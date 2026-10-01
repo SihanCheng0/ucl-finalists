@@ -12,7 +12,7 @@ def test_unknown_command_exits_with_usage_error(capsys):
 
 
 def test_commands_run_in_pipeline_order():
-    assert list(cli.COMMANDS)[:4] == ["fetch", "build", "model", "analyze"]
+    assert list(cli.COMMANDS) == ["fetch", "build", "model", "analyze", "report"]
 
 
 def test_build_reports_a_failed_plausibility_gate(monkeypatch, capsys):

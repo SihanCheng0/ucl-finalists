@@ -78,7 +78,20 @@ def cmd_analyze(args: argparse.Namespace) -> int:
     return 0
 
 
-COMMANDS = {"fetch": cmd_fetch, "build": cmd_build, "model": cmd_model, "analyze": cmd_analyze}
+def cmd_report(args: argparse.Namespace) -> int:
+    from . import analyst, dataset, model, report
+
+    ds = dataset.load()
+    page = report.render(ds.team_seasons, ds.finals, model.load(), analyst.load())
+    config.OUT_DIR.mkdir(parents=True, exist_ok=True)
+    (config.OUT_DIR / "report_page.html").write_text(page)  # artifact-ready fragment
+    (config.OUT_DIR / "report.html").write_text(report.standalone(page))
+    print(f"wrote {config.OUT_DIR / 'report.html'} and report_page.html")
+    return 0
+
+
+COMMANDS = {"fetch": cmd_fetch, "build": cmd_build, "model": cmd_model, "analyze": cmd_analyze,
+            "report": cmd_report}
 
 
 def main(argv: list[str] | None = None) -> int:
