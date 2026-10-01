@@ -197,9 +197,10 @@ class PlayerService:
         }
 
     def build_index(self, progress: Callable[[int, int], None], log: Callable[[str], None] = print,
-                    workers: int = 4) -> list[tuple[tuple[int, str], str]]:
-        """Fetch every squad not cached yet (and the live season's, which change), four at a time. Returns the
-        failures as ((season, team_id), reason)."""
+                    workers: int = 4, client=None) -> list[tuple[tuple[int, str], str]]:
+        """Fetch every squad not cached yet (and the live season's, which change), four at a time, with `client`
+        (default: the background client). Returns the failures as ((season, team_id), reason)."""
+        client = client or self._background
         pairs = sorted(set(self._pairs()))
         have = set(self.cached())
         todo = [p for p in pairs if p not in have or p[0] == config.LIVE_SEASON]
@@ -212,7 +213,7 @@ class PlayerService:
             season, team_id = pair
             try:
                 max_age = 0 if season == config.LIVE_SEASON else None
-                self._add(season, team_id, self._background.squad(season, team_id, max_age=max_age).data)
+                self._add(season, team_id, client.squad(season, team_id, max_age=max_age).data)
                 return pair, None
             except Exception as exc:  # noqa: BLE001 - reported, the rest go on
                 return pair, f"{type(exc).__name__}: {exc}"

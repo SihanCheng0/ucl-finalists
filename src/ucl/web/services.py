@@ -157,9 +157,19 @@ def live_stage(live) -> Stage:
     return run
 
 
-def players_stage(players) -> Stage:
+def players_stage(players, client_factory: Callable[[Callable], object] | None = None) -> Stage:
     def run(ctx: StageContext) -> StageOutcome:
-        failures = players.build_index(lambda done, of: ctx.set("players", {"done": done, "of": of}), log=ctx.log)
+        def hook(kind: str, key: str, source: str) -> None:
+            ctx.bump("requests", source)
+
+        if client_factory is not None:
+            client = client_factory(hook)
+        else:
+            from ..uefa import UefaClient
+
+            client = UefaClient(on_request=hook)  # so the run's request counters include the squads
+        failures = players.build_index(lambda done, of: ctx.set("players", {"done": done, "of": of}), log=ctx.log,
+                                       client=client)
         if failures:
             for (season, team_id), reason in failures[:MAX_ERRORS]:
                 ctx.log(f"{config.season_label(season)} {team_id}: {reason}", level="warn")

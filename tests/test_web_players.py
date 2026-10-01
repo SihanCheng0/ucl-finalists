@@ -127,3 +127,10 @@ def test_the_index_job_fetches_what_is_missing_reports_progress_and_failures(tmp
     assert players.index_status() == {"complete": False, "squads": {"done": 3, "of": 4}, "running": False}
     assert players.history("1")["unavailable_seasons"] == ["2024-25"]
     assert (2027, "52280", 0) in client.calls  # the live season's squad is always refetched
+
+
+def test_the_index_job_can_use_its_own_client(tmp_path):
+    players, background = service(tmp_path)
+    other = FakeClient(tmp_path, SQUADS)
+    players.build_index(lambda done, of: None, log=lambda line: None, workers=1, client=other)
+    assert background.calls == [] and len(other.calls) == 4
