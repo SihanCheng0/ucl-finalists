@@ -9,13 +9,18 @@ dependencies = [
     "scipy>=1.14",
     "scikit-learn>=1.9",
     "shap>=0.52",
+    "fastapi>=0.142",
+    "uvicorn>=0.54",
 ]
 
 [project.scripts]
 ucl = "ucl.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = [
+    "httpx2>=2.13",
+    "pytest>=8",
+]
 
 [build-system]
 requires = ["hatchling"]
