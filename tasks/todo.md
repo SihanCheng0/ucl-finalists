@@ -7,7 +7,7 @@ Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
 - [x] Chunk 2: labels, features, dataset
 - [x] Chunk 3: fetch + build on real data, models, drivers, ablation, finals comparison
 - [x] Chunk 4: grounding checks, LM Studio client
-- [ ] Chunk 5: fact sheets, analyst, analyze on the real data
+- [x] Chunk 5: fact sheets, analyst, analyze on the real data
 - [ ] Chunk 6: charts and the report
 - [ ] Chunk 7: end-to-end run, verification, publish
 

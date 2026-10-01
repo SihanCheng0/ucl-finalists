@@ -53,7 +53,21 @@ def cmd_model(args: argparse.Namespace) -> int:
     return 0
 
 
-COMMANDS = {"fetch": cmd_fetch, "build": cmd_build, "model": cmd_model}
+def cmd_analyze(args: argparse.Namespace) -> int:
+    from . import analyst, dataset, model
+
+    ds = dataset.load()
+    analysis = analyst.run(ds.team_seasons, ds.finals, model.load(), llm_model=args.llm_model,
+                           enabled=not args.no_ai)
+    analyst.save(analysis)
+    flagged = sum(len(n.unsupported) for n in analysis.narratives.values())
+    unavailable = sum(n.status != "ok" for n in analysis.narratives.values())
+    print(f"analysis {analysis.status} with {args.llm_model}: {len(analysis.narratives)} narratives "
+          f"({unavailable} unavailable), {flagged} figure(s) not found in the data")
+    return 0
+
+
+COMMANDS = {"fetch": cmd_fetch, "build": cmd_build, "model": cmd_model, "analyze": cmd_analyze}
 
 
 def main(argv: list[str] | None = None) -> int:

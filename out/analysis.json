@@ -1,0 +1,2209 @@
+{
+  "status": "ok",
+  "model": "qwen/qwen3.5-35b-a3b",
+  "narratives": {
+    "2022-50051": {
+      "key": "2022-50051",
+      "status": "ok",
+      "text": "## How they got there\nReal Madrid reached the final by defeating Liverpool 1-0 to claim the title. Their profile was defined by exceptional control and discipline, ranking better than 100% of teams in passes per game (670), 97% in pre-season UEFA club coefficient (127.0 points), and 97% in fouls committed per game (7.8).\n\n## Would the model have picked them?\nThe model would not have selected Real Madrid, as they ranked fifth among knockout teams while only the top two were chosen. Although their probability of reaching the final was 18.8%, this remains higher than the base rate of 12.5% for a random team. The stage nearest to the model's expectation of 2.06 is the semi-finals. Attacks per game (66.0) provided the largest positive SHAP contribution at 0.42, whereas long passes (% of passes) at 8.8 contributed -0.1 as the primary negative factor.\n\n## Weak spots\nLong passes (% of passes) saw the team perform better than only 6% of teams in that season's group phase and among all Champions League teams since 2011-12. Distance covered per game (110.3 km) was a metric where they outperformed just 12% of their peers in the current campaign and 26% historically. Opponent shots per game (9.0), while marked as lower is better, showed them doing better than only 44% of teams in the group phase and 62% over the longer period.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2022-7889": {
+      "key": "2022-7889",
+      "status": "ok",
+      "text": "## How they got there\nLiverpool reached the final as runners-up after losing to Real Madrid 0-1. Their campaign was defined by a dominant profile, leading in Points per game with a value of 3.0 that placed them better than 97% of teams in the group phase and 99% historically. They also excelled in Shot accuracy at 59.2%, beating 97% of their peers in the same season, while maintaining high Possession of 59.5%, which was superior to 97% of teams that year.\n\n## Would the model have picked them?\nThe model would have selected Liverpool, ranking them second and placing them inside its top two predictions for this season. With a probability of 32.5% to reach the final, they significantly outperformed the base rate of 12.5%. The stage nearest to the model's expectation was semi-finals, reflecting an expected value of 2.24 on the knockout scale. This high ranking was driven upward most by Attacks per game at 57.5 with a SHAP contribution of 0.45, while being pulled down most by Pre-season UEFA club coefficient at 101.0 points with a contribution of -0.07.\n\n## Weak spots\nTheir Distance covered per game was 113.1 km, performing better than only 25% of teams in the group phase. Liverpool committed an average of 12.0 fouls per game, which beat just 38% of their season's opponents despite being marked as lower is better. Additionally, they utilized Long passes for 13.1% of their total passing, a metric that outperformed only 47% of teams in the group phase.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2023-50138": {
+      "key": "2023-50138",
+      "status": "ok",
+      "text": "## How they got there\nInter reached the final as runners-up after losing to Manchester City 0-1. Their profile was defined by exceptional shooting efficiency, with a shot accuracy of 59.3% that placed them better than 97% of teams in the group phase and a shot conversion rate of 18.5%, beating 62% of their peers. They also relied on direct play, executing long passes for 12.9% of all attempts to outperform 62% of the season's competition.\n\n## Would the model have picked them?\nThe model would not have selected Inter, as they ranked 14th among knockout teams with only a 2.9% probability of reaching the final compared to a base rate of 12.5%. This low expectation aligns with the stage nearest to the model's calculation, which is out before quarter-finals. The prediction was pushed up most by long passes at 12.9%, contributing 0.08 to the expected stage, while shot conversion at 18.5% added a further 0.04. Conversely, the outlook was dragged down significantly by attacks per game (value 40.8), which carried a SHAP contribution of -0.22, followed by goal difference per game at 0.5 with a contribution of -0.15.\n\n## Weak spots\nInter allowed opponent shots on target per game at a rate of 5.7, performing better than only 23% of teams in the group phase. Their average of 10.7 opponent shots per game was superior to just 34% of their rivals. Additionally, they generated an average of 9.0 shots per game, which beat only 38% of the teams that season.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2023-52919": {
+      "key": "2023-52919",
+      "status": "ok",
+      "text": "## How they got there\nManchester City won the title by defeating Inter 1-0 in the final. Their profile was defined by an attacking style, recording 69.2 attacks per game to perform better than 100% of teams in the group phase and 99% historically. They also dominated possession with 64.2%, beating all peers in the season and 92% since 2011-12, while averaging 734 passes per game to outperform every team in their league phase and 97% of historical opponents.\n\n## Would the model have picked them?\nThe model would not have selected Manchester City as a top-two finalist, ranking them third despite being a leading contender. With a predicted probability of 27.1%, they were significantly more likely to reach the final than the base rate of 12.5% for a random knockout team. The stage nearest to the model's expectation was the semi-finals, reflecting an expected value of 1.82 on the outcome scale. The prediction was pushed up most by fouls committed per game at 8.2 (SHAP contribution: 0.31), while long passes (% of passes) at 9.1 pulled it down most (SHAP contribution: -0.16).\n\n## Weak spots\nManchester City's long passes (% of passes) value of 9.1 beat only 12% of teams in the group phase and 7% historically. Their distance covered per game (km) of 116.2 outperformed just 66% of season peers and 68% of all historical teams.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2024-50051": {
+      "key": "2024-50051",
+      "status": "ok",
+      "text": "## How they got there\nReal Madrid secured the title by defeating Borussia Dortmund 2-0 in the final. Their path was defined by a dominant profile, leading the league phase with 3.0 points per game (better than 98% of teams) and maintaining exceptional control through 15.3 shots per game (better than 97%) alongside 93.1% pass accuracy (better than 97%).\n\n## Would the model have picked them?\nThe model would have selected Real Madrid, ranking them second among all knockout teams with a 32.0% probability of reaching the final, well above the 12.5% base rate for a random team. This expectation aligns most closely with a quarter-final exit on the model's scale. The prediction was pushed upward primarily by their 61.0 attacks per game (better than 91%), which contributed 0.29 to the score, while being pulled downward by their 7.9 long passes (% of passes), contributing -0.65.\n\n## Weak spots\nReal Madrid's 7.9 long passes (% of passes) was better than only 3% of teams in that season's group phase. Their 113.1 distance covered per game (km) beat just 9% of their peers during the same period.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2024-52758": {
+      "key": "2024-52758",
+      "status": "ok",
+      "text": "## How they got there\nBorussia Dortmund reached the 2023-24 final as runners-up after losing to Real Madrid 0-2. Their profile was defined by a strong pre-season UEFA club coefficient of 86.0 points, better than 75% of teams in that season's group phase, and an opponent shots on target per game figure of just 3.7, which placed them ahead of 72% of their peers. They also secured a goal difference per game of 0.5, outperforming 72% of the competition during the league stage.\n\n## Would the model have picked them?\nThe model would not have selected Dortmund, as they ranked eighth in probability and fell outside its top two choices. With an estimated chance of reaching the final at 8.9%, their likelihood was significantly lower than the base rate of 12.5% for a random knockout team. The algorithm's expectation corresponded to a stage out before quarter-finals, reflecting a conservative outlook based on historical data from other seasons. While long passes accounted for 66% of teams beaten with a SHAP contribution of 0.1 pushing the prediction up most, attacks per game contributed -0.19 to pull it down most.\n\n## Weak spots\nDortmund covered only 112.3 km per game, a distance better than just 6% of teams in that season's group phase. Their shot conversion rate stood at 11.7%, surpassing only 12% of their league-phase opponents. Additionally, they held possession for 44.8% of the time, which was superior to merely 20% of the teams competing during the same period.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2025-50138": {
+      "key": "2025-50138",
+      "status": "ok",
+      "text": "## How they got there\nInter reached the final as runners-up after losing to Paris Saint-Germain with a score of 0-5. Their campaign was defined by exceptional dominance in regular play, where they finished better than 94% of teams in points per game (2.38) and outperformed 89% of peers in opponent shots on target per game (2.9). Additionally, the club ranked above 88% of their league rivals for goal difference per game (1.25), establishing a profile built on high efficiency and defensive solidity during the group phase.\n\n## Would the model have picked them?\nThe model would not have selected Inter as a top-two finalist, ranking them seventh out of 24 knockout teams against an 8.3% base rate for reaching the final. Although the model assigned a 12.9% probability to their success, this placed them outside its preferred selections despite being higher than the average chance. The nearest stage to the model's expectation of 0.87 was the quarter-finals. Long passes (% of passes) at 11.1 contributed 0.12 to pushing the prediction up most, while attacks per game (38.4) contributed -0.19 for pushing it down most.\n\n## Weak spots\nInter covered only 68.1 km per game, beating just 3% of teams in that metric during the season. Their shot accuracy sat at 39.2%, a figure better than only 8% of their league opponents. Finally, they generated 38.4 attacks per game, outperforming merely 35% of the teams in that specific category.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2025-52747": {
+      "key": "2025-52747",
+      "status": "ok",
+      "text": "## How they got there\nParis Saint-Germain secured the title by defeating Inter 5-0 in the final. Their campaign was defined by an aggressive profile, leading 97% of teams in attacks per game with a value of 65.5 and matching that dominance in shots per game at 13.2. They also maintained defensive solidity, recording only 6.0 opponent shots per game to better than 94% of their peers.\n\n## Would the model have picked them?\nThe model would not have selected Paris Saint-Germain as a top-two finalist, ranking them eighth against an 8.3% base rate with a predicted probability of 10.1%. The algorithm's expectation aligns closest to reaching the quarter-finals rather than the final. This prediction was pushed upward primarily by their high volume of attacks per game (SHAP contribution: 0.38) and shots per game (SHAP contribution: 0.14). Conversely, the model adjusted expectations downward due to a low reliance on long passes at 9.1% (SHAP contribution: -0.15) and their opponent shot count of 6.0 (SHAP contribution: -0.13).\n\n## Weak spots\nParis Saint-Germain relied on long passes for only 9.1% of their total volume, a metric where they outperformed just 17% of teams in the group phase. Their shot conversion rate stood at 13.2%, beating only 26% of that season's competitors. Additionally, their shot accuracy was recorded at 46.2%, which placed them ahead of merely 33% of teams during the league stage.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2026-52280": {
+      "key": "2026-52280",
+      "status": "ok",
+      "text": "## How they got there\nArsenal reached the final as runners-up after losing to Paris Saint-Germain on penalties. Their campaign was defined by a dominant profile, leading in points per game (3.0) and goal difference per game (2.38), while conceding very few shots on target with just 2.8 per game.\n\n## Would the model have picked them?\nThe model would have selected Arsenal, ranking them second among all knockout teams inside its top two. Its calculated probability of reaching the final was 25.6%, which is significantly higher than the base rate of 8.3% for a random team. The stage nearest to the model's expectation of 1.52 is the semi-finals. This high ranking was driven primarily by goal difference per game (0.83), while passes per game (-0.17) and attacks per game (-0.14) were the factors that pushed the prediction down most according to the model's view.\n\n## Weak spots\nArsenal committed fouls at a rate of 13.9 per game, performing better than only 11% of teams in their own league phase. They attempted long passes for just 11.4% of their total volume, beating fewer than half of the season's competitors. Additionally, they averaged 450 passes per game, a figure that placed them below the majority of their peers in the group stage.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "2026-52747": {
+      "key": "2026-52747",
+      "status": "ok",
+      "text": "## How they got there\nParis Saint-Germain secured the title by defeating Arsenal on penalties in the final after a 1-1 draw. Their campaign was defined by an attacking profile that dominated possession and volume, as they recorded 64.0% of the ball and averaged 671 passes per game while beating 100% of teams in those categories during the group phase. This approach complemented their high output of 14.9 shots per game, a metric where they also outperformed every other team in that season's league phase.\n\n## Would the model have picked them?\nThe model would not have selected Paris Saint-Germain as its top choice, ranking them fourth among knockout teams despite being a leading contender outside its top two. With a 16.1% probability of reaching the final, they were significantly more likely to succeed than the 8.3% base rate for a random team. The model's expectation of 1.73 on its scale corresponds nearest to the semi-finals stage. While attacks per game contributed 0.55 to pushing this prediction up, long passes at 8.6% pulled it down by -0.22.\n\n## Weak spots\nLong passes (% of passes) saw the club beat only 8% of teams in that season's group phase and just 5% historically. Distance covered per game (km) was a metric where they outperformed 28% of their peers this season, though they managed to beat 57% of all Champions League teams since 2011-12.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    },
+    "synthesis": {
+      "key": "synthesis",
+      "status": "ok",
+      "text": "## Why the best teams win\n\nThe model trained on 256 knockout team-seasons to predict how far clubs progress in European competitions. Its performance is measured by a mean within-season Spearman correlation of 0.46 between predicted and actual stages, with an AUC for reaching the final at 0.72. The model achieved a Brier score of 0.098 compared to a base-rate guess Brier score of 0.103. While this represents an improvement over the baseline, the edge was not tested statistically, so it cannot be called significant or superior. In terms of identifying finalists, 46.7% of actual finalists appeared in the model's top 4 predictions for their respective season.\n\nWhen analyzing which stats drive deep runs, style emerges as the most predictive feature set with a Spearman correlation of 0.41 and an AUC of 0.69. The pedigree-only set yields a Spearman of 0.28 and an AUC of 0.66, while results alone achieve a Spearman of 0.3 and an AUC of 0.72. Combining all features reaches a Spearman of 0.46 and an AUC of 0.72. The most important stat is Attacks per game with an importance of 0.25, followed by Goal difference per game at 0.201. Both are marked as robust. Long passes (% of passes) follows with an importance of 0.137 and Passes per game at 0.128, both also labeled robust. These four stats represent the strongest statistical associations for deep knockout runs in this dataset.\n\n## Winners vs runners-up\n\nComparing group and league-phase stats between winners and runners-up across all finals reveals no statistically significant differences when applying a Holm-adjusted p threshold of 0.05. The analysis focuses on the first four sorted stats: Pre-season UEFA club coefficient, Fouls committed per game, Shots per game, and Pass accuracy. For Pre-season UEFA club coefficient, winners were higher in 13 finals with a mean difference (z) of 0.57, but the Holm-adjusted p was 0.111. In the case of Fouls committed per game, where lower is better, winners had lower values in 12 finals with a mean difference (z) of -1.13, yet the Holm-adjusted p remained at 0.181.\n\nThe third stat, Shots per game, shows winners were higher in 11 finals with a mean difference (z) of 0.79 and a Holm-adjusted p of 0.292. Finally, Pass accuracy saw winners higher in 12 finals with a mean difference (z) of 0.76 and a Holm-adjusted p of 0.422. Since all these p-values exceed the significance threshold of 0.05, no difference between winners and runners-up is significant based on this data. Other stats like Points per game and Goal difference per game show even higher p-values of 1.0. The data indicates that while certain style metrics predict deep runs generally, they do not consistently differentiate winners from runners-up in the final stage when looking at pre-final phase statistics.",
+      "unsupported": [],
+      "calls": 1,
+      "reason": null
+    }
+  },
+  "facts": {
+    "2022-50051": {
+      "Club": "Real Madrid",
+      "Season": "2021-22",
+      "Actual result": "Winner: beat Liverpool 1-0 in the final",
+      "Knockout teams that season": 16,
+      "Base rate: chance a random knockout team reaches the final (%)": 12.5,
+      "Model probability of reaching the final (%)": 18.8,
+      "Rank by that probability among the season's knockout teams": 5,
+      "Would the model have picked them?": "No: ranked 5, outside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 2.06,
+      "Stage on that scale nearest to the model's expectation": "semi-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Passes per game",
+          "value": 670,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "value": 127.0,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 89
+        },
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "value": 7.8,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 8.8,
+          "Teams beaten in that season's group/league phase (%)": 6,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 6
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 110.3,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 26
+        },
+        {
+          "stat": "Opponent shots per game (lower is better)",
+          "value": 9.0,
+          "Teams beaten in that season's group/league phase (%)": 44,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 62
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Attacks per game",
+          "value": 66.0,
+          "Teams beaten in that season's group/league phase (%)": 91,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97,
+          "SHAP contribution (knockout stages)": 0.42
+        },
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "value": 7.8,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99,
+          "SHAP contribution (knockout stages)": 0.27
+        },
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "value": 127.0,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 89,
+          "SHAP contribution (knockout stages)": 0.17
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 110.3,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 26,
+          "SHAP contribution (knockout stages)": 0.13
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 8.8,
+          "Teams beaten in that season's group/league phase (%)": 6,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 6,
+          "SHAP contribution (knockout stages)": -0.1
+        },
+        {
+          "stat": "Shot accuracy (% on target)",
+          "value": 55.3,
+          "Teams beaten in that season's group/league phase (%)": 81,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 74,
+          "SHAP contribution (knockout stages)": -0.07
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 4.2,
+          "Teams beaten in that season's group/league phase (%)": 61,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68,
+          "SHAP contribution (knockout stages)": -0.02
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 127.0,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 89
+        },
+        "Points per game": {
+          "value": 2.5,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        "Goal difference per game": {
+          "value": 1.83,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        "Shots per game": {
+          "value": 12.7,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 80
+        },
+        "Shot accuracy (% on target)": {
+          "value": 55.3,
+          "Teams beaten in that season's group/league phase (%)": 81,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 74
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 18.4,
+          "Teams beaten in that season's group/league phase (%)": 69,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 73
+        },
+        "Attacks per game": {
+          "value": 66.0,
+          "Teams beaten in that season's group/league phase (%)": 91,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 9.0,
+          "Teams beaten in that season's group/league phase (%)": 44,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 62
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 4.2,
+          "Teams beaten in that season's group/league phase (%)": 61,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68
+        },
+        "Possession (%)": {
+          "value": 56.7,
+          "Teams beaten in that season's group/league phase (%)": 81,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 79
+        },
+        "Pass accuracy (%)": {
+          "value": 90.2,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        "Passes per game": {
+          "value": 670,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        "Long passes (% of passes)": {
+          "value": 8.8,
+          "Teams beaten in that season's group/league phase (%)": 6,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 6
+        },
+        "Distance covered per game (km)": {
+          "value": 110.3,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 26
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 7.8,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        }
+      }
+    },
+    "2022-7889": {
+      "Club": "Liverpool",
+      "Season": "2021-22",
+      "Actual result": "Runner-up: lost the final to Real Madrid 0-1",
+      "Knockout teams that season": 16,
+      "Base rate: chance a random knockout team reaches the final (%)": 12.5,
+      "Model probability of reaching the final (%)": 32.5,
+      "Rank by that probability among the season's knockout teams": 2,
+      "Would the model have picked them?": "Yes: ranked 2, inside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 2.24,
+      "Stage on that scale nearest to the model's expectation": "semi-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Points per game",
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        {
+          "stat": "Shot accuracy (% on target)",
+          "value": 59.2,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        {
+          "stat": "Possession (%)",
+          "value": 59.5,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 86
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 113.1,
+          "Teams beaten in that season's group/league phase (%)": 25,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 47
+        },
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "value": 12.0,
+          "Teams beaten in that season's group/league phase (%)": 38,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 48
+        },
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 13.1,
+          "Teams beaten in that season's group/league phase (%)": 47,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 51
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Attacks per game",
+          "value": 57.5,
+          "Teams beaten in that season's group/league phase (%)": 84,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93,
+          "SHAP contribution (knockout stages)": 0.45
+        },
+        {
+          "stat": "Points per game",
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99,
+          "SHAP contribution (knockout stages)": 0.44
+        },
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 13.1,
+          "Teams beaten in that season's group/league phase (%)": 47,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 51,
+          "SHAP contribution (knockout stages)": 0.19
+        },
+        {
+          "stat": "Passes per game",
+          "value": 587,
+          "Teams beaten in that season's group/league phase (%)": 78,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 80,
+          "SHAP contribution (knockout stages)": 0.16
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "value": 101.0,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 77,
+          "SHAP contribution (knockout stages)": -0.07
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 2.5,
+          "Teams beaten in that season's group/league phase (%)": 86,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 95,
+          "SHAP contribution (knockout stages)": -0.04
+        },
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "value": 12.0,
+          "Teams beaten in that season's group/league phase (%)": 38,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 48,
+          "SHAP contribution (knockout stages)": -0.03
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 101.0,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 77
+        },
+        "Points per game": {
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        "Goal difference per game": {
+          "value": 1.83,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        "Shots per game": {
+          "value": 12.7,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 80
+        },
+        "Shot accuracy (% on target)": {
+          "value": 59.2,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 22.4,
+          "Teams beaten in that season's group/league phase (%)": 81,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        "Attacks per game": {
+          "value": 57.5,
+          "Teams beaten in that season's group/league phase (%)": 84,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 5.5,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 2.5,
+          "Teams beaten in that season's group/league phase (%)": 86,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 95
+        },
+        "Possession (%)": {
+          "value": 59.5,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 86
+        },
+        "Pass accuracy (%)": {
+          "value": 87.0,
+          "Teams beaten in that season's group/league phase (%)": 69,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68
+        },
+        "Passes per game": {
+          "value": 587,
+          "Teams beaten in that season's group/league phase (%)": 78,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 80
+        },
+        "Long passes (% of passes)": {
+          "value": 13.1,
+          "Teams beaten in that season's group/league phase (%)": 47,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 51
+        },
+        "Distance covered per game (km)": {
+          "value": 113.1,
+          "Teams beaten in that season's group/league phase (%)": 25,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 47
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 12.0,
+          "Teams beaten in that season's group/league phase (%)": 38,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 48
+        }
+      }
+    },
+    "2023-50138": {
+      "Club": "Inter",
+      "Season": "2022-23",
+      "Actual result": "Runner-up: lost the final to Manchester City 0-1",
+      "Knockout teams that season": 16,
+      "Base rate: chance a random knockout team reaches the final (%)": 12.5,
+      "Model probability of reaching the final (%)": 2.9,
+      "Rank by that probability among the season's knockout teams": 14,
+      "Would the model have picked them?": "No: ranked 14, outside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 0.09,
+      "Stage on that scale nearest to the model's expectation": "out before quarter-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Shot accuracy (% on target)",
+          "value": 59.3,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        {
+          "stat": "Shot conversion (% of shots scored)",
+          "value": 18.5,
+          "Teams beaten in that season's group/league phase (%)": 62,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 74
+        },
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 12.9,
+          "Teams beaten in that season's group/league phase (%)": 62,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 48
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 5.7,
+          "Teams beaten in that season's group/league phase (%)": 23,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 34
+        },
+        {
+          "stat": "Opponent shots per game (lower is better)",
+          "value": 10.7,
+          "Teams beaten in that season's group/league phase (%)": 34,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 38
+        },
+        {
+          "stat": "Shots per game",
+          "value": 9.0,
+          "Teams beaten in that season's group/league phase (%)": 38,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 34
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 12.9,
+          "Teams beaten in that season's group/league phase (%)": 62,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 48,
+          "SHAP contribution (knockout stages)": 0.08
+        },
+        {
+          "stat": "Shot conversion (% of shots scored)",
+          "value": 18.5,
+          "Teams beaten in that season's group/league phase (%)": 62,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 74,
+          "SHAP contribution (knockout stages)": 0.04
+        },
+        {
+          "stat": "Shot accuracy (% on target)",
+          "value": 59.3,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90,
+          "SHAP contribution (knockout stages)": 0.0
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Attacks per game",
+          "value": 40.8,
+          "Teams beaten in that season's group/league phase (%)": 42,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 56,
+          "SHAP contribution (knockout stages)": -0.22
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 0.5,
+          "Teams beaten in that season's group/league phase (%)": 61,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65,
+          "SHAP contribution (knockout stages)": -0.15
+        },
+        {
+          "stat": "Passes per game",
+          "value": 470,
+          "Teams beaten in that season's group/league phase (%)": 41,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41,
+          "SHAP contribution (knockout stages)": -0.12
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 67.0,
+          "Teams beaten in that season's group/league phase (%)": 47,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 50
+        },
+        "Points per game": {
+          "value": 1.67,
+          "Teams beaten in that season's group/league phase (%)": 59,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 61
+        },
+        "Goal difference per game": {
+          "value": 0.5,
+          "Teams beaten in that season's group/league phase (%)": 61,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65
+        },
+        "Shots per game": {
+          "value": 9.0,
+          "Teams beaten in that season's group/league phase (%)": 38,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 34
+        },
+        "Shot accuracy (% on target)": {
+          "value": 59.3,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 18.5,
+          "Teams beaten in that season's group/league phase (%)": 62,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 74
+        },
+        "Attacks per game": {
+          "value": 40.8,
+          "Teams beaten in that season's group/league phase (%)": 42,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 56
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 10.7,
+          "Teams beaten in that season's group/league phase (%)": 34,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 38
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 5.7,
+          "Teams beaten in that season's group/league phase (%)": 23,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 34
+        },
+        "Possession (%)": {
+          "value": 49.2,
+          "Teams beaten in that season's group/league phase (%)": 48,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41
+        },
+        "Pass accuracy (%)": {
+          "value": 86.1,
+          "Teams beaten in that season's group/league phase (%)": 53,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 60
+        },
+        "Passes per game": {
+          "value": 470,
+          "Teams beaten in that season's group/league phase (%)": 41,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41
+        },
+        "Long passes (% of passes)": {
+          "value": 12.9,
+          "Teams beaten in that season's group/league phase (%)": 62,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 48
+        },
+        "Distance covered per game (km)": {
+          "value": 115.0,
+          "Teams beaten in that season's group/league phase (%)": 53,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 61
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 10.7,
+          "Teams beaten in that season's group/league phase (%)": 53,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 71
+        }
+      }
+    },
+    "2023-52919": {
+      "Club": "Manchester City",
+      "Season": "2022-23",
+      "Actual result": "Winner: beat Inter 1-0 in the final",
+      "Knockout teams that season": 16,
+      "Base rate: chance a random knockout team reaches the final (%)": 12.5,
+      "Model probability of reaching the final (%)": 27.1,
+      "Rank by that probability among the season's knockout teams": 3,
+      "Would the model have picked them?": "No: ranked 3, a leading contender but outside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 1.82,
+      "Stage on that scale nearest to the model's expectation": "semi-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Attacks per game",
+          "value": 69.2,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        {
+          "stat": "Possession (%)",
+          "value": 64.2,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 92
+        },
+        {
+          "stat": "Passes per game",
+          "value": 734,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 9.1,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 7
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "value": 8.2,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 98,
+          "SHAP contribution (knockout stages)": 0.31
+        },
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "value": 134.0,
+          "Teams beaten in that season's group/league phase (%)": 95,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91,
+          "SHAP contribution (knockout stages)": 0.26
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 2.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 95,
+          "SHAP contribution (knockout stages)": 0.21
+        },
+        {
+          "stat": "Attacks per game",
+          "value": 69.2,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99,
+          "SHAP contribution (knockout stages)": 0.19
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 9.1,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 7,
+          "SHAP contribution (knockout stages)": -0.16
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 116.2,
+          "Teams beaten in that season's group/league phase (%)": 66,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68,
+          "SHAP contribution (knockout stages)": -0.11
+        },
+        {
+          "stat": "Opponent shots per game (lower is better)",
+          "value": 5.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99,
+          "SHAP contribution (knockout stages)": -0.07
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 134.0,
+          "Teams beaten in that season's group/league phase (%)": 95,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91
+        },
+        "Points per game": {
+          "value": 2.33,
+          "Teams beaten in that season's group/league phase (%)": 88,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 89
+        },
+        "Goal difference per game": {
+          "value": 2.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 95
+        },
+        "Shots per game": {
+          "value": 13.0,
+          "Teams beaten in that season's group/league phase (%)": 88,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 84
+        },
+        "Shot accuracy (% on target)": {
+          "value": 53.8,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 67
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 17.9,
+          "Teams beaten in that season's group/league phase (%)": 58,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 70
+        },
+        "Attacks per game": {
+          "value": 69.2,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 5.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 1.7,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        "Possession (%)": {
+          "value": 64.2,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 92
+        },
+        "Pass accuracy (%)": {
+          "value": 91.5,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 96
+        },
+        "Passes per game": {
+          "value": 734,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        },
+        "Long passes (% of passes)": {
+          "value": 9.1,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 7
+        },
+        "Distance covered per game (km)": {
+          "value": 116.2,
+          "Teams beaten in that season's group/league phase (%)": 66,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 8.2,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 98
+        }
+      }
+    },
+    "2024-50051": {
+      "Club": "Real Madrid",
+      "Season": "2023-24",
+      "Actual result": "Winner: beat Borussia Dortmund 2-0 in the final",
+      "Knockout teams that season": 16,
+      "Base rate: chance a random knockout team reaches the final (%)": 12.5,
+      "Model probability of reaching the final (%)": 32.0,
+      "Rank by that probability among the season's knockout teams": 2,
+      "Would the model have picked them?": "Yes: ranked 2, inside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 1.36,
+      "Stage on that scale nearest to the model's expectation": "quarter-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Points per game",
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 98,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        {
+          "stat": "Shots per game",
+          "value": 15.3,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94
+        },
+        {
+          "stat": "Pass accuracy (%)",
+          "value": 93.1,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 98
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 7.9,
+          "Teams beaten in that season's group/league phase (%)": 3,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 2
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 113.1,
+          "Teams beaten in that season's group/league phase (%)": 9,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 47
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Attacks per game",
+          "value": 61.0,
+          "Teams beaten in that season's group/league phase (%)": 91,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94,
+          "SHAP contribution (knockout stages)": 0.29
+        },
+        {
+          "stat": "Points per game",
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 98,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99,
+          "SHAP contribution (knockout stages)": 0.22
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 1.5,
+          "Teams beaten in that season's group/league phase (%)": 91,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 88,
+          "SHAP contribution (knockout stages)": 0.21
+        },
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "value": 121.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 87,
+          "SHAP contribution (knockout stages)": 0.15
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 7.9,
+          "Teams beaten in that season's group/league phase (%)": 3,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 2,
+          "SHAP contribution (knockout stages)": -0.65
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 3.5,
+          "Teams beaten in that season's group/league phase (%)": 80,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 81,
+          "SHAP contribution (knockout stages)": -0.1
+        },
+        {
+          "stat": "Shots per game",
+          "value": 15.3,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94,
+          "SHAP contribution (knockout stages)": -0.09
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 121.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 87
+        },
+        "Points per game": {
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 98,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        "Goal difference per game": {
+          "value": 1.5,
+          "Teams beaten in that season's group/league phase (%)": 91,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 88
+        },
+        "Shots per game": {
+          "value": 15.3,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94
+        },
+        "Shot accuracy (% on target)": {
+          "value": 46.7,
+          "Teams beaten in that season's group/league phase (%)": 56,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 39
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 17.4,
+          "Teams beaten in that season's group/league phase (%)": 69,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68
+        },
+        "Attacks per game": {
+          "value": 61.0,
+          "Teams beaten in that season's group/league phase (%)": 91,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 7.2,
+          "Teams beaten in that season's group/league phase (%)": 83,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 84
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 3.5,
+          "Teams beaten in that season's group/league phase (%)": 80,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 81
+        },
+        "Possession (%)": {
+          "value": 58.5,
+          "Teams beaten in that season's group/league phase (%)": 91,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 84
+        },
+        "Pass accuracy (%)": {
+          "value": 93.1,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 98
+        },
+        "Passes per game": {
+          "value": 648,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91
+        },
+        "Long passes (% of passes)": {
+          "value": 7.9,
+          "Teams beaten in that season's group/league phase (%)": 3,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 2
+        },
+        "Distance covered per game (km)": {
+          "value": 113.1,
+          "Teams beaten in that season's group/league phase (%)": 9,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 47
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 8.8,
+          "Teams beaten in that season's group/league phase (%)": 88,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        }
+      }
+    },
+    "2024-52758": {
+      "Club": "Borussia Dortmund",
+      "Season": "2023-24",
+      "Actual result": "Runner-up: lost the final to Real Madrid 0-2",
+      "Knockout teams that season": 16,
+      "Base rate: chance a random knockout team reaches the final (%)": 12.5,
+      "Model probability of reaching the final (%)": 8.9,
+      "Rank by that probability among the season's knockout teams": 8,
+      "Would the model have picked them?": "No: ranked 8, outside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 0.38,
+      "Stage on that scale nearest to the model's expectation": "out before quarter-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "value": 86.0,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 0.5,
+          "Teams beaten in that season's group/league phase (%)": 72,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 3.7,
+          "Teams beaten in that season's group/league phase (%)": 72,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 78
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 112.3,
+          "Teams beaten in that season's group/league phase (%)": 6,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41
+        },
+        {
+          "stat": "Shot conversion (% of shots scored)",
+          "value": 11.7,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 30
+        },
+        {
+          "stat": "Possession (%)",
+          "value": 44.8,
+          "Teams beaten in that season's group/league phase (%)": 20,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 19
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 13.7,
+          "Teams beaten in that season's group/league phase (%)": 66,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 57,
+          "SHAP contribution (knockout stages)": 0.1
+        },
+        {
+          "stat": "Shots per game",
+          "value": 10.0,
+          "Teams beaten in that season's group/league phase (%)": 56,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 53,
+          "SHAP contribution (knockout stages)": 0.07
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 112.3,
+          "Teams beaten in that season's group/league phase (%)": 6,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41,
+          "SHAP contribution (knockout stages)": 0.06
+        },
+        {
+          "stat": "Possession (%)",
+          "value": 44.8,
+          "Teams beaten in that season's group/league phase (%)": 20,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 19,
+          "SHAP contribution (knockout stages)": 0.01
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Attacks per game",
+          "value": 39.8,
+          "Teams beaten in that season's group/league phase (%)": 38,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 51,
+          "SHAP contribution (knockout stages)": -0.19
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 0.5,
+          "Teams beaten in that season's group/league phase (%)": 72,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65,
+          "SHAP contribution (knockout stages)": -0.16
+        },
+        {
+          "stat": "Passes per game",
+          "value": 400,
+          "Teams beaten in that season's group/league phase (%)": 25,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 18,
+          "SHAP contribution (knockout stages)": -0.13
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 86.0,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65
+        },
+        "Points per game": {
+          "value": 1.83,
+          "Teams beaten in that season's group/league phase (%)": 69,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 69
+        },
+        "Goal difference per game": {
+          "value": 0.5,
+          "Teams beaten in that season's group/league phase (%)": 72,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65
+        },
+        "Shots per game": {
+          "value": 10.0,
+          "Teams beaten in that season's group/league phase (%)": 56,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 53
+        },
+        "Shot accuracy (% on target)": {
+          "value": 46.7,
+          "Teams beaten in that season's group/league phase (%)": 53,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 38
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 11.7,
+          "Teams beaten in that season's group/league phase (%)": 12,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 30
+        },
+        "Attacks per game": {
+          "value": 39.8,
+          "Teams beaten in that season's group/league phase (%)": 38,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 51
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 9.8,
+          "Teams beaten in that season's group/league phase (%)": 52,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 50
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 3.7,
+          "Teams beaten in that season's group/league phase (%)": 72,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 78
+        },
+        "Possession (%)": {
+          "value": 44.8,
+          "Teams beaten in that season's group/league phase (%)": 20,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 19
+        },
+        "Pass accuracy (%)": {
+          "value": 83.0,
+          "Teams beaten in that season's group/league phase (%)": 34,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 38
+        },
+        "Passes per game": {
+          "value": 400,
+          "Teams beaten in that season's group/league phase (%)": 25,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 18
+        },
+        "Long passes (% of passes)": {
+          "value": 13.7,
+          "Teams beaten in that season's group/league phase (%)": 66,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 57
+        },
+        "Distance covered per game (km)": {
+          "value": 112.3,
+          "Teams beaten in that season's group/league phase (%)": 6,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 11.0,
+          "Teams beaten in that season's group/league phase (%)": 48,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 66
+        }
+      }
+    },
+    "2025-50138": {
+      "Club": "Inter",
+      "Season": "2024-25",
+      "Actual result": "Runner-up: lost the final to Paris Saint-Germain 0-5",
+      "Knockout teams that season": 24,
+      "Base rate: chance a random knockout team reaches the final (%)": 8.3,
+      "Model probability of reaching the final (%)": 12.9,
+      "Rank by that probability among the season's knockout teams": 7,
+      "Would the model have picked them?": "No: ranked 7, outside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 0.87,
+      "Stage on that scale nearest to the model's expectation": "quarter-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Points per game",
+          "value": 2.38,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 2.9,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 1.25,
+          "Teams beaten in that season's group/league phase (%)": 88,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 83
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 68.1,
+          "Teams beaten in that season's group/league phase (%)": 3,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 0
+        },
+        {
+          "stat": "Shot accuracy (% on target)",
+          "value": 39.2,
+          "Teams beaten in that season's group/league phase (%)": 8,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 12
+        },
+        {
+          "stat": "Attacks per game",
+          "value": 38.4,
+          "Teams beaten in that season's group/league phase (%)": 35,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 46
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 11.1,
+          "Teams beaten in that season's group/league phase (%)": 50,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 24,
+          "SHAP contribution (knockout stages)": 0.12
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 68.1,
+          "Teams beaten in that season's group/league phase (%)": 3,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 0,
+          "SHAP contribution (knockout stages)": 0.11
+        },
+        {
+          "stat": "Shots per game",
+          "value": 9.9,
+          "Teams beaten in that season's group/league phase (%)": 60,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 51,
+          "SHAP contribution (knockout stages)": 0.07
+        },
+        {
+          "stat": "Passes per game",
+          "value": 536,
+          "Teams beaten in that season's group/league phase (%)": 78,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68,
+          "SHAP contribution (knockout stages)": 0.07
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Attacks per game",
+          "value": 38.4,
+          "Teams beaten in that season's group/league phase (%)": 35,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 46,
+          "SHAP contribution (knockout stages)": -0.19
+        },
+        {
+          "stat": "Shot accuracy (% on target)",
+          "value": 39.2,
+          "Teams beaten in that season's group/league phase (%)": 8,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 12,
+          "SHAP contribution (knockout stages)": -0.12
+        },
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "value": 9.6,
+          "Teams beaten in that season's group/league phase (%)": 83,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 86,
+          "SHAP contribution (knockout stages)": -0.08
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 101.0,
+          "Teams beaten in that season's group/league phase (%)": 86,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 77
+        },
+        "Points per game": {
+          "value": 2.38,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91
+        },
+        "Goal difference per game": {
+          "value": 1.25,
+          "Teams beaten in that season's group/league phase (%)": 88,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 83
+        },
+        "Shots per game": {
+          "value": 9.9,
+          "Teams beaten in that season's group/league phase (%)": 60,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 51
+        },
+        "Shot accuracy (% on target)": {
+          "value": 39.2,
+          "Teams beaten in that season's group/league phase (%)": 8,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 12
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 13.9,
+          "Teams beaten in that season's group/league phase (%)": 36,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 46
+        },
+        "Attacks per game": {
+          "value": 38.4,
+          "Teams beaten in that season's group/league phase (%)": 35,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 46
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 9.0,
+          "Teams beaten in that season's group/league phase (%)": 56,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 62
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 2.9,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 90
+        },
+        "Possession (%)": {
+          "value": 50.6,
+          "Teams beaten in that season's group/league phase (%)": 50,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 50
+        },
+        "Pass accuracy (%)": {
+          "value": 88.5,
+          "Teams beaten in that season's group/league phase (%)": 78,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 80
+        },
+        "Passes per game": {
+          "value": 536,
+          "Teams beaten in that season's group/league phase (%)": 78,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68
+        },
+        "Long passes (% of passes)": {
+          "value": 11.1,
+          "Teams beaten in that season's group/league phase (%)": 50,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 24
+        },
+        "Distance covered per game (km)": {
+          "value": 68.1,
+          "Teams beaten in that season's group/league phase (%)": 3,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 0
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 9.6,
+          "Teams beaten in that season's group/league phase (%)": 83,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 86
+        }
+      }
+    },
+    "2025-52747": {
+      "Club": "Paris Saint-Germain",
+      "Season": "2024-25",
+      "Actual result": "Winner: beat Inter 5-0 in the final",
+      "Knockout teams that season": 24,
+      "Base rate: chance a random knockout team reaches the final (%)": 8.3,
+      "Model probability of reaching the final (%)": 10.1,
+      "Rank by that probability among the season's knockout teams": 8,
+      "Would the model have picked them?": "No: ranked 8, outside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 0.82,
+      "Stage on that scale nearest to the model's expectation": "quarter-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Shots per game",
+          "value": 13.2,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 85
+        },
+        {
+          "stat": "Attacks per game",
+          "value": 65.5,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        },
+        {
+          "stat": "Opponent shots per game (lower is better)",
+          "value": 6.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 9.1,
+          "Teams beaten in that season's group/league phase (%)": 17,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 7
+        },
+        {
+          "stat": "Shot conversion (% of shots scored)",
+          "value": 13.2,
+          "Teams beaten in that season's group/league phase (%)": 26,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41
+        },
+        {
+          "stat": "Shot accuracy (% on target)",
+          "value": 46.2,
+          "Teams beaten in that season's group/league phase (%)": 33,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 36
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Attacks per game",
+          "value": 65.5,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97,
+          "SHAP contribution (knockout stages)": 0.38
+        },
+        {
+          "stat": "Shots per game",
+          "value": 13.2,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 85,
+          "SHAP contribution (knockout stages)": 0.14
+        },
+        {
+          "stat": "Passes per game",
+          "value": 656,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91,
+          "SHAP contribution (knockout stages)": 0.07
+        },
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "value": 116.0,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 85,
+          "SHAP contribution (knockout stages)": 0.06
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 9.1,
+          "Teams beaten in that season's group/league phase (%)": 17,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 7,
+          "SHAP contribution (knockout stages)": -0.15
+        },
+        {
+          "stat": "Opponent shots per game (lower is better)",
+          "value": 6.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94,
+          "SHAP contribution (knockout stages)": -0.13
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 0.62,
+          "Teams beaten in that season's group/league phase (%)": 67,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 69,
+          "SHAP contribution (knockout stages)": -0.11
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 116.0,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 85
+        },
+        "Points per game": {
+          "value": 1.62,
+          "Teams beaten in that season's group/league phase (%)": 56,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 57
+        },
+        "Goal difference per game": {
+          "value": 0.62,
+          "Teams beaten in that season's group/league phase (%)": 67,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 69
+        },
+        "Shots per game": {
+          "value": 13.2,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 85
+        },
+        "Shot accuracy (% on target)": {
+          "value": 46.2,
+          "Teams beaten in that season's group/league phase (%)": 33,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 36
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 13.2,
+          "Teams beaten in that season's group/league phase (%)": 26,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 41
+        },
+        "Attacks per game": {
+          "value": 65.5,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 6.0,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 94
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 3.5,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 81
+        },
+        "Possession (%)": {
+          "value": 59.8,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 86
+        },
+        "Pass accuracy (%)": {
+          "value": 89.9,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 88
+        },
+        "Passes per game": {
+          "value": 656,
+          "Teams beaten in that season's group/league phase (%)": 94,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91
+        },
+        "Long passes (% of passes)": {
+          "value": 9.1,
+          "Teams beaten in that season's group/league phase (%)": 17,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 7
+        },
+        "Distance covered per game (km)": {
+          "value": 117.4,
+          "Teams beaten in that season's group/league phase (%)": 58,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 74
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 9.4,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 88
+        }
+      }
+    },
+    "2026-52280": {
+      "Club": "Arsenal",
+      "Season": "2025-26",
+      "Actual result": "Runner-up: lost the final to Paris Saint-Germain on penalties (1-1, 3-4 on penalties)",
+      "Knockout teams that season": 24,
+      "Base rate: chance a random knockout team reaches the final (%)": 8.3,
+      "Model probability of reaching the final (%)": 25.6,
+      "Rank by that probability among the season's knockout teams": 2,
+      "Would the model have picked them?": "Yes: ranked 2, inside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 1.52,
+      "Stage on that scale nearest to the model's expectation": "semi-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Points per game",
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 2.38,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 2.8,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 92
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "value": 13.9,
+          "Teams beaten in that season's group/league phase (%)": 11,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 24
+        },
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 11.4,
+          "Teams beaten in that season's group/league phase (%)": 36,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 29
+        },
+        {
+          "stat": "Passes per game",
+          "value": 450,
+          "Teams beaten in that season's group/league phase (%)": 39,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 34
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Goal difference per game",
+          "value": 2.38,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97,
+          "SHAP contribution (knockout stages)": 0.83
+        },
+        {
+          "stat": "Points per game",
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99,
+          "SHAP contribution (knockout stages)": 0.19
+        },
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 11.4,
+          "Teams beaten in that season's group/league phase (%)": 36,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 29,
+          "SHAP contribution (knockout stages)": 0.1
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "value": 2.8,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 92,
+          "SHAP contribution (knockout stages)": 0.09
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Passes per game",
+          "value": 450,
+          "Teams beaten in that season's group/league phase (%)": 39,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 34,
+          "SHAP contribution (knockout stages)": -0.17
+        },
+        {
+          "stat": "Attacks per game",
+          "value": 50.1,
+          "Teams beaten in that season's group/league phase (%)": 81,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 83,
+          "SHAP contribution (knockout stages)": -0.14
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 118.5,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 82,
+          "SHAP contribution (knockout stages)": -0.14
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 98.0,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 74
+        },
+        "Points per game": {
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 99
+        },
+        "Goal difference per game": {
+          "value": 2.38,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        },
+        "Shots per game": {
+          "value": 12.9,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 82
+        },
+        "Shot accuracy (% on target)": {
+          "value": 56.3,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 78
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 22.3,
+          "Teams beaten in that season's group/league phase (%)": 83,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 89
+        },
+        "Attacks per game": {
+          "value": 50.1,
+          "Teams beaten in that season's group/league phase (%)": 81,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 83
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 7.0,
+          "Teams beaten in that season's group/league phase (%)": 86,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 87
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 2.8,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 92
+        },
+        "Possession (%)": {
+          "value": 54.6,
+          "Teams beaten in that season's group/league phase (%)": 81,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 72
+        },
+        "Pass accuracy (%)": {
+          "value": 85.9,
+          "Teams beaten in that season's group/league phase (%)": 50,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 59
+        },
+        "Passes per game": {
+          "value": 450,
+          "Teams beaten in that season's group/league phase (%)": 39,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 34
+        },
+        "Long passes (% of passes)": {
+          "value": 11.4,
+          "Teams beaten in that season's group/league phase (%)": 36,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 29
+        },
+        "Distance covered per game (km)": {
+          "value": 118.5,
+          "Teams beaten in that season's group/league phase (%)": 75,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 82
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 13.9,
+          "Teams beaten in that season's group/league phase (%)": 11,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 24
+        }
+      }
+    },
+    "2026-52747": {
+      "Club": "Paris Saint-Germain",
+      "Season": "2025-26",
+      "Actual result": "Winner: beat Arsenal on penalties in the final (1-1, 4-3 on penalties)",
+      "Knockout teams that season": 24,
+      "Base rate: chance a random knockout team reaches the final (%)": 8.3,
+      "Model probability of reaching the final (%)": 16.1,
+      "Rank by that probability among the season's knockout teams": 4,
+      "Would the model have picked them?": "No: ranked 4, a leading contender but outside the model's top two",
+      "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, 2 = semi-finals, 3 = lost final, 4 = won final)": 1.73,
+      "Stage on that scale nearest to the model's expectation": "semi-finals",
+      "Strongest stats (most teams beaten first)": [
+        {
+          "stat": "Shots per game",
+          "value": 14.9,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        {
+          "stat": "Possession (%)",
+          "value": 64.0,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91
+        },
+        {
+          "stat": "Passes per game",
+          "value": 671,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        }
+      ],
+      "Weakest stats (those that beat under half of that season's teams, fewest beaten first)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 8.6,
+          "Teams beaten in that season's group/league phase (%)": 8,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 5
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 114.5,
+          "Teams beaten in that season's group/league phase (%)": 28,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 57
+        }
+      ],
+      "Stats that pushed the prediction up most": [
+        {
+          "stat": "Attacks per game",
+          "value": 62.6,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 96,
+          "SHAP contribution (knockout stages)": 0.55
+        },
+        {
+          "stat": "Passes per game",
+          "value": 671,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93,
+          "SHAP contribution (knockout stages)": 0.18
+        },
+        {
+          "stat": "Goal difference per game",
+          "value": 1.25,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 83,
+          "SHAP contribution (knockout stages)": 0.17
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "value": 114.5,
+          "Teams beaten in that season's group/league phase (%)": 28,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 57,
+          "SHAP contribution (knockout stages)": 0.1
+        }
+      ],
+      "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+        {
+          "stat": "Long passes (% of passes)",
+          "value": 8.6,
+          "Teams beaten in that season's group/league phase (%)": 8,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 5,
+          "SHAP contribution (knockout stages)": -0.22
+        },
+        {
+          "stat": "Shots per game",
+          "value": 14.9,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93,
+          "SHAP contribution (knockout stages)": -0.13
+        },
+        {
+          "stat": "Points per game",
+          "value": 1.75,
+          "Teams beaten in that season's group/league phase (%)": 71,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65,
+          "SHAP contribution (knockout stages)": -0.06
+        }
+      ],
+      "All league/group-phase stats": {
+        "Pre-season UEFA club coefficient (points)": {
+          "value": 118.5,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 86
+        },
+        "Points per game": {
+          "value": 1.75,
+          "Teams beaten in that season's group/league phase (%)": 71,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 65
+        },
+        "Goal difference per game": {
+          "value": 1.25,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 83
+        },
+        "Shots per game": {
+          "value": 14.9,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        "Shot accuracy (% on target)": {
+          "value": 51.3,
+          "Teams beaten in that season's group/league phase (%)": 56,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 57
+        },
+        "Shot conversion (% of shots scored)": {
+          "value": 17.6,
+          "Teams beaten in that season's group/league phase (%)": 53,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 68
+        },
+        "Attacks per game": {
+          "value": 62.6,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 96
+        },
+        "Opponent shots per game (lower is better)": {
+          "value": 6.9,
+          "Teams beaten in that season's group/league phase (%)": 89,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 88
+        },
+        "Opponent shots on target per game (lower is better)": {
+          "value": 3.0,
+          "Teams beaten in that season's group/league phase (%)": 90,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 89
+        },
+        "Possession (%)": {
+          "value": 64.0,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 91
+        },
+        "Pass accuracy (%)": {
+          "value": 91.4,
+          "Teams beaten in that season's group/league phase (%)": 97,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 95
+        },
+        "Passes per game": {
+          "value": 671,
+          "Teams beaten in that season's group/league phase (%)": 100,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 93
+        },
+        "Long passes (% of passes)": {
+          "value": 8.6,
+          "Teams beaten in that season's group/league phase (%)": 8,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 5
+        },
+        "Distance covered per game (km)": {
+          "value": 114.5,
+          "Teams beaten in that season's group/league phase (%)": 28,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 57
+        },
+        "Fouls committed per game (lower is better)": {
+          "value": 8.2,
+          "Teams beaten in that season's group/league phase (%)": 92,
+          "Teams beaten among all Champions League teams since 2011-12 (%)": 97
+        }
+      }
+    },
+    "synthesis": {
+      "Context": {
+        "Seasons analysed": 15,
+        "Finals": 15,
+        "Finalists": 30,
+        "Group/league-phase team-seasons": 488,
+        "Knockout team-seasons (what the model learns from, using each team's group/league-phase stats)": 256
+      },
+      "Model quality (each season scored by a model trained on the other seasons)": {
+        "Mean within-season Spearman correlation, predicted vs actual stage": 0.46,
+        "Share of actual finalists in the model's top 4 of their season (%)": 46.7,
+        "AUC for reaching the final": 0.72,
+        "Brier score": 0.098,
+        "Brier score of the base-rate guess": 0.103
+      },
+      "Robustness rule": "robust = the logistic model agrees on the direction in at least 12 of 15 seasons; only the top 6 stats get a robustness label",
+      "What drives deep runs, most important first": [
+        {
+          "stat": "Attacks per game",
+          "group": "style",
+          "importance (mean |SHAP|, knockout stages)": 0.25,
+          "direction": "higher helps",
+          "robustness label": "robust"
+        },
+        {
+          "stat": "Goal difference per game",
+          "group": "results",
+          "importance (mean |SHAP|, knockout stages)": 0.201,
+          "direction": "higher helps",
+          "robustness label": "robust"
+        },
+        {
+          "stat": "Long passes (% of passes)",
+          "group": "style",
+          "importance (mean |SHAP|, knockout stages)": 0.137,
+          "direction": "higher helps",
+          "robustness label": "robust"
+        },
+        {
+          "stat": "Passes per game",
+          "group": "style",
+          "importance (mean |SHAP|, knockout stages)": 0.128,
+          "direction": "higher helps",
+          "robustness label": "robust"
+        },
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "group": "style",
+          "importance (mean |SHAP|, knockout stages)": 0.088,
+          "direction": "lower helps",
+          "robustness label": "model-dependent"
+        },
+        {
+          "stat": "Shot conversion (% of shots scored)",
+          "group": "style",
+          "importance (mean |SHAP|, knockout stages)": 0.086,
+          "direction": "lower helps",
+          "robustness label": "robust"
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "group": "style",
+          "importance (mean |SHAP|, knockout stages)": 0.077,
+          "direction": "lower helps",
+          "robustness label": "not in top 6"
+        },
+        {
+          "stat": "Shots per game",
+          "group": "style",
+          "importance (mean |SHAP|, knockout stages)": 0.074,
+          "direction": "higher helps",
+          "robustness label": "not in top 6"
+        }
+      ],
+      "Feature-set comparison (Spearman / AUC)": [
+        {
+          "feature set": "pedigree",
+          "number of stats": 1,
+          "Spearman": 0.28,
+          "AUC": 0.66
+        },
+        {
+          "feature set": "results",
+          "number of stats": 2,
+          "Spearman": 0.3,
+          "AUC": 0.72
+        },
+        {
+          "feature set": "style",
+          "number of stats": 12,
+          "Spearman": 0.41,
+          "AUC": 0.69
+        },
+        {
+          "feature set": "all",
+          "number of stats": 15,
+          "Spearman": 0.46,
+          "AUC": 0.72
+        },
+        {
+          "feature set": "all minus pedigree",
+          "number of stats": 14,
+          "Spearman": 0.47,
+          "AUC": 0.72
+        },
+        {
+          "feature set": "all minus results",
+          "number of stats": 13,
+          "Spearman": 0.4,
+          "AUC": 0.69
+        },
+        {
+          "feature set": "all minus style",
+          "number of stats": 3,
+          "Spearman": 0.37,
+          "AUC": 0.73
+        }
+      ],
+      "The 10 finalists": [
+        {
+          "club": "Real Madrid",
+          "season": "2021-22",
+          "result": "Winner",
+          "model probability of reaching the final (%)": 18.8,
+          "rank among the season's knockout teams": 5,
+          "knockout teams": 16
+        },
+        {
+          "club": "Liverpool",
+          "season": "2021-22",
+          "result": "Runner-up",
+          "model probability of reaching the final (%)": 32.5,
+          "rank among the season's knockout teams": 2,
+          "knockout teams": 16
+        },
+        {
+          "club": "Manchester City",
+          "season": "2022-23",
+          "result": "Winner",
+          "model probability of reaching the final (%)": 27.1,
+          "rank among the season's knockout teams": 3,
+          "knockout teams": 16
+        },
+        {
+          "club": "Inter",
+          "season": "2022-23",
+          "result": "Runner-up",
+          "model probability of reaching the final (%)": 2.9,
+          "rank among the season's knockout teams": 14,
+          "knockout teams": 16
+        },
+        {
+          "club": "Real Madrid",
+          "season": "2023-24",
+          "result": "Winner",
+          "model probability of reaching the final (%)": 32.0,
+          "rank among the season's knockout teams": 2,
+          "knockout teams": 16
+        },
+        {
+          "club": "Borussia Dortmund",
+          "season": "2023-24",
+          "result": "Runner-up",
+          "model probability of reaching the final (%)": 8.9,
+          "rank among the season's knockout teams": 8,
+          "knockout teams": 16
+        },
+        {
+          "club": "Paris Saint-Germain",
+          "season": "2024-25",
+          "result": "Winner",
+          "model probability of reaching the final (%)": 10.1,
+          "rank among the season's knockout teams": 8,
+          "knockout teams": 24
+        },
+        {
+          "club": "Inter",
+          "season": "2024-25",
+          "result": "Runner-up",
+          "model probability of reaching the final (%)": 12.9,
+          "rank among the season's knockout teams": 7,
+          "knockout teams": 24
+        },
+        {
+          "club": "Paris Saint-Germain",
+          "season": "2025-26",
+          "result": "Winner",
+          "model probability of reaching the final (%)": 16.1,
+          "rank among the season's knockout teams": 4,
+          "knockout teams": 24
+        },
+        {
+          "club": "Arsenal",
+          "season": "2025-26",
+          "result": "Runner-up",
+          "model probability of reaching the final (%)": 25.6,
+          "rank among the season's knockout teams": 2,
+          "knockout teams": 24
+        }
+      ],
+      "Significance threshold for Holm-adjusted p": 0.05,
+      "Winners vs runners-up across all finals (z-score difference, winner minus runner-up)": [
+        {
+          "stat": "Pre-season UEFA club coefficient (points)",
+          "finals where the winner was higher": 13,
+          "finals where the winner was lower": 2,
+          "ties": 0,
+          "mean difference (z)": 0.57,
+          "Holm-adjusted p": 0.111
+        },
+        {
+          "stat": "Fouls committed per game (lower is better)",
+          "finals where the winner was higher": 2,
+          "finals where the winner was lower": 12,
+          "ties": 1,
+          "mean difference (z)": -1.13,
+          "Holm-adjusted p": 0.181
+        },
+        {
+          "stat": "Shots per game",
+          "finals where the winner was higher": 11,
+          "finals where the winner was lower": 2,
+          "ties": 2,
+          "mean difference (z)": 0.79,
+          "Holm-adjusted p": 0.292
+        },
+        {
+          "stat": "Pass accuracy (%)",
+          "finals where the winner was higher": 12,
+          "finals where the winner was lower": 3,
+          "ties": 0,
+          "mean difference (z)": 0.76,
+          "Holm-adjusted p": 0.422
+        },
+        {
+          "stat": "Passes per game",
+          "finals where the winner was higher": 12,
+          "finals where the winner was lower": 3,
+          "ties": 0,
+          "mean difference (z)": 0.97,
+          "Holm-adjusted p": 0.422
+        },
+        {
+          "stat": "Points per game",
+          "finals where the winner was higher": 7,
+          "finals where the winner was lower": 7,
+          "ties": 1,
+          "mean difference (z)": -0.01,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Goal difference per game",
+          "finals where the winner was higher": 9,
+          "finals where the winner was lower": 4,
+          "ties": 2,
+          "mean difference (z)": 0.22,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Shot accuracy (% on target)",
+          "finals where the winner was higher": 6,
+          "finals where the winner was lower": 9,
+          "ties": 0,
+          "mean difference (z)": -0.28,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Shot conversion (% of shots scored)",
+          "finals where the winner was higher": 7,
+          "finals where the winner was lower": 8,
+          "ties": 0,
+          "mean difference (z)": 0.23,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Attacks per game",
+          "finals where the winner was higher": 11,
+          "finals where the winner was lower": 4,
+          "ties": 0,
+          "mean difference (z)": 0.9,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Opponent shots per game (lower is better)",
+          "finals where the winner was higher": 6,
+          "finals where the winner was lower": 9,
+          "ties": 0,
+          "mean difference (z)": -0.14,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Opponent shots on target per game (lower is better)",
+          "finals where the winner was higher": 9,
+          "finals where the winner was lower": 6,
+          "ties": 0,
+          "mean difference (z)": 0.09,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Possession (%)",
+          "finals where the winner was higher": 9,
+          "finals where the winner was lower": 6,
+          "ties": 0,
+          "mean difference (z)": 0.5,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Long passes (% of passes)",
+          "finals where the winner was higher": 5,
+          "finals where the winner was lower": 10,
+          "ties": 0,
+          "mean difference (z)": -0.42,
+          "Holm-adjusted p": 1.0
+        },
+        {
+          "stat": "Distance covered per game (km)",
+          "finals where the winner was higher": 6,
+          "finals where the winner was lower": 9,
+          "ties": 0,
+          "mean difference (z)": -0.1,
+          "Holm-adjusted p": 1.0
+        }
+      ]
+    }
+  }
+}

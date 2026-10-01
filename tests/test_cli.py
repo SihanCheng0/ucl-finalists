@@ -10,4 +10,4 @@ def test_unknown_command_exits_with_usage_error(capsys):
 
 
 def test_commands_run_in_pipeline_order():
-    assert list(cli.COMMANDS)[:3] == ["fetch", "build", "model"]
+    assert list(cli.COMMANDS)[:4] == ["fetch", "build", "model", "analyze"]

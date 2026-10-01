@@ -9,8 +9,12 @@ from . import config
 from .features import display_value
 from .model import ModelResults, feature_list
 
-PCT_SEASON = "Percentile vs that season's teams"
-PCT_ALL = "Percentile vs all Champions League teams since 2011-12"
+BEATS_SEASON = "Teams beaten in that season's group/league phase (%)"
+BEATS_ALL = "Teams beaten among all Champions League teams since 2011-12 (%)"
+STAGES = ["out before quarter-finals", "quarter-finals", "semi-finals", "lost final", "won final"]
+STRONGEST = "Strongest stats (most teams beaten first)"
+WEAKEST = "Weakest stats (those that beat under half of that season's teams, fewest beaten first)"
+NO_WEAK_STAT = "none: it beat at least half of that season's teams on every stat"
 SIGNIFICANCE = 0.05
 DIRECTION = {1: "higher helps", -1: "lower helps", 0: "no clear direction"}
 
@@ -39,19 +43,46 @@ def result_text(team_id: str, final) -> str:
     return f"Runner-up: lost the final to {winner} {rg}-{wg}"
 
 
+def nearest_stage(expected: float) -> str:
+    """Name of the stage on the 0-4 scale closest to the model's expected stage; the LLM rounded this badly."""
+    return STAGES[min(max(int(expected + 0.5), 0), len(STAGES) - 1)]
+
+
+def pick_verdict(rank: int) -> str:
+    """Whether the model would have picked a finalist: exactly two teams reach each final, so only its top two count."""
+    if rank <= 2:
+        return f"Yes: ranked {rank}, inside the model's top two"
+    if rank <= 4:
+        return f"No: ranked {rank}, a leading contender but outside the model's top two"
+    return f"No: ranked {rank}, outside the model's top two"
+
+
+def _beats(row: pd.Series, feature: str, scope: str) -> int:
+    """Share of teams beaten on a stat. Percentiles are flipped where lower is better, because the local
+    model kept reading a low percentile on those stats as a weakness."""
+    pct = int(row[f"pct_{scope}_{feature}"])
+    return 100 - pct if feature in config.LOWER_IS_BETTER else pct
+
+
 def _stat_fact(row: pd.Series, feature: str) -> dict:
     return {
         "value": display_value(row, feature),
-        PCT_SEASON: int(row[f"pct_season_{feature}"]),
-        PCT_ALL: int(row[f"pct_all_{feature}"]),
+        BEATS_SEASON: _beats(row, feature, "season"),
+        BEATS_ALL: _beats(row, feature, "all"),
     }
 
 
 def team_fact_sheet(row: pd.Series, pred: pd.Series, shap_row: pd.Series, final, features: list[str]) -> dict:
     contributions = sorted(((f, float(shap_row[f"shap_{f}"])) for f in features), key=lambda kv: kv[1], reverse=True)
 
+    def stat_entry(f: str) -> dict:
+        return {"stat": stat_label(f), **_stat_fact(row, f)}
+
     def driver(f: str, c: float) -> dict:
-        return {"stat": stat_label(f), **_stat_fact(row, f), "SHAP contribution (knockout stages)": round(c, 2)}
+        return {**stat_entry(f), "SHAP contribution (knockout stages)": round(c, 2)}
+
+    # picked here rather than left to the LLM, which chose them from the SHAP lists instead
+    ranked = sorted(features, key=lambda f: _beats(row, f, "season"), reverse=True)
 
     return {
         "Club": row["team_display"],
@@ -61,10 +92,16 @@ def team_fact_sheet(row: pd.Series, pred: pd.Series, shap_row: pd.Series, final,
         "Base rate: chance a random knockout team reaches the final (%)": round(100 * float(pred["base_rate"]), 1),
         "Model probability of reaching the final (%)": round(100 * float(pred["p_final"]), 1),
         "Rank by that probability among the season's knockout teams": int(pred["rank_in_season"]),
+        "Would the model have picked them?": pick_verdict(int(pred["rank_in_season"])),
         "Model's expected knockout stage (0 = out before quarter-finals, 1 = quarter-finals, "
         "2 = semi-finals, 3 = lost final, 4 = won final)": round(float(pred["exp_stage"]), 2),
+        "Stage on that scale nearest to the model's expectation": nearest_stage(round(float(pred["exp_stage"]), 2)),
+        STRONGEST: [stat_entry(f) for f in ranked[:3]],
+        WEAKEST: [stat_entry(f) for f in reversed(ranked) if _beats(row, f, "season") < 50][:3] or NO_WEAK_STAT,
         "Stats that pushed the prediction up most": [driver(f, c) for f, c in contributions if c > 0][:4],
-        "Stats that pushed the prediction down most": [driver(f, c) for f, c in reversed(contributions) if c < 0][:3],
+        "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
+            driver(f, c) for f, c in reversed(contributions) if c < 0
+        ][:3],
         "All league/group-phase stats": {stat_label(f): _stat_fact(row, f) for f in features},
     }
 
@@ -81,7 +118,8 @@ def synthesis_facts(team_seasons: pd.DataFrame, results: ModelResults) -> dict:
             "Finals": m["n_seasons"],
             "Finalists": m["n_finalists"],
             "Group/league-phase team-seasons": int(len(team_seasons)),
-            "Knockout team-seasons": m["n_knockout"],
+            "Knockout team-seasons (what the model learns from, using each team's group/league-phase stats)":
+                m["n_knockout"],
         },
         "Model quality (each season scored by a model trained on the other seasons)": {
             "Mean within-season Spearman correlation, predicted vs actual stage": round(m["spearman_mean"], 2),
