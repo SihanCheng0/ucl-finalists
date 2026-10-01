@@ -21,6 +21,35 @@ Each stage also runs alone: `uv run ucl fetch | build | model | analyze | report
 `uv run python scripts/check_standings.py` checks the finalists' points and goal difference against UEFA's
 standings.
 
+## UCL Lab, the local dashboard
+
+```bash
+cd web && npm install && npm run build   # once, and again after changing the frontend
+uv run ucl web                           # serves http://127.0.0.1:8787 and opens it in your browser
+```
+
+`ucl web` listens on 127.0.0.1 only. `--port N` changes the port, `--no-open` skips the browser and
+`--llm-model KEY` picks the LM Studio model for the analyze stage.
+
+- **Pipeline:** run every stage, or one at a time, and watch it live: the stage rail, counters (UEFA requests,
+  seasons, folds, feature sets, write-ups, squads) and the event log. "Skip AI write-ups" runs without
+  LM Studio. "Also refresh the live season" refetches 2026-27. "Build player index" fetches every squad since
+  2011-12 (about 524 tables, a couple of minutes) so player histories cover every club.
+- **Explore:** search any club (case and accents don't matter, and nicknames like "PSG" or "Barca" work), pick a
+  season on the scrubber, and see each stat's "teams beaten" share with its trend across seasons, the model
+  card and the AI scouting report where they exist. The live season is marked, and its figures are labelled
+  early-season until the first phase is complete.
+- **Compare:** two team-seasons, any seasons, stat by stat. Each bar is the team's distance from its own
+  season's average, so teams from different seasons compare fairly.
+- **Squad:** the squad on the pitch. Circles grow with minutes and glow with the chosen stat (per 90 for
+  counts and distance). Pick a player for this season's numbers and every cached season at any club.
+
+The live season is built in memory from UEFA's feeds and refreshed in the background; it is never written
+to `data/processed` or modelled. Squads are cached in `data/raw/players/`.
+
+For frontend work, run `uv run ucl web --no-open` and `npm run dev` in `web/` (Vite proxies `/api`).
+Tests: `uv run pytest -q` and `npm --prefix web test`.
+
 ## Stages and outputs
 
 | Stage | Writes |

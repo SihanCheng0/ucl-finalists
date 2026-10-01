@@ -75,7 +75,8 @@ export function PlayerPanel({ player, stat, stats, onClose, onBuildIndex, runnin
             {entries.map((e) => (
               <tr key={`${e.season}-${e.team_id}`}>
                 <td>{e.label}{e.live ? " (live)" : ""}</td><td>{e.team}</td>
-                <td className="r">{num(e.minutes, 0)}</td><td className="r">{num(e.stats[stat.key], stat.decimals)}</td>
+                <td className="r">{num(e.minutes, 0)}</td>
+                <td className="r">{num(e.stats[stat.key], stat.kind === "count" ? 0 : stat.decimals)}</td>
               </tr>
             ))}
           </tbody>
