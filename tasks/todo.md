@@ -5,7 +5,7 @@ Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
 
 - [x] Chunk 1: scaffold, config, UEFA client
 - [x] Chunk 2: labels, features, dataset
-- [ ] Chunk 3: fetch + build on real data, models, drivers, ablation, finals comparison
+- [x] Chunk 3: fetch + build on real data, models, drivers, ablation, finals comparison
 - [ ] Chunk 4: grounding checks, LM Studio client
 - [ ] Chunk 5: fact sheets, analyst, analyze on the real data
 - [ ] Chunk 6: charts and the report
@@ -23,6 +23,14 @@ Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
 - Coefficients imputed: 12 = 11 clubs absent from the previous ranking (Málaga 2013, Real Sociedad 2014, Monaco 2015, Leicester 2017, Leipzig 2018, Lens and Newcastle 2024, Brest, Girona, Stuttgart and Bologna 2025)
   plus Steaua 2014, whose match-feed id 2614166 is FCSB (50065) in the ranking. None of the 10 finalists is imputed.
 - All 10 finalists' league/group points and goal difference match UEFA standings (`scripts/check_standings.py`).
+
+## Model notes (real run, 2026-10-01)
+
+- 15 leave-one-season-out folds, 256 knockout team-seasons (30 finalists), 15 features, `config` hyperparameters as planned (not tuned). `uv run ucl model` takes about 10 s and its output is byte-identical on a re-run.
+- Spearman 0.46 (per season: 0.08 in 2020 to 0.72 in 2024), AUC 0.72, Brier 0.098 against 0.103 for the base rate (a slim edge), and 47% of finalists land in the model's top 4 by expected stage. These are modest numbers; the report should present them as such.
+- Ablation (Spearman / AUC): pedigree 0.28 / 0.66, results 0.30 / 0.72, style 0.41 / 0.69, all 0.46 / 0.72, all minus pedigree 0.47 / 0.72, all minus results 0.40 / 0.69, all minus style 0.37 / 0.73.
+  The two results features alone match the full set on AUC; the style features add rank ordering (Spearman), not finalist discrimination.
+- Top-6 drivers: attacks_pg, goal_diff_pg, long_pass_share, passes_pg, fouls_pg, conversion. Five are robust (same sign in 15 of 15 logistic folds); fouls_pg is model-dependent (5 of 15).
 
 ## Review
 (filled in at the end)

@@ -38,7 +38,22 @@ def cmd_build(args: argparse.Namespace) -> int:
     return 0
 
 
-COMMANDS = {"fetch": cmd_fetch, "build": cmd_build}
+def cmd_model(args: argparse.Namespace) -> int:
+    from . import dataset, model
+
+    ds = dataset.load()
+    results = model.run(ds.team_seasons, ds.finals, ds.features)
+    model.save(results)
+    m = results.metrics
+    print(f"Spearman {m['spearman_mean']:.2f} | AUC {m['auc']:.2f} | Brier {m['brier']:.3f} "
+          f"(base rate {m['brier_base_rate']:.3f}) | finalists in top 4: {m['finalists_in_top4']:.0%}")
+    print(results.drivers.head(config.TOP_DRIVERS)[["feature", "importance", "direction", "label"]]
+          .to_string(index=False))
+    print(results.ablation.to_string(index=False))
+    return 0
+
+
+COMMANDS = {"fetch": cmd_fetch, "build": cmd_build, "model": cmd_model}
 
 
 def main(argv: list[str] | None = None) -> int:
