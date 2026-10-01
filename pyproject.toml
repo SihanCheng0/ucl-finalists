@@ -1,0 +1,28 @@
+[project]
+name = "ucl-finalists"
+version = "0.1.0"
+description = "Why the best Champions League teams win: UEFA data, validated models and a local-LLM analyst."
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "numpy>=2.1",
+    "pandas>=3.0",
+    "scipy>=1.14",
+    "scikit-learn>=1.9",
+    "shap>=0.52",
+]
+
+[project.scripts]
+ucl = "ucl.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ucl"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
