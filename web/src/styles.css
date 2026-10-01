@@ -264,7 +264,8 @@ main > *, .overview > *, .explore-grid > *, .squad-layout > *, .side > * { min-w
 .player .shirt { font: 700 12px var(--font-display); fill: #0d1422; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
 .player .shirt.light { fill: var(--pitch-ink); }
 .player .tag { font: 600 12px var(--font-body); fill: var(--pitch-ink); text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(8, 28, 20, 0.85); stroke-width: 3px; }
-.player.leaving { opacity: 0; }
+.player.leaving { animation: leave 300ms ease forwards; pointer-events: none; }
+@keyframes leave { to { opacity: 0; } }
 .player.entering { animation: enter 350ms ease both; }
 @keyframes enter { from { opacity: 0; } }
 .player:focus { outline: none; }
