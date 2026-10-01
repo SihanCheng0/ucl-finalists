@@ -142,7 +142,8 @@ class Narrative:
     unsupported: list[str] = field(default_factory=list)
     calls: int = 0
     reason: str | None = None
-    # banned words, wrong first-phase names and 'over N words (count)' still in the text; defaulted so old files load
+    # banned words, wrong first-phase names, finals placed in the first phase and 'over N words (count)' left in the
+    # text; defaulted so old files load
     style: list[str] = field(default_factory=list)
 
 
