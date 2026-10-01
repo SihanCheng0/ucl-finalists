@@ -24,6 +24,13 @@ BANNED_TEAM_WORDS = ("significant", "significantly", "significance")
 TEAM_MAX_WORDS, SYNTH_MAX_WORDS = 250, 450
 HEADING_LINE = re.compile(r"\s{0,3}#{1,6}(?:\s|$)")  # a markdown heading: 1-6 #s, then a space or the line's end
 OVER_LENGTH = re.compile(r"over (\d+) words \((\d+)\)")  # how style_issues lists an answer that runs long
+# What a team narrative may not call its season's first phase: the other format's name, or a hedge between the two.
+# The local model took 'group/league phase' from the fact sheets and either guessed or hedged.
+FORMAT_NAME = {True: "league phase", False: "group stage"}  # by whether the season used the league format
+HEDGE = r"group\s*/\s*league|league\s*/\s*group|group\s+or\s+league|league\s+or\s+group"
+WRONG_NAME = {True: r"group[\s-]+(?:stage|phase)|groups", False: r"league[\s-]+phase"}
+# how format_issues lists a wrong name, so that _feedback can tell it from a banned word
+WRONG_FORMAT = re.compile(r"says '.+' but this season had a (?:league phase|group stage)")
 
 SYSTEM_PROMPT = (
     "You are a football performance analyst writing for a curious, data-literate reader. "
@@ -54,6 +61,11 @@ STYLE_FEEDBACK = (
     "Don't use these words, which imply a statistical test the facts don't contain: {words}. Rewrite the "
     "complete answer with the same headings, without them."
 )
+FORMAT_FEEDBACK = (
+    "Your answer names the first phase wrongly: {issues}. Rewrite the complete answer with the same headings, "
+    "calling the first phase only by the name given for 'First-phase format that season' and never hedging "
+    "between the two names."
+)
 LENGTH_FEEDBACK = (
     "Your answer is {count} words, not counting the headings, over the {limit}-word limit. Rewrite the complete "
     "answer with the same headings, shorter and within {limit} words."
@@ -72,7 +84,8 @@ TEAM_INSTRUCTIONS = (
     "other seasons, including later ones, so describe whether it would have picked them, not a forecast made at "
     "the time.\n"
     "Under 'Weak spots', write one sentence for each stat under 'Weakest stats', however few, and nothing else; "
-    "do not mention SHAP.\n"
+    "do not mention SHAP. For each weak spot give the stat's value and say it beat N% of that season's teams, "
+    "using exactly that phrase.\n"
     "Call the first phase exactly as 'First-phase format that season' names it (league phase or group stage).\n\n"
     "Facts (JSON):\n"
 )
@@ -115,7 +128,7 @@ class Narrative:
     unsupported: list[str] = field(default_factory=list)
     calls: int = 0
     reason: str | None = None
-    # banned words and 'over N words (count)' still in the text; defaulted so old files load
+    # banned words, wrong first-phase names and 'over N words (count)' still in the text; defaulted so old files load
     style: list[str] = field(default_factory=list)
 
 
@@ -133,36 +146,54 @@ def word_count(text: str) -> int:
     return sum(len(line.split()) for line in text.splitlines() if not HEADING_LINE.match(line))
 
 
-def style_issues(text: str, banned: tuple[str, ...], max_words: int | None = None) -> list[str]:
-    """The banned words in `text` (whole words only, ignoring case, each once in order of first appearance),
-    then 'over N words (count)' when it has more than `max_words` words."""
+def format_issues(text: str, league_format: bool) -> list[str]:
+    """The names in `text` that don't fit its season's first phase (whole words, ignoring case, each once in order
+    of first appearance): the other format's name and any 'group or league' hedge, each worded like
+    "says 'group stage' but this season had a league phase"."""
+    pattern = re.compile(rf"\b(?:{HEDGE}|{WRONG_NAME[league_format]})\b", re.IGNORECASE)
+    said = dict.fromkeys(" ".join(match.group().lower().split()) for match in pattern.finditer(text))
+    return [f"says '{name}' but this season had a {FORMAT_NAME[league_format]}" for name in said]
+
+
+def style_issues(text: str, banned: tuple[str, ...], max_words: int | None = None,
+                 league_format: bool | None = None) -> list[str]:
+    """The banned words in `text` (whole words only, ignoring case, each once in order of first appearance), then
+    its wrong first-phase names when `league_format` is given, then 'over N words (count)' when it has more than
+    `max_words` words."""
     issues: list[str] = []
     if banned:
         pattern = re.compile(r"\b(?:" + "|".join(re.escape(word) for word in banned) + r")\b", re.IGNORECASE)
         issues = list(dict.fromkeys(match.group().lower() for match in pattern.finditer(text)))
+    if league_format is not None:
+        issues += format_issues(text, league_format)
     if max_words is not None and (count := word_count(text)) > max_words:
         issues.append(f"over {max_words} words ({count})")
     return issues
 
 
 def _feedback(unsupported: list[str], style: list[str]) -> str:
-    """What the one retry tells the model is wrong with its answer: numbers, wording, length or a mix."""
-    words = [issue for issue in style if not OVER_LENGTH.fullmatch(issue)]
+    """What the one retry tells the model is wrong with its answer: numbers, wording, first-phase names, length or
+    a mix."""
+    names = [issue for issue in style if WRONG_FORMAT.fullmatch(issue)]
+    words = [issue for issue in style if issue not in names and not OVER_LENGTH.fullmatch(issue)]
     over = next((match for match in map(OVER_LENGTH.fullmatch, style) if match), None)
     parts = []
     if unsupported:
         parts.append(GROUNDING_FEEDBACK.format(numbers=", ".join(unsupported)))
     if words:
         parts.append(STYLE_FEEDBACK.format(words=", ".join(words)))
+    if names:
+        parts.append(FORMAT_FEEDBACK.format(issues="; ".join(names)))
     if over:
         parts.append(LENGTH_FEEDBACK.format(limit=over[1], count=over[2]))
     return " ".join(parts)
 
 
 def write_narrative(llm, key: str, messages: list[dict], headings: list[str], facts: dict,
-                    banned: tuple[str, ...] = (), max_words: int | None = None) -> Narrative:
-    """At most 3 calls: initial, one validity retry, one retry for unsupported numbers, banned words or an answer
-    over `max_words` (spec §7)."""
+                    banned: tuple[str, ...] = (), max_words: int | None = None,
+                    league_format: bool | None = None) -> Narrative:
+    """At most 3 calls: initial, one validity retry, one retry for unsupported numbers, banned words, a wrong
+    first-phase name (checked when `league_format` is given) or an answer over `max_words` (spec §7)."""
     calls = 0
     try:
         answer = llm.chat(messages)
@@ -184,7 +215,7 @@ def write_narrative(llm, key: str, messages: list[dict], headings: list[str], fa
         if reason:
             return Narrative(key, "unavailable", calls=calls, reason=reason)
     text = normalize_headings(strip_think(answer.content), headings)
-    unsupported, style = check_grounding(text, facts), style_issues(text, banned, max_words)
+    unsupported, style = check_grounding(text, facts), style_issues(text, banned, max_words, league_format)
     if unsupported or style:
         retry = messages + [
             {"role": "assistant", "content": text},
@@ -196,7 +227,7 @@ def write_narrative(llm, key: str, messages: list[dict], headings: list[str], fa
             if validate_output(second.content, second.finish_reason, headings) is None:
                 second_text = normalize_headings(strip_think(second.content), headings)
                 second_unsupported = check_grounding(second_text, facts)
-                second_style = style_issues(second_text, banned, max_words)
+                second_style = style_issues(second_text, banned, max_words, league_format)
                 if len(second_unsupported) + len(second_style) < len(unsupported) + len(style):
                     text, unsupported, style = second_text, second_unsupported, second_style
         except LLMError:
@@ -230,9 +261,12 @@ def run(
     for key, sheet in sheets.items():
         synth = key == "synthesis"
         messages = _messages(SYNTH_INSTRUCTIONS if synth else TEAM_INSTRUCTIONS, sheet)
+        # team keys are '{season}-{team_id}'; the synthesis spans both formats, so it is not held to either name
+        league_format = None if synth else config.is_league_format(int(key.split("-", 1)[0]))
         narrative = write_narrative(llm, key, messages, SYNTH_HEADINGS if synth else TEAM_HEADINGS, sheet,
                                     banned=() if synth else BANNED_TEAM_WORDS,
-                                    max_words=SYNTH_MAX_WORDS if synth else TEAM_MAX_WORDS)
+                                    max_words=SYNTH_MAX_WORDS if synth else TEAM_MAX_WORDS,
+                                    league_format=league_format)
         narratives[key] = narrative
         log(f"  {key}: {narrative.status}, {narrative.calls} call(s), {len(narrative.unsupported)} unsupported")
     return Analysis("ok", llm_model, narratives, sheets)

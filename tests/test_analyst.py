@@ -2,7 +2,7 @@ import json
 
 from fakes import FakeLLM
 
-from ucl import analyst, facts
+from ucl import analyst, config, facts
 from ucl.llm import ChatResult
 
 
@@ -117,6 +117,41 @@ def test_run_holds_team_narratives_to_250_words_and_the_synthesis_to_450(built):
     assert (synth.calls, synth.style) == (2, []) and "450" in llm.requests[-1][-1]["content"]
 
 
+class SaysGroupStage(FakeLLM):
+    """Answers by request: team narratives say 'group stage' until told off, the synthesis says 'group/league-phase'."""
+
+    def __init__(self):
+        super().__init__([])
+
+    def chat(self, messages):
+        self.requests.append(messages)
+        if "## Why the best teams win" in messages[1]["content"]:
+            return ChatResult(synth_reply().content.replace("\nx\n", "\nThe group/league-phase stats.\n"), "stop")
+        if len(messages) > 2:  # the feedback has been added to the conversation
+            return team_reply()
+        return ChatResult(team_reply().content.replace("\nx\n", "\nTheir group stage.\n"), "stop")
+
+
+def test_run_checks_the_first_phase_name_of_team_narratives_by_their_season_and_not_the_synthesis(built):
+    ds, res = built
+    llm = SaysGroupStage()
+    analysis = analyst.run(ds.team_seasons, ds.finals, res, llm=llm, log=lambda _: None)
+    teams = {k: n for k, n in analysis.narratives.items() if k != "synthesis"}
+    seasons = {key: int(key.split("-", 1)[0]) for key in teams}
+    assert {config.is_league_format(s) for s in seasons.values()} == {True, False}  # both formats are covered
+    for key, narrative in teams.items():
+        if config.is_league_format(seasons[key]):  # 'group stage' is wrong here: retried once, then clean
+            assert (narrative.calls, narrative.style) == (2, []), key
+        else:  # and right here
+            assert (narrative.calls, narrative.style) == (1, []), key
+            assert "group stage" in narrative.text
+    retried = [r for r in llm.requests if len(r) > 2]
+    assert len(retried) == sum(config.is_league_format(s) for s in seasons.values())
+    assert all("this season had a league phase" in r[-1]["content"] for r in retried)
+    synth = analysis.narratives["synthesis"]  # spans both formats, so the hedge is right there
+    assert (synth.calls, synth.style) == (1, []) and "group/league-phase" in synth.text
+
+
 def test_the_word_limits_match_the_ones_the_instructions_ask_for():
     assert f"-{analyst.TEAM_MAX_WORDS} words" in analyst.TEAM_INSTRUCTIONS
     assert f"-{analyst.SYNTH_MAX_WORDS} words" in analyst.SYNTH_INSTRUCTIONS
@@ -130,6 +165,15 @@ def test_team_instructions_tell_the_model_to_name_the_first_phase_as_the_facts_d
     ds, res = built
     sheet = next(v for k, v in facts.build_facts(ds.team_seasons, ds.finals, res).items() if k != "synthesis")
     assert "First-phase format that season" in sheet  # the key the instruction points at
+
+
+def test_team_instructions_make_weak_spots_say_how_many_of_the_seasons_teams_the_stat_beat():
+    # the local model wrote 'placed them below only 11% of teams' where the facts say the team beat 11%
+    text = analyst.TEAM_INSTRUCTIONS
+    sentence = ("For each weak spot give the stat's value and say it beat N% of that season's teams, "
+                "using exactly that phrase.")
+    assert text.count(sentence) == 1
+    assert text.index("Under 'Weak spots'") < text.index(sentence) < text.index("Call the first phase")
 
 
 def test_synthesis_instructions_cover_intervals_labels_and_the_training_data():

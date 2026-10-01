@@ -1,6 +1,7 @@
 from fakes import FakeLLM
 
-from ucl.analyst import BANNED_TEAM_WORDS, TEAM_HEADINGS, style_issues, word_count, write_narrative
+from ucl import facts
+from ucl.analyst import BANNED_TEAM_WORDS, TEAM_HEADINGS, format_issues, style_issues, word_count, write_narrative
 from ucl.llm import ChatResult, LLMError
 
 FACTS = {"Shots per game": 17.4}
@@ -11,6 +12,12 @@ UNGROUNDED_2 = GOOD.replace("Few.", "A 47% risk and 88 problems.")
 LOOSE = GOOD.replace("They averaged", "They significantly outshot rivals, averaging")
 LOOSE_B = LOOSE.replace("rivals", "opponents")
 LOOSE_AND_UNGROUNDED = LOOSE.replace("Few.", "A 47% risk.")
+GROUP_STAGE_TALK = GOOD.replace("They averaged", "Through the group stage they averaged")
+GROUP_STAGE_TALK_B = GROUP_STAGE_TALK.replace("Through", "Across")
+LEAGUE_PHASE_TALK = GOOD.replace("They averaged", "Through the league phase they averaged")
+HEDGED = GOOD.replace("They averaged", "In that season's group/league phase they averaged")
+WRONG_FOR_LEAGUE = "says 'group stage' but this season had a league phase"
+WRONG_FOR_GROUPS = "says 'league phase' but this season had a group stage"
 INVALID = ChatResult("", "length")
 MESSAGES = [{"role": "user", "content": "write"}]
 GOOD_WORDS = 6  # GOOD's words outside its headings, which are not counted
@@ -209,3 +216,95 @@ def test_one_retry_covers_unsupported_numbers_banned_words_and_length_together()
     feedback = llm.requests[1][-1]["content"]
     assert "47" in feedback and "significantly" in feedback and "250" in feedback
     assert "over 250 words" not in feedback  # the length is not passed off as a banned word
+
+
+def test_format_issues_flag_the_other_formats_name_ignoring_case_once_each():
+    text = "They topped the Group Stage, a group stage record, then the GROUP phase and the groups."
+    assert format_issues(text, league_format=True) == [
+        "says 'group stage' but this season had a league phase",
+        "says 'group phase' but this season had a league phase",
+        "says 'groups' but this season had a league phase",
+    ]
+    assert format_issues("Their group-stage form was strong.", league_format=True) == [
+        "says 'group-stage' but this season had a league phase"]
+    text = "They topped the League Phase, then the league phase again."
+    assert format_issues(text, league_format=False) == [WRONG_FOR_GROUPS]
+    # a season's own name is fine, and so is the other format's name when it is not about the first phase
+    assert format_issues("They topped the league phase, 8 matches each.", league_format=True) == []
+    assert format_issues("They topped their group in the group stage, in groups of four.", league_format=False) == []
+    assert format_issues("A regrouped, subgroups-free side.", league_format=True) == []  # whole words only
+
+
+def test_format_issues_flag_group_league_hedges_in_both_formats():
+    for league_format, season in ((True, 2025), (False, 2024)):
+        actual = facts.phase_format(season)  # the name the check holds the answer to is the one the facts give
+        assert format_issues("In that season's group/league phase they did well.", league_format) == [
+            f"says 'group/league' but this season had a {actual}"]
+        assert format_issues("In their Group or League stage they did well.", league_format) == [
+            f"says 'group or league' but this season had a {actual}"]
+        assert format_issues("The league/group-phase stats were good.", league_format) == [
+            f"says 'league/group' but this season had a {actual}"]
+
+
+def test_a_wrong_first_phase_name_triggers_exactly_one_retry_that_names_the_problem():
+    llm = FakeLLM([ok(GROUP_STAGE_TALK), ok(GOOD)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, league_format=True)
+    assert n.calls == 2 and len(llm.requests) == 2
+    last = llm.requests[1][-1]
+    assert last["role"] == "user" and WRONG_FOR_LEAGUE in last["content"]
+
+
+def test_a_correct_second_answer_replaces_one_with_the_wrong_first_phase_name():
+    n = write_narrative(FakeLLM([ok(GROUP_STAGE_TALK), ok(GOOD)]), "k", MESSAGES, TEAM_HEADINGS, FACTS,
+                        league_format=True)
+    assert (n.status, n.text, n.style, n.unsupported, n.calls) == ("ok", GOOD, [], [], 2)
+
+
+def test_a_second_answer_that_still_has_the_wrong_first_phase_name_keeps_the_first():
+    n = write_narrative(FakeLLM([ok(GROUP_STAGE_TALK), ok(GROUP_STAGE_TALK_B)]), "k", MESSAGES, TEAM_HEADINGS, FACTS,
+                        league_format=True)
+    assert (n.text, n.style, n.calls) == (GROUP_STAGE_TALK, [WRONG_FOR_LEAGUE], 2)
+
+
+def test_a_group_season_answer_that_says_league_phase_is_flagged_and_retried():
+    llm = FakeLLM([ok(LEAGUE_PHASE_TALK), ok(GOOD)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, league_format=False)
+    assert (n.calls, n.text, n.style) == (2, GOOD, [])
+    assert WRONG_FOR_GROUPS in llm.requests[1][-1]["content"]
+    # the same words are right for a league season, and 'group stage' is right for a group season: no retry
+    for text, league_format in ((LEAGUE_PHASE_TALK, True), (GROUP_STAGE_TALK, False)):
+        llm = FakeLLM([ok(text)])
+        n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, league_format=league_format)
+        assert (n.calls, n.text, n.style) == (1, text, []) and len(llm.requests) == 1
+
+
+def test_a_group_league_hedge_triggers_the_retry_in_both_formats():
+    for league_format, actual in ((True, "league phase"), (False, "group stage")):
+        llm = FakeLLM([ok(HEDGED), ok(GOOD)])
+        n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, league_format=league_format)
+        assert (n.calls, n.text, n.style) == (2, GOOD, [])
+        assert f"says 'group/league' but this season had a {actual}" in llm.requests[1][-1]["content"]
+
+
+def test_without_a_league_format_the_first_phase_name_is_not_checked():
+    llm = FakeLLM([ok(GROUP_STAGE_TALK)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS)  # the synthesis path spans both formats
+    assert (n.calls, n.text, n.style) == (1, GROUP_STAGE_TALK, []) and len(llm.requests) == 1
+
+
+def test_the_first_phase_retry_shares_the_three_call_cap():
+    llm = FakeLLM([INVALID, ok(GROUP_STAGE_TALK), ok(GROUP_STAGE_TALK_B)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, league_format=True)
+    assert n.calls == 3 and len(llm.requests) == 3
+    assert (n.text, n.style) == (GROUP_STAGE_TALK, [WRONG_FOR_LEAGUE])
+
+
+def test_one_retry_covers_a_wrong_first_phase_name_with_the_other_style_issues():
+    messy = LONG.replace("They averaged", "They significantly outshot rivals in the group stage, averaging")
+    llm = FakeLLM([ok(messy), ok(GOOD)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, banned=BANNED_TEAM_WORDS, max_words=250,
+                        league_format=True)
+    assert (n.calls, n.text, n.unsupported, n.style) == (2, GOOD, [], [])
+    feedback = llm.requests[1][-1]["content"]
+    assert WRONG_FOR_LEAGUE in feedback and "significantly" in feedback and "250" in feedback
+    assert "contain: significantly." in feedback  # the wrong name is not passed off as a banned word

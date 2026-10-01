@@ -20,28 +20,53 @@ def test_team_sheets_use_plain_labels_and_mark_lower_is_better(built):
     assert len(team_keys) == 10
     sheet = sheets[team_keys[0]]
     assert "Model probability of reaching the final (%)" in sheet
-    stats = sheet["All league/group-phase stats"]
+    stats = sheet["All first-phase stats"]
     assert "Opponent shots per game (lower is better)" in stats
     assert "Possession (%)" in stats
     json.dumps(sheets, allow_nan=False)  # raises if any NaN slipped into the facts
 
 
 FORMAT = "First-phase format that season"
-LEAGUE_PHASE = "league phase (36 teams, 8 matches each)"
-GROUP_STAGE = "group stage (32 teams in groups of four, 6 matches each)"
+SIZE = "First-phase size"
+LEAGUE_PHASE = ("league phase", "36 teams, 8 matches each")
+GROUP_STAGE = ("group stage", "32 teams in groups of four, 6 matches each")
 
 
-def test_team_sheets_name_the_first_phase_format_of_their_season(built):
-    # the other keys only say "group/league phase", so the local model guessed which one a season had
+def test_team_sheets_name_the_first_phase_format_and_size_of_their_season(built):
+    # the other keys only say "first phase", so the local model guessed which format a season had; the name stands
+    # alone because it pasted the size after it into its prose
     ds, res = built
     sheets = facts.build_facts(ds.team_seasons, ds.finals, res)
     format_of = {2022: GROUP_STAGE, 2023: GROUP_STAGE, 2024: GROUP_STAGE, 2025: LEAGUE_PHASE, 2026: LEAGUE_PHASE}
     team_keys = [k for k in sheets if k != "synthesis"]
     assert {int(k.split("-", 1)[0]) for k in team_keys} == set(format_of)
     for key in team_keys:
-        assert sheets[key][FORMAT] == format_of[int(key.split("-", 1)[0])], key
+        assert (sheets[key][FORMAT], sheets[key][SIZE]) == format_of[int(key.split("-", 1)[0])], key
         keys = list(sheets[key])
-        assert keys[keys.index("Season") + 1] == FORMAT  # right after the season, ahead of any stat
+        after_season = keys.index("Season") + 1
+        assert keys[after_season:after_season + 2] == [FORMAT, SIZE]  # right after the season, ahead of any stat
+
+
+def key_names(node):
+    """Every dict key anywhere inside a fact sheet."""
+    if isinstance(node, dict):
+        for name, value in node.items():
+            yield name
+            yield from key_names(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from key_names(item)
+
+
+def test_no_team_sheet_key_says_group_slash_league(built):
+    # the model copied that key text into its prose as a hedge; only the synthesis spans both formats
+    ds, res = built
+    sheets = facts.build_facts(ds.team_seasons, ds.finals, res)
+    assert facts.BEATS_SEASON == "Teams beaten in that season's first phase (%)"
+    for key in (k for k in sheets if k != "synthesis"):
+        assert "All first-phase stats" in sheets[key], key
+        for name in key_names(sheets[key]):
+            assert "group/league" not in name.lower() and "league/group" not in name.lower(), (key, name)
 
 
 def test_better_than_shares_are_flipped_for_lower_is_better_stats(built):
@@ -50,7 +75,7 @@ def test_better_than_shares_are_flipped_for_lower_is_better_stats(built):
     key = next(k for k in sheets if k != "synthesis")
     season, team_id = key.split("-", 1)
     row = ds.team_seasons.set_index(["season", "team_id"]).loc[(int(season), team_id)]
-    stats = sheets[key]["All league/group-phase stats"]
+    stats = sheets[key]["All first-phase stats"]
     for feature in ds.features:
         raw = int(row[f"pct_season_{feature}"])
         expected = 100 - raw if feature in config.LOWER_IS_BETTER else raw
@@ -63,7 +88,7 @@ def test_strongest_and_weakest_stats_are_picked_by_teams_beaten(built):
     sheets = facts.build_facts(ds.team_seasons, ds.finals, res)
     for key in (k for k in sheets if k != "synthesis"):
         sheet = sheets[key]
-        shares = {label: s[facts.BEATS_SEASON] for label, s in sheet["All league/group-phase stats"].items()}
+        shares = {label: s[facts.BEATS_SEASON] for label, s in sheet["All first-phase stats"].items()}
         strongest = [shares[d["stat"]] for d in sheet[facts.STRONGEST]]
         assert strongest == sorted(shares.values(), reverse=True)[:3]
         weakest = sheet[facts.WEAKEST]
