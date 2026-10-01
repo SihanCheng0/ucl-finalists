@@ -165,3 +165,52 @@ def test_many_fetches_each_unique_id_once_with_at_most_four_in_flight(tmp_path):
     assert len(results) == 30 and not failed
     assert len(calls) == 30 and state["peak"] <= 4
     assert not list(tmp_path.rglob("*.tmp"))
+
+
+def hooked_client(tmp_path, responses, hook):
+    fetch = FakeFetch(responses)
+    return UefaClient(cache_dir=tmp_path, fetch=fetch, sleep=lambda _: None, on_request=hook)
+
+
+def test_on_request_reports_each_resource_once_with_its_source(tmp_path):
+    seen = []
+    client = hooked_client(tmp_path, {config.MATCHES_URL.format(season=2026): [[{"id": "1"}]]},
+                           lambda *args: seen.append(args))
+    client.matches(2026)
+    client.matches(2026)
+    assert seen == [("matches", "matches/2026", "network"), ("matches", "matches/2026", "cache")]
+
+
+def test_on_request_counts_a_missing_resource_as_fetched(tmp_path):
+    seen = []
+    client = hooked_client(tmp_path, {config.MATCH_STATS_URL.format(match_id="9"): [http_error(404)]},
+                           lambda *args: seen.append(args))
+    assert client.team_match_stats("9") is None
+    assert client.team_match_stats("9") is None
+    assert seen == [("stats", "stats/9", "network"), ("stats", "stats/9", "cache")]
+
+
+def test_a_hook_that_raises_changes_nothing(tmp_path):
+    def broken(*args):
+        raise ValueError("bug in the hook")
+
+    client = hooked_client(tmp_path, {config.MATCHES_URL.format(season=2026): [[{"id": "1"}]]}, broken)
+    assert client.matches(2026) == [{"id": "1"}]
+    assert client.matches(2026) == [{"id": "1"}]
+
+
+def test_a_retried_request_is_reported_once(tmp_path):
+    seen = []
+    url = config.MATCHES_URL.format(season=2026)
+    client = hooked_client(tmp_path, {url: [http_error(503), [{"id": "1"}]]}, lambda *args: seen.append(args))
+    assert client.matches(2026) == [{"id": "1"}]
+    assert seen == [("matches", "matches/2026", "network")]
+
+
+def test_a_failed_request_is_not_reported(tmp_path):
+    seen = []
+    client = hooked_client(tmp_path, {config.MATCHES_URL.format(season=2026): [http_error(403)]},
+                           lambda *args: seen.append(args))
+    with pytest.raises(PermanentHTTPError):
+        client.matches(2026)
+    assert seen == []

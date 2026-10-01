@@ -67,11 +67,13 @@ class UefaClient:
         max_workers: int = 4,
         fetch: Fetch = http_get_json,
         sleep: Callable[[float], None] = time.sleep,
+        on_request: Callable[[str, str, str], None] | None = None,
     ):
         self.cache_dir = Path(cache_dir)
         self.max_workers = max_workers
         self._fetch = fetch
         self._sleep = sleep
+        self._on_request = on_request
 
     def matches(self, season: int) -> list[dict]:
         return self._cached(f"matches/{season}", config.MATCHES_URL.format(season=season), check=_is_match_list)
@@ -126,6 +128,7 @@ class UefaClient:
                 data = json.loads(path.read_text())
             except json.JSONDecodeError as exc:
                 raise RuntimeError(f"corrupt cache file {path}: delete it and run `uv run ucl fetch` again") from exc
+            source = "cache"
         else:
             try:
                 data = self._get(url)
@@ -137,7 +140,19 @@ class UefaClient:
             if check is not None and data != MISSING_MARKER and not check(data):
                 raise RuntimeError(f"unexpected response shape from {url}; nothing was cached")
             _atomic_write_json(path, data)
+            source = "network"
+        self._notify(key, source)
         return None if data == MISSING_MARKER else data
+
+    def _notify(self, key: str, source: str) -> None:
+        """Tell the on_request hook about one resolved resource (once, however many attempts it took). It runs on
+        team_match_stats_many's worker threads, so the hook must be thread-safe; a broken hook never breaks a fetch."""
+        if self._on_request is None:
+            return
+        try:
+            self._on_request(key.split("/", 1)[0], key, source)
+        except Exception:  # noqa: BLE001 - the hook is a progress display, not part of the data path
+            pass
 
     def _get(self, url: str) -> Any:
         delays = config.HTTP_RETRY_DELAYS_S
