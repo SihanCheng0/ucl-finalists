@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 import threading
 import time
@@ -16,6 +17,19 @@ def uvicorn_config(app, port: int):
     import uvicorn
 
     return uvicorn.Config(app, host="127.0.0.1", port=port, timeout_graceful_shutdown=2, log_level="warning")
+
+
+def make_server(settings, bus):
+    """A uvicorn server that ends the event streams before it waits for open connections, so a Ctrl-C with a
+    browser tab open returns at once (the lifespan shutdown only runs after that wait)."""
+    import uvicorn
+
+    class Server(uvicorn.Server):
+        async def shutdown(self, sockets=None):
+            bus.close()
+            await super().shutdown(sockets)
+
+    return Server(settings)
 
 
 def open_when_up(server, url: str, poll: float = 0.1, limit: float = 30.0) -> bool:
@@ -42,16 +56,22 @@ def main(argv: list[str]) -> int:
         print(f"The dashboard hasn't been built yet. Build it once with:\n"
               f"  cd {config.WEB_DIR} && npm install && npm run build", file=sys.stderr)
         return 1
-    import uvicorn
-
     from .app import create_app
     from .services import build_services
 
     services = build_services(llm_model=args.llm_model)
-    server = uvicorn.Server(uvicorn_config(create_app(services, dist_dir=dist), args.port))
+    server = make_server(uvicorn_config(create_app(services, dist_dir=dist), args.port), services.bus)
     url = f"http://127.0.0.1:{args.port}/"
     print(f"UCL Lab: {url} (Ctrl-C to stop)")
     if not args.no_open:
         threading.Thread(target=open_when_up, args=(server, url), daemon=True).start()
-    server.run()
+    try:
+        server.run()
+    except KeyboardInterrupt:  # uvicorn re-raises the signal after its graceful shutdown
+        pass
+    if services.runner.state()["running"]:
+        # A stage's fetch pool would otherwise finish every queued request before Python exits.
+        sys.stdout.flush()
+        sys.stderr.flush()
+        os._exit(0)
     return 0

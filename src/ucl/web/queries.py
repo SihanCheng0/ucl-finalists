@@ -9,6 +9,7 @@ import pandas as pd
 
 from .. import config, facts
 from ..features import display_value
+from ..report import md_to_html  # escapes the model's text, so the browser can render the HTML as is
 from .jsonsafe import to_jsonable
 from .pipeline import CORE, ORDER, STAGE_LABELS
 
@@ -17,6 +18,8 @@ SEARCH_LIMIT = 12
 MIN_QUERY = 2
 TIE_Z = 0.05  # a smaller gap in oriented z counts as level
 HELPS = {1: "higher", -1: "lower"}
+# letters NFKD doesn't split into a base letter and an accent
+LETTERS = str.maketrans({"ø": "o", "æ": "ae", "œ": "oe", "ł": "l", "đ": "d", "ı": "i", "þ": "th", "ð": "d"})
 
 
 class NotFound(Exception):
@@ -31,18 +34,25 @@ def feature_meta(feature: str) -> dict:
             "lower_is_better": feature in config.LOWER_IS_BETTER}
 
 
-def meta(snapshot, stage_names: list[str] | None = None) -> dict:
+def meta(snapshot, stage_names: list[str] | None = None, live=None, player_stats: list[dict] | None = None) -> dict:
+    """What the UI needs before anything else. `live` is the LiveState (None without the live season)."""
     ds = snapshot.dataset
     seasons = sorted(int(s) for s in ds.team_seasons["season"].unique()) if ds is not None else list(config.SEASONS)
     names = stage_names if stage_names is not None else CORE
+    listed = [{"season": s, "label": config.season_label(s), "live": False} for s in seasons]
+    if live is not None and live.available:
+        listed.append({"season": live.snapshot.season, "label": config.season_label(live.snapshot.season),
+                       "live": True})
     return to_jsonable({
         "ready": snapshot.ready,
         "problems": list(snapshot.errors.values()),
-        "seasons": [{"season": s, "label": config.season_label(s), "live": False} for s in seasons],
-        "live_season": None,
-        "live_status": "unavailable",
+        "seasons": listed,
+        "live_season": config.LIVE_SEASON if live is not None else None,
+        "live_status": live.status if live is not None else "unavailable",
+        "live_message": live.message if live is not None else "",
+        "sections": list(config.STAT_SECTIONS),
         "features": [feature_meta(f) for f in ds.features] if ds is not None else [],
-        "player_stats": [],
+        "player_stats": player_stats or [],
         "stages": [{"name": name, "label": STAGE_LABELS[name], "optional": name not in CORE}
                    for name in ORDER if name in names],
         "data": {"built_at": snapshot.built_at, "modelled_at": snapshot.modelled_at,
@@ -52,7 +62,7 @@ def meta(snapshot, stage_names: list[str] | None = None) -> dict:
 
 def fold(text: str) -> str:
     """Lower case without accents or punctuation, so 'Atlético' matches 'atletico' and 'B. Dortmund' 'b dortmund'."""
-    decomposed = unicodedata.normalize("NFKD", str(text).casefold())
+    decomposed = unicodedata.normalize("NFKD", str(text).casefold().translate(LETTERS))
     plain = "".join(c for c in decomposed if not unicodedata.combining(c))
     return " ".join("".join(c if c.isalnum() else " " for c in plain).split())
 
@@ -156,7 +166,7 @@ def _model_card(results, row: pd.Series, features: list[str]) -> dict | None:
 
     def entry(feature: str, contribution: float) -> dict:
         return {"feature": feature, "label": config.FEATURE_META[feature][0], "value": value_of(row, feature),
-                "contribution": round(contribution, 3)}
+                "contribution": round(contribution, 2)}  # as in the facts the AI write-ups quote
 
     exp_stage = float(pred["exp_stage"])
     return {"p_final": float(pred["p_final"]), "base_rate": float(pred["base_rate"]),
@@ -173,8 +183,6 @@ def _narrative(analysis, key: str, stale_keys: frozenset[str]) -> dict | None:
         return None
     if narrative.status != "ok" or not narrative.text:
         return {"text": None, "html": None, "badge": {"kind": "unavailable", "label": "AI write-up unavailable"}}
-    from ..report import md_to_html  # escapes the model's text, so the browser can render the HTML as is
-
     if key in stale_keys:
         badge = {"kind": "stale", "label": "Written for earlier numbers"}
     elif narrative.unsupported:
@@ -201,7 +209,9 @@ def profile(snapshot, team_id: str, season: int, team_seasons: pd.DataFrame | No
         "stale": bool(live.get("stale", False)) if _is_live(row) else False,
         "fetched_at": live.get("fetched_at") if _is_live(row) else None,
         "matches_played": int(row["n_matches"]),
-        "ko_stage": row["ko_stage"],
+        "phase_matches": config.phase_matches(season),
+        "provisional": _flag(row, "provisional"),
+        "ko_stage": None if pd.isna(row["ko_stage"]) else int(row["ko_stage"]),
         "result": _result(ds.finals, team_id, season),
         "seasons": [{"season": int(s), "label": config.season_label(int(s))} for s in played["season"]],
         "features": [_stat(row, f) for f in ds.features],

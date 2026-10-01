@@ -145,3 +145,125 @@ def test_the_built_spa_is_served_at_the_root(outputs, tmp_path):
     with TestClient(create_app(make_services(*outputs), dist_dir=dist)) as client:
         assert "UCL Lab" in client.get("/").text
         assert client.get("/api/meta").json()["ready"] is True  # API routes win over the static mount
+
+
+# --- the live season, squads and players (Plan B) ---
+
+import socket  # noqa: E402
+
+import pandas as pd  # noqa: E402
+
+from ucl.web.live import LiveSnapshot, LiveState  # noqa: E402
+from ucl.web.players import STAT_META, SquadUnavailable  # noqa: E402
+
+
+class FakeLive:
+    def __init__(self, rows, status="ready"):
+        self.state = LiveState(LiveSnapshot(2027, rows, status == "stale", None, 1, 0.0), status)
+        self.revalidations = 0
+
+    def current(self):
+        return self.state
+
+    def refresh_in_background(self):
+        self.revalidations += 1
+        return False
+
+
+class FakePlayers:
+    def squad(self, team_id, season):
+        if season == 2025:
+            raise SquadUnavailable("UEFA couldn't be reached: offline")
+        return {"players": [{"player_id": "1", "name": "Bukayo Saka", "position": "FWD", "minutes": 90.0,
+                             "stats": {"goals": 1.0}}], "minutes_published": True, "stale": False, "fetched_at": None}
+
+    def history(self, player_id):
+        if player_id == "nobody":
+            return None
+        return {"player": {"player_id": "1", "name": "Bukayo Saka"}, "unavailable_seasons": [],
+                "index": {"complete": False, "squads": {"done": 3, "of": 524}, "running": False},
+                "history": [{"season": 2027, "label": "2026-27", "team_id": "52280", "team": "Arsenal",
+                             "minutes": 90.0, "stats": {"goals": 1.0}, "live": True}]}
+
+
+@pytest.fixture
+def live_api(outputs):
+    services = make_services(*outputs)
+    history = services.store.snapshot.dataset.team_seasons
+    row = history[(history["team_id"] == "52280") & (history["season"] == 2026)].copy()
+    row["season"], row["n_matches"], row["ko_stage"] = 2027, 1, float("nan")
+    row["stage_label"], row["live"], row["provisional"] = "League phase (in progress)", True, True
+    services.live, services.players = FakeLive(row.reset_index(drop=True)), FakePlayers()
+    with TestClient(create_app(services)) as client:
+        yield client, services
+
+
+def test_meta_lists_the_live_season_and_the_player_stats(live_api):
+    client, services = live_api
+    meta = client.get("/api/meta").json()
+    assert meta["seasons"][-1] == {"season": 2027, "label": "2026-27", "live": True}
+    assert (meta["live_season"], meta["live_status"]) == (2027, "ready")
+    assert [s["key"] for s in meta["player_stats"]] == [s["key"] for s in STAT_META]
+    assert meta["sections"][0] == "Results" and services.live.revalidations == 1
+
+
+def test_a_live_team_season_is_searchable_profiled_and_comparable(live_api):
+    client, _ = live_api
+    hit = client.get("/api/teams", params={"q": "team 52280"}).json()[0]
+    assert hit["seasons"][0] == {"season": 2027, "label": "2026-27", "stage_label": "League phase (in progress)"}
+    p = client.get("/api/teams/52280/seasons/2027").json()
+    assert (p["live"], p["provisional"], p["matches_played"], p["phase_matches"]) == (True, True, 1, 8)
+    assert p["model"] is None and p["narrative"] is None and p["live_available"] is True
+    assert [point["live"] for point in p["trend"]["points_pg"]] == [False, True]
+    out = client.get("/api/compare", params={"a": "52280:2027", "b": "52747:2026"}).json()
+    assert out["a"]["live"] is True and out["b"]["live"] is False
+
+
+def test_squads_and_their_errors(live_api):
+    client, _ = live_api
+    squad = client.get("/api/squads/52280/2027").json()
+    assert (squad["name"], squad["label"], squad["live"], squad["minutes_published"]) == (
+        "Team 52280", "2026-27", True, True)
+    assert squad["players"][0]["name"] == "Bukayo Saka"
+    assert error(client.get("/api/squads/52280/2012")) == (404, "not_found")
+    assert error(client.get("/api/squads/52747/2025")) == (503, "uefa_unreachable")
+
+
+def test_player_histories(live_api):
+    client, _ = live_api
+    player = client.get("/api/players/1").json()
+    assert player["history"][0]["team"] == "Arsenal" and player["index"]["squads"] == {"done": 3, "of": 524}
+    assert (player["stale"], player["fetched_at"]) == (False, None)
+    assert error(client.get("/api/players/nobody")) == (404, "not_found")
+
+
+def test_every_error_has_the_same_shape(api):
+    client, _, _ = api
+    assert error(client.get("/api/nope")) == (404, "not_found")
+    assert error(client.post("/api/meta")) == (405, "method_not_allowed")
+    assert error(client.post("/api/pipeline/runs", json={"stage": ["fetch"]})) == (422, "invalid_request")
+    assert error(client.get("/api/squads/52280/2026")) == (503, "players_unavailable")
+
+
+def test_ctrl_c_with_an_event_stream_open_stops_the_server_at_once(outputs):
+    import threading
+    import time
+
+    from ucl.web.server import make_server, uvicorn_config
+
+    services = make_services(*outputs)
+    server = make_server(uvicorn_config(create_app(services), 0), services.bus)
+    thread = threading.Thread(target=server.run, daemon=True)
+    thread.start()
+    deadline = time.monotonic() + 5
+    while not server.started and time.monotonic() < deadline:
+        time.sleep(0.02)
+    port = server.servers[0].sockets[0].getsockname()[1]
+    stream = socket.create_connection(("127.0.0.1", port))
+    stream.sendall(b"GET /api/pipeline/events HTTP/1.1\r\nHost: localhost\r\n\r\n")
+    assert b"text/event-stream" in stream.recv(4096)
+    began = time.monotonic()
+    server.should_exit = True
+    thread.join(5)
+    stream.close()
+    assert not thread.is_alive() and time.monotonic() - began < 1.5

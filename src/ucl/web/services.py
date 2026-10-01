@@ -7,6 +7,8 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
+import pandas as pd
+
 from .. import config, stages
 from .events import EventBus
 from .pipeline import PipelineRunner, Stage, StageContext, StageOutcome
@@ -25,6 +27,16 @@ class Services:
     live: object | None = None  # LiveService (live.py)
     players: object | None = None  # PlayerService (players.py)
 
+    def live_state(self):
+        return self.live.current() if self.live is not None else None
+
+    def team_seasons(self, snapshot, live_state=None) -> pd.DataFrame:
+        """The historical team-seasons, plus the live season's rows when there are any."""
+        rows = snapshot.dataset.team_seasons
+        if live_state is None or live_state.snapshot is None:
+            return rows
+        return pd.concat([rows, live_state.snapshot.rows], ignore_index=True)
+
 
 def _shown(path: Path) -> str:
     try:
@@ -42,6 +54,7 @@ def missing_inputs(names: list[str], processed_dir: Path = config.PROCESSED_DIR,
         "model": [("build", dataset_file)],
         "analyze": [("build", dataset_file), ("model", metrics_file)],
         "report": [("build", dataset_file), ("model", metrics_file)],
+        "live": [("build", dataset_file)],
         "players": [("build", dataset_file)],
     }
     for name in names:
@@ -130,12 +143,69 @@ def stage_registry(store, llm_model: str = config.LLM_MODEL,
     return {"fetch": fetch, "build": build, "model": fit, "analyze": analyze, "report": report}
 
 
+def live_stage(live) -> Stage:
+    def run(ctx: StageContext) -> StageOutcome:
+        ctx.log(f"Fetching the {config.season_label(config.LIVE_SEASON)} season from UEFA")
+        state = live.refresh(force=True)
+        if state.snapshot is None:
+            return StageOutcome("failed", f"live season unavailable ({state.message or 'no data'})")
+        message = f"{len(state.snapshot.rows)} teams, {state.snapshot.finished_matches} finished matches"
+        if state.status == "stale":
+            return StageOutcome("warning", f"{message}; UEFA couldn't be reached, so this is the last copy "
+                                           f"({state.message or 'some match stats missing'})")
+        return StageOutcome("done", message)
+    return run
+
+
+def players_stage(players) -> Stage:
+    def run(ctx: StageContext) -> StageOutcome:
+        failures = players.build_index(lambda done, of: ctx.set("players", {"done": done, "of": of}), log=ctx.log)
+        if failures:
+            for (season, team_id), reason in failures[:MAX_ERRORS]:
+                ctx.log(f"{config.season_label(season)} {team_id}: {reason}", level="warn")
+            return StageOutcome("warning", f"{len(failures)} squads unavailable; their seasons are missing from "
+                                           "player histories")
+        return StageOutcome("done", "player index complete")
+    return run
+
+
+def all_pairs(store: DataStore, live) -> list[tuple[int, str]]:
+    """Every (season, team_id) whose squad the player index should hold: history plus the live field."""
+    pairs: list[tuple[int, str]] = []
+    dataset = store.snapshot.dataset
+    if dataset is not None:
+        pairs += [(int(s), str(t)) for s, t in zip(dataset.team_seasons["season"], dataset.team_seasons["team_id"])]
+    state = live.current() if live is not None else None
+    if state is not None and state.snapshot is not None:
+        rows = state.snapshot.rows
+        pairs += [(int(s), str(t)) for s, t in zip(rows["season"], rows["team_id"])]
+    return pairs
+
+
 def build_services(processed_dir: Path = config.PROCESSED_DIR, out_dir: Path = config.OUT_DIR,
-                   llm_model: str = config.LLM_MODEL) -> Services:
-    """The store, bus and runner over the given directories. The stages themselves always use the config
-    paths, so tests that point this at tmp_path must not start real runs."""
+                   llm_model: str = config.LLM_MODEL, start_live: bool = True) -> Services:
+    """Everything the app needs. The stages themselves always use the config paths, so tests that point this
+    at tmp_path must not start real runs."""
+    from ..uefa import UefaClient
+    from .live import LiveService, build_snapshot
+    from .players import PlayerService
+
     store = DataStore(processed_dir, out_dir)
     bus = EventBus()
-    runner = PipelineRunner(stage_registry(store, llm_model), bus,
+    live_client = UefaClient()
+
+    def build_live(force: bool):
+        dataset = store.snapshot.dataset
+        if dataset is None:
+            raise RuntimeError("the historical dataset isn't built yet: run build first")
+        return build_snapshot(live_client, dataset.team_seasons, dataset.features, force=force)
+
+    live = LiveService(build_live)
+    request_client = UefaClient(retry_delays=(), timeout=config.REQUEST_TIMEOUT_S)
+    players = PlayerService(request_client, UefaClient(), lambda: all_pairs(store, live))
+    registry = {**stage_registry(store, llm_model), "live": live_stage(live), "players": players_stage(players)}
+    runner = PipelineRunner(registry, bus,
                             missing_inputs=lambda names: missing_inputs(names, processed_dir, out_dir))
-    return Services(store, bus, runner)
+    if start_live:
+        live.refresh_in_background()
+    return Services(store, bus, runner, live, players)

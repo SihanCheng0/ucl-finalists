@@ -165,7 +165,7 @@ def test_missing_inputs_name_the_stage_to_run_first(tmp_path):
 
 
 def test_build_services_shares_one_bus_and_checks_inputs(tmp_path):
-    svc = services.build_services(tmp_path / "processed", tmp_path / "out")
+    svc = services.build_services(tmp_path / "processed", tmp_path / "out", start_live=False)
     assert not svc.store.snapshot.ready and svc.runner.bus is svc.bus
     with pytest.raises(BadRun, match="run build first"):
         svc.runner.start(["model"])

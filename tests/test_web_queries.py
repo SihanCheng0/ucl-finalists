@@ -35,6 +35,7 @@ TS = teams(
     (2024, "50051", "Real Madrid", "Real Madrid", "Winner"),
     (2026, "999", "Surreal FC", "Surreal FC", "League phase"),
     (2024, "52758", "B. Dortmund", "Borussia Dortmund", "Runner-up"),
+    (2026, "59324", "Bodø/Glimt", "Bodø/Glimt", "Knockout play-off"),
 )
 
 
@@ -56,6 +57,7 @@ def test_matching_ignores_case_accents_and_punctuation():
     assert ids(queries.search(TS, "atlético")) == ["50124"]  # through the alias "atletico madrid"
     assert ids(queries.search(TS, "b dortmund")) == ["52758"]  # UEFA's "B. Dortmund"
     assert ids(queries.search(TS, "DORTMUND")) == ["52758"]  # inside "Borussia Dortmund"
+    assert ids(queries.search(TS, "bodo")) == ["59324"]  # ø doesn't decompose, so it is mapped by hand
 
 
 def test_prefix_matches_rank_before_matches_inside_a_name():
@@ -110,7 +112,7 @@ def row_of(snapshot, team_id, season):
 def test_profile_header_result_and_seasons_played(snapshot):
     p = queries.profile(snapshot, "52280", 2026)
     assert (p["team_id"], p["name"], p["season"], p["label"]) == ("52280", "Team 52280", 2026, "2025-26")
-    assert (p["ko_stage"], p["matches_played"], p["live"], p["live_available"]) == (3.0, 8, False, False)
+    assert (p["ko_stage"], p["matches_played"], p["live"], p["live_available"]) == (3, 8, False, False)
     assert (p["stale"], p["fetched_at"]) == (False, None)
     assert p["result"] == "Runner-up: lost the final to Paris Saint-Germain 1-2"
     assert p["seasons"] == [{"season": 2026, "label": "2025-26"}]
@@ -219,3 +221,28 @@ def test_summary_has_metrics_with_intervals_the_top_drivers_and_the_synthesis(sn
     assert s["drivers"][0]["importance"] >= s["drivers"][-1]["importance"]
     assert s["synthesis"]["badge"]["kind"] == "good"
     json.dumps(s, allow_nan=False)
+
+
+def test_profiles_survive_model_outputs_older_than_the_data(snapshot):
+    import dataclasses
+
+    results = snapshot.results
+    older = dataclasses.replace(results, predictions=results.predictions[results.predictions["season"] != 2026],
+                                shap=results.shap[results.shap["season"] != 2026])
+    p = queries.profile(dataclasses.replace(snapshot, results=older), "52280", 2026)
+    assert p["model"] is None and p["features"] and p["narrative"] is not None
+
+
+def test_a_missing_stat_is_null_everywhere(snapshot):
+    import dataclasses
+
+    ts = snapshot.dataset.team_seasons.copy()
+    hit = (ts["team_id"] == "52280") & (ts["season"] == 2026)
+    for column in ("passes_pg", "pct_season_passes_pg", "pct_all_passes_pg", "z_passes_pg"):
+        ts.loc[hit, column] = float("nan")
+    holes = dataclasses.replace(snapshot, dataset=dataclasses.replace(snapshot.dataset, team_seasons=ts))
+    passes = next(s for s in queries.profile(holes, "52280", 2026)["features"] if s["feature"] == "passes_pg")
+    assert (passes["value"], passes["z"], passes["beats_season"], passes["beats_all"]) == (None, None, None, None)
+    row = next(r for r in queries.compare(holes, ("52280", 2026), ("52747", 2026))["rows"]
+               if r["feature"] == "passes_pg")
+    assert (row["a_z"], row["ahead"]) == (None, "tie")
