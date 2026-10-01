@@ -1,0 +1,59 @@
+{
+  "features": [
+    "coef_log",
+    "points_pg",
+    "goal_diff_pg",
+    "shots_pg",
+    "shot_accuracy",
+    "conversion",
+    "attacks_pg",
+    "shots_against_pg",
+    "on_target_against_pg",
+    "possession_pct",
+    "pass_accuracy",
+    "passes_pg",
+    "long_pass_share",
+    "distance_km_pg",
+    "fouls_pg"
+  ],
+  "notes": {
+    "coverage": {
+      "shots_pg": 0.9583333333333334,
+      "shot_accuracy": 0.9583333333333334,
+      "conversion": 0.9583333333333334,
+      "attacks_pg": 0.9479166666666666,
+      "shots_against_pg": 0.9583333333333334,
+      "on_target_against_pg": 0.9635416666666666,
+      "save_pct": 0.8645833333333334,
+      "possession_pct": 0.9791666666666666,
+      "pass_accuracy": 0.9791666666666666,
+      "passes_pg": 0.9791666666666666,
+      "long_pass_share": 0.9791666666666666,
+      "distance_km_pg": 0.96875,
+      "fouls_pg": 0.9791666666666666
+    },
+    "dropped_features": [
+      "save_pct"
+    ],
+    "imputed_values": 0,
+    "coef_match_rate": {
+      "2012": 1.0,
+      "2013": 0.96875,
+      "2014": 0.9375,
+      "2015": 0.96875,
+      "2016": 1.0,
+      "2017": 0.96875,
+      "2018": 0.96875,
+      "2019": 1.0,
+      "2020": 1.0,
+      "2021": 1.0,
+      "2022": 1.0,
+      "2023": 1.0,
+      "2024": 0.9375,
+      "2025": 0.8888888888888888,
+      "2026": 1.0
+    },
+    "coef_imputed": 12,
+    "team_matches_without_stats": 2
+  }
+}

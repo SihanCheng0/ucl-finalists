@@ -1,0 +1,16 @@
+season,winner_id,winner,runner_up_id,runner_up,winner_goals,runner_up_goals,winner_pens,runner_up_pens,city
+2012,52914,Chelsea,50037,Bayern München,1,1,4.0,3.0,Munich
+2013,50037,Bayern München,52758,B. Dortmund,2,1,,,London
+2014,50051,Real Madrid,50124,Atleti,4,1,,,Lisbon
+2015,50080,Barcelona,50139,Juventus,3,1,,,Berlin
+2016,50051,Real Madrid,50124,Atleti,1,1,5.0,3.0,Milan
+2017,50051,Real Madrid,50139,Juventus,4,1,,,Cardiff
+2018,50051,Real Madrid,7889,Liverpool,3,1,,,Kyiv
+2019,7889,Liverpool,1652,Tottenham,2,0,,,Madrid
+2020,50037,Bayern München,52747,Paris,1,0,,,Lisbon
+2021,52914,Chelsea,52919,Man City,1,0,,,Porto
+2022,50051,Real Madrid,7889,Liverpool,1,0,,,Saint-Denis
+2023,52919,Man City,50138,Inter,1,0,,,Istanbul
+2024,50051,Real Madrid,52758,B. Dortmund,2,0,,,London
+2025,52747,Paris,50138,Inter,5,0,,,Munich
+2026,52747,Paris,52280,Arsenal,1,1,4.0,3.0,Budapest

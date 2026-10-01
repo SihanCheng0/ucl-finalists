@@ -1,0 +1,1998 @@
+season,match_id,round,depth,home_id,home,away_id,away,home_goals,away_goals,home_pens,away_pens,winner_id,city
+2012,2007569,Group stage,0,52914,Chelsea,50109,Leverkusen,2,0,,,52914,London
+2012,2007570,Group stage,0,61582,Genk,52268,Valencia,0,0,,,,Genk
+2012,2007571,Group stage,0,2610,Olympiacos,52748,Marseille,0,1,,,52748,Piraeus
+2012,2007572,Group stage,0,52758,B. Dortmund,52280,Arsenal,1,1,,,,Dortmund
+2012,2007573,Group stage,0,50064,Porto,52707,Shakhtar,2,1,,,50064,Porto
+2012,2007574,Group stage,0,50118,APOEL,52826,Zenit,2,1,,,50118,Nicosia
+2012,2007575,Group stage,0,50080,Barcelona,50058,Milan,2,2,,,,Barcelona
+2012,2007576,Group stage,0,64388,Viktoria Plzeň,66168,BATE,1,1,,,,Prague
+2012,2007577,Group stage,0,52919,Man City,50136,Napoli,1,1,,,,Manchester
+2012,2007578,Group stage,0,70691,Villarreal,50037,Bayern München,0,2,,,50037,Villarreal
+2012,2007579,Group stage,0,75797,Lille,54266,CSKA Moskva,2,2,,,,Lille Métropole
+2012,2007580,Group stage,0,50138,Inter,52731,Trabzonspor,0,1,,,52731,Milan
+2012,2007581,Group stage,0,59856,Basel,50151,Oţelul,2,1,,,59856,Basel
+2012,2007582,Group stage,0,50147,Benfica,52682,Man Utd,1,1,,,,Lisbon
+2012,2007583,Group stage,0,50164,GNK Dinamo,50051,Real Madrid,0,1,,,50051,Zagreb
+2012,2007584,Group stage,0,50143,Ajax,5312,Lyon,0,0,,,,Amsterdam
+2012,2007588,Group stage,0,54266,CSKA Moskva,50138,Inter,2,3,,,50138,Moscow
+2012,2007585,Group stage,0,50037,Bayern München,52919,Man City,2,0,,,50037,Munich
+2012,2007586,Group stage,0,50136,Napoli,70691,Villarreal,2,0,,,50136,Naples
+2012,2007587,Group stage,0,52731,Trabzonspor,75797,Lille,1,1,,,,Trabzon
+2012,2007589,Group stage,0,52682,Man Utd,59856,Basel,3,3,,,,Manchester
+2012,2007590,Group stage,0,50151,Oţelul,50147,Benfica,0,1,,,50147,Bucharest
+2012,2007591,Group stage,0,5312,Lyon,50164,GNK Dinamo,2,0,,,5312,Lyon
+2012,2007592,Group stage,0,50051,Real Madrid,50143,Ajax,3,0,,,50051,Madrid
+2012,2007597,Group stage,0,52826,Zenit,50064,Porto,3,1,,,52826,St Petersburg
+2012,2007593,Group stage,0,52268,Valencia,52914,Chelsea,1,1,,,,Valencia
+2012,2007594,Group stage,0,50109,Leverkusen,61582,Genk,2,0,,,50109,Leverkusen
+2012,2007595,Group stage,0,52280,Arsenal,2610,Olympiacos,2,1,,,52280,London
+2012,2007596,Group stage,0,52748,Marseille,52758,B. Dortmund,3,0,,,52748,Marseille
+2012,2007598,Group stage,0,52707,Shakhtar,50118,APOEL,1,1,,,,Donetsk
+2012,2007599,Group stage,0,66168,BATE,50080,Barcelona,0,5,,,50080,Minsk
+2012,2007600,Group stage,0,50058,Milan,64388,Viktoria Plzeň,2,0,,,50058,Milan
+2012,2007603,Group stage,0,54266,CSKA Moskva,52731,Trabzonspor,3,0,,,54266,Moscow
+2012,2007601,Group stage,0,50136,Napoli,50037,Bayern München,1,1,,,,Naples
+2012,2007602,Group stage,0,52919,Man City,70691,Villarreal,2,1,,,52919,Manchester
+2012,2007604,Group stage,0,75797,Lille,50138,Inter,0,1,,,50138,Lille Métropole
+2012,2007605,Group stage,0,50151,Oţelul,52682,Man Utd,0,2,,,52682,Bucharest
+2012,2007606,Group stage,0,59856,Basel,50147,Benfica,0,2,,,50147,Basel
+2012,2007607,Group stage,0,50051,Real Madrid,5312,Lyon,4,0,,,50051,Madrid
+2012,2007608,Group stage,0,50164,GNK Dinamo,50143,Ajax,0,2,,,50143,Zagreb
+2012,2007609,Group stage,0,50109,Leverkusen,52268,Valencia,2,1,,,50109,Leverkusen
+2012,2007610,Group stage,0,52914,Chelsea,61582,Genk,5,0,,,52914,London
+2012,2007611,Group stage,0,52748,Marseille,52280,Arsenal,0,1,,,52280,Marseille
+2012,2007612,Group stage,0,2610,Olympiacos,52758,B. Dortmund,3,1,,,2610,Piraeus
+2012,2007613,Group stage,0,52707,Shakhtar,52826,Zenit,2,2,,,,Donetsk
+2012,2007614,Group stage,0,50064,Porto,50118,APOEL,1,1,,,,Porto
+2012,2007615,Group stage,0,50058,Milan,66168,BATE,2,0,,,50058,Milan
+2012,2007616,Group stage,0,50080,Barcelona,64388,Viktoria Plzeň,2,0,,,50080,Barcelona
+2012,2007621,Group stage,0,52826,Zenit,52707,Shakhtar,1,0,,,52826,St Petersburg
+2012,2007623,Group stage,0,66168,BATE,50058,Milan,1,1,,,,Minsk
+2012,2007617,Group stage,0,52268,Valencia,50109,Leverkusen,3,1,,,52268,Valencia
+2012,2007618,Group stage,0,61582,Genk,52914,Chelsea,1,1,,,,Genk
+2012,2007619,Group stage,0,52280,Arsenal,52748,Marseille,0,0,,,,London
+2012,2007620,Group stage,0,52758,B. Dortmund,2610,Olympiacos,1,0,,,52758,Dortmund
+2012,2007622,Group stage,0,50118,APOEL,50064,Porto,2,1,,,50118,Nicosia
+2012,2007624,Group stage,0,64388,Viktoria Plzeň,50080,Barcelona,0,4,,,50080,Prague
+2012,2007625,Group stage,0,50037,Bayern München,50136,Napoli,3,2,,,50037,Munich
+2012,2007626,Group stage,0,70691,Villarreal,52919,Man City,0,3,,,52919,Villarreal
+2012,2007627,Group stage,0,52731,Trabzonspor,54266,CSKA Moskva,0,0,,,,Trabzon
+2012,2007628,Group stage,0,50138,Inter,75797,Lille,2,1,,,50138,Milan
+2012,2007629,Group stage,0,52682,Man Utd,50151,Oţelul,2,0,,,52682,Manchester
+2012,2007630,Group stage,0,50147,Benfica,59856,Basel,1,1,,,,Lisbon
+2012,2007631,Group stage,0,5312,Lyon,50051,Real Madrid,0,2,,,50051,Lyon
+2012,2007632,Group stage,0,50143,Ajax,50164,GNK Dinamo,4,0,,,50143,Amsterdam
+2012,2007635,Group stage,0,54266,CSKA Moskva,75797,Lille,0,2,,,75797,Moscow
+2012,2007633,Group stage,0,50136,Napoli,52919,Man City,2,1,,,50136,Naples
+2012,2007634,Group stage,0,50037,Bayern München,70691,Villarreal,3,1,,,50037,Munich
+2012,2007636,Group stage,0,52731,Trabzonspor,50138,Inter,1,1,,,,Trabzon
+2012,2007637,Group stage,0,50151,Oţelul,59856,Basel,2,3,,,59856,Bucharest
+2012,2007638,Group stage,0,52682,Man Utd,50147,Benfica,2,2,,,,Manchester
+2012,2007639,Group stage,0,50051,Real Madrid,50164,GNK Dinamo,6,2,,,50051,Madrid
+2012,2007640,Group stage,0,5312,Lyon,50143,Ajax,0,0,,,,Lyon
+2012,2007646,Group stage,0,52826,Zenit,50118,APOEL,0,0,,,,St Petersburg
+2012,2007648,Group stage,0,66168,BATE,64388,Viktoria Plzeň,0,1,,,64388,Minsk
+2012,2007641,Group stage,0,50109,Leverkusen,52914,Chelsea,2,1,,,50109,Leverkusen
+2012,2007642,Group stage,0,52268,Valencia,61582,Genk,7,0,,,52268,Valencia
+2012,2007643,Group stage,0,52748,Marseille,2610,Olympiacos,0,1,,,2610,Marseille
+2012,2007644,Group stage,0,52280,Arsenal,52758,B. Dortmund,2,1,,,52280,London
+2012,2007645,Group stage,0,52707,Shakhtar,50064,Porto,0,2,,,50064,Donetsk
+2012,2007647,Group stage,0,50058,Milan,50080,Barcelona,2,3,,,50080,Milan
+2012,2007649,Group stage,0,52914,Chelsea,52268,Valencia,3,0,,,52914,London
+2012,2007650,Group stage,0,61582,Genk,50109,Leverkusen,1,1,,,,Genk
+2012,2007651,Group stage,0,2610,Olympiacos,52280,Arsenal,3,1,,,2610,Piraeus
+2012,2007652,Group stage,0,52758,B. Dortmund,52748,Marseille,2,3,,,52748,Dortmund
+2012,2007653,Group stage,0,50064,Porto,52826,Zenit,0,0,,,,Porto
+2012,2007654,Group stage,0,50118,APOEL,52707,Shakhtar,0,2,,,52707,Nicosia
+2012,2007655,Group stage,0,50080,Barcelona,66168,BATE,4,0,,,50080,Barcelona
+2012,2007656,Group stage,0,64388,Viktoria Plzeň,50058,Milan,2,2,,,,Prague
+2012,2007657,Group stage,0,52919,Man City,50037,Bayern München,2,0,,,52919,Manchester
+2012,2007658,Group stage,0,70691,Villarreal,50136,Napoli,0,2,,,50136,Villarreal
+2012,2007659,Group stage,0,75797,Lille,52731,Trabzonspor,0,0,,,,Lille Métropole
+2012,2007660,Group stage,0,50138,Inter,54266,CSKA Moskva,1,2,,,54266,Milan
+2012,2007661,Group stage,0,59856,Basel,52682,Man Utd,2,1,,,59856,Basel
+2012,2007662,Group stage,0,50147,Benfica,50151,Oţelul,1,0,,,50147,Lisbon
+2012,2007663,Group stage,0,50164,GNK Dinamo,5312,Lyon,1,7,,,5312,Zagreb
+2012,2007664,Group stage,0,50143,Ajax,50051,Real Madrid,0,3,,,50051,Amsterdam
+2012,2007665,Round of 16,2,5312,Lyon,50118,APOEL,1,0,,,5312,Lyon
+2012,2007671,Round of 16,2,50109,Leverkusen,50080,Barcelona,1,3,,,50080,Leverkusen
+2012,2007667,Round of 16,2,52826,Zenit,50147,Benfica,3,2,,,52826,St Petersburg
+2012,2007669,Round of 16,2,50058,Milan,52280,Arsenal,4,0,,,50058,Milan
+2012,2007672,Round of 16,2,54266,CSKA Moskva,50051,Real Madrid,1,1,,,,Moscow
+2012,2007666,Round of 16,2,50136,Napoli,52914,Chelsea,3,1,,,50136,Naples
+2012,2007668,Round of 16,2,52748,Marseille,50138,Inter,1,0,,,52748,Marseille
+2012,2007670,Round of 16,2,59856,Basel,50037,Bayern München,1,0,,,59856,Basel
+2012,2007673,Round of 16,2,50147,Benfica,52826,Zenit,2,0,,,50147,Lisbon
+2012,2007679,Round of 16,2,52280,Arsenal,50058,Milan,3,0,,,52280,London
+2012,2007675,Round of 16,2,50118,APOEL,5312,Lyon,1,0,4.0,3.0,50118,Nicosia
+2012,2007677,Round of 16,2,50080,Barcelona,50109,Leverkusen,7,1,,,50080,Barcelona
+2012,2007674,Round of 16,2,50138,Inter,52748,Marseille,2,1,,,50138,Milan
+2012,2007680,Round of 16,2,50037,Bayern München,59856,Basel,7,0,,,50037,Munich
+2012,2007676,Round of 16,2,52914,Chelsea,50136,Napoli,4,1,,,52914,London
+2012,2007678,Round of 16,2,50051,Real Madrid,54266,CSKA Moskva,4,1,,,50051,Madrid
+2012,2007681,Quarter-finals,3,50118,APOEL,50051,Real Madrid,0,3,,,50051,Nicosia
+2012,2007683,Quarter-finals,3,50147,Benfica,52914,Chelsea,0,1,,,52914,Lisbon
+2012,2007682,Quarter-finals,3,52748,Marseille,50037,Bayern München,0,2,,,50037,Marseille
+2012,2007686,Quarter-finals,3,50058,Milan,50080,Barcelona,0,0,,,,Milan
+2012,2007684,Quarter-finals,3,50080,Barcelona,50058,Milan,3,1,,,50080,Barcelona
+2012,2007688,Quarter-finals,3,50037,Bayern München,52748,Marseille,2,0,,,50037,Munich
+2012,2007685,Quarter-finals,3,52914,Chelsea,50147,Benfica,2,1,,,52914,London
+2012,2007687,Quarter-finals,3,50051,Real Madrid,50118,APOEL,5,2,,,50051,Madrid
+2012,2007690,Semi-finals,4,50037,Bayern München,50051,Real Madrid,2,1,,,50037,Munich
+2012,2007689,Semi-finals,4,52914,Chelsea,50080,Barcelona,1,0,,,52914,London
+2012,2007692,Semi-finals,4,50080,Barcelona,52914,Chelsea,2,2,,,,Barcelona
+2012,2007691,Semi-finals,4,50051,Real Madrid,50037,Bayern München,2,1,1.0,3.0,50051,Madrid
+2012,2007693,Final,5,50037,Bayern München,52914,Chelsea,1,1,3.0,4.0,52914,Munich
+2013,2009496,Group stage,0,50164,GNK Dinamo,50064,Porto,0,2,,,50064,Zagreb
+2013,2009497,Group stage,0,52747,Paris,52723,Dynamo Kyiv,4,1,,,52747,Paris
+2013,2009498,Group stage,0,50128,Montpellier,52280,Arsenal,1,2,,,52280,Montpellier
+2013,2009499,Group stage,0,2610,Olympiacos,57388,Schalke,1,2,,,57388,Piraeus
+2013,2009500,Group stage,0,74069,Málaga,52826,Zenit,3,0,,,74069,Malaga
+2013,2009501,Group stage,0,50058,Milan,50074,Anderlecht,0,0,,,,Milan
+2013,2009502,Group stage,0,52758,B. Dortmund,50143,Ajax,1,0,,,52758,Dortmund
+2013,2009503,Group stage,0,50051,Real Madrid,52919,Man City,3,2,,,50051,Madrid
+2013,2009488,Group stage,0,52707,Shakhtar,79940,Nordsjælland,2,0,,,52707,Donetsk
+2013,2009489,Group stage,0,52914,Chelsea,50139,Juventus,2,2,,,,London
+2013,2009490,Group stage,0,75797,Lille,66168,BATE,1,3,,,66168,Lille Métropole
+2013,2009491,Group stage,0,50037,Bayern München,52268,Valencia,2,1,,,50037,Munich
+2013,2009492,Group stage,0,50080,Barcelona,50068,Spartak Moskva,3,2,,,50080,Barcelona
+2013,2009493,Group stage,0,50050,Celtic,50147,Benfica,0,0,,,,Glasgow
+2013,2009494,Group stage,0,52682,Man Utd,50067,Galatasaray,1,0,,,52682,Manchester
+2013,2009495,Group stage,0,52336,Braga,88131,CFR Cluj,0,2,,,88131,Braga
+2013,2009517,Group stage,0,50068,Spartak Moskva,50050,Celtic,2,3,,,50050,Moscow
+2013,2009512,Group stage,0,50139,Juventus,52707,Shakhtar,1,1,,,,Turin
+2013,2009513,Group stage,0,79940,Nordsjælland,52914,Chelsea,0,4,,,52914,Copenhagen
+2013,2009514,Group stage,0,52268,Valencia,75797,Lille,2,0,,,52268,Valencia
+2013,2009515,Group stage,0,66168,BATE,50037,Bayern München,3,1,,,66168,Minsk
+2013,2009516,Group stage,0,50147,Benfica,50080,Barcelona,0,2,,,50080,Lisbon
+2013,2009518,Group stage,0,88131,CFR Cluj,52682,Man Utd,1,2,,,52682,Cluj-Napoca
+2013,2009519,Group stage,0,50067,Galatasaray,52336,Braga,0,2,,,52336,Istanbul
+2013,2009509,Group stage,0,52826,Zenit,50058,Milan,2,3,,,50058,St Petersburg
+2013,2009504,Group stage,0,52723,Dynamo Kyiv,50164,GNK Dinamo,2,0,,,52723,Kyiv
+2013,2009505,Group stage,0,50064,Porto,52747,Paris,1,0,,,50064,Porto
+2013,2009506,Group stage,0,57388,Schalke,50128,Montpellier,2,2,,,,Gelsenkirchen
+2013,2009507,Group stage,0,52280,Arsenal,2610,Olympiacos,3,1,,,52280,London
+2013,2009508,Group stage,0,50074,Anderlecht,74069,Málaga,0,3,,,74069,Brussels
+2013,2009510,Group stage,0,52919,Man City,52758,B. Dortmund,1,1,,,,Manchester
+2013,2009511,Group stage,0,50143,Ajax,50051,Real Madrid,1,4,,,50051,Amsterdam
+2013,2009532,Group stage,0,50068,Spartak Moskva,50147,Benfica,2,1,,,50068,Moscow
+2013,2009528,Group stage,0,79940,Nordsjælland,50139,Juventus,1,1,,,,Copenhagen
+2013,2009529,Group stage,0,52707,Shakhtar,52914,Chelsea,2,1,,,52707,Donetsk
+2013,2009530,Group stage,0,66168,BATE,52268,Valencia,0,3,,,52268,Minsk
+2013,2009531,Group stage,0,75797,Lille,50037,Bayern München,0,1,,,50037,Lille Métropole
+2013,2009533,Group stage,0,50080,Barcelona,50050,Celtic,2,1,,,50080,Barcelona
+2013,2009534,Group stage,0,50067,Galatasaray,88131,CFR Cluj,1,1,,,,Istanbul
+2013,2009535,Group stage,0,52682,Man Utd,52336,Braga,3,2,,,52682,Manchester
+2013,2009524,Group stage,0,52826,Zenit,50074,Anderlecht,1,0,,,52826,St Petersburg
+2013,2009520,Group stage,0,50064,Porto,52723,Dynamo Kyiv,3,2,,,50064,Porto
+2013,2009521,Group stage,0,50164,GNK Dinamo,52747,Paris,0,2,,,52747,Zagreb
+2013,2009522,Group stage,0,52280,Arsenal,57388,Schalke,0,2,,,57388,London
+2013,2009523,Group stage,0,50128,Montpellier,2610,Olympiacos,1,2,,,2610,Montpellier
+2013,2009525,Group stage,0,74069,Málaga,50058,Milan,1,0,,,74069,Malaga
+2013,2009526,Group stage,0,50143,Ajax,52919,Man City,3,1,,,50143,Amsterdam
+2013,2009527,Group stage,0,52758,B. Dortmund,50051,Real Madrid,2,1,,,52758,Dortmund
+2013,2009544,Group stage,0,52723,Dynamo Kyiv,50064,Porto,0,0,,,,Kyiv
+2013,2009545,Group stage,0,52747,Paris,50164,GNK Dinamo,4,0,,,52747,Paris
+2013,2009546,Group stage,0,57388,Schalke,52280,Arsenal,2,2,,,,Gelsenkirchen
+2013,2009547,Group stage,0,2610,Olympiacos,50128,Montpellier,3,1,,,2610,Piraeus
+2013,2009548,Group stage,0,50074,Anderlecht,52826,Zenit,1,0,,,50074,Brussels
+2013,2009549,Group stage,0,50058,Milan,74069,Málaga,1,1,,,,Milan
+2013,2009550,Group stage,0,52919,Man City,50143,Ajax,2,2,,,,Manchester
+2013,2009551,Group stage,0,50051,Real Madrid,52758,B. Dortmund,2,2,,,,Madrid
+2013,2009536,Group stage,0,50139,Juventus,79940,Nordsjælland,4,0,,,50139,Turin
+2013,2009537,Group stage,0,52914,Chelsea,52707,Shakhtar,3,2,,,52914,London
+2013,2009538,Group stage,0,52268,Valencia,66168,BATE,4,2,,,52268,Valencia
+2013,2009539,Group stage,0,50037,Bayern München,75797,Lille,6,1,,,50037,Munich
+2013,2009540,Group stage,0,50147,Benfica,50068,Spartak Moskva,2,0,,,50147,Lisbon
+2013,2009541,Group stage,0,50050,Celtic,50080,Barcelona,2,1,,,50050,Glasgow
+2013,2009542,Group stage,0,88131,CFR Cluj,50067,Galatasaray,1,3,,,50067,Cluj-Napoca
+2013,2009543,Group stage,0,52336,Braga,52682,Man Utd,1,3,,,52682,Braga
+2013,2009562,Group stage,0,66168,BATE,75797,Lille,0,2,,,75797,Minsk
+2013,2009564,Group stage,0,50068,Spartak Moskva,50080,Barcelona,0,3,,,50080,Moscow
+2013,2009560,Group stage,0,79940,Nordsjælland,52707,Shakhtar,2,5,,,52707,Copenhagen
+2013,2009561,Group stage,0,50139,Juventus,52914,Chelsea,3,0,,,50139,Turin
+2013,2009563,Group stage,0,52268,Valencia,50037,Bayern München,1,1,,,,Valencia
+2013,2009565,Group stage,0,50147,Benfica,50050,Celtic,2,1,,,50147,Lisbon
+2013,2009566,Group stage,0,50067,Galatasaray,52682,Man Utd,1,0,,,50067,Istanbul
+2013,2009567,Group stage,0,88131,CFR Cluj,52336,Braga,3,1,,,88131,Cluj-Napoca
+2013,2009556,Group stage,0,52826,Zenit,74069,Málaga,2,2,,,,St Petersburg
+2013,2009552,Group stage,0,50064,Porto,50164,GNK Dinamo,3,0,,,50064,Porto
+2013,2009553,Group stage,0,52723,Dynamo Kyiv,52747,Paris,0,2,,,52747,Kyiv
+2013,2009554,Group stage,0,52280,Arsenal,50128,Montpellier,2,0,,,52280,London
+2013,2009555,Group stage,0,57388,Schalke,2610,Olympiacos,1,0,,,57388,Gelsenkirchen
+2013,2009557,Group stage,0,50074,Anderlecht,50058,Milan,1,3,,,50058,Brussels
+2013,2009558,Group stage,0,50143,Ajax,52758,B. Dortmund,1,4,,,52758,Amsterdam
+2013,2009559,Group stage,0,52919,Man City,50051,Real Madrid,1,1,,,,Manchester
+2013,2009576,Group stage,0,50164,GNK Dinamo,52723,Dynamo Kyiv,1,1,,,,Zagreb
+2013,2009577,Group stage,0,52747,Paris,50064,Porto,2,1,,,52747,Paris
+2013,2009578,Group stage,0,50128,Montpellier,57388,Schalke,1,1,,,,Montpellier
+2013,2009579,Group stage,0,2610,Olympiacos,52280,Arsenal,2,1,,,2610,Piraeus
+2013,2009580,Group stage,0,74069,Málaga,50074,Anderlecht,2,2,,,,Malaga
+2013,2009581,Group stage,0,50058,Milan,52826,Zenit,0,1,,,52826,Milan
+2013,2009582,Group stage,0,52758,B. Dortmund,52919,Man City,1,0,,,52758,Dortmund
+2013,2009583,Group stage,0,50051,Real Madrid,50143,Ajax,4,1,,,50051,Madrid
+2013,2009568,Group stage,0,52707,Shakhtar,50139,Juventus,0,1,,,50139,Donetsk
+2013,2009569,Group stage,0,52914,Chelsea,79940,Nordsjælland,6,1,,,52914,London
+2013,2009570,Group stage,0,75797,Lille,52268,Valencia,0,1,,,52268,Lille Métropole
+2013,2009571,Group stage,0,50037,Bayern München,66168,BATE,4,1,,,50037,Munich
+2013,2009572,Group stage,0,50080,Barcelona,50147,Benfica,0,0,,,,Barcelona
+2013,2009573,Group stage,0,50050,Celtic,50068,Spartak Moskva,2,1,,,50050,Glasgow
+2013,2009574,Group stage,0,52682,Man Utd,88131,CFR Cluj,0,1,,,88131,Manchester
+2013,2009575,Group stage,0,52336,Braga,50067,Galatasaray,1,2,,,50067,Braga
+2013,2009585,Round of 16,2,50050,Celtic,50139,Juventus,0,3,,,50139,Glasgow
+2013,2009586,Round of 16,2,52268,Valencia,52747,Paris,1,2,,,52747,Valencia
+2013,2009589,Round of 16,2,52707,Shakhtar,52758,B. Dortmund,2,2,,,,Donetsk
+2013,2009591,Round of 16,2,50051,Real Madrid,52682,Man Utd,1,1,,,,Madrid
+2013,2009587,Round of 16,2,50064,Porto,74069,Málaga,1,0,,,50064,Porto
+2013,2009588,Round of 16,2,52280,Arsenal,50037,Bayern München,1,3,,,50037,London
+2013,2009584,Round of 16,2,50067,Galatasaray,57388,Schalke,1,1,,,,Istanbul
+2013,2009590,Round of 16,2,50058,Milan,50080,Barcelona,2,0,,,50058,Milan
+2013,2009597,Round of 16,2,52682,Man Utd,50051,Real Madrid,1,2,,,50051,Manchester
+2013,2009599,Round of 16,2,52758,B. Dortmund,52707,Shakhtar,3,0,,,52758,Dortmund
+2013,2009592,Round of 16,2,52747,Paris,52268,Valencia,1,1,,,,Paris
+2013,2009595,Round of 16,2,50139,Juventus,50050,Celtic,2,0,,,50139,Turin
+2013,2009594,Round of 16,2,57388,Schalke,50067,Galatasaray,2,3,,,50067,Gelsenkirchen
+2013,2009596,Round of 16,2,50080,Barcelona,50058,Milan,4,0,,,50080,Barcelona
+2013,2009593,Round of 16,2,74069,Málaga,50064,Porto,2,0,,,74069,Malaga
+2013,2009598,Round of 16,2,50037,Bayern München,52280,Arsenal,0,2,,,52280,Munich
+2013,2009602,Quarter-finals,3,52747,Paris,50080,Barcelona,2,2,,,,Paris
+2013,2009603,Quarter-finals,3,50037,Bayern München,50139,Juventus,2,0,,,50037,Munich
+2013,2009600,Quarter-finals,3,74069,Málaga,52758,B. Dortmund,0,0,,,,Malaga
+2013,2009601,Quarter-finals,3,50051,Real Madrid,50067,Galatasaray,3,0,,,50051,Madrid
+2013,2009606,Quarter-finals,3,52758,B. Dortmund,74069,Málaga,3,2,,,52758,Dortmund
+2013,2009607,Quarter-finals,3,50067,Galatasaray,50051,Real Madrid,3,2,,,50067,Istanbul
+2013,2009604,Quarter-finals,3,50080,Barcelona,52747,Paris,1,1,,,,Barcelona
+2013,2009605,Quarter-finals,3,50139,Juventus,50037,Bayern München,0,2,,,50037,Turin
+2013,2009609,Semi-finals,4,50037,Bayern München,50080,Barcelona,4,0,,,50037,Munich
+2013,2009608,Semi-finals,4,52758,B. Dortmund,50051,Real Madrid,4,1,,,52758,Dortmund
+2013,2009611,Semi-finals,4,50051,Real Madrid,52758,B. Dortmund,2,0,,,50051,Madrid
+2013,2009610,Semi-finals,4,50080,Barcelona,50037,Bayern München,0,3,,,50037,Barcelona
+2013,2009612,Final,5,52758,B. Dortmund,50037,Bayern München,1,2,,,50037,London
+2014,2011767,Group stage,0,52682,Man Utd,50109,Leverkusen,4,2,,,52682,Manchester
+2014,2011768,Group stage,0,50123,Real Sociedad,52707,Shakhtar,0,2,,,52707,San Sebastian
+2014,2011769,Group stage,0,50067,Galatasaray,50051,Real Madrid,1,6,,,50051,Istanbul
+2014,2011770,Group stage,0,52709,Copenhagen,50139,Juventus,1,1,,,,Copenhagen
+2014,2011771,Group stage,0,50147,Benfica,50074,Anderlecht,2,0,,,50147,Lisbon
+2014,2011772,Group stage,0,2610,Olympiacos,52747,Paris,1,4,,,52747,Piraeus
+2014,2011773,Group stage,0,50037,Bayern München,54266,CSKA Moskva,3,0,,,50037,Munich
+2014,2011774,Group stage,0,64388,Viktoria Plzeň,52919,Man City,0,3,,,52919,Plzen
+2014,2011759,Group stage,0,57388,Schalke,2614166,Steaua București,3,0,,,57388,Gelsenkirchen
+2014,2011760,Group stage,0,52914,Chelsea,59856,Basel,1,2,,,59856,London
+2014,2011761,Group stage,0,52748,Marseille,52280,Arsenal,1,2,,,52280,Marseille
+2014,2011762,Group stage,0,50136,Napoli,52758,B. Dortmund,2,1,,,50136,Naples
+2014,2011763,Group stage,0,50110,Austria Wien,50064,Porto,0,1,,,50064,Vienna
+2014,2011764,Group stage,0,50124,Atleti,52826,Zenit,3,1,,,50124,Madrid
+2014,2011765,Group stage,0,50058,Milan,50050,Celtic,2,0,,,50058,Milan
+2014,2011766,Group stage,0,50080,Barcelona,50143,Ajax,4,0,,,50080,Barcelona
+2014,2011787,Group stage,0,52826,Zenit,50110,Austria Wien,0,0,,,,St Petersburg
+2014,2011783,Group stage,0,59856,Basel,57388,Schalke,0,1,,,57388,Basel
+2014,2011784,Group stage,0,2614166,Steaua București,52914,Chelsea,0,4,,,52914,Bucharest
+2014,2011785,Group stage,0,52758,B. Dortmund,52748,Marseille,3,0,,,52758,Dortmund
+2014,2011786,Group stage,0,52280,Arsenal,50136,Napoli,2,0,,,52280,London
+2014,2011788,Group stage,0,50064,Porto,50124,Atleti,1,2,,,50124,Porto
+2014,2011789,Group stage,0,50143,Ajax,50058,Milan,1,1,,,,Amsterdam
+2014,2011790,Group stage,0,50050,Celtic,50080,Barcelona,0,1,,,50080,Glasgow
+2014,2011782,Group stage,0,54266,CSKA Moskva,64388,Viktoria Plzeň,3,2,,,54266,St Petersburg
+2014,2011775,Group stage,0,52707,Shakhtar,52682,Man Utd,1,1,,,,Donetsk
+2014,2011776,Group stage,0,50109,Leverkusen,50123,Real Sociedad,2,1,,,50109,Leverkusen
+2014,2011777,Group stage,0,50139,Juventus,50067,Galatasaray,2,2,,,,Turin
+2014,2011778,Group stage,0,50051,Real Madrid,52709,Copenhagen,4,0,,,50051,Madrid
+2014,2011779,Group stage,0,52747,Paris,50147,Benfica,3,0,,,52747,Paris
+2014,2011780,Group stage,0,50074,Anderlecht,2610,Olympiacos,0,3,,,2610,Brussels
+2014,2011781,Group stage,0,52919,Man City,50037,Bayern München,1,3,,,50037,Manchester
+2014,2011799,Group stage,0,2614166,Steaua București,59856,Basel,1,1,,,,Bucharest
+2014,2011800,Group stage,0,57388,Schalke,52914,Chelsea,0,3,,,52914,Gelsenkirchen
+2014,2011801,Group stage,0,52280,Arsenal,52758,B. Dortmund,1,2,,,52758,London
+2014,2011802,Group stage,0,52748,Marseille,50136,Napoli,1,2,,,50136,Marseille
+2014,2011803,Group stage,0,50064,Porto,52826,Zenit,0,1,,,52826,Porto
+2014,2011804,Group stage,0,50110,Austria Wien,50124,Atleti,0,3,,,50124,Vienna
+2014,2011805,Group stage,0,50050,Celtic,50143,Ajax,2,1,,,50050,Glasgow
+2014,2011806,Group stage,0,50058,Milan,50080,Barcelona,1,1,,,,Milan
+2014,2011797,Group stage,0,54266,CSKA Moskva,52919,Man City,1,2,,,52919,Moscow
+2014,2011791,Group stage,0,50109,Leverkusen,52707,Shakhtar,4,0,,,50109,Leverkusen
+2014,2011792,Group stage,0,52682,Man Utd,50123,Real Sociedad,1,0,,,52682,Manchester
+2014,2011793,Group stage,0,50051,Real Madrid,50139,Juventus,2,1,,,50051,Madrid
+2014,2011794,Group stage,0,50067,Galatasaray,52709,Copenhagen,3,1,,,50067,Istanbul
+2014,2011795,Group stage,0,50074,Anderlecht,52747,Paris,0,5,,,52747,Brussels
+2014,2011796,Group stage,0,50147,Benfica,2610,Olympiacos,1,1,,,,Lisbon
+2014,2011798,Group stage,0,50037,Bayern München,64388,Viktoria Plzeň,5,0,,,50037,Munich
+2014,2011815,Group stage,0,52707,Shakhtar,50109,Leverkusen,0,0,,,,Donetsk
+2014,2011816,Group stage,0,50123,Real Sociedad,52682,Man Utd,0,0,,,,San Sebastian
+2014,2011817,Group stage,0,50139,Juventus,50051,Real Madrid,2,2,,,,Turin
+2014,2011818,Group stage,0,52709,Copenhagen,50067,Galatasaray,1,0,,,52709,Copenhagen
+2014,2011819,Group stage,0,52747,Paris,50074,Anderlecht,1,1,,,,Paris
+2014,2011820,Group stage,0,2610,Olympiacos,50147,Benfica,1,0,,,2610,Piraeus
+2014,2011821,Group stage,0,52919,Man City,54266,CSKA Moskva,5,2,,,52919,Manchester
+2014,2011822,Group stage,0,64388,Viktoria Plzeň,50037,Bayern München,0,1,,,50037,Plzen
+2014,2011811,Group stage,0,52826,Zenit,50064,Porto,1,1,,,,St Petersburg
+2014,2011807,Group stage,0,59856,Basel,2614166,Steaua București,1,1,,,,Basel
+2014,2011808,Group stage,0,52914,Chelsea,57388,Schalke,3,0,,,52914,London
+2014,2011809,Group stage,0,52758,B. Dortmund,52280,Arsenal,0,1,,,52280,Dortmund
+2014,2011810,Group stage,0,50136,Napoli,52748,Marseille,3,2,,,50136,Naples
+2014,2011812,Group stage,0,50124,Atleti,50110,Austria Wien,4,0,,,50124,Madrid
+2014,2011813,Group stage,0,50143,Ajax,50050,Celtic,1,0,,,50143,Amsterdam
+2014,2011814,Group stage,0,50080,Barcelona,50058,Milan,3,1,,,50080,Barcelona
+2014,2011836,Group stage,0,52826,Zenit,50124,Atleti,1,1,,,,St Petersburg
+2014,2011831,Group stage,0,2614166,Steaua București,57388,Schalke,0,0,,,,Bucharest
+2014,2011832,Group stage,0,59856,Basel,52914,Chelsea,1,0,,,59856,Basel
+2014,2011833,Group stage,0,52280,Arsenal,52748,Marseille,2,0,,,52280,London
+2014,2011834,Group stage,0,52758,B. Dortmund,50136,Napoli,3,1,,,52758,Dortmund
+2014,2011835,Group stage,0,50064,Porto,50110,Austria Wien,1,1,,,,Porto
+2014,2011837,Group stage,0,50050,Celtic,50058,Milan,0,3,,,50058,Glasgow
+2014,2011838,Group stage,0,50143,Ajax,50080,Barcelona,2,1,,,50143,Amsterdam
+2014,2011829,Group stage,0,54266,CSKA Moskva,50037,Bayern München,1,3,,,50037,Moscow
+2014,2011823,Group stage,0,50109,Leverkusen,52682,Man Utd,0,5,,,52682,Leverkusen
+2014,2011824,Group stage,0,52707,Shakhtar,50123,Real Sociedad,4,0,,,52707,Donetsk
+2014,2011825,Group stage,0,50051,Real Madrid,50067,Galatasaray,4,1,,,50051,Madrid
+2014,2011826,Group stage,0,50139,Juventus,52709,Copenhagen,3,1,,,50139,Turin
+2014,2011827,Group stage,0,50074,Anderlecht,50147,Benfica,2,3,,,50147,Brussels
+2014,2011828,Group stage,0,52747,Paris,2610,Olympiacos,2,1,,,52747,Paris
+2014,2011830,Group stage,0,52919,Man City,64388,Viktoria Plzeň,4,2,,,52919,Manchester
+2014,2011847,Group stage,0,52682,Man Utd,52707,Shakhtar,1,0,,,52682,Manchester
+2014,2011848,Group stage,0,50123,Real Sociedad,50109,Leverkusen,0,1,,,50109,San Sebastian
+2014,2011850,Group stage,0,52709,Copenhagen,50051,Real Madrid,0,2,,,50051,Copenhagen
+2014,2011851,Group stage,0,50147,Benfica,52747,Paris,2,1,,,50147,Lisbon
+2014,2011852,Group stage,0,2610,Olympiacos,50074,Anderlecht,3,1,,,2610,Piraeus
+2014,2011853,Group stage,0,50037,Bayern München,52919,Man City,2,3,,,52919,Munich
+2014,2011854,Group stage,0,64388,Viktoria Plzeň,54266,CSKA Moskva,2,1,,,64388,Plzen
+2014,2011849,Group stage,0,50067,Galatasaray,50139,Juventus,1,0,,,50067,Istanbul
+2014,2011839,Group stage,0,57388,Schalke,59856,Basel,2,0,,,57388,Gelsenkirchen
+2014,2011840,Group stage,0,52914,Chelsea,2614166,Steaua București,1,0,,,52914,London
+2014,2011841,Group stage,0,52748,Marseille,52758,B. Dortmund,1,2,,,52758,Marseille
+2014,2011842,Group stage,0,50136,Napoli,52280,Arsenal,2,0,,,50136,Naples
+2014,2011843,Group stage,0,50110,Austria Wien,52826,Zenit,4,1,,,50110,Vienna
+2014,2011844,Group stage,0,50124,Atleti,50064,Porto,2,0,,,50124,Madrid
+2014,2011845,Group stage,0,50058,Milan,50143,Ajax,0,0,,,,Milan
+2014,2011846,Group stage,0,50080,Barcelona,50050,Celtic,6,1,,,50080,Barcelona
+2014,2011855,Round of 16,2,52919,Man City,50080,Barcelona,0,2,,,50080,Manchester
+2014,2011860,Round of 16,2,50109,Leverkusen,52747,Paris,0,4,,,52747,Leverkusen
+2014,2011858,Round of 16,2,52280,Arsenal,50037,Bayern München,0,2,,,50037,London
+2014,2011859,Round of 16,2,50058,Milan,50124,Atleti,0,1,,,50124,Milan
+2014,2011857,Round of 16,2,52826,Zenit,52758,B. Dortmund,2,4,,,52758,St Petersburg
+2014,2011856,Round of 16,2,2610,Olympiacos,52682,Man Utd,2,0,,,2610,Piraeus
+2014,2011861,Round of 16,2,50067,Galatasaray,52914,Chelsea,1,1,,,,Istanbul
+2014,2011862,Round of 16,2,57388,Schalke,50051,Real Madrid,1,6,,,50051,Gelsenkirchen
+2014,2011864,Round of 16,2,50037,Bayern München,52280,Arsenal,1,1,,,,Munich
+2014,2011869,Round of 16,2,50124,Atleti,50058,Milan,4,1,,,50124,Madrid
+2014,2011865,Round of 16,2,50080,Barcelona,52919,Man City,2,1,,,50080,Barcelona
+2014,2011870,Round of 16,2,52747,Paris,50109,Leverkusen,2,1,,,52747,Paris
+2014,2011867,Round of 16,2,52914,Chelsea,50067,Galatasaray,2,0,,,52914,London
+2014,2011868,Round of 16,2,50051,Real Madrid,57388,Schalke,3,1,,,50051,Madrid
+2014,2011863,Round of 16,2,52758,B. Dortmund,52826,Zenit,1,2,,,52826,Dortmund
+2014,2011866,Round of 16,2,52682,Man Utd,2610,Olympiacos,3,0,,,52682,Manchester
+2014,2011871,Quarter-finals,3,50080,Barcelona,50124,Atleti,1,1,,,,Barcelona
+2014,2011874,Quarter-finals,3,52682,Man Utd,50037,Bayern München,1,1,,,,Manchester
+2014,2011872,Quarter-finals,3,50051,Real Madrid,52758,B. Dortmund,3,0,,,50051,Madrid
+2014,2011873,Quarter-finals,3,52747,Paris,52914,Chelsea,3,1,,,52747,Paris
+2014,2011875,Quarter-finals,3,52914,Chelsea,52747,Paris,2,0,,,52914,London
+2014,2011878,Quarter-finals,3,52758,B. Dortmund,50051,Real Madrid,2,0,,,52758,Dortmund
+2014,2011876,Quarter-finals,3,50037,Bayern München,52682,Man Utd,3,1,,,50037,Munich
+2014,2011877,Quarter-finals,3,50124,Atleti,50080,Barcelona,1,0,,,50124,Madrid
+2014,2011879,Semi-finals,4,50124,Atleti,52914,Chelsea,0,0,,,,Madrid
+2014,2011880,Semi-finals,4,50051,Real Madrid,50037,Bayern München,1,0,,,50051,Madrid
+2014,2011881,Semi-finals,4,50037,Bayern München,50051,Real Madrid,0,4,,,50051,Munich
+2014,2011882,Semi-finals,4,52914,Chelsea,50124,Atleti,1,3,,,50124,London
+2014,2011883,Final,5,50051,Real Madrid,50124,Atleti,4,1,,,50051,Lisbon
+2015,2014315,Group stage,0,2610,Olympiacos,50124,Atleti,3,2,,,2610,Piraeus
+2015,2014316,Group stage,0,50139,Juventus,50152,Malmö,2,0,,,50139,Turin
+2015,2014317,Group stage,0,7889,Liverpool,2603104,Ludogorets,2,1,,,7889,Liverpool
+2015,2014318,Group stage,0,50051,Real Madrid,59856,Basel,5,1,,,50051,Madrid
+2015,2014319,Group stage,0,50023,Monaco,50109,Leverkusen,1,0,,,50023,Monaco
+2015,2014320,Group stage,0,50147,Benfica,52826,Zenit,0,2,,,52826,Lisbon
+2015,2014321,Group stage,0,50067,Galatasaray,50074,Anderlecht,1,1,,,,Istanbul
+2015,2014322,Group stage,0,52758,B. Dortmund,52280,Arsenal,2,0,,,52758,Dortmund
+2015,2014307,Group stage,0,50137,Roma,54266,CSKA Moskva,5,1,,,50137,Rome
+2015,2014308,Group stage,0,50037,Bayern München,52919,Man City,1,0,,,50037,Munich
+2015,2014309,Group stage,0,50080,Barcelona,50118,APOEL,1,0,,,50080,Barcelona
+2015,2014310,Group stage,0,50143,Ajax,52747,Paris,1,1,,,,Amsterdam
+2015,2014311,Group stage,0,52914,Chelsea,57388,Schalke,1,1,,,,London
+2015,2014312,Group stage,0,57490,Maribor,50149,Sporting CP,1,1,,,,Maribor
+2015,2014313,Group stage,0,50064,Porto,66168,BATE,6,0,,,50064,Porto
+2015,2014314,Group stage,0,50125,Athletic Club,52707,Shakhtar,0,0,,,,Bilbao
+2015,2014332,Group stage,0,54266,CSKA Moskva,50037,Bayern München,0,1,,,50037,Khimki
+2015,2014331,Group stage,0,52919,Man City,50137,Roma,1,1,,,,Manchester
+2015,2014333,Group stage,0,52747,Paris,50080,Barcelona,3,2,,,52747,Paris
+2015,2014334,Group stage,0,50118,APOEL,50143,Ajax,1,1,,,,Nicosia
+2015,2014335,Group stage,0,50149,Sporting CP,52914,Chelsea,0,1,,,52914,Lisbon
+2015,2014336,Group stage,0,57388,Schalke,57490,Maribor,1,1,,,,Gelsenkirchen
+2015,2014337,Group stage,0,52707,Shakhtar,50064,Porto,2,2,,,,Lviv
+2015,2014338,Group stage,0,66168,BATE,50125,Athletic Club,2,1,,,66168,Borisov
+2015,2014327,Group stage,0,52826,Zenit,50023,Monaco,0,0,,,,St Petersburg
+2015,2014323,Group stage,0,50152,Malmö,2610,Olympiacos,2,0,,,50152,Malmö
+2015,2014324,Group stage,0,50124,Atleti,50139,Juventus,1,0,,,50124,Madrid
+2015,2014325,Group stage,0,59856,Basel,7889,Liverpool,1,0,,,59856,Basel
+2015,2014326,Group stage,0,2603104,Ludogorets,50051,Real Madrid,1,2,,,50051,Sofia
+2015,2014328,Group stage,0,50109,Leverkusen,50147,Benfica,3,1,,,50109,Leverkusen
+2015,2014329,Group stage,0,52280,Arsenal,50067,Galatasaray,4,1,,,52280,London
+2015,2014330,Group stage,0,50074,Anderlecht,52758,B. Dortmund,0,3,,,52758,Brussels
+2015,2014347,Group stage,0,54266,CSKA Moskva,52919,Man City,2,2,,,,Khimki
+2015,2014348,Group stage,0,50137,Roma,50037,Bayern München,1,7,,,50037,Rome
+2015,2014349,Group stage,0,50118,APOEL,52747,Paris,0,1,,,52747,Nicosia
+2015,2014350,Group stage,0,50080,Barcelona,50143,Ajax,3,1,,,50080,Barcelona
+2015,2014351,Group stage,0,57388,Schalke,50149,Sporting CP,4,3,,,57388,Gelsenkirchen
+2015,2014352,Group stage,0,52914,Chelsea,57490,Maribor,6,0,,,52914,London
+2015,2014353,Group stage,0,66168,BATE,52707,Shakhtar,0,7,,,52707,Borisov
+2015,2014354,Group stage,0,50064,Porto,50125,Athletic Club,2,1,,,50064,Porto
+2015,2014339,Group stage,0,50124,Atleti,50152,Malmö,5,0,,,50124,Madrid
+2015,2014340,Group stage,0,2610,Olympiacos,50139,Juventus,1,0,,,2610,Piraeus
+2015,2014341,Group stage,0,2603104,Ludogorets,59856,Basel,1,0,,,2603104,Sofia
+2015,2014342,Group stage,0,7889,Liverpool,50051,Real Madrid,0,3,,,50051,Liverpool
+2015,2014343,Group stage,0,50109,Leverkusen,52826,Zenit,2,0,,,50109,Leverkusen
+2015,2014344,Group stage,0,50023,Monaco,50147,Benfica,0,0,,,,Monaco
+2015,2014345,Group stage,0,50074,Anderlecht,52280,Arsenal,1,2,,,52280,Brussels
+2015,2014346,Group stage,0,50067,Galatasaray,52758,B. Dortmund,0,4,,,52758,Istanbul
+2015,2014367,Group stage,0,52826,Zenit,50109,Leverkusen,1,2,,,50109,St Petersburg
+2015,2014363,Group stage,0,50152,Malmö,50124,Atleti,0,2,,,50124,Malmö
+2015,2014364,Group stage,0,50139,Juventus,2610,Olympiacos,3,2,,,50139,Turin
+2015,2014365,Group stage,0,59856,Basel,2603104,Ludogorets,4,0,,,59856,Basel
+2015,2014366,Group stage,0,50051,Real Madrid,7889,Liverpool,1,0,,,50051,Madrid
+2015,2014368,Group stage,0,50147,Benfica,50023,Monaco,1,0,,,50147,Lisbon
+2015,2014369,Group stage,0,52280,Arsenal,50074,Anderlecht,3,3,,,,London
+2015,2014370,Group stage,0,52758,B. Dortmund,50067,Galatasaray,4,1,,,52758,Dortmund
+2015,2014355,Group stage,0,52919,Man City,54266,CSKA Moskva,1,2,,,54266,Manchester
+2015,2014356,Group stage,0,50037,Bayern München,50137,Roma,2,0,,,50037,Munich
+2015,2014357,Group stage,0,52747,Paris,50118,APOEL,1,0,,,52747,Paris
+2015,2014358,Group stage,0,50143,Ajax,50080,Barcelona,0,2,,,50080,Amsterdam
+2015,2014359,Group stage,0,50149,Sporting CP,57388,Schalke,4,2,,,50149,Lisbon
+2015,2014360,Group stage,0,57490,Maribor,52914,Chelsea,1,1,,,,Maribor
+2015,2014361,Group stage,0,52707,Shakhtar,66168,BATE,5,0,,,52707,Lviv
+2015,2014362,Group stage,0,50125,Athletic Club,50064,Porto,0,2,,,50064,Bilbao
+2015,2014379,Group stage,0,54266,CSKA Moskva,50137,Roma,1,1,,,,Khimki
+2015,2014385,Group stage,0,66168,BATE,50064,Porto,0,3,,,50064,Borisov
+2015,2014380,Group stage,0,52919,Man City,50037,Bayern München,3,2,,,52919,Manchester
+2015,2014381,Group stage,0,50118,APOEL,50080,Barcelona,0,4,,,50080,Nicosia
+2015,2014382,Group stage,0,52747,Paris,50143,Ajax,3,1,,,52747,Paris
+2015,2014383,Group stage,0,57388,Schalke,52914,Chelsea,0,5,,,52914,Gelsenkirchen
+2015,2014384,Group stage,0,50149,Sporting CP,57490,Maribor,3,1,,,50149,Lisbon
+2015,2014386,Group stage,0,52707,Shakhtar,50125,Athletic Club,0,1,,,50125,Lviv
+2015,2014376,Group stage,0,52826,Zenit,50147,Benfica,1,0,,,52826,St Petersburg
+2015,2014371,Group stage,0,50124,Atleti,2610,Olympiacos,4,0,,,50124,Madrid
+2015,2014372,Group stage,0,50152,Malmö,50139,Juventus,0,2,,,50139,Malmö
+2015,2014373,Group stage,0,2603104,Ludogorets,7889,Liverpool,2,2,,,,Sofia
+2015,2014374,Group stage,0,59856,Basel,50051,Real Madrid,0,1,,,50051,Basel
+2015,2014375,Group stage,0,50109,Leverkusen,50023,Monaco,0,1,,,50023,Leverkusen
+2015,2014377,Group stage,0,50074,Anderlecht,50067,Galatasaray,2,0,,,50074,Brussels
+2015,2014378,Group stage,0,52280,Arsenal,52758,B. Dortmund,2,0,,,52280,London
+2015,2014395,Group stage,0,2610,Olympiacos,50152,Malmö,4,2,,,2610,Piraeus
+2015,2014396,Group stage,0,50139,Juventus,50124,Atleti,0,0,,,,Turin
+2015,2014397,Group stage,0,7889,Liverpool,59856,Basel,1,1,,,,Liverpool
+2015,2014398,Group stage,0,50051,Real Madrid,2603104,Ludogorets,4,0,,,50051,Madrid
+2015,2014399,Group stage,0,50023,Monaco,52826,Zenit,2,0,,,50023,Monaco
+2015,2014400,Group stage,0,50147,Benfica,50109,Leverkusen,0,0,,,,Lisbon
+2015,2014401,Group stage,0,50067,Galatasaray,52280,Arsenal,1,4,,,52280,Istanbul
+2015,2014402,Group stage,0,52758,B. Dortmund,50074,Anderlecht,1,1,,,,Dortmund
+2015,2014387,Group stage,0,50137,Roma,52919,Man City,0,2,,,52919,Rome
+2015,2014388,Group stage,0,50037,Bayern München,54266,CSKA Moskva,3,0,,,50037,Munich
+2015,2014389,Group stage,0,50080,Barcelona,52747,Paris,3,1,,,50080,Barcelona
+2015,2014390,Group stage,0,50143,Ajax,50118,APOEL,4,0,,,50143,Amsterdam
+2015,2014391,Group stage,0,52914,Chelsea,50149,Sporting CP,3,1,,,52914,London
+2015,2014392,Group stage,0,57490,Maribor,57388,Schalke,0,1,,,57388,Maribor
+2015,2014393,Group stage,0,50064,Porto,52707,Shakhtar,1,1,,,,Porto
+2015,2014394,Group stage,0,50125,Athletic Club,66168,BATE,2,0,,,50125,Bilbao
+2015,2014403,Round of 16,2,52747,Paris,52914,Chelsea,1,1,,,,Paris
+2015,2014410,Round of 16,2,52707,Shakhtar,50037,Bayern München,0,0,,,,Lviv
+2015,2014406,Round of 16,2,59856,Basel,50064,Porto,1,1,,,,Basel
+2015,2014409,Round of 16,2,57388,Schalke,50051,Real Madrid,0,2,,,50051,Gelsenkirchen
+2015,2014404,Round of 16,2,52919,Man City,50080,Barcelona,1,2,,,50080,Manchester
+2015,2014408,Round of 16,2,50139,Juventus,52758,B. Dortmund,2,1,,,50139,Turin
+2015,2014405,Round of 16,2,52280,Arsenal,50023,Monaco,1,3,,,50023,London
+2015,2014407,Round of 16,2,50109,Leverkusen,50124,Atleti,1,0,,,50109,Leverkusen
+2015,2014412,Round of 16,2,50064,Porto,59856,Basel,4,0,,,50064,Porto
+2015,2014415,Round of 16,2,50051,Real Madrid,57388,Schalke,3,4,,,57388,Madrid
+2015,2014413,Round of 16,2,52914,Chelsea,52747,Paris,2,2,,,,London
+2015,2014416,Round of 16,2,50037,Bayern München,52707,Shakhtar,7,0,,,50037,Munich
+2015,2014411,Round of 16,2,50023,Monaco,52280,Arsenal,0,2,,,52280,Monaco
+2015,2014417,Round of 16,2,50124,Atleti,50109,Leverkusen,1,0,3.0,2.0,50124,Madrid
+2015,2014414,Round of 16,2,50080,Barcelona,52919,Man City,1,0,,,50080,Barcelona
+2015,2014418,Round of 16,2,52758,B. Dortmund,50139,Juventus,0,3,,,50139,Dortmund
+2015,2014420,Quarter-finals,3,50124,Atleti,50051,Real Madrid,0,0,,,,Madrid
+2015,2014422,Quarter-finals,3,50139,Juventus,50023,Monaco,1,0,,,50139,Turin
+2015,2014419,Quarter-finals,3,52747,Paris,50080,Barcelona,1,3,,,50080,Paris
+2015,2014421,Quarter-finals,3,50064,Porto,50037,Bayern München,3,1,,,50064,Porto
+2015,2014423,Quarter-finals,3,50037,Bayern München,50064,Porto,6,1,,,50037,Munich
+2015,2014425,Quarter-finals,3,50080,Barcelona,52747,Paris,2,0,,,50080,Barcelona
+2015,2014424,Quarter-finals,3,50023,Monaco,50139,Juventus,0,0,,,,Monaco
+2015,2014426,Quarter-finals,3,50051,Real Madrid,50124,Atleti,1,0,,,50051,Madrid
+2015,2014427,Semi-finals,4,50139,Juventus,50051,Real Madrid,2,1,,,50139,Turin
+2015,2014428,Semi-finals,4,50080,Barcelona,50037,Bayern München,3,0,,,50080,Barcelona
+2015,2014429,Semi-finals,4,50037,Bayern München,50080,Barcelona,3,2,,,50037,Munich
+2015,2014430,Semi-finals,4,50051,Real Madrid,50139,Juventus,1,1,,,,Madrid
+2015,2015227,Final,5,50139,Juventus,50080,Barcelona,1,3,,,50080,Berlin
+2016,2015665,Group stage,0,52747,Paris,50152,Malmö,2,0,,,52747,Paris
+2016,2015666,Group stage,0,50051,Real Madrid,52707,Shakhtar,4,0,,,50051,Madrid
+2016,2015667,Group stage,0,64332,Wolfsburg,54266,CSKA Moskva,1,0,,,64332,Wolfsburg
+2016,2015668,Group stage,0,50062,PSV,52682,Man Utd,2,1,,,50062,Eindhoven
+2016,2015669,Group stage,0,50067,Galatasaray,50124,Atleti,0,2,,,50124,Istanbul
+2016,2015671,Group stage,0,52919,Man City,50139,Juventus,1,2,,,50139,Manchester
+2016,2015672,Group stage,0,52714,Sevilla,52757,Mönchengladbach,3,0,,,52714,Seville
+2016,2015670,Group stage,0,50147,Benfica,2600605,Astana,2,0,,,50147,Lisbon
+2016,2015673,Group stage,0,50109,Leverkusen,66168,BATE,4,1,,,50109,Leverkusen
+2016,2015674,Group stage,0,50137,Roma,50080,Barcelona,1,1,,,,Rome
+2016,2015675,Group stage,0,50164,GNK Dinamo,52280,Arsenal,2,1,,,50164,Zagreb
+2016,2015676,Group stage,0,2610,Olympiacos,50037,Bayern München,0,3,,,50037,Piraeus
+2016,2015677,Group stage,0,52723,Dynamo Kyiv,50064,Porto,2,2,,,,Kyiv
+2016,2015678,Group stage,0,52914,Chelsea,57477,M. Tel-Aviv,4,0,,,52914,London
+2016,2015679,Group stage,0,52268,Valencia,52826,Zenit,2,3,,,52826,Valencia
+2016,2015680,Group stage,0,4608,Gent,5312,Lyon,1,1,,,,Ghent
+2016,2015681,Group stage,0,50080,Barcelona,50109,Leverkusen,2,1,,,50080,Barcelona
+2016,2015682,Group stage,0,66168,BATE,50137,Roma,3,2,,,66168,Borisov
+2016,2015683,Group stage,0,50037,Bayern München,50164,GNK Dinamo,5,0,,,50037,Munich
+2016,2015684,Group stage,0,52280,Arsenal,2610,Olympiacos,2,3,,,2610,London
+2016,2015685,Group stage,0,57477,M. Tel-Aviv,52723,Dynamo Kyiv,0,2,,,52723,Haifa
+2016,2015686,Group stage,0,50064,Porto,52914,Chelsea,2,1,,,50064,Porto
+2016,2015687,Group stage,0,5312,Lyon,52268,Valencia,0,1,,,52268,Lyon
+2016,2015688,Group stage,0,52826,Zenit,4608,Gent,2,1,,,52826,St Petersburg
+2016,2015693,Group stage,0,2600605,Astana,50067,Galatasaray,2,2,,,,Astana
+2016,2015689,Group stage,0,52707,Shakhtar,52747,Paris,0,3,,,52747,Lviv
+2016,2015690,Group stage,0,50152,Malmö,50051,Real Madrid,0,2,,,50051,Malmö
+2016,2015691,Group stage,0,52682,Man Utd,64332,Wolfsburg,2,1,,,52682,Manchester
+2016,2015692,Group stage,0,54266,CSKA Moskva,50062,PSV,3,2,,,54266,Khimki
+2016,2015694,Group stage,0,50124,Atleti,50147,Benfica,1,2,,,50147,Madrid
+2016,2015695,Group stage,0,52757,Mönchengladbach,52919,Man City,1,2,,,52919,Monchengladbach
+2016,2015696,Group stage,0,50139,Juventus,52714,Sevilla,2,0,,,50139,Turin
+2016,2015697,Group stage,0,66168,BATE,50080,Barcelona,0,2,,,50080,Borisov
+2016,2015698,Group stage,0,50109,Leverkusen,50137,Roma,4,4,,,,Leverkusen
+2016,2015699,Group stage,0,52280,Arsenal,50037,Bayern München,2,0,,,52280,London
+2016,2015700,Group stage,0,50164,GNK Dinamo,2610,Olympiacos,0,1,,,2610,Zagreb
+2016,2015701,Group stage,0,50064,Porto,57477,M. Tel-Aviv,2,0,,,50064,Porto
+2016,2015702,Group stage,0,52723,Dynamo Kyiv,52914,Chelsea,0,0,,,,Kyiv
+2016,2015703,Group stage,0,52826,Zenit,5312,Lyon,3,1,,,52826,St Petersburg
+2016,2015704,Group stage,0,52268,Valencia,4608,Gent,2,1,,,52268,Valencia
+2016,2015705,Group stage,0,50152,Malmö,52707,Shakhtar,1,0,,,50152,Malmö
+2016,2015706,Group stage,0,52747,Paris,50051,Real Madrid,0,0,,,,Paris
+2016,2015707,Group stage,0,54266,CSKA Moskva,52682,Man Utd,1,1,,,,Khimki
+2016,2015708,Group stage,0,64332,Wolfsburg,50062,PSV,2,0,,,64332,Wolfsburg
+2016,2015709,Group stage,0,50124,Atleti,2600605,Astana,4,0,,,50124,Madrid
+2016,2015710,Group stage,0,50067,Galatasaray,50147,Benfica,2,1,,,50067,Istanbul
+2016,2015711,Group stage,0,50139,Juventus,52757,Mönchengladbach,0,0,,,,Turin
+2016,2015712,Group stage,0,52919,Man City,52714,Sevilla,2,1,,,52919,Manchester
+2016,2015717,Group stage,0,2600605,Astana,50124,Atleti,0,0,,,,Astana
+2016,2015713,Group stage,0,52707,Shakhtar,50152,Malmö,4,0,,,52707,Lviv
+2016,2015714,Group stage,0,50051,Real Madrid,52747,Paris,1,0,,,50051,Madrid
+2016,2015715,Group stage,0,52682,Man Utd,54266,CSKA Moskva,1,0,,,52682,Manchester
+2016,2015716,Group stage,0,50062,PSV,64332,Wolfsburg,2,0,,,50062,Eindhoven
+2016,2015718,Group stage,0,50147,Benfica,50067,Galatasaray,2,1,,,50147,Lisbon
+2016,2015719,Group stage,0,52757,Mönchengladbach,50139,Juventus,1,1,,,,Monchengladbach
+2016,2015720,Group stage,0,52714,Sevilla,52919,Man City,1,3,,,52919,Seville
+2016,2015721,Group stage,0,50080,Barcelona,66168,BATE,3,0,,,50080,Barcelona
+2016,2015722,Group stage,0,50137,Roma,50109,Leverkusen,3,2,,,50137,Rome
+2016,2015723,Group stage,0,50037,Bayern München,52280,Arsenal,5,1,,,50037,Munich
+2016,2015724,Group stage,0,2610,Olympiacos,50164,GNK Dinamo,2,1,,,2610,Piraeus
+2016,2015725,Group stage,0,57477,M. Tel-Aviv,50064,Porto,1,3,,,50064,Haifa
+2016,2015726,Group stage,0,52914,Chelsea,52723,Dynamo Kyiv,2,1,,,52914,London
+2016,2015727,Group stage,0,5312,Lyon,52826,Zenit,0,2,,,52826,Lyon
+2016,2015728,Group stage,0,4608,Gent,52268,Valencia,1,0,,,4608,Ghent
+2016,2015729,Group stage,0,66168,BATE,50109,Leverkusen,1,1,,,,Borisov
+2016,2015735,Group stage,0,52826,Zenit,52268,Valencia,2,0,,,52826,St Petersburg
+2016,2015730,Group stage,0,50080,Barcelona,50137,Roma,6,1,,,50080,Barcelona
+2016,2015731,Group stage,0,52280,Arsenal,50164,GNK Dinamo,3,0,,,52280,London
+2016,2015732,Group stage,0,50037,Bayern München,2610,Olympiacos,4,0,,,50037,Munich
+2016,2015733,Group stage,0,50064,Porto,52723,Dynamo Kyiv,0,2,,,52723,Porto
+2016,2015734,Group stage,0,57477,M. Tel-Aviv,52914,Chelsea,0,4,,,52914,Haifa
+2016,2015736,Group stage,0,5312,Lyon,4608,Gent,1,2,,,4608,Lyon
+2016,2015742,Group stage,0,2600605,Astana,50147,Benfica,2,2,,,,Astana
+2016,2015739,Group stage,0,54266,CSKA Moskva,64332,Wolfsburg,0,2,,,64332,Khimki
+2016,2015737,Group stage,0,50152,Malmö,52747,Paris,0,5,,,52747,Malmö
+2016,2015738,Group stage,0,52707,Shakhtar,50051,Real Madrid,3,4,,,50051,Lviv
+2016,2015740,Group stage,0,52682,Man Utd,50062,PSV,0,0,,,,Manchester
+2016,2015741,Group stage,0,50124,Atleti,50067,Galatasaray,2,0,,,50124,Madrid
+2016,2015743,Group stage,0,50139,Juventus,52919,Man City,1,0,,,50139,Turin
+2016,2015744,Group stage,0,52757,Mönchengladbach,52714,Sevilla,4,2,,,52757,Monchengladbach
+2016,2015745,Group stage,0,52747,Paris,52707,Shakhtar,2,0,,,52747,Paris
+2016,2015746,Group stage,0,50051,Real Madrid,50152,Malmö,8,0,,,50051,Madrid
+2016,2015747,Group stage,0,64332,Wolfsburg,52682,Man Utd,3,2,,,64332,Wolfsburg
+2016,2015748,Group stage,0,50062,PSV,54266,CSKA Moskva,2,1,,,50062,Eindhoven
+2016,2015749,Group stage,0,50067,Galatasaray,2600605,Astana,1,1,,,,Istanbul
+2016,2015750,Group stage,0,50147,Benfica,50124,Atleti,1,2,,,50124,Lisbon
+2016,2015751,Group stage,0,52919,Man City,52757,Mönchengladbach,4,2,,,52919,Manchester
+2016,2015752,Group stage,0,52714,Sevilla,50139,Juventus,1,0,,,52714,Seville
+2016,2015753,Group stage,0,50109,Leverkusen,50080,Barcelona,1,1,,,,Leverkusen
+2016,2015754,Group stage,0,50137,Roma,66168,BATE,0,0,,,,Rome
+2016,2015755,Group stage,0,50164,GNK Dinamo,50037,Bayern München,0,2,,,50037,Zagreb
+2016,2015756,Group stage,0,2610,Olympiacos,52280,Arsenal,0,3,,,52280,Piraeus
+2016,2015757,Group stage,0,52723,Dynamo Kyiv,57477,M. Tel-Aviv,1,0,,,52723,Kyiv
+2016,2015758,Group stage,0,52914,Chelsea,50064,Porto,2,0,,,52914,London
+2016,2015759,Group stage,0,52268,Valencia,5312,Lyon,0,2,,,5312,Valencia
+2016,2015760,Group stage,0,4608,Gent,52826,Zenit,2,1,,,4608,Ghent
+2016,2015763,Round of 16,2,50147,Benfica,52826,Zenit,1,0,,,50147,Lisbon
+2016,2015765,Round of 16,2,52747,Paris,52914,Chelsea,2,1,,,52747,Paris
+2016,2015761,Round of 16,2,4608,Gent,64332,Wolfsburg,2,3,,,64332,Ghent
+2016,2015762,Round of 16,2,50137,Roma,50051,Real Madrid,0,2,,,50051,Rome
+2016,2015766,Round of 16,2,52280,Arsenal,50080,Barcelona,0,2,,,50080,London
+2016,2015767,Round of 16,2,50139,Juventus,50037,Bayern München,2,2,,,,Turin
+2016,2015764,Round of 16,2,52723,Dynamo Kyiv,52919,Man City,1,3,,,52919,Kyiv
+2016,2015768,Round of 16,2,50062,PSV,50124,Atleti,0,0,,,,Eindhoven
+2016,2015771,Round of 16,2,64332,Wolfsburg,4608,Gent,1,0,,,64332,Wolfsburg
+2016,2015772,Round of 16,2,50051,Real Madrid,50137,Roma,2,0,,,50051,Madrid
+2016,2015769,Round of 16,2,52826,Zenit,50147,Benfica,1,2,,,50147,St Petersburg
+2016,2015775,Round of 16,2,52914,Chelsea,52747,Paris,1,2,,,52747,London
+2016,2015770,Round of 16,2,52919,Man City,52723,Dynamo Kyiv,0,0,,,,Manchester
+2016,2015774,Round of 16,2,50124,Atleti,50062,PSV,0,0,8.0,7.0,,Madrid
+2016,2015773,Round of 16,2,50037,Bayern München,50139,Juventus,4,2,,,50037,Munich
+2016,2015776,Round of 16,2,50080,Barcelona,52280,Arsenal,3,1,,,50080,Barcelona
+2016,2015778,Quarter-finals,3,50037,Bayern München,50147,Benfica,1,0,,,50037,Munich
+2016,2015779,Quarter-finals,3,50080,Barcelona,50124,Atleti,2,1,,,50080,Barcelona
+2016,2015777,Quarter-finals,3,64332,Wolfsburg,50051,Real Madrid,2,0,,,64332,Wolfsburg
+2016,2015780,Quarter-finals,3,52747,Paris,52919,Man City,2,2,,,,Paris
+2016,2015782,Quarter-finals,3,52919,Man City,52747,Paris,1,0,,,52919,Manchester
+2016,2015783,Quarter-finals,3,50051,Real Madrid,64332,Wolfsburg,3,0,,,50051,Madrid
+2016,2015781,Quarter-finals,3,50124,Atleti,50080,Barcelona,2,0,,,50124,Madrid
+2016,2015784,Quarter-finals,3,50147,Benfica,50037,Bayern München,2,2,,,,Lisbon
+2016,2015785,Semi-finals,4,52919,Man City,50051,Real Madrid,0,0,,,,Manchester
+2016,2015786,Semi-finals,4,50124,Atleti,50037,Bayern München,1,0,,,50124,Madrid
+2016,2015787,Semi-finals,4,50037,Bayern München,50124,Atleti,2,1,,,50037,Munich
+2016,2015788,Semi-finals,4,50051,Real Madrid,52919,Man City,1,0,,,50051,Madrid
+2016,2015789,Final,5,50051,Real Madrid,50124,Atleti,1,1,5.0,3.0,50051,Milan
+2017,2019282,Group stage,0,52747,Paris,52280,Arsenal,1,1,,,,Paris
+2017,2019283,Group stage,0,59856,Basel,2603104,Ludogorets,1,1,,,,Basel
+2017,2019284,Group stage,0,52723,Dynamo Kyiv,50136,Napoli,1,2,,,50136,Kyiv
+2017,2019285,Group stage,0,50147,Benfica,50157,Beşiktaş,1,1,,,,Lisbon
+2017,2019286,Group stage,0,50080,Barcelona,50050,Celtic,7,0,,,50080,Barcelona
+2017,2019288,Group stage,0,50037,Bayern München,64500,Rostov,5,0,,,50037,Munich
+2017,2019289,Group stage,0,50062,PSV,50124,Atleti,0,1,,,50124,Eindhoven
+2017,2019287,Group stage,0,52919,Man City,52757,Mönchengladbach,4,0,,,52919,Manchester
+2017,2019290,Group stage,0,50109,Leverkusen,54266,CSKA Moskva,2,2,,,,Leverkusen
+2017,2019291,Group stage,0,1652,Tottenham,50023,Monaco,1,2,,,50023,London
+2017,2019292,Group stage,0,50051,Real Madrid,50149,Sporting CP,2,1,,,50051,Madrid
+2017,2019293,Group stage,0,50146,Legia Warszawa,52758,B. Dortmund,0,6,,,52758,Warsaw
+2017,2019294,Group stage,0,50043,Club Brugge,53577,Leicester,0,3,,,53577,Bruges
+2017,2019295,Group stage,0,50064,Porto,52709,Copenhagen,1,1,,,,Porto
+2017,2019296,Group stage,0,5312,Lyon,50164,GNK Dinamo,3,0,,,5312,Décines
+2017,2019297,Group stage,0,50139,Juventus,52714,Sevilla,0,0,,,,Turin
+2017,2019298,Group stage,0,50023,Monaco,50109,Leverkusen,1,1,,,,Monaco
+2017,2019299,Group stage,0,54266,CSKA Moskva,1652,Tottenham,0,1,,,1652,Moscow
+2017,2019300,Group stage,0,52758,B. Dortmund,50051,Real Madrid,2,2,,,,Dortmund
+2017,2019301,Group stage,0,50149,Sporting CP,50146,Legia Warszawa,2,0,,,50149,Lisbon
+2017,2019302,Group stage,0,52709,Copenhagen,50043,Club Brugge,4,0,,,52709,Copenhagen
+2017,2019303,Group stage,0,53577,Leicester,50064,Porto,1,0,,,53577,Leicester
+2017,2019304,Group stage,0,52714,Sevilla,5312,Lyon,1,0,,,52714,Seville
+2017,2019305,Group stage,0,50164,GNK Dinamo,50139,Juventus,0,4,,,50139,Zagreb
+2017,2019306,Group stage,0,2603104,Ludogorets,52747,Paris,1,3,,,52747,Sofia
+2017,2019307,Group stage,0,52280,Arsenal,59856,Basel,2,0,,,52280,London
+2017,2019308,Group stage,0,50157,Beşiktaş,52723,Dynamo Kyiv,1,1,,,,Istanbul
+2017,2019309,Group stage,0,50136,Napoli,50147,Benfica,4,2,,,50136,Naples
+2017,2019310,Group stage,0,52757,Mönchengladbach,50080,Barcelona,1,2,,,50080,Monchengladbach
+2017,2019311,Group stage,0,50050,Celtic,52919,Man City,3,3,,,,Glasgow
+2017,2019312,Group stage,0,50124,Atleti,50037,Bayern München,1,0,,,50124,Madrid
+2017,2019313,Group stage,0,64500,Rostov,50062,PSV,2,2,,,,Rostov-on-Don
+2017,2019314,Group stage,0,54266,CSKA Moskva,50023,Monaco,1,1,,,,Moscow
+2017,2019315,Group stage,0,50109,Leverkusen,1652,Tottenham,0,0,,,,Leverkusen
+2017,2019316,Group stage,0,50149,Sporting CP,52758,B. Dortmund,1,2,,,52758,Lisbon
+2017,2019317,Group stage,0,50051,Real Madrid,50146,Legia Warszawa,5,1,,,50051,Madrid
+2017,2019318,Group stage,0,53577,Leicester,52709,Copenhagen,1,0,,,53577,Leicester
+2017,2019319,Group stage,0,50043,Club Brugge,50064,Porto,1,2,,,50064,Bruges
+2017,2019320,Group stage,0,50164,GNK Dinamo,52714,Sevilla,0,1,,,52714,Zagreb
+2017,2019321,Group stage,0,5312,Lyon,50139,Juventus,0,1,,,50139,Décines
+2017,2019322,Group stage,0,52280,Arsenal,2603104,Ludogorets,6,0,,,52280,London
+2017,2019323,Group stage,0,52747,Paris,59856,Basel,3,0,,,52747,Paris
+2017,2019324,Group stage,0,50136,Napoli,50157,Beşiktaş,2,3,,,50157,Naples
+2017,2019325,Group stage,0,52723,Dynamo Kyiv,50147,Benfica,0,2,,,50147,Kyiv
+2017,2019326,Group stage,0,50050,Celtic,52757,Mönchengladbach,0,2,,,52757,Glasgow
+2017,2019327,Group stage,0,50080,Barcelona,52919,Man City,4,0,,,50080,Barcelona
+2017,2019328,Group stage,0,64500,Rostov,50124,Atleti,0,1,,,50124,Rostov-on-Don
+2017,2019329,Group stage,0,50037,Bayern München,50062,PSV,4,1,,,50037,Munich
+2017,2019332,Group stage,0,50157,Beşiktaş,50136,Napoli,1,1,,,,Istanbul
+2017,2019330,Group stage,0,2603104,Ludogorets,52280,Arsenal,2,3,,,52280,Sofia
+2017,2019331,Group stage,0,59856,Basel,52747,Paris,1,2,,,52747,Basel
+2017,2019333,Group stage,0,50147,Benfica,52723,Dynamo Kyiv,1,0,,,50147,Lisbon
+2017,2019334,Group stage,0,52757,Mönchengladbach,50050,Celtic,1,1,,,,Monchengladbach
+2017,2019335,Group stage,0,52919,Man City,50080,Barcelona,3,1,,,52919,Manchester
+2017,2019336,Group stage,0,50124,Atleti,64500,Rostov,2,1,,,50124,Madrid
+2017,2019337,Group stage,0,50062,PSV,50037,Bayern München,1,2,,,50037,Eindhoven
+2017,2019338,Group stage,0,50023,Monaco,54266,CSKA Moskva,3,0,,,50023,Monaco
+2017,2019339,Group stage,0,1652,Tottenham,50109,Leverkusen,0,1,,,50109,London
+2017,2019340,Group stage,0,52758,B. Dortmund,50149,Sporting CP,1,0,,,52758,Dortmund
+2017,2019341,Group stage,0,50146,Legia Warszawa,50051,Real Madrid,3,3,,,,Warsaw
+2017,2019342,Group stage,0,52709,Copenhagen,53577,Leicester,0,0,,,,Copenhagen
+2017,2019343,Group stage,0,50064,Porto,50043,Club Brugge,1,0,,,50064,Porto
+2017,2019344,Group stage,0,52714,Sevilla,50164,GNK Dinamo,4,0,,,52714,Seville
+2017,2019345,Group stage,0,50139,Juventus,5312,Lyon,1,1,,,,Turin
+2017,2019346,Group stage,0,54266,CSKA Moskva,50109,Leverkusen,1,1,,,,Moscow
+2017,2019347,Group stage,0,50023,Monaco,1652,Tottenham,2,1,,,50023,Monaco
+2017,2019348,Group stage,0,50149,Sporting CP,50051,Real Madrid,1,2,,,50051,Lisbon
+2017,2019349,Group stage,0,52758,B. Dortmund,50146,Legia Warszawa,8,4,,,52758,Dortmund
+2017,2019350,Group stage,0,53577,Leicester,50043,Club Brugge,2,1,,,53577,Leicester
+2017,2019351,Group stage,0,52709,Copenhagen,50064,Porto,0,0,,,,Copenhagen
+2017,2019352,Group stage,0,50164,GNK Dinamo,5312,Lyon,0,1,,,5312,Zagreb
+2017,2019353,Group stage,0,52714,Sevilla,50139,Juventus,1,3,,,50139,Seville
+2017,2019360,Group stage,0,64500,Rostov,50037,Bayern München,3,2,,,64500,Rostov-on-Don
+2017,2019357,Group stage,0,50157,Beşiktaş,50147,Benfica,3,3,,,,Istanbul
+2017,2019354,Group stage,0,52280,Arsenal,52747,Paris,2,2,,,,London
+2017,2019355,Group stage,0,2603104,Ludogorets,59856,Basel,0,0,,,,Sofia
+2017,2019356,Group stage,0,50136,Napoli,52723,Dynamo Kyiv,0,0,,,,Naples
+2017,2019358,Group stage,0,50050,Celtic,50080,Barcelona,0,2,,,50080,Glasgow
+2017,2019359,Group stage,0,52757,Mönchengladbach,52919,Man City,1,1,,,,Monchengladbach
+2017,2019361,Group stage,0,50124,Atleti,50062,PSV,2,0,,,50124,Madrid
+2017,2019362,Group stage,0,52747,Paris,2603104,Ludogorets,2,2,,,,Paris
+2017,2019363,Group stage,0,59856,Basel,52280,Arsenal,1,4,,,52280,Basel
+2017,2019364,Group stage,0,52723,Dynamo Kyiv,50157,Beşiktaş,6,0,,,52723,Kyiv
+2017,2019365,Group stage,0,50147,Benfica,50136,Napoli,1,2,,,50136,Lisbon
+2017,2019366,Group stage,0,50080,Barcelona,52757,Mönchengladbach,4,0,,,50080,Barcelona
+2017,2019367,Group stage,0,52919,Man City,50050,Celtic,1,1,,,,Manchester
+2017,2019368,Group stage,0,50037,Bayern München,50124,Atleti,1,0,,,50037,Munich
+2017,2019369,Group stage,0,50062,PSV,64500,Rostov,0,0,,,,Eindhoven
+2017,2019370,Group stage,0,50109,Leverkusen,50023,Monaco,3,0,,,50109,Leverkusen
+2017,2019371,Group stage,0,1652,Tottenham,54266,CSKA Moskva,3,1,,,1652,London
+2017,2019372,Group stage,0,50051,Real Madrid,52758,B. Dortmund,2,2,,,,Madrid
+2017,2019373,Group stage,0,50146,Legia Warszawa,50149,Sporting CP,1,0,,,50146,Warsaw
+2017,2019374,Group stage,0,50043,Club Brugge,52709,Copenhagen,0,2,,,52709,Bruges
+2017,2019375,Group stage,0,50064,Porto,53577,Leicester,5,0,,,50064,Porto
+2017,2019376,Group stage,0,5312,Lyon,52714,Sevilla,0,0,,,,Décines
+2017,2019377,Group stage,0,50139,Juventus,50164,GNK Dinamo,2,0,,,50139,Turin
+2017,2019615,Round of 16,2,52747,Paris,50080,Barcelona,4,0,,,52747,Paris
+2017,2019617,Round of 16,2,50147,Benfica,52758,B. Dortmund,1,0,,,50147,Lisbon
+2017,2019614,Round of 16,2,50051,Real Madrid,50136,Napoli,3,1,,,50051,Madrid
+2017,2019618,Round of 16,2,50037,Bayern München,52280,Arsenal,5,1,,,50037,Munich
+2017,2019613,Round of 16,2,52919,Man City,50023,Monaco,5,3,,,52919,Manchester
+2017,2019620,Round of 16,2,50109,Leverkusen,50124,Atleti,2,4,,,50124,Leverkusen
+2017,2019616,Round of 16,2,52714,Sevilla,53577,Leicester,2,1,,,52714,Seville
+2017,2019619,Round of 16,2,50064,Porto,50139,Juventus,0,2,,,50139,Porto
+2017,2019624,Round of 16,2,50136,Napoli,50051,Real Madrid,1,3,,,50051,Naples
+2017,2019628,Round of 16,2,52280,Arsenal,50037,Bayern München,1,5,,,50037,London
+2017,2019621,Round of 16,2,50080,Barcelona,52747,Paris,6,1,,,50080,Barcelona
+2017,2019627,Round of 16,2,52758,B. Dortmund,50147,Benfica,4,0,,,52758,Dortmund
+2017,2019622,Round of 16,2,53577,Leicester,52714,Sevilla,2,0,,,53577,Leicester
+2017,2019625,Round of 16,2,50139,Juventus,50064,Porto,1,0,,,50139,Turin
+2017,2019623,Round of 16,2,50023,Monaco,52919,Man City,3,1,,,50023,Monaco
+2017,2019626,Round of 16,2,50124,Atleti,50109,Leverkusen,0,0,,,,Madrid
+2017,2019632,Quarter-finals,3,50139,Juventus,50080,Barcelona,3,0,,,50139,Turin
+2017,2019630,Quarter-finals,3,52758,B. Dortmund,50023,Monaco,2,3,,,50023,Dortmund
+2017,2019629,Quarter-finals,3,50124,Atleti,53577,Leicester,1,0,,,50124,Madrid
+2017,2019631,Quarter-finals,3,50037,Bayern München,50051,Real Madrid,1,2,,,50051,Munich
+2017,2019633,Quarter-finals,3,50051,Real Madrid,50037,Bayern München,4,2,,,50051,Madrid
+2017,2019635,Quarter-finals,3,53577,Leicester,50124,Atleti,1,1,,,,Leicester
+2017,2019634,Quarter-finals,3,50080,Barcelona,50139,Juventus,0,0,,,,Barcelona
+2017,2019636,Quarter-finals,3,50023,Monaco,52758,B. Dortmund,3,1,,,50023,Monaco
+2017,2019638,Semi-finals,4,50051,Real Madrid,50124,Atleti,3,0,,,50051,Madrid
+2017,2019637,Semi-finals,4,50023,Monaco,50139,Juventus,0,2,,,50139,Monaco
+2017,2019640,Semi-finals,4,50139,Juventus,50023,Monaco,2,1,,,50139,Turin
+2017,2019639,Semi-finals,4,50124,Atleti,50051,Real Madrid,2,1,,,50124,Madrid
+2017,2019641,Final,5,50139,Juventus,50051,Real Madrid,1,4,,,50051,Cardiff
+2018,2021587,Group stage,0,50147,Benfica,54266,CSKA Moskva,1,2,,,54266,Lisbon
+2018,2021588,Group stage,0,52682,Man Utd,59856,Basel,3,0,,,52682,Manchester
+2018,2021589,Group stage,0,50037,Bayern München,50074,Anderlecht,3,0,,,50037,Munich
+2018,2021590,Group stage,0,50050,Celtic,52747,Paris,0,5,,,52747,Glasgow
+2018,2021591,Group stage,0,52914,Chelsea,60609,Qarabağ,6,0,,,52914,London
+2018,2021592,Group stage,0,50137,Roma,50124,Atleti,0,0,,,,Rome
+2018,2021593,Group stage,0,50080,Barcelona,50139,Juventus,3,0,,,50080,Barcelona
+2018,2021594,Group stage,0,2610,Olympiacos,50149,Sporting CP,2,3,,,50149,Piraeus
+2018,2021595,Group stage,0,57490,Maribor,50068,Spartak Moskva,1,1,,,,Maribor
+2018,2021596,Group stage,0,7889,Liverpool,52714,Sevilla,2,2,,,,Liverpool
+2018,2021597,Group stage,0,52749,Feyenoord,52919,Man City,0,4,,,52919,Rotterdam
+2018,2021598,Group stage,0,52707,Shakhtar,50136,Napoli,2,1,,,52707,Kharkiv
+2018,2021599,Group stage,0,2603790,Leipzig,50023,Monaco,1,1,,,,Leipzig
+2018,2021600,Group stage,0,50064,Porto,50157,Beşiktaş,1,3,,,50157,Porto
+2018,2021601,Group stage,0,50051,Real Madrid,50118,APOEL,3,0,,,50051,Madrid
+2018,2021602,Group stage,0,1652,Tottenham,52758,B. Dortmund,3,1,,,1652,London
+2018,2021603,Group stage,0,52714,Sevilla,57490,Maribor,3,0,,,52714,Seville
+2018,2021604,Group stage,0,50068,Spartak Moskva,7889,Liverpool,1,1,,,,Moscow
+2018,2021605,Group stage,0,50136,Napoli,52749,Feyenoord,3,1,,,50136,Naples
+2018,2021606,Group stage,0,52919,Man City,52707,Shakhtar,2,0,,,52919,Manchester
+2018,2021607,Group stage,0,50157,Beşiktaş,2603790,Leipzig,2,0,,,50157,Istanbul
+2018,2021608,Group stage,0,50023,Monaco,50064,Porto,0,3,,,50064,Monaco
+2018,2021609,Group stage,0,52758,B. Dortmund,50051,Real Madrid,1,3,,,50051,Dortmund
+2018,2021610,Group stage,0,50118,APOEL,1652,Tottenham,0,3,,,1652,Nicosia
+2018,2021616,Group stage,0,60609,Qarabağ,50137,Roma,1,2,,,50137,Baku
+2018,2021611,Group stage,0,59856,Basel,50147,Benfica,5,0,,,59856,Basel
+2018,2021612,Group stage,0,54266,CSKA Moskva,52682,Man Utd,1,4,,,52682,Moscow
+2018,2021613,Group stage,0,52747,Paris,50037,Bayern München,3,0,,,52747,Paris
+2018,2021614,Group stage,0,50074,Anderlecht,50050,Celtic,0,3,,,50050,Brussels
+2018,2021615,Group stage,0,50124,Atleti,52914,Chelsea,1,2,,,52914,Madrid
+2018,2021617,Group stage,0,50149,Sporting CP,50080,Barcelona,0,1,,,50080,Lisbon
+2018,2021618,Group stage,0,50139,Juventus,2610,Olympiacos,2,0,,,50139,Turin
+2018,2021619,Group stage,0,50068,Spartak Moskva,52714,Sevilla,5,1,,,50068,Moscow
+2018,2021620,Group stage,0,57490,Maribor,7889,Liverpool,0,7,,,7889,Maribor
+2018,2021621,Group stage,0,52919,Man City,50136,Napoli,2,1,,,52919,Manchester
+2018,2021622,Group stage,0,52749,Feyenoord,52707,Shakhtar,1,2,,,52707,Rotterdam
+2018,2021623,Group stage,0,50023,Monaco,50157,Beşiktaş,1,2,,,50157,Monaco
+2018,2021624,Group stage,0,2603790,Leipzig,50064,Porto,3,2,,,2603790,Leipzig
+2018,2021625,Group stage,0,50118,APOEL,52758,B. Dortmund,1,1,,,,Nicosia
+2018,2021626,Group stage,0,50051,Real Madrid,1652,Tottenham,1,1,,,,Madrid
+2018,2021631,Group stage,0,60609,Qarabağ,50124,Atleti,0,0,,,,Baku
+2018,2021627,Group stage,0,54266,CSKA Moskva,59856,Basel,0,2,,,59856,Moscow
+2018,2021628,Group stage,0,50147,Benfica,52682,Man Utd,0,1,,,52682,Lisbon
+2018,2021629,Group stage,0,50074,Anderlecht,52747,Paris,0,4,,,52747,Brussels
+2018,2021630,Group stage,0,50037,Bayern München,50050,Celtic,3,0,,,50037,Munich
+2018,2021632,Group stage,0,52914,Chelsea,50137,Roma,3,3,,,,London
+2018,2021633,Group stage,0,50139,Juventus,50149,Sporting CP,2,1,,,50139,Turin
+2018,2021634,Group stage,0,50080,Barcelona,2610,Olympiacos,3,1,,,50080,Barcelona
+2018,2021635,Group stage,0,59856,Basel,54266,CSKA Moskva,1,2,,,54266,Basel
+2018,2021636,Group stage,0,52682,Man Utd,50147,Benfica,2,0,,,52682,Manchester
+2018,2021637,Group stage,0,52747,Paris,50074,Anderlecht,5,0,,,52747,Paris
+2018,2021638,Group stage,0,50050,Celtic,50037,Bayern München,1,2,,,50037,Glasgow
+2018,2021639,Group stage,0,50124,Atleti,60609,Qarabağ,1,1,,,,Madrid
+2018,2021640,Group stage,0,50137,Roma,52914,Chelsea,3,0,,,50137,Rome
+2018,2021641,Group stage,0,50149,Sporting CP,50139,Juventus,1,1,,,,Lisbon
+2018,2021642,Group stage,0,2610,Olympiacos,50080,Barcelona,0,0,,,,Piraeus
+2018,2021647,Group stage,0,50157,Beşiktaş,50023,Monaco,1,1,,,,Istanbul
+2018,2021643,Group stage,0,52714,Sevilla,50068,Spartak Moskva,2,1,,,52714,Seville
+2018,2021644,Group stage,0,7889,Liverpool,57490,Maribor,3,0,,,7889,Liverpool
+2018,2021645,Group stage,0,50136,Napoli,52919,Man City,2,4,,,52919,Naples
+2018,2021646,Group stage,0,52707,Shakhtar,52749,Feyenoord,3,1,,,52707,Kharkiv
+2018,2021648,Group stage,0,50064,Porto,2603790,Leipzig,3,1,,,50064,Porto
+2018,2021649,Group stage,0,52758,B. Dortmund,50118,APOEL,1,1,,,,Dortmund
+2018,2021650,Group stage,0,1652,Tottenham,50051,Real Madrid,3,1,,,1652,London
+2018,2021651,Group stage,0,50068,Spartak Moskva,57490,Maribor,1,1,,,,Moscow
+2018,2021656,Group stage,0,50157,Beşiktaş,50064,Porto,1,1,,,,Istanbul
+2018,2021652,Group stage,0,52714,Sevilla,7889,Liverpool,3,3,,,,Seville
+2018,2021653,Group stage,0,52919,Man City,52749,Feyenoord,1,0,,,52919,Manchester
+2018,2021654,Group stage,0,50136,Napoli,52707,Shakhtar,3,0,,,50136,Naples
+2018,2021655,Group stage,0,50023,Monaco,2603790,Leipzig,1,4,,,2603790,Monaco
+2018,2021657,Group stage,0,50118,APOEL,50051,Real Madrid,0,6,,,50051,Nicosia
+2018,2021658,Group stage,0,52758,B. Dortmund,1652,Tottenham,1,2,,,1652,Dortmund
+2018,2021659,Group stage,0,54266,CSKA Moskva,50147,Benfica,2,0,,,54266,Moscow
+2018,2021663,Group stage,0,60609,Qarabağ,52914,Chelsea,0,4,,,52914,Baku
+2018,2021660,Group stage,0,59856,Basel,52682,Man Utd,1,0,,,59856,Basel
+2018,2021661,Group stage,0,50074,Anderlecht,50037,Bayern München,1,2,,,50037,Brussels
+2018,2021662,Group stage,0,52747,Paris,50050,Celtic,7,1,,,52747,Paris
+2018,2021664,Group stage,0,50124,Atleti,50137,Roma,2,0,,,50124,Madrid
+2018,2021665,Group stage,0,50139,Juventus,50080,Barcelona,0,0,,,,Turin
+2018,2021666,Group stage,0,50149,Sporting CP,2610,Olympiacos,3,1,,,50149,Lisbon
+2018,2021667,Group stage,0,50147,Benfica,59856,Basel,0,2,,,59856,Lisbon
+2018,2021668,Group stage,0,52682,Man Utd,54266,CSKA Moskva,2,1,,,52682,Manchester
+2018,2021669,Group stage,0,50037,Bayern München,52747,Paris,3,1,,,50037,Munich
+2018,2021670,Group stage,0,50050,Celtic,50074,Anderlecht,0,1,,,50074,Glasgow
+2018,2021671,Group stage,0,52914,Chelsea,50124,Atleti,1,1,,,,London
+2018,2021672,Group stage,0,50137,Roma,60609,Qarabağ,1,0,,,50137,Rome
+2018,2021673,Group stage,0,50080,Barcelona,50149,Sporting CP,2,0,,,50080,Barcelona
+2018,2021674,Group stage,0,2610,Olympiacos,50139,Juventus,0,2,,,50139,Piraeus
+2018,2021675,Group stage,0,57490,Maribor,52714,Sevilla,1,1,,,,Maribor
+2018,2021676,Group stage,0,7889,Liverpool,50068,Spartak Moskva,7,0,,,7889,Liverpool
+2018,2021677,Group stage,0,52749,Feyenoord,50136,Napoli,2,1,,,52749,Rotterdam
+2018,2021678,Group stage,0,52707,Shakhtar,52919,Man City,2,1,,,52707,Kharkiv
+2018,2021679,Group stage,0,2603790,Leipzig,50157,Beşiktaş,1,2,,,50157,Leipzig
+2018,2021680,Group stage,0,50064,Porto,50023,Monaco,5,2,,,50064,Porto
+2018,2021681,Group stage,0,50051,Real Madrid,52758,B. Dortmund,3,2,,,50051,Madrid
+2018,2021682,Group stage,0,1652,Tottenham,50118,APOEL,3,0,,,1652,London
+2018,2021683,Round of 16,2,50139,Juventus,1652,Tottenham,2,2,,,,Turin
+2018,2021684,Round of 16,2,59856,Basel,52919,Man City,0,4,,,52919,Basel
+2018,2021687,Round of 16,2,50064,Porto,7889,Liverpool,0,5,,,7889,Porto
+2018,2021689,Round of 16,2,50051,Real Madrid,52747,Paris,3,1,,,50051,Madrid
+2018,2021685,Round of 16,2,52914,Chelsea,50080,Barcelona,1,1,,,,London
+2018,2021686,Round of 16,2,50037,Bayern München,50157,Beşiktaş,5,0,,,50037,Munich
+2018,2021688,Round of 16,2,52714,Sevilla,52682,Man Utd,0,0,,,,Seville
+2018,2021690,Round of 16,2,52707,Shakhtar,50137,Roma,2,1,,,52707,Kharkiv
+2018,2021695,Round of 16,2,52747,Paris,50051,Real Madrid,1,2,,,50051,Paris
+2018,2021697,Round of 16,2,7889,Liverpool,50064,Porto,0,0,,,,Liverpool
+2018,2021693,Round of 16,2,1652,Tottenham,50139,Juventus,1,2,,,50139,London
+2018,2021694,Round of 16,2,52919,Man City,59856,Basel,1,2,,,59856,Manchester
+2018,2021696,Round of 16,2,50137,Roma,52707,Shakhtar,1,0,,,50137,Rome
+2018,2021698,Round of 16,2,52682,Man Utd,52714,Sevilla,1,2,,,52714,Manchester
+2018,2021692,Round of 16,2,50157,Beşiktaş,50037,Bayern München,1,3,,,50037,Istanbul
+2018,2021691,Round of 16,2,50080,Barcelona,52914,Chelsea,3,0,,,50080,Barcelona
+2018,2021700,Quarter-finals,3,52714,Sevilla,50037,Bayern München,1,2,,,50037,Seville
+2018,2021701,Quarter-finals,3,50139,Juventus,50051,Real Madrid,0,3,,,50051,Turin
+2018,2021699,Quarter-finals,3,50080,Barcelona,50137,Roma,4,1,,,50080,Barcelona
+2018,2021702,Quarter-finals,3,7889,Liverpool,52919,Man City,3,0,,,7889,Liverpool
+2018,2021704,Quarter-finals,3,52919,Man City,7889,Liverpool,1,2,,,7889,Manchester
+2018,2021705,Quarter-finals,3,50137,Roma,50080,Barcelona,3,0,,,50137,Rome
+2018,2021703,Quarter-finals,3,50051,Real Madrid,50139,Juventus,1,3,,,50139,Madrid
+2018,2021706,Quarter-finals,3,50037,Bayern München,52714,Sevilla,0,0,,,,Munich
+2018,2021707,Semi-finals,4,7889,Liverpool,50137,Roma,5,2,,,7889,Liverpool
+2018,2021708,Semi-finals,4,50037,Bayern München,50051,Real Madrid,1,2,,,50051,Munich
+2018,2021709,Semi-finals,4,50051,Real Madrid,50037,Bayern München,2,2,,,,Madrid
+2018,2021710,Semi-finals,4,50137,Roma,7889,Liverpool,4,2,,,50137,Rome
+2018,2021711,Final,5,50051,Real Madrid,7889,Liverpool,3,1,,,50051,Kyiv
+2019,2025055,Group stage,0,50080,Barcelona,50062,PSV,4,0,,,50080,Barcelona
+2019,2025056,Group stage,0,50138,Inter,1652,Tottenham,2,1,,,50138,Milan
+2019,2025053,Group stage,0,50043,Club Brugge,52758,B. Dortmund,0,1,,,52758,Bruges
+2019,2025054,Group stage,0,50023,Monaco,50124,Atleti,1,2,,,50124,Monaco
+2019,2025057,Group stage,0,7889,Liverpool,52747,Paris,3,2,,,7889,Liverpool
+2019,2025058,Group stage,0,50069,Crvena Zvezda,50136,Napoli,0,0,,,,Belgrade
+2019,2025059,Group stage,0,50067,Galatasaray,53065,Lokomotiv Moskva,3,0,,,50067,Istanbul
+2019,2025060,Group stage,0,57388,Schalke,50064,Porto,1,1,,,,Gelsenkirchen
+2019,2025061,Group stage,0,50143,Ajax,50129,AEK Athens,3,0,,,50143,Amsterdam
+2019,2025063,Group stage,0,52707,Shakhtar,2600431,Hoffenheim,2,2,,,,Kharkiv
+2019,2025062,Group stage,0,50147,Benfica,50037,Bayern München,0,2,,,50037,Lisbon
+2019,2025064,Group stage,0,52919,Man City,5312,Lyon,1,2,,,5312,Manchester
+2019,2025065,Group stage,0,50051,Real Madrid,50137,Roma,3,0,,,50051,Madrid
+2019,2025066,Group stage,0,64388,Viktoria Plzeň,54266,CSKA Moskva,2,2,,,,Plzen
+2019,2025067,Group stage,0,50031,Young Boys,52682,Man Utd,0,3,,,52682,Bern
+2019,2025068,Group stage,0,52268,Valencia,50139,Juventus,0,2,,,50139,Valencia
+2019,2025072,Group stage,0,2600431,Hoffenheim,52919,Man City,1,2,,,52919,Sinsheim
+2019,2025075,Group stage,0,50139,Juventus,50031,Young Boys,3,0,,,50139,Turin
+2019,2025069,Group stage,0,50037,Bayern München,50143,Ajax,1,1,,,,Munich
+2019,2025070,Group stage,0,50129,AEK Athens,50147,Benfica,2,3,,,50147,Athens
+2019,2025071,Group stage,0,5312,Lyon,52707,Shakhtar,2,2,,,,Décines
+2019,2025073,Group stage,0,54266,CSKA Moskva,50051,Real Madrid,1,0,,,54266,Moscow
+2019,2025074,Group stage,0,50137,Roma,64388,Viktoria Plzeň,5,0,,,50137,Rome
+2019,2025076,Group stage,0,52682,Man Utd,52268,Valencia,0,0,,,,Manchester
+2019,2025082,Group stage,0,52747,Paris,50069,Crvena Zvezda,6,1,,,52747,Paris
+2019,2025084,Group stage,0,53065,Lokomotiv Moskva,57388,Schalke,0,1,,,57388,Moscow
+2019,2025077,Group stage,0,50124,Atleti,50043,Club Brugge,3,1,,,50124,Madrid
+2019,2025078,Group stage,0,52758,B. Dortmund,50023,Monaco,3,0,,,52758,Dortmund
+2019,2025079,Group stage,0,1652,Tottenham,50080,Barcelona,2,4,,,50080,London
+2019,2025080,Group stage,0,50062,PSV,50138,Inter,1,2,,,50138,Eindhoven
+2019,2025081,Group stage,0,50136,Napoli,7889,Liverpool,1,0,,,50136,Naples
+2019,2025083,Group stage,0,50064,Porto,50067,Galatasaray,1,0,,,50064,Porto
+2019,2025085,Group stage,0,50129,AEK Athens,50037,Bayern München,0,2,,,50037,Athens
+2019,2025092,Group stage,0,50031,Young Boys,52268,Valencia,1,1,,,,Bern
+2019,2025086,Group stage,0,50143,Ajax,50147,Benfica,1,0,,,50143,Amsterdam
+2019,2025087,Group stage,0,2600431,Hoffenheim,5312,Lyon,3,3,,,,Sinsheim
+2019,2025088,Group stage,0,52707,Shakhtar,52919,Man City,0,3,,,52919,Kharkiv
+2019,2025089,Group stage,0,50137,Roma,54266,CSKA Moskva,3,0,,,50137,Rome
+2019,2025090,Group stage,0,50051,Real Madrid,64388,Viktoria Plzeň,2,1,,,50051,Madrid
+2019,2025091,Group stage,0,52682,Man Utd,50139,Juventus,0,1,,,50139,Manchester
+2019,2025094,Group stage,0,50043,Club Brugge,50023,Monaco,1,1,,,,Bruges
+2019,2025095,Group stage,0,50062,PSV,1652,Tottenham,2,2,,,,Eindhoven
+2019,2025093,Group stage,0,52758,B. Dortmund,50124,Atleti,4,0,,,52758,Dortmund
+2019,2025096,Group stage,0,50080,Barcelona,50138,Inter,2,0,,,50080,Barcelona
+2019,2025097,Group stage,0,52747,Paris,50136,Napoli,2,2,,,,Paris
+2019,2025098,Group stage,0,7889,Liverpool,50069,Crvena Zvezda,4,0,,,7889,Liverpool
+2019,2025099,Group stage,0,53065,Lokomotiv Moskva,50064,Porto,1,3,,,50064,Moscow
+2019,2025100,Group stage,0,50067,Galatasaray,57388,Schalke,0,0,,,,Istanbul
+2019,2025102,Group stage,0,50023,Monaco,50043,Club Brugge,0,4,,,50043,Monaco
+2019,2025106,Group stage,0,50069,Crvena Zvezda,7889,Liverpool,2,0,,,50069,Belgrade
+2019,2025101,Group stage,0,50124,Atleti,52758,B. Dortmund,2,0,,,50124,Madrid
+2019,2025103,Group stage,0,1652,Tottenham,50062,PSV,2,1,,,1652,London
+2019,2025104,Group stage,0,50138,Inter,50080,Barcelona,1,1,,,,Milan
+2019,2025105,Group stage,0,50136,Napoli,52747,Paris,1,1,,,,Naples
+2019,2025107,Group stage,0,50064,Porto,53065,Lokomotiv Moskva,4,1,,,50064,Porto
+2019,2025108,Group stage,0,57388,Schalke,50067,Galatasaray,2,0,,,57388,Gelsenkirchen
+2019,2025113,Group stage,0,54266,CSKA Moskva,50137,Roma,1,2,,,50137,Moscow
+2019,2025116,Group stage,0,52268,Valencia,50031,Young Boys,3,1,,,52268,Valencia
+2019,2025109,Group stage,0,50037,Bayern München,50129,AEK Athens,2,0,,,50037,Munich
+2019,2025110,Group stage,0,50147,Benfica,50143,Ajax,1,1,,,,Lisbon
+2019,2025111,Group stage,0,5312,Lyon,2600431,Hoffenheim,2,2,,,,Décines
+2019,2025112,Group stage,0,52919,Man City,52707,Shakhtar,6,0,,,52919,Manchester
+2019,2025114,Group stage,0,64388,Viktoria Plzeň,50051,Real Madrid,0,5,,,50051,Plzen
+2019,2025115,Group stage,0,50139,Juventus,52682,Man Utd,1,2,,,52682,Turin
+2019,2025117,Group stage,0,50129,AEK Athens,50143,Ajax,0,2,,,50143,Athens
+2019,2025122,Group stage,0,54266,CSKA Moskva,64388,Viktoria Plzeň,1,2,,,64388,Moscow
+2019,2025118,Group stage,0,50037,Bayern München,50147,Benfica,5,1,,,50037,Munich
+2019,2025119,Group stage,0,2600431,Hoffenheim,52707,Shakhtar,2,3,,,52707,Sinsheim
+2019,2025120,Group stage,0,5312,Lyon,52919,Man City,2,2,,,,Décines
+2019,2025121,Group stage,0,50137,Roma,50051,Real Madrid,0,2,,,50051,Rome
+2019,2025123,Group stage,0,52682,Man Utd,50031,Young Boys,1,0,,,52682,Manchester
+2019,2025124,Group stage,0,50139,Juventus,52268,Valencia,1,0,,,50139,Turin
+2019,2025126,Group stage,0,50124,Atleti,50023,Monaco,2,0,,,50124,Madrid
+2019,2025131,Group stage,0,53065,Lokomotiv Moskva,50067,Galatasaray,2,0,,,53065,Moscow
+2019,2025125,Group stage,0,52758,B. Dortmund,50043,Club Brugge,0,0,,,,Dortmund
+2019,2025127,Group stage,0,50062,PSV,50080,Barcelona,1,2,,,50080,Eindhoven
+2019,2025128,Group stage,0,1652,Tottenham,50138,Inter,1,0,,,1652,London
+2019,2025129,Group stage,0,52747,Paris,7889,Liverpool,2,1,,,52747,Paris
+2019,2025130,Group stage,0,50136,Napoli,50069,Crvena Zvezda,3,1,,,50136,Naples
+2019,2025132,Group stage,0,50064,Porto,57388,Schalke,3,1,,,50064,Porto
+2019,2025139,Group stage,0,50067,Galatasaray,50064,Porto,2,3,,,50064,Istanbul
+2019,2025140,Group stage,0,57388,Schalke,53065,Lokomotiv Moskva,1,0,,,57388,Gelsenkirchen
+2019,2025133,Group stage,0,50043,Club Brugge,50124,Atleti,0,0,,,,Bruges
+2019,2025134,Group stage,0,50023,Monaco,52758,B. Dortmund,0,2,,,52758,Monaco
+2019,2025135,Group stage,0,50080,Barcelona,1652,Tottenham,1,1,,,,Barcelona
+2019,2025136,Group stage,0,50138,Inter,50062,PSV,1,1,,,,Milan
+2019,2025137,Group stage,0,7889,Liverpool,50136,Napoli,1,0,,,7889,Liverpool
+2019,2025138,Group stage,0,50069,Crvena Zvezda,52747,Paris,1,4,,,52747,Belgrade
+2019,2025145,Group stage,0,50051,Real Madrid,54266,CSKA Moskva,0,3,,,54266,Madrid
+2019,2025146,Group stage,0,64388,Viktoria Plzeň,50137,Roma,2,1,,,64388,Plzen
+2019,2025141,Group stage,0,50143,Ajax,50037,Bayern München,3,3,,,,Amsterdam
+2019,2025142,Group stage,0,50147,Benfica,50129,AEK Athens,1,0,,,50147,Lisbon
+2019,2025143,Group stage,0,52707,Shakhtar,5312,Lyon,1,1,,,,Kyiv
+2019,2025144,Group stage,0,52919,Man City,2600431,Hoffenheim,2,1,,,52919,Manchester
+2019,2025147,Group stage,0,50031,Young Boys,50139,Juventus,2,1,,,50031,Bern
+2019,2025148,Group stage,0,52268,Valencia,52682,Man Utd,2,1,,,52268,Valencia
+2019,2026849,Round of 16,2,52682,Man Utd,52747,Paris,0,2,,,52747,Manchester
+2019,2026852,Round of 16,2,50137,Roma,50064,Porto,2,1,,,50137,Rome
+2019,2026847,Round of 16,2,50143,Ajax,50051,Real Madrid,1,2,,,50051,Amsterdam
+2019,2026850,Round of 16,2,1652,Tottenham,52758,B. Dortmund,3,0,,,1652,London
+2019,2026848,Round of 16,2,7889,Liverpool,50037,Bayern München,0,0,,,,Liverpool
+2019,2026851,Round of 16,2,5312,Lyon,50080,Barcelona,0,0,,,,Décines
+2019,2026845,Round of 16,2,57388,Schalke,52919,Man City,2,3,,,52919,Gelsenkirchen
+2019,2026846,Round of 16,2,50124,Atleti,50139,Juventus,2,0,,,50124,Madrid
+2019,2026853,Round of 16,2,50051,Real Madrid,50143,Ajax,1,4,,,50143,Madrid
+2019,2026860,Round of 16,2,52758,B. Dortmund,1652,Tottenham,0,1,,,1652,Dortmund
+2019,2026858,Round of 16,2,50064,Porto,50137,Roma,3,1,,,50064,Porto
+2019,2026859,Round of 16,2,52747,Paris,52682,Man Utd,1,3,,,52682,Paris
+2019,2026855,Round of 16,2,52919,Man City,57388,Schalke,7,0,,,52919,Manchester
+2019,2026856,Round of 16,2,50139,Juventus,50124,Atleti,3,0,,,50139,Turin
+2019,2026854,Round of 16,2,50037,Bayern München,7889,Liverpool,1,3,,,7889,Munich
+2019,2026857,Round of 16,2,50080,Barcelona,5312,Lyon,5,1,,,50080,Barcelona
+2019,2027150,Quarter-finals,3,7889,Liverpool,50064,Porto,2,0,,,7889,Liverpool
+2019,2027151,Quarter-finals,3,1652,Tottenham,52919,Man City,1,0,,,1652,London
+2019,2027149,Quarter-finals,3,50143,Ajax,50139,Juventus,1,1,,,,Amsterdam
+2019,2027152,Quarter-finals,3,52682,Man Utd,50080,Barcelona,0,1,,,50080,Manchester
+2019,2027154,Quarter-finals,3,50080,Barcelona,52682,Man Utd,3,0,,,50080,Barcelona
+2019,2027155,Quarter-finals,3,50139,Juventus,50143,Ajax,1,2,,,50143,Turin
+2019,2027153,Quarter-finals,3,52919,Man City,1652,Tottenham,4,3,,,52919,Manchester
+2019,2027156,Quarter-finals,3,50064,Porto,7889,Liverpool,1,4,,,7889,Porto
+2019,2027158,Semi-finals,4,1652,Tottenham,50143,Ajax,0,1,,,50143,London
+2019,2027157,Semi-finals,4,50080,Barcelona,7889,Liverpool,3,0,,,50080,Barcelona
+2019,2027160,Semi-finals,4,7889,Liverpool,50080,Barcelona,4,0,,,7889,Liverpool
+2019,2027159,Semi-finals,4,50143,Ajax,1652,Tottenham,2,3,,,1652,Amsterdam
+2019,2025486,Final,5,1652,Tottenham,7889,Liverpool,0,2,,,7889,Madrid
+2020,2027034,Group stage,0,50138,Inter,52498,Slavia Praha,1,1,,,,Milan
+2020,2027037,Group stage,0,5312,Lyon,52826,Zenit,1,1,,,,Décines
+2020,2027032,Group stage,0,50030,Salzburg,61582,Genk,6,2,,,50030,Salzburg
+2020,2027033,Group stage,0,50136,Napoli,7889,Liverpool,2,0,,,50136,Naples
+2020,2027035,Group stage,0,52758,B. Dortmund,50080,Barcelona,0,0,,,,Dortmund
+2020,2027036,Group stage,0,50147,Benfica,2603790,Leipzig,1,2,,,2603790,Lisbon
+2020,2027038,Group stage,0,50143,Ajax,75797,Lille,3,0,,,50143,Amsterdam
+2020,2027039,Group stage,0,52914,Chelsea,52268,Valencia,0,1,,,52268,London
+2020,2027024,Group stage,0,50043,Club Brugge,50067,Galatasaray,0,0,,,,Bruges
+2020,2027026,Group stage,0,2610,Olympiacos,1652,Tottenham,2,2,,,,Piraeus
+2020,2027025,Group stage,0,52747,Paris,50051,Real Madrid,3,0,,,52747,Paris
+2020,2027027,Group stage,0,50037,Bayern München,50069,Crvena Zvezda,3,0,,,50037,Munich
+2020,2027028,Group stage,0,52707,Shakhtar,52919,Man City,0,3,,,52919,Kharkiv
+2020,2027029,Group stage,0,50164,GNK Dinamo,52816,Atalanta,4,0,,,50164,Zagreb
+2020,2027030,Group stage,0,50124,Atleti,50139,Juventus,2,2,,,,Madrid
+2020,2027031,Group stage,0,50109,Leverkusen,53065,Lokomotiv Moskva,1,2,,,53065,Leverkusen
+2020,2027048,Group stage,0,50051,Real Madrid,50043,Club Brugge,2,2,,,,Madrid
+2020,2027052,Group stage,0,52816,Atalanta,52707,Shakhtar,1,2,,,52707,Milan
+2020,2027049,Group stage,0,50067,Galatasaray,52747,Paris,0,1,,,52747,Istanbul
+2020,2027050,Group stage,0,50069,Crvena Zvezda,2610,Olympiacos,3,1,,,50069,Belgrade
+2020,2027051,Group stage,0,1652,Tottenham,50037,Bayern München,2,7,,,50037,London
+2020,2027053,Group stage,0,52919,Man City,50164,GNK Dinamo,2,0,,,52919,Manchester
+2020,2027054,Group stage,0,53065,Lokomotiv Moskva,50124,Atleti,0,2,,,50124,Moscow
+2020,2027055,Group stage,0,50139,Juventus,50109,Leverkusen,3,0,,,50139,Turin
+2020,2027041,Group stage,0,61582,Genk,50136,Napoli,0,0,,,,Genk
+2020,2027043,Group stage,0,52498,Slavia Praha,52758,B. Dortmund,0,2,,,52758,Prague
+2020,2027040,Group stage,0,7889,Liverpool,50030,Salzburg,4,3,,,7889,Liverpool
+2020,2027042,Group stage,0,50080,Barcelona,50138,Inter,2,1,,,50080,Barcelona
+2020,2027044,Group stage,0,52826,Zenit,50147,Benfica,3,1,,,52826,St Petersburg
+2020,2027045,Group stage,0,2603790,Leipzig,5312,Lyon,0,2,,,5312,Leipzig
+2020,2027046,Group stage,0,52268,Valencia,50143,Ajax,0,3,,,50143,Valencia
+2020,2027047,Group stage,0,75797,Lille,52914,Chelsea,1,2,,,52914,Villeneuve d'Ascq
+2020,2027069,Group stage,0,52707,Shakhtar,50164,GNK Dinamo,2,2,,,,Kharkiv
+2020,2027071,Group stage,0,50124,Atleti,50109,Leverkusen,1,0,,,50124,Madrid
+2020,2027064,Group stage,0,50067,Galatasaray,50051,Real Madrid,0,1,,,50051,Istanbul
+2020,2027065,Group stage,0,50043,Club Brugge,52747,Paris,0,5,,,52747,Bruges
+2020,2027066,Group stage,0,1652,Tottenham,50069,Crvena Zvezda,5,0,,,1652,London
+2020,2027067,Group stage,0,2610,Olympiacos,50037,Bayern München,2,3,,,50037,Piraeus
+2020,2027068,Group stage,0,52919,Man City,52816,Atalanta,5,1,,,52919,Manchester
+2020,2027070,Group stage,0,50139,Juventus,53065,Lokomotiv Moskva,2,1,,,50139,Turin
+2020,2027060,Group stage,0,2603790,Leipzig,52826,Zenit,2,1,,,2603790,Leipzig
+2020,2027063,Group stage,0,50143,Ajax,52914,Chelsea,0,1,,,52914,Amsterdam
+2020,2027056,Group stage,0,61582,Genk,7889,Liverpool,1,4,,,7889,Genk
+2020,2027057,Group stage,0,50030,Salzburg,50136,Napoli,2,3,,,50136,Salzburg
+2020,2027058,Group stage,0,52498,Slavia Praha,50080,Barcelona,1,2,,,50080,Prague
+2020,2027059,Group stage,0,50138,Inter,52758,B. Dortmund,2,0,,,50138,Milan
+2020,2027061,Group stage,0,50147,Benfica,5312,Lyon,2,1,,,50147,Lisbon
+2020,2027062,Group stage,0,75797,Lille,52268,Valencia,1,1,,,,Villeneuve d'Ascq
+2020,2027082,Group stage,0,50080,Barcelona,52498,Slavia Praha,0,0,,,,Barcelona
+2020,2027084,Group stage,0,52826,Zenit,2603790,Leipzig,0,2,,,2603790,St Petersburg
+2020,2027080,Group stage,0,7889,Liverpool,61582,Genk,2,1,,,7889,Liverpool
+2020,2027081,Group stage,0,50136,Napoli,50030,Salzburg,1,1,,,,Naples
+2020,2027083,Group stage,0,52758,B. Dortmund,50138,Inter,3,2,,,52758,Dortmund
+2020,2027085,Group stage,0,5312,Lyon,50147,Benfica,3,1,,,5312,Décines
+2020,2027086,Group stage,0,52268,Valencia,75797,Lille,4,1,,,52268,Valencia
+2020,2027087,Group stage,0,52914,Chelsea,50143,Ajax,4,4,,,,London
+2020,2027075,Group stage,0,50037,Bayern München,2610,Olympiacos,2,0,,,50037,Munich
+2020,2027078,Group stage,0,53065,Lokomotiv Moskva,50139,Juventus,1,2,,,50139,Moscow
+2020,2027072,Group stage,0,50051,Real Madrid,50067,Galatasaray,6,0,,,50051,Madrid
+2020,2027073,Group stage,0,52747,Paris,50043,Club Brugge,1,0,,,52747,Paris
+2020,2027074,Group stage,0,50069,Crvena Zvezda,1652,Tottenham,0,4,,,1652,Belgrade
+2020,2027076,Group stage,0,52816,Atalanta,52919,Man City,1,1,,,,Milan
+2020,2027077,Group stage,0,50164,GNK Dinamo,52707,Shakhtar,3,3,,,,Zagreb
+2020,2027079,Group stage,0,50109,Leverkusen,50124,Atleti,2,1,,,50109,Leverkusen
+2020,2027096,Group stage,0,50067,Galatasaray,50043,Club Brugge,1,1,,,,Istanbul
+2020,2027103,Group stage,0,53065,Lokomotiv Moskva,50109,Leverkusen,0,2,,,50109,Moscow
+2020,2027097,Group stage,0,50051,Real Madrid,52747,Paris,2,2,,,,Madrid
+2020,2027098,Group stage,0,1652,Tottenham,2610,Olympiacos,4,2,,,1652,London
+2020,2027099,Group stage,0,50069,Crvena Zvezda,50037,Bayern München,0,6,,,50037,Belgrade
+2020,2027100,Group stage,0,52919,Man City,52707,Shakhtar,1,1,,,,Manchester
+2020,2027101,Group stage,0,52816,Atalanta,50164,GNK Dinamo,2,0,,,52816,Milan
+2020,2027102,Group stage,0,50139,Juventus,50124,Atleti,1,0,,,50139,Turin
+2020,2027093,Group stage,0,52826,Zenit,5312,Lyon,2,0,,,52826,St Petersburg
+2020,2027095,Group stage,0,52268,Valencia,52914,Chelsea,2,2,,,,Valencia
+2020,2027088,Group stage,0,61582,Genk,50030,Salzburg,1,4,,,50030,Genk
+2020,2027089,Group stage,0,7889,Liverpool,50136,Napoli,1,1,,,,Liverpool
+2020,2027090,Group stage,0,52498,Slavia Praha,50138,Inter,1,3,,,50138,Prague
+2020,2027091,Group stage,0,50080,Barcelona,52758,B. Dortmund,3,1,,,50080,Barcelona
+2020,2027092,Group stage,0,2603790,Leipzig,50147,Benfica,2,2,,,,Leipzig
+2020,2027094,Group stage,0,75797,Lille,50143,Ajax,0,2,,,50143,Villeneuve d'Ascq
+2020,2027112,Group stage,0,50030,Salzburg,7889,Liverpool,0,2,,,7889,Salzburg
+2020,2027113,Group stage,0,50136,Napoli,61582,Genk,4,0,,,50136,Naples
+2020,2027114,Group stage,0,50138,Inter,50080,Barcelona,1,2,,,50080,Milan
+2020,2027115,Group stage,0,52758,B. Dortmund,52498,Slavia Praha,2,1,,,52758,Dortmund
+2020,2027116,Group stage,0,50147,Benfica,52826,Zenit,3,0,,,50147,Lisbon
+2020,2027117,Group stage,0,5312,Lyon,2603790,Leipzig,2,2,,,,Décines
+2020,2027118,Group stage,0,50143,Ajax,52268,Valencia,0,1,,,52268,Amsterdam
+2020,2027119,Group stage,0,52914,Chelsea,75797,Lille,2,1,,,52914,London
+2020,2027108,Group stage,0,52707,Shakhtar,52816,Atalanta,0,3,,,52816,Kharkiv
+2020,2027109,Group stage,0,50164,GNK Dinamo,52919,Man City,1,4,,,52919,Zagreb
+2020,2027104,Group stage,0,50043,Club Brugge,50051,Real Madrid,1,3,,,50051,Bruges
+2020,2027105,Group stage,0,52747,Paris,50067,Galatasaray,5,0,,,52747,Paris
+2020,2027106,Group stage,0,2610,Olympiacos,50069,Crvena Zvezda,1,0,,,2610,Piraeus
+2020,2027107,Group stage,0,50037,Bayern München,1652,Tottenham,3,1,,,50037,Munich
+2020,2027110,Group stage,0,50124,Atleti,53065,Lokomotiv Moskva,2,0,,,50124,Madrid
+2020,2027111,Group stage,0,50109,Leverkusen,50139,Juventus,0,2,,,50139,Leverkusen
+2020,2027120,Round of 16,2,52758,B. Dortmund,52747,Paris,2,1,,,52758,Dortmund
+2020,2027125,Round of 16,2,50124,Atleti,7889,Liverpool,1,0,,,50124,Madrid
+2020,2027122,Round of 16,2,1652,Tottenham,2603790,Leipzig,0,1,,,2603790,London
+2020,2027124,Round of 16,2,52816,Atalanta,52268,Valencia,4,1,,,52816,Milan
+2020,2027123,Round of 16,2,50136,Napoli,50080,Barcelona,1,1,,,,Naples
+2020,2027126,Round of 16,2,52914,Chelsea,50037,Bayern München,0,3,,,50037,London
+2020,2027121,Round of 16,2,50051,Real Madrid,52919,Man City,1,2,,,52919,Madrid
+2020,2027127,Round of 16,2,5312,Lyon,50139,Juventus,1,0,,,5312,Décines
+2020,2027128,Round of 16,2,2603790,Leipzig,1652,Tottenham,3,0,,,2603790,Leipzig
+2020,2027134,Round of 16,2,52268,Valencia,52816,Atalanta,3,4,,,52816,Valencia
+2020,2027130,Round of 16,2,52747,Paris,52758,B. Dortmund,2,0,,,52747,Paris
+2020,2027135,Round of 16,2,7889,Liverpool,50124,Atleti,2,3,,,50124,Liverpool
+2020,2027131,Round of 16,2,52919,Man City,50051,Real Madrid,2,1,,,52919,Manchester
+2020,2027133,Round of 16,2,50139,Juventus,5312,Lyon,2,1,,,50139,Turin
+2020,2027129,Round of 16,2,50080,Barcelona,50136,Napoli,3,1,,,50080,Barcelona
+2020,2027132,Round of 16,2,50037,Bayern München,52914,Chelsea,4,1,,,50037,Munich
+2020,2030147,Quarter-finals,3,52816,Atalanta,52747,Paris,1,2,,,52747,Lisbon
+2020,2030145,Quarter-finals,3,2603790,Leipzig,50124,Atleti,2,1,,,2603790,Lisbon
+2020,2030146,Quarter-finals,3,50080,Barcelona,50037,Bayern München,2,8,,,50037,Lisbon
+2020,2030144,Quarter-finals,3,52919,Man City,5312,Lyon,1,3,,,5312,Lisbon
+2020,2030148,Semi-finals,4,2603790,Leipzig,52747,Paris,0,3,,,52747,Lisbon
+2020,2030149,Semi-finals,4,5312,Lyon,50037,Bayern München,0,3,,,50037,Lisbon
+2020,2030150,Final,5,52747,Paris,50037,Bayern München,0,1,,,50037,Lisbon
+2021,2029384,Group stage,0,52826,Zenit,50043,Club Brugge,1,2,,,50043,St Petersburg
+2021,2029387,Group stage,0,52723,Dynamo Kyiv,50139,Juventus,0,2,,,50139,Kyiv
+2021,2029382,Group stage,0,52914,Chelsea,52714,Sevilla,0,0,,,,London
+2021,2029383,Group stage,0,55031,Rennes,2601038,Krasnodar,1,1,,,,Rennes
+2021,2029385,Group stage,0,52973,Lazio,52758,B. Dortmund,3,1,,,52973,Rome
+2021,2029386,Group stage,0,50080,Barcelona,52298,Ferencváros,5,1,,,50080,Barcelona
+2021,2029388,Group stage,0,2603790,Leipzig,2600288,Başakşehir,2,0,,,2603790,Leipzig
+2021,2029389,Group stage,0,52747,Paris,52682,Man Utd,1,2,,,52682,Paris
+2021,2029275,Group stage,0,50030,Salzburg,53065,Lokomotiv Moskva,2,2,,,,Salzburg
+2021,2029277,Group stage,0,50051,Real Madrid,52707,Shakhtar,2,3,,,52707,Madrid
+2021,2029276,Group stage,0,50037,Bayern München,50124,Atleti,4,0,,,50037,Munich
+2021,2029278,Group stage,0,50138,Inter,52757,Mönchengladbach,2,2,,,,Milan
+2021,2029279,Group stage,0,52919,Man City,50064,Porto,3,1,,,52919,Manchester
+2021,2029280,Group stage,0,2610,Olympiacos,52748,Marseille,1,0,,,2610,Piraeus
+2021,2029281,Group stage,0,75795,Midtjylland,52816,Atalanta,0,4,,,52816,Herning
+2021,2029282,Group stage,0,50143,Ajax,7889,Liverpool,0,1,,,7889,Amsterdam
+2021,2029399,Group stage,0,53065,Lokomotiv Moskva,50037,Bayern München,1,2,,,50037,Moscow
+2021,2029401,Group stage,0,52707,Shakhtar,50138,Inter,0,0,,,,Kyiv
+2021,2029398,Group stage,0,50124,Atleti,50030,Salzburg,3,2,,,50124,Madrid
+2021,2029400,Group stage,0,52757,Mönchengladbach,50051,Real Madrid,2,2,,,,Monchengladbach
+2021,2029402,Group stage,0,52748,Marseille,52919,Man City,0,3,,,52919,Marseille
+2021,2029403,Group stage,0,50064,Porto,2610,Olympiacos,2,0,,,50064,Porto
+2021,2029404,Group stage,0,7889,Liverpool,75795,Midtjylland,2,0,,,7889,Liverpool
+2021,2029405,Group stage,0,52816,Atalanta,50143,Ajax,2,2,,,,Bergamo
+2021,2029390,Group stage,0,2601038,Krasnodar,52914,Chelsea,0,4,,,52914,Krasnodar
+2021,2029397,Group stage,0,2600288,Başakşehir,52747,Paris,0,2,,,52747,Istanbul
+2021,2029391,Group stage,0,52714,Sevilla,55031,Rennes,1,0,,,52714,Seville
+2021,2029392,Group stage,0,52758,B. Dortmund,52826,Zenit,2,0,,,52758,Dortmund
+2021,2029393,Group stage,0,50043,Club Brugge,52973,Lazio,1,1,,,,Bruges
+2021,2029394,Group stage,0,50139,Juventus,50080,Barcelona,0,2,,,50080,Turin
+2021,2029395,Group stage,0,52298,Ferencváros,52723,Dynamo Kyiv,2,2,,,,Budapest
+2021,2029396,Group stage,0,52682,Man Utd,2603790,Leipzig,5,0,,,52682,Manchester
+2021,2029414,Group stage,0,53065,Lokomotiv Moskva,50124,Atleti,1,1,,,,Moscow
+2021,2029416,Group stage,0,52707,Shakhtar,52757,Mönchengladbach,0,6,,,52757,Kyiv
+2021,2029415,Group stage,0,50030,Salzburg,50037,Bayern München,2,6,,,50037,Salzburg
+2021,2029417,Group stage,0,50051,Real Madrid,50138,Inter,3,2,,,50051,Madrid
+2021,2029418,Group stage,0,50064,Porto,52748,Marseille,3,0,,,50064,Porto
+2021,2029419,Group stage,0,52919,Man City,2610,Olympiacos,3,0,,,52919,Manchester
+2021,2029420,Group stage,0,52816,Atalanta,7889,Liverpool,0,5,,,7889,Bergamo
+2021,2029421,Group stage,0,75795,Midtjylland,50143,Ajax,1,2,,,50143,Herning
+2021,2029409,Group stage,0,52826,Zenit,52973,Lazio,1,1,,,,St Petersburg
+2021,2029412,Group stage,0,2600288,Başakşehir,52682,Man Utd,2,1,,,2600288,Istanbul
+2021,2029406,Group stage,0,52714,Sevilla,2601038,Krasnodar,3,2,,,52714,Seville
+2021,2029407,Group stage,0,52914,Chelsea,55031,Rennes,3,0,,,52914,London
+2021,2029408,Group stage,0,50043,Club Brugge,52758,B. Dortmund,0,3,,,52758,Bruges
+2021,2029410,Group stage,0,52298,Ferencváros,50139,Juventus,1,4,,,50139,Budapest
+2021,2029411,Group stage,0,50080,Barcelona,52723,Dynamo Kyiv,2,1,,,50080,Barcelona
+2021,2029413,Group stage,0,2603790,Leipzig,52747,Paris,2,1,,,2603790,Leipzig
+2021,2029430,Group stage,0,2601038,Krasnodar,52714,Sevilla,1,2,,,52714,Krasnodar
+2021,2029431,Group stage,0,55031,Rennes,52914,Chelsea,1,2,,,52914,Rennes
+2021,2029432,Group stage,0,52758,B. Dortmund,50043,Club Brugge,3,0,,,52758,Dortmund
+2021,2029433,Group stage,0,52973,Lazio,52826,Zenit,3,1,,,52973,Rome
+2021,2029434,Group stage,0,50139,Juventus,52298,Ferencváros,2,1,,,50139,Turin
+2021,2029435,Group stage,0,52723,Dynamo Kyiv,50080,Barcelona,0,4,,,50080,Kyiv
+2021,2029436,Group stage,0,52682,Man Utd,2600288,Başakşehir,4,1,,,52682,Manchester
+2021,2029437,Group stage,0,52747,Paris,2603790,Leipzig,1,0,,,52747,Paris
+2021,2029424,Group stage,0,52757,Mönchengladbach,52707,Shakhtar,4,0,,,52757,Monchengladbach
+2021,2029427,Group stage,0,2610,Olympiacos,52919,Man City,0,1,,,52919,Piraeus
+2021,2029422,Group stage,0,50124,Atleti,53065,Lokomotiv Moskva,0,0,,,,Madrid
+2021,2029423,Group stage,0,50037,Bayern München,50030,Salzburg,3,1,,,50037,Munich
+2021,2029425,Group stage,0,50138,Inter,50051,Real Madrid,0,2,,,50051,Milan
+2021,2029426,Group stage,0,52748,Marseille,50064,Porto,0,2,,,50064,Marseille
+2021,2029428,Group stage,0,7889,Liverpool,52816,Atalanta,0,2,,,52816,Liverpool
+2021,2029429,Group stage,0,50143,Ajax,75795,Midtjylland,3,1,,,50143,Amsterdam
+2021,2029446,Group stage,0,53065,Lokomotiv Moskva,50030,Salzburg,1,3,,,50030,Moscow
+2021,2029448,Group stage,0,52707,Shakhtar,50051,Real Madrid,2,0,,,52707,Kyiv
+2021,2029447,Group stage,0,50124,Atleti,50037,Bayern München,1,1,,,,Madrid
+2021,2029449,Group stage,0,52757,Mönchengladbach,50138,Inter,2,3,,,50138,Monchengladbach
+2021,2029450,Group stage,0,50064,Porto,52919,Man City,0,0,,,,Porto
+2021,2029451,Group stage,0,52748,Marseille,2610,Olympiacos,2,1,,,52748,Marseille
+2021,2029452,Group stage,0,52816,Atalanta,75795,Midtjylland,1,1,,,,Bergamo
+2021,2029453,Group stage,0,7889,Liverpool,50143,Ajax,1,0,,,7889,Liverpool
+2021,2029439,Group stage,0,2601038,Krasnodar,55031,Rennes,1,0,,,2601038,Krasnodar
+2021,2029444,Group stage,0,2600288,Başakşehir,2603790,Leipzig,3,4,,,2603790,Istanbul
+2021,2029438,Group stage,0,52714,Sevilla,52914,Chelsea,0,4,,,52914,Seville
+2021,2029440,Group stage,0,50043,Club Brugge,52826,Zenit,3,0,,,50043,Bruges
+2021,2029441,Group stage,0,52758,B. Dortmund,52973,Lazio,1,1,,,,Dortmund
+2021,2029442,Group stage,0,52298,Ferencváros,50080,Barcelona,0,3,,,50080,Budapest
+2021,2029443,Group stage,0,50139,Juventus,52723,Dynamo Kyiv,3,0,,,50139,Turin
+2021,2029445,Group stage,0,52682,Man Utd,52747,Paris,1,3,,,52747,Manchester
+2021,2029464,Group stage,0,52826,Zenit,52758,B. Dortmund,1,2,,,52758,St Petersburg
+2021,2029465,Group stage,0,52973,Lazio,50043,Club Brugge,2,2,,,,Rome
+2021,2029462,Group stage,0,52914,Chelsea,2601038,Krasnodar,1,1,,,,London
+2021,2029463,Group stage,0,55031,Rennes,52714,Sevilla,1,3,,,52714,Rennes
+2021,2029466,Group stage,0,50080,Barcelona,50139,Juventus,0,3,,,50139,Barcelona
+2021,2029467,Group stage,0,52723,Dynamo Kyiv,52298,Ferencváros,1,0,,,52723,Kyiv
+2021,2029468,Group stage,0,2603790,Leipzig,52682,Man Utd,3,2,,,2603790,Leipzig
+2021,2029460,Group stage,0,75795,Midtjylland,7889,Liverpool,1,1,,,,Herning
+2021,2029461,Group stage,0,50143,Ajax,52816,Atalanta,0,1,,,52816,Amsterdam
+2021,2029469,Group stage,0,52747,Paris,2600288,Başakşehir,5,1,,,52747,Paris
+2021,2029454,Group stage,0,50030,Salzburg,50124,Atleti,0,2,,,50124,Salzburg
+2021,2029455,Group stage,0,50037,Bayern München,53065,Lokomotiv Moskva,2,0,,,50037,Munich
+2021,2029456,Group stage,0,50051,Real Madrid,52757,Mönchengladbach,2,0,,,50051,Madrid
+2021,2029457,Group stage,0,50138,Inter,52707,Shakhtar,0,0,,,,Milan
+2021,2029458,Group stage,0,52919,Man City,52748,Marseille,3,0,,,52919,Manchester
+2021,2029459,Group stage,0,2610,Olympiacos,50064,Porto,0,2,,,50064,Piraeus
+2021,2029475,Round of 16,2,2603790,Leipzig,7889,Liverpool,0,2,,,7889,Budapest
+2021,2029477,Round of 16,2,50080,Barcelona,52747,Paris,1,4,,,52747,Barcelona
+2021,2029472,Round of 16,2,52714,Sevilla,52758,B. Dortmund,2,3,,,52758,Seville
+2021,2029476,Round of 16,2,50064,Porto,50139,Juventus,2,1,,,50064,Porto
+2021,2029471,Round of 16,2,52973,Lazio,50037,Bayern München,1,4,,,50037,Rome
+2021,2029474,Round of 16,2,50124,Atleti,52914,Chelsea,0,1,,,52914,Bucharest
+2021,2029470,Round of 16,2,52757,Mönchengladbach,52919,Man City,0,2,,,52919,Budapest
+2021,2029473,Round of 16,2,52816,Atalanta,50051,Real Madrid,0,1,,,50051,Bergamo
+2021,2029478,Round of 16,2,52758,B. Dortmund,52714,Sevilla,2,2,,,,Dortmund
+2021,2029482,Round of 16,2,50139,Juventus,50064,Porto,3,2,,,50139,Turin
+2021,2029483,Round of 16,2,52747,Paris,50080,Barcelona,1,1,,,,Paris
+2021,2029485,Round of 16,2,7889,Liverpool,2603790,Leipzig,2,0,,,7889,Budapest
+2021,2029479,Round of 16,2,50051,Real Madrid,52816,Atalanta,3,1,,,50051,Madrid
+2021,2029480,Round of 16,2,52919,Man City,52757,Mönchengladbach,2,0,,,52919,Budapest
+2021,2029481,Round of 16,2,50037,Bayern München,52973,Lazio,2,1,,,50037,Munich
+2021,2029484,Round of 16,2,52914,Chelsea,50124,Atleti,2,0,,,52914,London
+2021,2029486,Quarter-finals,3,52919,Man City,52758,B. Dortmund,2,1,,,52919,Manchester
+2021,2029489,Quarter-finals,3,50051,Real Madrid,7889,Liverpool,3,1,,,50051,Madrid
+2021,2029487,Quarter-finals,3,50064,Porto,52914,Chelsea,0,2,,,52914,Seville
+2021,2029488,Quarter-finals,3,50037,Bayern München,52747,Paris,2,3,,,52747,Munich
+2021,2029490,Quarter-finals,3,52747,Paris,50037,Bayern München,0,1,,,50037,Paris
+2021,2029493,Quarter-finals,3,52914,Chelsea,50064,Porto,0,1,,,50064,Seville
+2021,2029491,Quarter-finals,3,7889,Liverpool,50051,Real Madrid,0,0,,,,Liverpool
+2021,2029492,Quarter-finals,3,52758,B. Dortmund,52919,Man City,1,2,,,52919,Dortmund
+2021,2029495,Semi-finals,4,50051,Real Madrid,52914,Chelsea,1,1,,,,Madrid
+2021,2029494,Semi-finals,4,52747,Paris,52919,Man City,1,2,,,52919,Paris
+2021,2029497,Semi-finals,4,52919,Man City,52747,Paris,2,0,,,52919,Manchester
+2021,2029496,Semi-finals,4,52914,Chelsea,50051,Real Madrid,2,0,,,52914,London
+2021,2029498,Final,5,52919,Man City,52914,Chelsea,0,1,,,52914,Porto
+2022,2032652,Group stage,0,52714,Sevilla,50030,Salzburg,1,1,,,,Seville
+2022,2032699,Group stage,0,50031,Young Boys,52682,Man Utd,2,1,,,50031,Bern
+2022,2032698,Group stage,0,70691,Villarreal,52816,Atalanta,2,2,,,,Villarreal
+2022,2032702,Group stage,0,52914,Chelsea,52826,Zenit,1,0,,,52914,London
+2022,2032703,Group stage,0,50152,Malmö,50139,Juventus,0,3,,,50139,Malmö
+2022,2032709,Group stage,0,75797,Lille,64332,Wolfsburg,0,0,,,,Villeneuve d'Ascq
+2022,2032728,Group stage,0,50080,Barcelona,50037,Bayern München,0,3,,,50037,Barcelona
+2022,2032729,Group stage,0,52723,Dynamo Kyiv,50147,Benfica,0,0,,,,Kyiv
+2022,2032693,Group stage,0,50157,Beşiktaş,52758,B. Dortmund,1,2,,,52758,Istanbul
+2022,2032727,Group stage,0,69606,Sheriff,52707,Shakhtar,2,0,,,69606,Tiraspol
+2022,2032670,Group stage,0,50138,Inter,50051,Real Madrid,0,1,,,50051,Milan
+2022,2032683,Group stage,0,7889,Liverpool,50058,Milan,3,2,,,7889,Liverpool
+2022,2032688,Group stage,0,52919,Man City,2603790,Leipzig,6,3,,,52919,Manchester
+2022,2032689,Group stage,0,50043,Club Brugge,52747,Paris,1,1,,,,Bruges
+2022,2032690,Group stage,0,50124,Atleti,50064,Porto,0,0,,,,Madrid
+2022,2032692,Group stage,0,50149,Sporting CP,50143,Ajax,1,5,,,50143,Lisbon
+2022,2032669,Group stage,0,50143,Ajax,50157,Beşiktaş,2,0,,,50143,Amsterdam
+2022,2032686,Group stage,0,52707,Shakhtar,50138,Inter,0,0,,,,Kyiv
+2022,2032643,Group stage,0,50058,Milan,50124,Atleti,1,2,,,50124,Milan
+2022,2032665,Group stage,0,2603790,Leipzig,50043,Club Brugge,1,2,,,50043,Leipzig
+2022,2032687,Group stage,0,50051,Real Madrid,69606,Sheriff,1,2,,,69606,Madrid
+2022,2032714,Group stage,0,50064,Porto,7889,Liverpool,1,5,,,7889,Porto
+2022,2032720,Group stage,0,52747,Paris,52919,Man City,2,0,,,52747,Paris
+2022,2032724,Group stage,0,52758,B. Dortmund,50149,Sporting CP,1,0,,,52758,Dortmund
+2022,2032659,Group stage,0,52816,Atalanta,50031,Young Boys,1,0,,,52816,Bergamo
+2022,2032663,Group stage,0,52826,Zenit,50152,Malmö,4,0,,,52826,St Petersburg
+2022,2032676,Group stage,0,50030,Salzburg,75797,Lille,2,1,,,50030,Salzburg
+2022,2032701,Group stage,0,64332,Wolfsburg,52714,Sevilla,1,1,,,,Wolfsburg
+2022,2032704,Group stage,0,50147,Benfica,50080,Barcelona,3,0,,,50147,Lisbon
+2022,2032705,Group stage,0,50037,Bayern München,52723,Dynamo Kyiv,5,0,,,50037,Munich
+2022,2032730,Group stage,0,52682,Man Utd,70691,Villarreal,2,1,,,52682,Manchester
+2022,2032734,Group stage,0,50139,Juventus,52914,Chelsea,1,0,,,50139,Turin
+2022,2032641,Group stage,0,50043,Club Brugge,52919,Man City,1,5,,,52919,Bruges
+2022,2032645,Group stage,0,50157,Beşiktaş,50149,Sporting CP,1,4,,,50149,Istanbul
+2022,2032640,Group stage,0,52747,Paris,2603790,Leipzig,3,2,,,52747,Paris
+2022,2032666,Group stage,0,50124,Atleti,7889,Liverpool,2,3,,,7889,Madrid
+2022,2032667,Group stage,0,50064,Porto,50058,Milan,1,0,,,50064,Porto
+2022,2032716,Group stage,0,50143,Ajax,52758,B. Dortmund,4,0,,,50143,Amsterdam
+2022,2032718,Group stage,0,52707,Shakhtar,50051,Real Madrid,0,5,,,50051,Kyiv
+2022,2032719,Group stage,0,50138,Inter,69606,Sheriff,3,1,,,50138,Milan
+2022,2032661,Group stage,0,50030,Salzburg,64332,Wolfsburg,3,1,,,50030,Salzburg
+2022,2032673,Group stage,0,50080,Barcelona,52723,Dynamo Kyiv,1,0,,,50080,Barcelona
+2022,2032650,Group stage,0,52682,Man Utd,52816,Atalanta,3,2,,,52682,Manchester
+2022,2032651,Group stage,0,50031,Young Boys,70691,Villarreal,1,4,,,70691,Bern
+2022,2032660,Group stage,0,75797,Lille,52714,Sevilla,0,0,,,,Villeneuve d'Ascq
+2022,2032672,Group stage,0,50147,Benfica,50037,Bayern München,0,4,,,50037,Lisbon
+2022,2032710,Group stage,0,52826,Zenit,50139,Juventus,0,1,,,50139,St Petersburg
+2022,2032711,Group stage,0,52914,Chelsea,50152,Malmö,4,0,,,52914,London
+2022,2032655,Group stage,0,50152,Malmö,52914,Chelsea,0,1,,,52914,Malmö
+2022,2032733,Group stage,0,64332,Wolfsburg,50030,Salzburg,2,1,,,64332,Wolfsburg
+2022,2032654,Group stage,0,50139,Juventus,52826,Zenit,4,2,,,50139,Turin
+2022,2032696,Group stage,0,50037,Bayern München,50147,Benfica,5,2,,,50037,Munich
+2022,2032697,Group stage,0,52723,Dynamo Kyiv,50080,Barcelona,0,1,,,50080,Kyiv
+2022,2032706,Group stage,0,52816,Atalanta,52682,Man Utd,2,2,,,,Bergamo
+2022,2032707,Group stage,0,70691,Villarreal,50031,Young Boys,2,0,,,70691,Villarreal
+2022,2032732,Group stage,0,52714,Sevilla,75797,Lille,1,2,,,75797,Seville
+2022,2032646,Group stage,0,50051,Real Madrid,52707,Shakhtar,2,1,,,50051,Madrid
+2022,2032723,Group stage,0,50058,Milan,50064,Porto,1,1,,,,Milan
+2022,2032644,Group stage,0,52758,B. Dortmund,50143,Ajax,1,3,,,50143,Dortmund
+2022,2032647,Group stage,0,69606,Sheriff,50138,Inter,1,3,,,50138,Tiraspol
+2022,2032712,Group stage,0,2603790,Leipzig,52747,Paris,2,2,,,,Leipzig
+2022,2032713,Group stage,0,52919,Man City,50043,Club Brugge,4,1,,,52919,Manchester
+2022,2032717,Group stage,0,50149,Sporting CP,50157,Beşiktaş,4,0,,,50149,Lisbon
+2022,2032722,Group stage,0,7889,Liverpool,50124,Atleti,2,0,,,7889,Liverpool
+2022,2032649,Group stage,0,52723,Dynamo Kyiv,50037,Bayern München,1,2,,,50037,Kyiv
+2022,2032658,Group stage,0,70691,Villarreal,52682,Man Utd,0,2,,,52682,Villarreal
+2022,2032648,Group stage,0,50080,Barcelona,50147,Benfica,0,0,,,,Barcelona
+2022,2032662,Group stage,0,52914,Chelsea,50139,Juventus,4,0,,,52914,London
+2022,2032677,Group stage,0,52714,Sevilla,64332,Wolfsburg,2,0,,,52714,Seville
+2022,2032700,Group stage,0,75797,Lille,50030,Salzburg,1,0,,,75797,Villeneuve d'Ascq
+2022,2032731,Group stage,0,50031,Young Boys,52816,Atalanta,3,3,,,,Bern
+2022,2032735,Group stage,0,50152,Malmö,52826,Zenit,1,1,,,,Malmö
+2022,2032694,Group stage,0,50138,Inter,52707,Shakhtar,2,0,,,50138,Milan
+2022,2032725,Group stage,0,50157,Beşiktaş,50143,Ajax,1,2,,,50143,Istanbul
+2022,2032642,Group stage,0,7889,Liverpool,50064,Porto,2,0,,,7889,Liverpool
+2022,2032664,Group stage,0,52919,Man City,52747,Paris,2,1,,,52919,Manchester
+2022,2032668,Group stage,0,50149,Sporting CP,52758,B. Dortmund,3,1,,,50149,Lisbon
+2022,2032695,Group stage,0,69606,Sheriff,50051,Real Madrid,0,3,,,50051,Tiraspol
+2022,2032715,Group stage,0,50124,Atleti,50058,Milan,0,1,,,50058,Madrid
+2022,2032721,Group stage,0,50043,Club Brugge,2603790,Leipzig,0,5,,,2603790,Bruges
+2022,2032680,Group stage,0,2603790,Leipzig,52919,Man City,2,1,,,2603790,Leipzig
+2022,2032681,Group stage,0,52747,Paris,50043,Club Brugge,4,1,,,52747,Paris
+2022,2032671,Group stage,0,52707,Shakhtar,69606,Sheriff,1,1,,,,Kyiv
+2022,2032682,Group stage,0,50064,Porto,50124,Atleti,1,3,,,50124,Porto
+2022,2032684,Group stage,0,50143,Ajax,50149,Sporting CP,4,2,,,50143,Amsterdam
+2022,2032685,Group stage,0,52758,B. Dortmund,50157,Beşiktaş,5,0,,,52758,Dortmund
+2022,2032691,Group stage,0,50058,Milan,7889,Liverpool,1,2,,,7889,Milan
+2022,2032726,Group stage,0,50051,Real Madrid,50138,Inter,2,0,,,50051,Madrid
+2022,2032678,Group stage,0,52826,Zenit,52914,Chelsea,3,3,,,,St Petersburg
+2022,2032679,Group stage,0,50139,Juventus,50152,Malmö,1,0,,,50139,Turin
+2022,2032653,Group stage,0,64332,Wolfsburg,75797,Lille,1,3,,,75797,Wolfsburg
+2022,2032656,Group stage,0,50037,Bayern München,50080,Barcelona,3,0,,,50037,Munich
+2022,2032657,Group stage,0,50147,Benfica,52723,Dynamo Kyiv,2,0,,,50147,Lisbon
+2022,2032675,Group stage,0,52682,Man Utd,50031,Young Boys,1,1,,,,Manchester
+2022,2032708,Group stage,0,50030,Salzburg,52714,Sevilla,1,0,,,50030,Salzburg
+2022,2032674,Group stage,0,52816,Atalanta,70691,Villarreal,2,3,,,70691,Bergamo
+2022,2033897,Round of 16,2,50149,Sporting CP,52919,Man City,0,5,,,52919,Lisbon
+2022,2033899,Round of 16,2,52747,Paris,50051,Real Madrid,1,0,,,52747,Paris
+2022,2033896,Round of 16,2,50030,Salzburg,50037,Bayern München,1,1,,,,Salzburg
+2022,2033898,Round of 16,2,50138,Inter,7889,Liverpool,0,2,,,7889,Milan
+2022,2033901,Round of 16,2,52914,Chelsea,75797,Lille,2,0,,,52914,London
+2022,2033903,Round of 16,2,70691,Villarreal,50139,Juventus,1,1,,,,Villarreal
+2022,2033900,Round of 16,2,50147,Benfica,50143,Ajax,2,2,,,,Lisbon
+2022,2033902,Round of 16,2,50124,Atleti,52682,Man Utd,1,1,,,,Madrid
+2022,2033904,Round of 16,2,7889,Liverpool,50138,Inter,0,1,,,50138,Liverpool
+2022,2033906,Round of 16,2,50037,Bayern München,50030,Salzburg,7,1,,,50037,Munich
+2022,2033905,Round of 16,2,50051,Real Madrid,52747,Paris,3,1,,,50051,Madrid
+2022,2033907,Round of 16,2,52919,Man City,50149,Sporting CP,0,0,,,,Manchester
+2022,2033908,Round of 16,2,52682,Man Utd,50124,Atleti,0,1,,,50124,Manchester
+2022,2033910,Round of 16,2,50143,Ajax,50147,Benfica,0,1,,,50147,Amsterdam
+2022,2033909,Round of 16,2,50139,Juventus,70691,Villarreal,0,3,,,70691,Turin
+2022,2033911,Round of 16,2,75797,Lille,52914,Chelsea,1,2,,,52914,Villeneuve d'Ascq
+2022,2034654,Quarter-finals,3,52919,Man City,50124,Atleti,1,0,,,52919,Manchester
+2022,2034656,Quarter-finals,3,50147,Benfica,7889,Liverpool,1,3,,,7889,Lisbon
+2022,2034653,Quarter-finals,3,52914,Chelsea,50051,Real Madrid,1,3,,,50051,London
+2022,2034655,Quarter-finals,3,70691,Villarreal,50037,Bayern München,1,0,,,70691,Villarreal
+2022,2034657,Quarter-finals,3,50037,Bayern München,70691,Villarreal,1,1,,,,Munich
+2022,2034659,Quarter-finals,3,50051,Real Madrid,52914,Chelsea,2,3,,,52914,Madrid
+2022,2034658,Quarter-finals,3,7889,Liverpool,50147,Benfica,3,3,,,,Liverpool
+2022,2034660,Quarter-finals,3,50124,Atleti,52919,Man City,0,0,,,,Madrid
+2022,2034662,Semi-finals,4,52919,Man City,50051,Real Madrid,4,3,,,52919,Manchester
+2022,2034661,Semi-finals,4,7889,Liverpool,70691,Villarreal,2,0,,,7889,Liverpool
+2022,2034664,Semi-finals,4,70691,Villarreal,7889,Liverpool,2,3,,,7889,Villarreal
+2022,2034663,Semi-finals,4,50051,Real Madrid,52919,Man City,3,1,,,50051,Madrid
+2022,2034586,Final,5,7889,Liverpool,50051,Real Madrid,0,1,,,50051,Saint-Denis
+2023,2035649,Group stage,0,50164,GNK Dinamo,52914,Chelsea,1,0,,,50164,Zagreb
+2023,2035653,Group stage,0,52758,B. Dortmund,52709,Copenhagen,3,0,,,52758,Dortmund
+2023,2035650,Group stage,0,50030,Salzburg,50058,Milan,1,1,,,,Salzburg
+2023,2035651,Group stage,0,50050,Celtic,50051,Real Madrid,0,3,,,50051,Glasgow
+2023,2035652,Group stage,0,2603790,Leipzig,52707,Shakhtar,1,4,,,52707,Leipzig
+2023,2035654,Group stage,0,52714,Sevilla,52919,Man City,0,4,,,52919,Seville
+2023,2035655,Group stage,0,52747,Paris,50139,Juventus,2,1,,,52747,Paris
+2023,2035656,Group stage,0,50147,Benfica,59045,Maccabi Haifa,2,0,,,50147,Lisbon
+2023,2035641,Group stage,0,50143,Ajax,50121,Rangers,4,0,,,50143,Amsterdam
+2023,2035647,Group stage,0,50072,Frankfurt,50149,Sporting CP,0,3,,,50149,Frankfurt am Main
+2023,2035642,Group stage,0,50136,Napoli,7889,Liverpool,4,1,,,50136,Naples
+2023,2035643,Group stage,0,50124,Atleti,50064,Porto,2,1,,,50124,Madrid
+2023,2035644,Group stage,0,50043,Club Brugge,50109,Leverkusen,1,0,,,50043,Bruges
+2023,2035645,Group stage,0,50080,Barcelona,64388,Viktoria Plzeň,5,1,,,50080,Barcelona
+2023,2035646,Group stage,0,50138,Inter,50037,Bayern München,0,2,,,50037,Milan
+2023,2035648,Group stage,0,1652,Tottenham,52748,Marseille,2,0,,,1652,London
+2023,2035661,Group stage,0,64388,Viktoria Plzeň,50138,Inter,0,2,,,50138,Plzen
+2023,2035663,Group stage,0,50149,Sporting CP,1652,Tottenham,2,0,,,50149,Lisbon
+2023,2035657,Group stage,0,7889,Liverpool,50143,Ajax,2,1,,,7889,Liverpool
+2023,2035659,Group stage,0,50064,Porto,50043,Club Brugge,0,4,,,50043,Porto
+2023,2035660,Group stage,0,50109,Leverkusen,50124,Atleti,2,0,,,50109,Leverkusen
+2023,2035662,Group stage,0,50037,Bayern München,50080,Barcelona,2,0,,,50037,Munich
+2023,2035664,Group stage,0,52748,Marseille,50072,Frankfurt,0,1,,,50072,Marseille
+2023,2035665,Group stage,0,50058,Milan,50164,GNK Dinamo,3,1,,,50058,Milan
+2023,2035667,Group stage,0,52707,Shakhtar,50050,Celtic,1,1,,,,Warsaw
+2023,2035658,Group stage,0,50121,Rangers,50136,Napoli,0,3,,,50136,Glasgow
+2023,2035666,Group stage,0,52914,Chelsea,50030,Salzburg,1,1,,,,London
+2023,2035668,Group stage,0,50051,Real Madrid,2603790,Leipzig,2,0,,,50051,Madrid
+2023,2035669,Group stage,0,52919,Man City,52758,B. Dortmund,2,1,,,52919,Manchester
+2023,2035670,Group stage,0,52709,Copenhagen,52714,Sevilla,0,0,,,,Copenhagen
+2023,2035671,Group stage,0,50139,Juventus,50147,Benfica,1,2,,,50147,Turin
+2023,2035672,Group stage,0,59045,Maccabi Haifa,52747,Paris,1,3,,,52747,Haifa
+2023,2035677,Group stage,0,50037,Bayern München,64388,Viktoria Plzeň,5,0,,,50037,Munich
+2023,2035679,Group stage,0,52748,Marseille,50149,Sporting CP,4,1,,,52748,Marseille
+2023,2035673,Group stage,0,7889,Liverpool,50121,Rangers,2,0,,,7889,Liverpool
+2023,2035674,Group stage,0,50143,Ajax,50136,Napoli,1,6,,,50136,Amsterdam
+2023,2035675,Group stage,0,50064,Porto,50109,Leverkusen,2,0,,,50064,Porto
+2023,2035676,Group stage,0,50043,Club Brugge,50124,Atleti,2,0,,,50043,Bruges
+2023,2035678,Group stage,0,50138,Inter,50080,Barcelona,1,0,,,50138,Milan
+2023,2035680,Group stage,0,50072,Frankfurt,1652,Tottenham,0,0,,,,Frankfurt am Main
+2023,2035681,Group stage,0,50030,Salzburg,50164,GNK Dinamo,1,0,,,50030,Salzburg
+2023,2035683,Group stage,0,2603790,Leipzig,50050,Celtic,3,1,,,2603790,Leipzig
+2023,2035682,Group stage,0,52914,Chelsea,50058,Milan,3,0,,,52914,London
+2023,2035684,Group stage,0,50051,Real Madrid,52707,Shakhtar,2,1,,,50051,Madrid
+2023,2035685,Group stage,0,52919,Man City,52709,Copenhagen,5,0,,,52919,Manchester
+2023,2035686,Group stage,0,52714,Sevilla,52758,B. Dortmund,1,4,,,52758,Seville
+2023,2035687,Group stage,0,50139,Juventus,59045,Maccabi Haifa,3,1,,,50139,Turin
+2023,2035688,Group stage,0,50147,Benfica,52747,Paris,1,1,,,,Lisbon
+2023,2035701,Group stage,0,52709,Copenhagen,52919,Man City,0,0,,,,Copenhagen
+2023,2035703,Group stage,0,59045,Maccabi Haifa,50139,Juventus,2,0,,,59045,Haifa
+2023,2035697,Group stage,0,50164,GNK Dinamo,50030,Salzburg,1,1,,,,Zagreb
+2023,2035698,Group stage,0,50058,Milan,52914,Chelsea,0,2,,,52914,Milan
+2023,2035699,Group stage,0,52707,Shakhtar,50051,Real Madrid,1,1,,,,Warsaw
+2023,2035700,Group stage,0,50050,Celtic,2603790,Leipzig,0,2,,,2603790,Glasgow
+2023,2035702,Group stage,0,52758,B. Dortmund,52714,Sevilla,1,1,,,,Dortmund
+2023,2035704,Group stage,0,52747,Paris,50147,Benfica,1,1,,,,Paris
+2023,2035689,Group stage,0,50136,Napoli,50143,Ajax,4,2,,,50136,Naples
+2023,2035691,Group stage,0,50124,Atleti,50043,Club Brugge,0,0,,,,Madrid
+2023,2035690,Group stage,0,50121,Rangers,7889,Liverpool,1,7,,,7889,Glasgow
+2023,2035692,Group stage,0,50109,Leverkusen,50064,Porto,0,3,,,50064,Leverkusen
+2023,2035693,Group stage,0,50080,Barcelona,50138,Inter,3,3,,,,Barcelona
+2023,2035694,Group stage,0,64388,Viktoria Plzeň,50037,Bayern München,2,4,,,50037,Plzen
+2023,2035695,Group stage,0,1652,Tottenham,50072,Frankfurt,3,2,,,1652,London
+2023,2035696,Group stage,0,50149,Sporting CP,52748,Marseille,0,2,,,52748,Lisbon
+2023,2035713,Group stage,0,50030,Salzburg,52914,Chelsea,1,2,,,52914,Salzburg
+2023,2035717,Group stage,0,52714,Sevilla,52709,Copenhagen,3,0,,,52714,Seville
+2023,2035714,Group stage,0,50164,GNK Dinamo,50058,Milan,0,4,,,50058,Zagreb
+2023,2035715,Group stage,0,50050,Celtic,52707,Shakhtar,1,1,,,,Glasgow
+2023,2035716,Group stage,0,2603790,Leipzig,50051,Real Madrid,3,2,,,2603790,Leipzig
+2023,2035718,Group stage,0,52758,B. Dortmund,52919,Man City,0,0,,,,Dortmund
+2023,2035719,Group stage,0,52747,Paris,59045,Maccabi Haifa,7,2,,,52747,Paris
+2023,2035720,Group stage,0,50147,Benfica,50139,Juventus,4,3,,,50147,Lisbon
+2023,2035707,Group stage,0,50043,Club Brugge,50064,Porto,0,4,,,50064,Bruges
+2023,2035709,Group stage,0,50138,Inter,64388,Viktoria Plzeň,4,0,,,50138,Milan
+2023,2035705,Group stage,0,50136,Napoli,50121,Rangers,3,0,,,50136,Naples
+2023,2035706,Group stage,0,50143,Ajax,7889,Liverpool,0,3,,,7889,Amsterdam
+2023,2035708,Group stage,0,50124,Atleti,50109,Leverkusen,2,2,,,,Madrid
+2023,2035710,Group stage,0,50080,Barcelona,50037,Bayern München,0,3,,,50037,Barcelona
+2023,2035711,Group stage,0,1652,Tottenham,50149,Sporting CP,1,1,,,,London
+2023,2035712,Group stage,0,50072,Frankfurt,52748,Marseille,2,1,,,50072,Frankfurt am Main
+2023,2035723,Group stage,0,50064,Porto,50124,Atleti,2,1,,,50064,Porto
+2023,2035724,Group stage,0,50109,Leverkusen,50043,Club Brugge,0,0,,,,Leverkusen
+2023,2035721,Group stage,0,7889,Liverpool,50136,Napoli,2,0,,,7889,Liverpool
+2023,2035722,Group stage,0,50121,Rangers,50143,Ajax,1,3,,,50143,Glasgow
+2023,2035725,Group stage,0,50037,Bayern München,50138,Inter,2,0,,,50037,Munich
+2023,2035726,Group stage,0,64388,Viktoria Plzeň,50080,Barcelona,2,4,,,50080,Plzen
+2023,2035727,Group stage,0,50149,Sporting CP,50072,Frankfurt,1,2,,,50072,Lisbon
+2023,2035728,Group stage,0,52748,Marseille,1652,Tottenham,1,2,,,1652,Marseille
+2023,2035731,Group stage,0,50051,Real Madrid,50050,Celtic,5,1,,,50051,Madrid
+2023,2035732,Group stage,0,52707,Shakhtar,2603790,Leipzig,0,4,,,2603790,Warsaw
+2023,2035729,Group stage,0,52914,Chelsea,50164,GNK Dinamo,2,1,,,52914,London
+2023,2035730,Group stage,0,50058,Milan,50030,Salzburg,4,0,,,50058,Milan
+2023,2035733,Group stage,0,52919,Man City,52714,Sevilla,3,1,,,52919,Manchester
+2023,2035734,Group stage,0,52709,Copenhagen,52758,B. Dortmund,1,1,,,,Copenhagen
+2023,2035735,Group stage,0,50139,Juventus,52747,Paris,1,2,,,52747,Turin
+2023,2035736,Group stage,0,59045,Maccabi Haifa,50147,Benfica,1,6,,,50147,Haifa
+2023,2036582,Round of 16,2,50058,Milan,1652,Tottenham,1,0,,,50058,Milan
+2023,2036583,Round of 16,2,52747,Paris,50037,Bayern München,0,1,,,50037,Paris
+2023,2036584,Round of 16,2,50043,Club Brugge,50147,Benfica,0,2,,,50147,Bruges
+2023,2036585,Round of 16,2,52758,B. Dortmund,52914,Chelsea,1,0,,,52758,Dortmund
+2023,2036586,Round of 16,2,7889,Liverpool,50051,Real Madrid,2,5,,,50051,Liverpool
+2023,2036587,Round of 16,2,50072,Frankfurt,50136,Napoli,0,2,,,50136,Frankfurt am Main
+2023,2036588,Round of 16,2,2603790,Leipzig,52919,Man City,1,1,,,,Leipzig
+2023,2036589,Round of 16,2,50138,Inter,50064,Porto,1,0,,,50138,Milan
+2023,2036590,Round of 16,2,50147,Benfica,50043,Club Brugge,5,1,,,50147,Lisbon
+2023,2036591,Round of 16,2,52914,Chelsea,52758,B. Dortmund,2,0,,,52914,London
+2023,2036593,Round of 16,2,50037,Bayern München,52747,Paris,2,0,,,50037,Munich
+2023,2036592,Round of 16,2,1652,Tottenham,50058,Milan,0,0,,,,London
+2023,2036594,Round of 16,2,52919,Man City,2603790,Leipzig,7,0,,,52919,Manchester
+2023,2036595,Round of 16,2,50064,Porto,50138,Inter,0,0,,,,Porto
+2023,2036596,Round of 16,2,50051,Real Madrid,7889,Liverpool,1,0,,,50051,Madrid
+2023,2036597,Round of 16,2,50136,Napoli,50072,Frankfurt,3,0,,,50136,Naples
+2023,2037769,Quarter-finals,3,50147,Benfica,50138,Inter,0,2,,,50138,Lisbon
+2023,2037770,Quarter-finals,3,52919,Man City,50037,Bayern München,3,0,,,52919,Manchester
+2023,2037768,Quarter-finals,3,50051,Real Madrid,52914,Chelsea,2,0,,,50051,Madrid
+2023,2037771,Quarter-finals,3,50058,Milan,50136,Napoli,1,0,,,50058,Milan
+2023,2037773,Quarter-finals,3,50136,Napoli,50058,Milan,1,1,,,,Naples
+2023,2037774,Quarter-finals,3,52914,Chelsea,50051,Real Madrid,0,2,,,50051,London
+2023,2037772,Quarter-finals,3,50037,Bayern München,52919,Man City,1,1,,,,Munich
+2023,2037775,Quarter-finals,3,50138,Inter,50147,Benfica,3,3,,,,Milan
+2023,2037797,Semi-finals,4,50051,Real Madrid,52919,Man City,1,1,,,,Madrid
+2023,2037798,Semi-finals,4,50058,Milan,50138,Inter,0,2,,,50138,Milan
+2023,2037799,Semi-finals,4,50138,Inter,50058,Milan,1,0,,,50138,Milan
+2023,2037800,Semi-finals,4,52919,Man City,50051,Real Madrid,4,0,,,52919,Manchester
+2023,2037765,Final,5,52919,Man City,50138,Inter,1,0,,,52919,Istanbul
+2024,2039189,Group stage,0,50058,Milan,59324,Newcastle,0,0,,,,Milan
+2024,2039191,Group stage,0,50031,Young Boys,2603790,Leipzig,1,3,,,2603790,Bern
+2024,2039186,Group stage,0,52749,Feyenoord,50050,Celtic,2,0,,,52749,Rotterdam
+2024,2039187,Group stage,0,52973,Lazio,50124,Atleti,1,1,,,,Rome
+2024,2039188,Group stage,0,52747,Paris,52758,B. Dortmund,2,0,,,52747,Paris
+2024,2039190,Group stage,0,52919,Man City,50069,Crvena Zvezda,3,1,,,52919,Manchester
+2024,2039192,Group stage,0,50080,Barcelona,50113,Antwerp,5,0,,,50080,Barcelona
+2024,2039193,Group stage,0,52707,Shakhtar,50064,Porto,1,3,,,50064,Hamburg
+2024,2039179,Group stage,0,50067,Galatasaray,52709,Copenhagen,2,2,,,,Istanbul
+2024,2039183,Group stage,0,50051,Real Madrid,77977,Union Berlin,1,0,,,50051,Madrid
+2024,2039178,Group stage,0,50037,Bayern München,52682,Man Utd,4,3,,,50037,Munich
+2024,2039180,Group stage,0,52714,Sevilla,52277,Lens,1,1,,,,Seville
+2024,2039181,Group stage,0,52280,Arsenal,50062,PSV,4,0,,,52280,London
+2024,2039182,Group stage,0,52336,Braga,50136,Napoli,1,2,,,50136,Braga
+2024,2039184,Group stage,0,50123,Real Sociedad,50138,Inter,1,1,,,,San Sebastian
+2024,2039185,Group stage,0,50147,Benfica,50030,Salzburg,0,2,,,50030,Lisbon
+2024,2039098,Group stage,0,77977,Union Berlin,52336,Braga,2,3,,,52336,Berlin
+2024,2039099,Group stage,0,50030,Salzburg,50123,Real Sociedad,0,2,,,50123,Salzburg
+2024,2039100,Group stage,0,52682,Man Utd,50067,Galatasaray,2,3,,,50067,Manchester
+2024,2039101,Group stage,0,52709,Copenhagen,50037,Bayern München,1,2,,,50037,Copenhagen
+2024,2039102,Group stage,0,52277,Lens,52280,Arsenal,2,1,,,52277,Lens Agglo
+2024,2039103,Group stage,0,50062,PSV,52714,Sevilla,2,2,,,,Eindhoven
+2024,2039104,Group stage,0,50136,Napoli,50051,Real Madrid,2,3,,,50051,Naples
+2024,2039105,Group stage,0,50138,Inter,50147,Benfica,1,0,,,50138,Milan
+2024,2039106,Group stage,0,50124,Atleti,52749,Feyenoord,3,2,,,50124,Madrid
+2024,2039107,Group stage,0,50113,Antwerp,52707,Shakhtar,2,3,,,52707,Deurne
+2024,2039108,Group stage,0,50050,Celtic,52973,Lazio,1,2,,,52973,Glasgow
+2024,2039109,Group stage,0,52758,B. Dortmund,50058,Milan,0,0,,,,Dortmund
+2024,2039110,Group stage,0,59324,Newcastle,52747,Paris,4,1,,,59324,Newcastle
+2024,2039111,Group stage,0,2603790,Leipzig,52919,Man City,1,3,,,52919,Leipzig
+2024,2039112,Group stage,0,50069,Crvena Zvezda,50031,Young Boys,2,2,,,,Belgrade
+2024,2039113,Group stage,0,50064,Porto,50080,Barcelona,0,1,,,50080,Porto
+2024,2039114,Group stage,0,50067,Galatasaray,50037,Bayern München,1,3,,,50037,Istanbul
+2024,2039115,Group stage,0,50138,Inter,50030,Salzburg,2,1,,,50138,Milan
+2024,2039116,Group stage,0,52682,Man Utd,52709,Copenhagen,1,0,,,52682,Manchester
+2024,2039117,Group stage,0,52714,Sevilla,52280,Arsenal,1,2,,,52280,Seville
+2024,2039118,Group stage,0,52277,Lens,50062,PSV,1,1,,,,Lens Agglo
+2024,2039119,Group stage,0,52336,Braga,50051,Real Madrid,1,2,,,50051,Braga
+2024,2039120,Group stage,0,77977,Union Berlin,50136,Napoli,0,1,,,50136,Berlin
+2024,2039121,Group stage,0,50147,Benfica,50123,Real Sociedad,0,1,,,50123,Lisbon
+2024,2039122,Group stage,0,52749,Feyenoord,52973,Lazio,3,1,,,52749,Rotterdam
+2024,2039123,Group stage,0,50080,Barcelona,52707,Shakhtar,2,1,,,50080,Barcelona
+2024,2039124,Group stage,0,50050,Celtic,50124,Atleti,2,2,,,,Glasgow
+2024,2039125,Group stage,0,52747,Paris,50058,Milan,3,0,,,52747,Paris
+2024,2039126,Group stage,0,59324,Newcastle,52758,B. Dortmund,0,1,,,52758,Newcastle
+2024,2039127,Group stage,0,2603790,Leipzig,50069,Crvena Zvezda,3,1,,,2603790,Leipzig
+2024,2039128,Group stage,0,50031,Young Boys,52919,Man City,1,3,,,52919,Bern
+2024,2039129,Group stage,0,50113,Antwerp,50064,Porto,1,4,,,50064,Deurne
+2024,2039130,Group stage,0,52758,B. Dortmund,59324,Newcastle,2,0,,,52758,Dortmund
+2024,2039131,Group stage,0,52707,Shakhtar,50080,Barcelona,1,0,,,52707,Hamburg
+2024,2039132,Group stage,0,50124,Atleti,50050,Celtic,6,0,,,50124,Madrid
+2024,2039133,Group stage,0,52973,Lazio,52749,Feyenoord,1,0,,,52973,Rome
+2024,2039134,Group stage,0,50058,Milan,52747,Paris,2,1,,,50058,Milan
+2024,2039135,Group stage,0,52919,Man City,50031,Young Boys,3,0,,,52919,Manchester
+2024,2039136,Group stage,0,50069,Crvena Zvezda,2603790,Leipzig,1,2,,,2603790,Belgrade
+2024,2039137,Group stage,0,50064,Porto,50113,Antwerp,2,0,,,50064,Porto
+2024,2039138,Group stage,0,50136,Napoli,77977,Union Berlin,1,1,,,,Naples
+2024,2039139,Group stage,0,50123,Real Sociedad,50147,Benfica,3,1,,,50123,San Sebastian
+2024,2039140,Group stage,0,50037,Bayern München,50067,Galatasaray,2,1,,,50037,Munich
+2024,2039141,Group stage,0,52709,Copenhagen,52682,Man Utd,4,3,,,52709,Copenhagen
+2024,2039142,Group stage,0,52280,Arsenal,52714,Sevilla,2,0,,,52280,London
+2024,2039143,Group stage,0,50062,PSV,52277,Lens,1,0,,,50062,Eindhoven
+2024,2039144,Group stage,0,50051,Real Madrid,52336,Braga,3,0,,,50051,Madrid
+2024,2039145,Group stage,0,50030,Salzburg,50138,Inter,0,1,,,50138,Salzburg
+2024,2039146,Group stage,0,52973,Lazio,50050,Celtic,2,0,,,52973,Rome
+2024,2039147,Group stage,0,52707,Shakhtar,50113,Antwerp,1,0,,,52707,Hamburg
+2024,2039148,Group stage,0,52749,Feyenoord,50124,Atleti,1,3,,,50124,Rotterdam
+2024,2039149,Group stage,0,52747,Paris,59324,Newcastle,1,1,,,,Paris
+2024,2039150,Group stage,0,50058,Milan,52758,B. Dortmund,1,3,,,52758,Milan
+2024,2039151,Group stage,0,52919,Man City,2603790,Leipzig,3,2,,,52919,Manchester
+2024,2039152,Group stage,0,50031,Young Boys,50069,Crvena Zvezda,2,0,,,50031,Bern
+2024,2039153,Group stage,0,50080,Barcelona,50064,Porto,2,1,,,50080,Barcelona
+2024,2039154,Group stage,0,50067,Galatasaray,52682,Man Utd,3,3,,,,Istanbul
+2024,2039155,Group stage,0,52714,Sevilla,50062,PSV,2,3,,,50062,Seville
+2024,2039156,Group stage,0,50037,Bayern München,52709,Copenhagen,0,0,,,,Munich
+2024,2039157,Group stage,0,52280,Arsenal,52277,Lens,6,0,,,52280,London
+2024,2039158,Group stage,0,50051,Real Madrid,50136,Napoli,4,2,,,50051,Madrid
+2024,2039159,Group stage,0,52336,Braga,77977,Union Berlin,1,1,,,,Braga
+2024,2039160,Group stage,0,50147,Benfica,50138,Inter,3,3,,,,Lisbon
+2024,2039161,Group stage,0,50123,Real Sociedad,50030,Salzburg,0,0,,,,San Sebastian
+2024,2039162,Group stage,0,52277,Lens,52714,Sevilla,2,1,,,52277,Lens Agglo
+2024,2039163,Group stage,0,50062,PSV,52280,Arsenal,1,1,,,,Eindhoven
+2024,2039164,Group stage,0,52682,Man Utd,50037,Bayern München,0,1,,,50037,Manchester
+2024,2039165,Group stage,0,52709,Copenhagen,50067,Galatasaray,1,0,,,52709,Copenhagen
+2024,2039166,Group stage,0,50136,Napoli,52336,Braga,2,0,,,50136,Naples
+2024,2039167,Group stage,0,77977,Union Berlin,50051,Real Madrid,2,3,,,50051,Berlin
+2024,2039168,Group stage,0,50138,Inter,50123,Real Sociedad,0,0,,,,Milan
+2024,2039169,Group stage,0,50030,Salzburg,50147,Benfica,1,3,,,50147,Salzburg
+2024,2039170,Group stage,0,2603790,Leipzig,50031,Young Boys,2,1,,,2603790,Leipzig
+2024,2039171,Group stage,0,50069,Crvena Zvezda,52919,Man City,2,3,,,52919,Belgrade
+2024,2039172,Group stage,0,50124,Atleti,52973,Lazio,2,0,,,50124,Madrid
+2024,2039173,Group stage,0,50050,Celtic,52749,Feyenoord,2,1,,,50050,Glasgow
+2024,2039174,Group stage,0,52758,B. Dortmund,52747,Paris,1,1,,,,Dortmund
+2024,2039175,Group stage,0,59324,Newcastle,50058,Milan,1,2,,,50058,Newcastle
+2024,2039176,Group stage,0,50064,Porto,52707,Shakhtar,5,3,,,50064,Porto
+2024,2039177,Group stage,0,50113,Antwerp,50080,Barcelona,3,2,,,50113,Deurne
+2024,2039914,Round of 16,2,2603790,Leipzig,50051,Real Madrid,0,1,,,50051,Leipzig
+2024,2039915,Round of 16,2,52709,Copenhagen,52919,Man City,1,3,,,52919,Copenhagen
+2024,2039916,Round of 16,2,52973,Lazio,50037,Bayern München,1,0,,,52973,Rome
+2024,2039917,Round of 16,2,52747,Paris,50123,Real Sociedad,2,0,,,52747,Paris
+2024,2039918,Round of 16,2,50138,Inter,50124,Atleti,1,0,,,50138,Milan
+2024,2039919,Round of 16,2,50062,PSV,52758,B. Dortmund,1,1,,,,Eindhoven
+2024,2039920,Round of 16,2,50064,Porto,52280,Arsenal,1,0,,,50064,Porto
+2024,2039921,Round of 16,2,50136,Napoli,50080,Barcelona,1,1,,,,Naples
+2024,2039922,Round of 16,2,50037,Bayern München,52973,Lazio,3,0,,,50037,Munich
+2024,2039923,Round of 16,2,50123,Real Sociedad,52747,Paris,1,2,,,52747,San Sebastian
+2024,2039924,Round of 16,2,50051,Real Madrid,2603790,Leipzig,1,1,,,,Madrid
+2024,2039925,Round of 16,2,52919,Man City,52709,Copenhagen,3,1,,,52919,Manchester
+2024,2039926,Round of 16,2,52280,Arsenal,50064,Porto,1,0,4.0,2.0,52280,London
+2024,2039927,Round of 16,2,50080,Barcelona,50136,Napoli,3,1,,,50080,Barcelona
+2024,2039928,Round of 16,2,50124,Atleti,50138,Inter,2,1,3.0,2.0,50124,Madrid
+2024,2039929,Round of 16,2,52758,B. Dortmund,50062,PSV,2,0,,,52758,Dortmund
+2024,2040492,Quarter-finals,3,52280,Arsenal,50037,Bayern München,2,2,,,,London
+2024,2040494,Quarter-finals,3,50051,Real Madrid,52919,Man City,3,3,,,,Madrid
+2024,2040493,Quarter-finals,3,50124,Atleti,52758,B. Dortmund,2,1,,,50124,Madrid
+2024,2040495,Quarter-finals,3,52747,Paris,50080,Barcelona,2,3,,,50080,Paris
+2024,2040497,Quarter-finals,3,50080,Barcelona,52747,Paris,1,4,,,52747,Barcelona
+2024,2040499,Quarter-finals,3,52758,B. Dortmund,50124,Atleti,4,2,,,52758,Dortmund
+2024,2040496,Quarter-finals,3,52919,Man City,50051,Real Madrid,1,1,3.0,4.0,,Manchester
+2024,2040498,Quarter-finals,3,50037,Bayern München,52280,Arsenal,1,0,,,50037,Munich
+2024,2040500,Semi-finals,4,50037,Bayern München,50051,Real Madrid,2,2,,,,Munich
+2024,2040501,Semi-finals,4,52758,B. Dortmund,52747,Paris,1,0,,,52758,Dortmund
+2024,2040502,Semi-finals,4,52747,Paris,52758,B. Dortmund,0,1,,,52758,Paris
+2024,2040503,Semi-finals,4,50051,Real Madrid,50037,Bayern München,2,1,,,50051,Madrid
+2024,2039970,Final,5,52758,B. Dortmund,50051,Real Madrid,0,2,,,50051,London
+2025,2042029,League Phase,0,50139,Juventus,50062,PSV,3,1,,,50139,Turin
+2025,2042041,League Phase,0,50031,Young Boys,52683,Aston Villa,0,3,,,52683,Bern
+2025,2042032,League Phase,0,50037,Bayern München,50164,GNK Dinamo,9,2,,,50037,Munich
+2025,2042036,League Phase,0,50058,Milan,7889,Liverpool,1,3,,,7889,Milan
+2025,2042038,League Phase,0,50051,Real Madrid,50107,Stuttgart,3,1,,,50051,Madrid
+2025,2042040,League Phase,0,50149,Sporting CP,75797,Lille,2,0,,,50149,Lisbon
+2025,2042034,League Phase,0,52969,Bologna,52707,Shakhtar,0,0,,,,Bologna
+2025,2042042,League Phase,0,50033,Sparta Praha,50030,Salzburg,3,0,,,50033,Prague
+2025,2042025,League Phase,0,50043,Club Brugge,52758,B. Dortmund,0,3,,,52758,Bruges
+2025,2042026,League Phase,0,50050,Celtic,52797,S. Bratislava,5,1,,,50050,Glasgow
+2025,2042035,League Phase,0,52919,Man City,50138,Inter,0,0,,,,Manchester
+2025,2042039,League Phase,0,52747,Paris,2602798,Girona,1,0,,,52747,Paris
+2025,2042027,League Phase,0,50069,Crvena Zvezda,50147,Benfica,1,2,,,50147,Belgrade
+2025,2042028,League Phase,0,52749,Feyenoord,50109,Leverkusen,0,4,,,50109,Rotterdam
+2025,2042030,League Phase,0,52816,Atalanta,52280,Arsenal,0,0,,,,Bergamo
+2025,2042031,League Phase,0,50124,Atleti,2603790,Leipzig,2,1,,,50124,Madrid
+2025,2042033,League Phase,0,50023,Monaco,50080,Barcelona,2,1,,,50023,Monaco
+2025,2042037,League Phase,0,2601306,Brest,50111,Sturm Graz,2,1,,,2601306,Guingamp
+2025,2041941,League Phase,0,50030,Salzburg,2601306,Brest,0,4,,,2601306,Salzburg
+2025,2041943,League Phase,0,50107,Stuttgart,50033,Sparta Praha,1,1,,,,Stuttgart
+2025,2041935,League Phase,0,50138,Inter,50069,Crvena Zvezda,4,0,,,50138,Milan
+2025,2041936,League Phase,0,52758,B. Dortmund,50050,Celtic,7,1,,,52758,Dortmund
+2025,2041937,League Phase,0,50080,Barcelona,50031,Young Boys,5,0,,,50080,Barcelona
+2025,2041938,League Phase,0,50109,Leverkusen,50058,Milan,1,0,,,50109,Leverkusen
+2025,2041939,League Phase,0,52280,Arsenal,52747,Paris,2,0,,,52280,London
+2025,2041940,League Phase,0,50062,PSV,50149,Sporting CP,1,1,,,,Eindhoven
+2025,2041942,League Phase,0,52797,S. Bratislava,52919,Man City,0,4,,,52919,Bratislava
+2025,2041947,League Phase,0,52707,Shakhtar,52816,Atalanta,0,3,,,52816,Gelsenkirchen
+2025,2041951,League Phase,0,2602798,Girona,52749,Feyenoord,2,3,,,52749,Girona
+2025,2041944,League Phase,0,7889,Liverpool,52969,Bologna,2,0,,,7889,Liverpool
+2025,2041945,League Phase,0,2603790,Leipzig,50139,Juventus,2,3,,,50139,Leipzig
+2025,2041946,League Phase,0,50147,Benfica,50124,Atleti,4,0,,,50147,Lisbon
+2025,2041948,League Phase,0,50164,GNK Dinamo,50023,Monaco,2,2,,,,Zagreb
+2025,2041949,League Phase,0,75797,Lille,50051,Real Madrid,1,0,,,75797,Villeneuve d'Ascq
+2025,2041950,League Phase,0,52683,Aston Villa,50037,Bayern München,1,0,,,52683,Birmingham
+2025,2041952,League Phase,0,50111,Sturm Graz,50043,Club Brugge,0,1,,,50043,Klagenfurt
+2025,2041957,League Phase,0,50058,Milan,50043,Club Brugge,3,1,,,50058,Milan
+2025,2041958,League Phase,0,50023,Monaco,50069,Crvena Zvezda,5,1,,,50023,Monaco
+2025,2041954,League Phase,0,52747,Paris,50062,PSV,1,1,,,,Paris
+2025,2041955,League Phase,0,50139,Juventus,50107,Stuttgart,0,1,,,50107,Turin
+2025,2041956,League Phase,0,52280,Arsenal,52707,Shakhtar,1,0,,,52280,London
+2025,2041959,League Phase,0,52683,Aston Villa,52969,Bologna,2,0,,,52683,Birmingham
+2025,2041960,League Phase,0,2602798,Girona,52797,S. Bratislava,2,0,,,2602798,Girona
+2025,2041961,League Phase,0,50111,Sturm Graz,50149,Sporting CP,0,2,,,50149,Klagenfurt
+2025,2042043,League Phase,0,50051,Real Madrid,52758,B. Dortmund,5,2,,,50051,Madrid
+2025,2041966,League Phase,0,52816,Atalanta,50050,Celtic,0,0,,,,Bergamo
+2025,2041970,League Phase,0,2601306,Brest,50109,Leverkusen,1,1,,,,Guingamp
+2025,2041962,League Phase,0,52919,Man City,50033,Sparta Praha,5,0,,,52919,Manchester
+2025,2041963,League Phase,0,2603790,Leipzig,7889,Liverpool,0,1,,,7889,Leipzig
+2025,2041964,League Phase,0,50080,Barcelona,50037,Bayern München,4,1,,,50080,Barcelona
+2025,2041965,League Phase,0,50124,Atleti,75797,Lille,1,3,,,75797,Madrid
+2025,2041967,League Phase,0,50147,Benfica,52749,Feyenoord,1,3,,,52749,Lisbon
+2025,2041968,League Phase,0,50030,Salzburg,50164,GNK Dinamo,0,2,,,50164,Salzburg
+2025,2041969,League Phase,0,50031,Young Boys,50138,Inter,0,1,,,50138,Bern
+2025,2041975,League Phase,0,50062,PSV,2602798,Girona,4,0,,,50062,Eindhoven
+2025,2041978,League Phase,0,52797,S. Bratislava,50164,GNK Dinamo,1,4,,,50164,Bratislava
+2025,2041971,League Phase,0,50051,Real Madrid,50058,Milan,1,3,,,50058,Madrid
+2025,2041972,League Phase,0,7889,Liverpool,50109,Leverkusen,4,0,,,7889,Liverpool
+2025,2041973,League Phase,0,52758,B. Dortmund,50111,Sturm Graz,1,0,,,52758,Dortmund
+2025,2041974,League Phase,0,50149,Sporting CP,52919,Man City,4,1,,,50149,Lisbon
+2025,2041976,League Phase,0,75797,Lille,50139,Juventus,1,1,,,,Villeneuve d'Ascq
+2025,2041977,League Phase,0,50050,Celtic,2603790,Leipzig,3,1,,,50050,Glasgow
+2025,2041979,League Phase,0,52969,Bologna,50023,Monaco,0,1,,,50023,Bologna
+2025,2041983,League Phase,0,50043,Club Brugge,52683,Aston Villa,1,0,,,50043,Bruges
+2025,2041984,League Phase,0,52707,Shakhtar,50031,Young Boys,2,1,,,52707,Gelsenkirchen
+2025,2041981,League Phase,0,52747,Paris,50124,Atleti,1,2,,,50124,Paris
+2025,2041982,League Phase,0,50138,Inter,52280,Arsenal,1,0,,,50138,Milan
+2025,2041985,League Phase,0,52749,Feyenoord,50030,Salzburg,1,3,,,50030,Rotterdam
+2025,2041986,League Phase,0,50069,Crvena Zvezda,50080,Barcelona,2,5,,,50080,Belgrade
+2025,2041987,League Phase,0,50033,Sparta Praha,2601306,Brest,1,2,,,2601306,Prague
+2025,2041988,League Phase,0,50107,Stuttgart,52816,Atalanta,0,2,,,52816,Stuttgart
+2025,2041980,League Phase,0,50037,Bayern München,50147,Benfica,1,0,,,50037,Munich
+2025,2041996,League Phase,0,52797,S. Bratislava,50058,Milan,2,3,,,50058,Bratislava
+2025,2041997,League Phase,0,50033,Sparta Praha,50124,Atleti,0,6,,,50124,Prague
+2025,2041989,League Phase,0,52919,Man City,52749,Feyenoord,3,3,,,,Manchester
+2025,2041990,League Phase,0,50037,Bayern München,52747,Paris,1,0,,,50037,Munich
+2025,2041991,League Phase,0,50138,Inter,2603790,Leipzig,1,0,,,50138,Milan
+2025,2041992,League Phase,0,50080,Barcelona,2601306,Brest,3,0,,,50080,Barcelona
+2025,2041993,League Phase,0,50109,Leverkusen,50030,Salzburg,5,0,,,50109,Leverkusen
+2025,2041994,League Phase,0,50149,Sporting CP,52280,Arsenal,1,5,,,52280,Lisbon
+2025,2041995,League Phase,0,50031,Young Boys,52816,Atalanta,1,6,,,52816,Bern
+2025,2042001,League Phase,0,50069,Crvena Zvezda,50107,Stuttgart,5,1,,,50069,Belgrade
+2025,2042006,League Phase,0,50111,Sturm Graz,2602798,Girona,1,0,,,50111,Klagenfurt
+2025,2041998,League Phase,0,7889,Liverpool,50051,Real Madrid,2,0,,,7889,Liverpool
+2025,2041999,League Phase,0,50062,PSV,52707,Shakhtar,3,2,,,50062,Eindhoven
+2025,2042000,League Phase,0,50164,GNK Dinamo,52758,B. Dortmund,0,3,,,52758,Zagreb
+2025,2042002,League Phase,0,50050,Celtic,50043,Club Brugge,1,1,,,,Glasgow
+2025,2042003,League Phase,0,50023,Monaco,50147,Benfica,2,3,,,50147,Monaco
+2025,2042004,League Phase,0,52683,Aston Villa,50139,Juventus,0,0,,,,Birmingham
+2025,2042005,League Phase,0,52969,Bologna,75797,Lille,1,2,,,75797,Bologna
+2025,2042012,League Phase,0,50164,GNK Dinamo,50050,Celtic,0,0,,,,Zagreb
+2025,2042014,League Phase,0,2602798,Girona,7889,Liverpool,0,1,,,7889,Girona
+2025,2042007,League Phase,0,2603790,Leipzig,52683,Aston Villa,2,3,,,52683,Leipzig
+2025,2042008,League Phase,0,50109,Leverkusen,50138,Inter,1,0,,,50109,Leverkusen
+2025,2042009,League Phase,0,52816,Atalanta,50051,Real Madrid,2,3,,,50051,Bergamo
+2025,2042010,League Phase,0,50043,Club Brugge,50149,Sporting CP,2,1,,,50043,Bruges
+2025,2042011,League Phase,0,52707,Shakhtar,50037,Bayern München,1,5,,,50037,Gelsenkirchen
+2025,2042013,League Phase,0,50030,Salzburg,52747,Paris,0,3,,,52747,Salzburg
+2025,2042015,League Phase,0,2601306,Brest,50062,PSV,1,0,,,2601306,Guingamp
+2025,2042017,League Phase,0,50124,Atleti,52797,S. Bratislava,3,1,,,50124,Madrid
+2025,2042023,League Phase,0,75797,Lille,50111,Sturm Graz,3,2,,,75797,Villeneuve d'Ascq
+2025,2042016,League Phase,0,52758,B. Dortmund,50080,Barcelona,2,3,,,50080,Dortmund
+2025,2042018,League Phase,0,50139,Juventus,52919,Man City,2,0,,,50139,Turin
+2025,2042019,League Phase,0,50147,Benfica,52969,Bologna,0,0,,,,Lisbon
+2025,2042020,League Phase,0,52280,Arsenal,50023,Monaco,3,0,,,52280,London
+2025,2042021,League Phase,0,50058,Milan,50069,Crvena Zvezda,2,1,,,50058,Milan
+2025,2042022,League Phase,0,52749,Feyenoord,50033,Sparta Praha,4,2,,,52749,Rotterdam
+2025,2042024,League Phase,0,50107,Stuttgart,50031,Young Boys,5,1,,,50107,Stuttgart
+2025,2042056,League Phase,0,52816,Atalanta,50111,Sturm Graz,5,0,,,52816,Bergamo
+2025,2042057,League Phase,0,50023,Monaco,52683,Aston Villa,1,0,,,50023,Monaco
+2025,2042046,League Phase,0,52797,S. Bratislava,50107,Stuttgart,1,3,,,50107,Bratislava
+2025,2042055,League Phase,0,50043,Club Brugge,50139,Juventus,0,0,,,,Bruges
+2025,2042058,League Phase,0,50124,Atleti,50109,Leverkusen,2,1,,,50124,Madrid
+2025,2042059,League Phase,0,50147,Benfica,50080,Barcelona,4,5,,,50080,Lisbon
+2025,2042060,League Phase,0,7889,Liverpool,75797,Lille,2,1,,,7889,Liverpool
+2025,2042061,League Phase,0,52969,Bologna,52758,B. Dortmund,2,1,,,52969,Bologna
+2025,2042063,League Phase,0,50069,Crvena Zvezda,50062,PSV,2,3,,,50062,Belgrade
+2025,2042045,League Phase,0,2603790,Leipzig,50149,Sporting CP,2,1,,,2603790,Leipzig
+2025,2042047,League Phase,0,52707,Shakhtar,2601306,Brest,2,0,,,52707,Gelsenkirchen
+2025,2041953,League Phase,0,50051,Real Madrid,50030,Salzburg,5,1,,,50051,Madrid
+2025,2042044,League Phase,0,52747,Paris,52919,Man City,4,2,,,52747,Paris
+2025,2042048,League Phase,0,50033,Sparta Praha,50138,Inter,0,1,,,50138,Prague
+2025,2042054,League Phase,0,52280,Arsenal,50164,GNK Dinamo,3,0,,,52280,London
+2025,2042062,League Phase,0,50050,Celtic,50031,Young Boys,1,0,,,50050,Glasgow
+2025,2042064,League Phase,0,52749,Feyenoord,50037,Bayern München,3,0,,,52749,Rotterdam
+2025,2042065,League Phase,0,50058,Milan,2602798,Girona,1,0,,,50058,Milan
+2025,2042049,League Phase,0,50149,Sporting CP,52969,Bologna,1,1,,,,Lisbon
+2025,2042050,League Phase,0,50062,PSV,7889,Liverpool,3,2,,,50062,Eindhoven
+2025,2042051,League Phase,0,50031,Young Boys,50069,Crvena Zvezda,0,1,,,50069,Bern
+2025,2042052,League Phase,0,50107,Stuttgart,52747,Paris,1,4,,,52747,Stuttgart
+2025,2042053,League Phase,0,50111,Sturm Graz,2603790,Leipzig,1,0,,,50111,Klagenfurt
+2025,2042066,League Phase,0,52919,Man City,50043,Club Brugge,3,1,,,52919,Manchester
+2025,2042067,League Phase,0,50037,Bayern München,52797,S. Bratislava,3,1,,,50037,Munich
+2025,2042068,League Phase,0,50138,Inter,50023,Monaco,3,0,,,50138,Milan
+2025,2042069,League Phase,0,52758,B. Dortmund,52707,Shakhtar,3,1,,,52758,Dortmund
+2025,2042070,League Phase,0,50080,Barcelona,52816,Atalanta,2,2,,,,Barcelona
+2025,2042071,League Phase,0,50109,Leverkusen,50033,Sparta Praha,2,0,,,50109,Leverkusen
+2025,2042072,League Phase,0,50139,Juventus,50147,Benfica,0,2,,,50147,Turin
+2025,2042073,League Phase,0,50164,GNK Dinamo,50058,Milan,2,1,,,50164,Zagreb
+2025,2042074,League Phase,0,50030,Salzburg,50124,Atleti,1,4,,,50124,Salzburg
+2025,2042075,League Phase,0,75797,Lille,52749,Feyenoord,6,1,,,75797,Villeneuve d'Ascq
+2025,2042076,League Phase,0,52683,Aston Villa,50050,Celtic,4,2,,,52683,Birmingham
+2025,2042077,League Phase,0,2602798,Girona,52280,Arsenal,1,2,,,52280,Girona
+2025,2042078,League Phase,0,2601306,Brest,50051,Real Madrid,0,3,,,50051,Guingamp
+2025,2044472,Knockout Phase Play-Offs,1,2601306,Brest,52747,Paris,0,3,,,52747,Guingamp
+2025,2044474,Knockout Phase Play-Offs,1,52919,Man City,50051,Real Madrid,2,3,,,50051,Manchester
+2025,2044475,Knockout Phase Play-Offs,1,50139,Juventus,50062,PSV,2,1,,,50139,Turin
+2025,2044478,Knockout Phase Play-Offs,1,50149,Sporting CP,52758,B. Dortmund,0,3,,,52758,Lisbon
+2025,2044473,Knockout Phase Play-Offs,1,50043,Club Brugge,52816,Atalanta,2,1,,,50043,Bruges
+2025,2044476,Knockout Phase Play-Offs,1,52749,Feyenoord,50058,Milan,1,0,,,52749,Rotterdam
+2025,2044477,Knockout Phase Play-Offs,1,50050,Celtic,50037,Bayern München,1,2,,,50037,Glasgow
+2025,2044479,Knockout Phase Play-Offs,1,50023,Monaco,50147,Benfica,0,1,,,50147,Monaco
+2025,2044484,Knockout Phase Play-Offs,1,50058,Milan,52749,Feyenoord,1,1,,,,Milan
+2025,2044481,Knockout Phase Play-Offs,1,52816,Atalanta,50043,Club Brugge,1,3,,,50043,Bergamo
+2025,2044485,Knockout Phase Play-Offs,1,50037,Bayern München,50050,Celtic,1,1,,,,Munich
+2025,2044487,Knockout Phase Play-Offs,1,50147,Benfica,50023,Monaco,3,3,,,,Lisbon
+2025,2044486,Knockout Phase Play-Offs,1,52758,B. Dortmund,50149,Sporting CP,0,0,,,,Dortmund
+2025,2044480,Knockout Phase Play-Offs,1,52747,Paris,2601306,Brest,7,0,,,52747,Paris
+2025,2044482,Knockout Phase Play-Offs,1,50051,Real Madrid,52919,Man City,3,1,,,50051,Madrid
+2025,2044483,Knockout Phase Play-Offs,1,50062,PSV,50139,Juventus,3,1,,,50062,Eindhoven
+2025,2044817,Round of 16,2,50043,Club Brugge,52683,Aston Villa,1,3,,,52683,Bruges
+2025,2044818,Round of 16,2,50051,Real Madrid,50124,Atleti,2,1,,,50051,Madrid
+2025,2044819,Round of 16,2,50062,PSV,52280,Arsenal,1,7,,,52280,Eindhoven
+2025,2044822,Round of 16,2,52758,B. Dortmund,75797,Lille,1,1,,,,Dortmund
+2025,2044820,Round of 16,2,52749,Feyenoord,50138,Inter,0,2,,,50138,Rotterdam
+2025,2044816,Round of 16,2,52747,Paris,7889,Liverpool,0,1,,,7889,Paris
+2025,2044821,Round of 16,2,50037,Bayern München,50109,Leverkusen,3,0,,,50037,Munich
+2025,2044823,Round of 16,2,50147,Benfica,50080,Barcelona,0,1,,,50080,Lisbon
+2025,2044783,Round of 16,2,50080,Barcelona,50147,Benfica,3,1,,,50080,Barcelona
+2025,2044776,Round of 16,2,7889,Liverpool,52747,Paris,0,1,1.0,4.0,52747,Liverpool
+2025,2044780,Round of 16,2,50138,Inter,52749,Feyenoord,2,1,,,50138,Milan
+2025,2044781,Round of 16,2,50109,Leverkusen,50037,Bayern München,0,2,,,50037,Leverkusen
+2025,2044782,Round of 16,2,75797,Lille,52758,B. Dortmund,1,2,,,52758,Villeneuve d'Ascq
+2025,2044777,Round of 16,2,52683,Aston Villa,50043,Club Brugge,3,0,,,52683,Birmingham
+2025,2044778,Round of 16,2,50124,Atleti,50051,Real Madrid,1,0,2.0,4.0,50124,Madrid
+2025,2044779,Round of 16,2,52280,Arsenal,50062,PSV,2,2,,,,London
+2025,2044849,Quarter-finals,3,52280,Arsenal,50051,Real Madrid,3,0,,,52280,London
+2025,2044852,Quarter-finals,3,50037,Bayern München,50138,Inter,1,2,,,50138,Munich
+2025,2044848,Quarter-finals,3,52747,Paris,52683,Aston Villa,3,1,,,52747,Paris
+2025,2044851,Quarter-finals,3,50080,Barcelona,52758,B. Dortmund,4,0,,,50080,Barcelona
+2025,2044853,Quarter-finals,3,52758,B. Dortmund,50080,Barcelona,3,1,,,52758,Dortmund
+2025,2044854,Quarter-finals,3,52683,Aston Villa,52747,Paris,3,2,,,52683,Birmingham
+2025,2044850,Quarter-finals,3,50138,Inter,50037,Bayern München,2,2,,,,Milan
+2025,2044855,Quarter-finals,3,50051,Real Madrid,52280,Arsenal,1,2,,,52280,Madrid
+2025,2044857,Semi-finals,4,52280,Arsenal,52747,Paris,0,1,,,52747,London
+2025,2044856,Semi-finals,4,50080,Barcelona,50138,Inter,3,3,,,,Barcelona
+2025,2044859,Semi-finals,4,50138,Inter,50080,Barcelona,4,3,,,,Milan
+2025,2044858,Semi-finals,4,52747,Paris,52280,Arsenal,2,1,,,52747,Paris
+2025,2044466,Final,5,52747,Paris,50138,Inter,5,0,,,52747,Munich
+2026,2045907,League Phase,0,50062,PSV,64125,Union SG,1,3,,,64125,Eindhoven
+2026,2045908,League Phase,0,50125,Athletic Club,52280,Arsenal,0,2,,,52280,Bilbao
+2026,2045903,League Phase,0,50051,Real Madrid,52748,Marseille,2,1,,,50051,Madrid
+2026,2045904,League Phase,0,50147,Benfica,60609,Qarabağ,2,3,,,60609,Lisbon
+2026,2045905,League Phase,0,50139,Juventus,52758,B. Dortmund,4,4,,,,Turin
+2026,2045906,League Phase,0,1652,Tottenham,70691,Villarreal,1,0,,,1652,London
+2026,2045913,League Phase,0,2610,Olympiacos,2609532,Pafos,0,0,,,,Piraeus
+2026,2045914,League Phase,0,52498,Slavia Praha,59333,Bodø/Glimt,2,2,,,,Prague
+2026,2045909,League Phase,0,52747,Paris,52816,Atalanta,4,0,,,52747,Paris
+2026,2045910,League Phase,0,50037,Bayern München,52914,Chelsea,3,1,,,50037,Munich
+2026,2045911,League Phase,0,7889,Liverpool,50124,Atleti,3,2,,,7889,Liverpool
+2026,2045912,League Phase,0,50143,Ajax,50138,Inter,0,2,,,50138,Amsterdam
+2026,2045917,League Phase,0,50043,Club Brugge,50023,Monaco,4,1,,,50043,Bruges
+2026,2045919,League Phase,0,52709,Copenhagen,50109,Leverkusen,2,2,,,,Copenhagen
+2026,2045915,League Phase,0,52919,Man City,50136,Napoli,2,0,,,52919,Manchester
+2026,2045916,League Phase,0,50072,Frankfurt,50067,Galatasaray,5,1,,,50072,Frankfurt am Main
+2026,2045918,League Phase,0,50149,Sporting CP,79970,Kairat Almaty,4,1,,,50149,Lisbon
+2026,2045920,League Phase,0,59324,Newcastle,50080,Barcelona,1,2,,,50080,Newcastle
+2026,2045924,League Phase,0,52816,Atalanta,50043,Club Brugge,2,1,,,52816,Bergamo
+2026,2045929,League Phase,0,79970,Kairat Almaty,50051,Real Madrid,0,5,,,50051,Almaty
+2026,2045921,League Phase,0,50138,Inter,52498,Slavia Praha,3,0,,,50138,Milan
+2026,2045922,League Phase,0,52914,Chelsea,50147,Benfica,1,0,,,52914,London
+2026,2045923,League Phase,0,50124,Atleti,50072,Frankfurt,5,1,,,50124,Madrid
+2026,2045925,League Phase,0,59333,Bodø/Glimt,1652,Tottenham,2,2,,,,Bodø
+2026,2045926,League Phase,0,52748,Marseille,50143,Ajax,4,0,,,52748,Marseille
+2026,2045927,League Phase,0,50067,Galatasaray,7889,Liverpool,1,0,,,50067,Istanbul
+2026,2045928,League Phase,0,2609532,Pafos,50037,Bayern München,1,5,,,50037,Limassol
+2026,2045935,League Phase,0,64125,Union SG,59324,Newcastle,0,4,,,59324,Brussels
+2026,2045936,League Phase,0,60609,Qarabağ,52709,Copenhagen,2,0,,,60609,Baku
+2026,2045930,League Phase,0,52280,Arsenal,2610,Olympiacos,2,0,,,52280,London
+2026,2045931,League Phase,0,50109,Leverkusen,50062,PSV,1,1,,,,Leverkusen
+2026,2045932,League Phase,0,70691,Villarreal,50139,Juventus,2,2,,,,Villarreal
+2026,2045933,League Phase,0,50136,Napoli,50149,Sporting CP,2,1,,,50136,Naples
+2026,2045934,League Phase,0,50023,Monaco,52919,Man City,2,2,,,,Monaco
+2026,2045937,League Phase,0,52758,B. Dortmund,50125,Athletic Club,4,1,,,52758,Dortmund
+2026,2045938,League Phase,0,50080,Barcelona,52747,Paris,1,2,,,52747,Barcelona
+2026,2045939,League Phase,0,50080,Barcelona,2610,Olympiacos,6,1,,,50080,Barcelona
+2026,2045947,League Phase,0,79970,Kairat Almaty,2609532,Pafos,0,0,,,,Almaty
+2026,2045940,League Phase,0,52280,Arsenal,50124,Atleti,4,0,,,52280,London
+2026,2045941,League Phase,0,50109,Leverkusen,52747,Paris,2,7,,,52747,Leverkusen
+2026,2045942,League Phase,0,70691,Villarreal,52919,Man City,0,2,,,52919,Villarreal
+2026,2045943,League Phase,0,50062,PSV,50136,Napoli,6,2,,,50062,Eindhoven
+2026,2045944,League Phase,0,52709,Copenhagen,52758,B. Dortmund,2,4,,,52758,Copenhagen
+2026,2045945,League Phase,0,64125,Union SG,50138,Inter,0,4,,,50138,Brussels
+2026,2045946,League Phase,0,59324,Newcastle,50147,Benfica,3,0,,,59324,Newcastle
+2026,2045953,League Phase,0,50067,Galatasaray,59333,Bodø/Glimt,3,1,,,50067,Istanbul
+2026,2045954,League Phase,0,50125,Athletic Club,60609,Qarabağ,3,1,,,50125,Bilbao
+2026,2045948,League Phase,0,52914,Chelsea,50143,Ajax,5,1,,,52914,London
+2026,2045949,League Phase,0,52816,Atalanta,52498,Slavia Praha,0,0,,,,Bergamo
+2026,2045950,League Phase,0,50072,Frankfurt,7889,Liverpool,1,5,,,7889,Frankfurt am Main
+2026,2045951,League Phase,0,50149,Sporting CP,52748,Marseille,2,1,,,50149,Lisbon
+2026,2045952,League Phase,0,50023,Monaco,1652,Tottenham,0,0,,,,Monaco
+2026,2045955,League Phase,0,50051,Real Madrid,50139,Juventus,1,0,,,50051,Madrid
+2026,2045956,League Phase,0,50037,Bayern München,50043,Club Brugge,4,0,,,50037,Munich
+2026,2045962,League Phase,0,50136,Napoli,50072,Frankfurt,0,0,,,,Naples
+2026,2045964,League Phase,0,52498,Slavia Praha,52280,Arsenal,0,3,,,52280,Prague
+2026,2045957,League Phase,0,52747,Paris,50037,Bayern München,1,2,,,50037,Paris
+2026,2045958,League Phase,0,7889,Liverpool,50051,Real Madrid,1,0,,,7889,Liverpool
+2026,2045959,League Phase,0,50124,Atleti,64125,Union SG,3,1,,,50124,Madrid
+2026,2045960,League Phase,0,50139,Juventus,50149,Sporting CP,1,1,,,,Turin
+2026,2045961,League Phase,0,1652,Tottenham,52709,Copenhagen,4,0,,,1652,London
+2026,2045963,League Phase,0,2610,Olympiacos,50062,PSV,1,1,,,,Piraeus
+2026,2045965,League Phase,0,59333,Bodø/Glimt,50023,Monaco,0,1,,,50023,Bodø
+2026,2045972,League Phase,0,60609,Qarabağ,52914,Chelsea,2,2,,,,Baku
+2026,2045974,League Phase,0,2609532,Pafos,70691,Villarreal,1,0,,,2609532,Limassol
+2026,2045966,League Phase,0,52919,Man City,52758,B. Dortmund,4,1,,,52919,Manchester
+2026,2045967,League Phase,0,50138,Inter,79970,Kairat Almaty,2,1,,,50138,Milan
+2026,2045968,League Phase,0,50147,Benfica,50109,Leverkusen,0,1,,,50109,Lisbon
+2026,2045969,League Phase,0,50043,Club Brugge,50080,Barcelona,3,3,,,,Bruges
+2026,2045970,League Phase,0,50143,Ajax,50067,Galatasaray,0,3,,,50067,Amsterdam
+2026,2045971,League Phase,0,52748,Marseille,52816,Atalanta,0,1,,,52816,Marseille
+2026,2045973,League Phase,0,59324,Newcastle,50125,Athletic Club,2,0,,,59324,Newcastle
+2026,2045978,League Phase,0,50143,Ajax,50147,Benfica,0,2,,,50147,Amsterdam
+2026,2045983,League Phase,0,50067,Galatasaray,64125,Union SG,0,1,,,64125,Istanbul
+2026,2045975,League Phase,0,52919,Man City,50109,Leverkusen,0,2,,,50109,Manchester
+2026,2045976,League Phase,0,52914,Chelsea,50080,Barcelona,3,0,,,52914,London
+2026,2045977,League Phase,0,52758,B. Dortmund,70691,Villarreal,4,0,,,52758,Dortmund
+2026,2045979,League Phase,0,50136,Napoli,60609,Qarabağ,2,0,,,50136,Naples
+2026,2045980,League Phase,0,52498,Slavia Praha,50125,Athletic Club,0,0,,,,Prague
+2026,2045981,League Phase,0,59333,Bodø/Glimt,50139,Juventus,2,3,,,50139,Bodø
+2026,2045982,League Phase,0,52748,Marseille,59324,Newcastle,2,1,,,52748,Marseille
+2026,2045991,League Phase,0,52709,Copenhagen,79970,Kairat Almaty,3,2,,,52709,Copenhagen
+2026,2045992,League Phase,0,2609532,Pafos,50023,Monaco,2,2,,,,Limassol
+2026,2045984,League Phase,0,52747,Paris,1652,Tottenham,5,3,,,52747,Paris
+2026,2045985,League Phase,0,7889,Liverpool,50062,PSV,1,4,,,50062,Liverpool
+2026,2045986,League Phase,0,52280,Arsenal,50037,Bayern München,3,1,,,52280,London
+2026,2045987,League Phase,0,50124,Atleti,50138,Inter,2,1,,,50124,Madrid
+2026,2045988,League Phase,0,50072,Frankfurt,52816,Atalanta,0,3,,,52816,Frankfurt am Main
+2026,2045989,League Phase,0,50149,Sporting CP,50043,Club Brugge,3,0,,,50149,Lisbon
+2026,2045990,League Phase,0,2610,Olympiacos,50051,Real Madrid,3,4,,,50051,Piraeus
+2026,2046001,League Phase,0,79970,Kairat Almaty,2610,Olympiacos,0,1,,,2610,Astana
+2026,2045993,League Phase,0,50037,Bayern München,50149,Sporting CP,3,1,,,50037,Munich
+2026,2045994,League Phase,0,50138,Inter,7889,Liverpool,0,1,,,7889,Milan
+2026,2045995,League Phase,0,50080,Barcelona,50072,Frankfurt,2,1,,,50080,Barcelona
+2026,2045996,League Phase,0,52816,Atalanta,52914,Chelsea,2,1,,,52816,Bergamo
+2026,2045997,League Phase,0,1652,Tottenham,52498,Slavia Praha,3,0,,,1652,London
+2026,2045998,League Phase,0,50062,PSV,50124,Atleti,2,3,,,50124,Eindhoven
+2026,2045999,League Phase,0,50023,Monaco,50067,Galatasaray,1,0,,,50023,Monaco
+2026,2046000,League Phase,0,64125,Union SG,52748,Marseille,2,3,,,52748,Brussels
+2026,2046005,League Phase,0,70691,Villarreal,52709,Copenhagen,2,3,,,52709,Villarreal
+2026,2046008,League Phase,0,60609,Qarabağ,50143,Ajax,2,4,,,50143,Baku
+2026,2046002,League Phase,0,52758,B. Dortmund,59333,Bodø/Glimt,2,2,,,,Dortmund
+2026,2046003,League Phase,0,50109,Leverkusen,59324,Newcastle,2,2,,,,Leverkusen
+2026,2046004,League Phase,0,50147,Benfica,50136,Napoli,2,0,,,50147,Lisbon
+2026,2046006,League Phase,0,50139,Juventus,2609532,Pafos,2,0,,,50139,Turin
+2026,2046007,League Phase,0,50043,Club Brugge,52280,Arsenal,0,3,,,52280,Bruges
+2026,2046009,League Phase,0,50125,Athletic Club,52747,Paris,0,0,,,,Bilbao
+2026,2046010,League Phase,0,50051,Real Madrid,52919,Man City,1,2,,,52919,Madrid
+2026,2046019,League Phase,0,79970,Kairat Almaty,50043,Club Brugge,1,4,,,50043,Astana
+2026,2046017,League Phase,0,59333,Bodø/Glimt,52919,Man City,3,1,,,59333,Bodø
+2026,2046011,League Phase,0,50051,Real Madrid,50023,Monaco,6,1,,,50051,Madrid
+2026,2046012,League Phase,0,50138,Inter,52280,Arsenal,1,3,,,52280,Milan
+2026,2046013,League Phase,0,70691,Villarreal,50143,Ajax,1,2,,,50143,Villarreal
+2026,2046014,League Phase,0,1652,Tottenham,52758,B. Dortmund,2,0,,,1652,London
+2026,2046015,League Phase,0,50149,Sporting CP,52747,Paris,2,1,,,50149,Lisbon
+2026,2046016,League Phase,0,2610,Olympiacos,50109,Leverkusen,2,0,,,2610,Piraeus
+2026,2046018,League Phase,0,52709,Copenhagen,50136,Napoli,1,1,,,,Copenhagen
+2026,2046025,League Phase,0,50067,Galatasaray,50124,Atleti,1,1,,,,Istanbul
+2026,2046026,League Phase,0,60609,Qarabağ,50072,Frankfurt,3,2,,,60609,Baku
+2026,2046020,League Phase,0,52914,Chelsea,2609532,Pafos,1,0,,,52914,London
+2026,2046021,League Phase,0,52816,Atalanta,50125,Athletic Club,2,3,,,50125,Bergamo
+2026,2046022,League Phase,0,50139,Juventus,50147,Benfica,2,0,,,50139,Turin
+2026,2046023,League Phase,0,52498,Slavia Praha,50080,Barcelona,2,4,,,50080,Prague
+2026,2046024,League Phase,0,52748,Marseille,7889,Liverpool,0,3,,,7889,Marseille
+2026,2046027,League Phase,0,59324,Newcastle,50062,PSV,3,0,,,59324,Newcastle
+2026,2046028,League Phase,0,50037,Bayern München,64125,Union SG,2,0,,,50037,Munich
+2026,2046029,League Phase,0,52747,Paris,59324,Newcastle,1,1,,,,Paris
+2026,2046030,League Phase,0,52919,Man City,50067,Galatasaray,2,0,,,52919,Manchester
+2026,2046031,League Phase,0,7889,Liverpool,60609,Qarabağ,6,0,,,7889,Liverpool
+2026,2046032,League Phase,0,52758,B. Dortmund,50138,Inter,0,2,,,50138,Dortmund
+2026,2046033,League Phase,0,50080,Barcelona,52709,Copenhagen,4,1,,,50080,Barcelona
+2026,2046034,League Phase,0,52280,Arsenal,79970,Kairat Almaty,3,2,,,52280,London
+2026,2046035,League Phase,0,50109,Leverkusen,70691,Villarreal,3,0,,,50109,Leverkusen
+2026,2046036,League Phase,0,50124,Atleti,59333,Bodø/Glimt,1,2,,,59333,Madrid
+2026,2046037,League Phase,0,50147,Benfica,50051,Real Madrid,4,2,,,50147,Lisbon
+2026,2046038,League Phase,0,50072,Frankfurt,1652,Tottenham,0,2,,,1652,Frankfurt am Main
+2026,2046039,League Phase,0,50043,Club Brugge,52748,Marseille,3,0,,,50043,Bruges
+2026,2046040,League Phase,0,50062,PSV,50037,Bayern München,1,2,,,50037,Eindhoven
+2026,2046041,League Phase,0,50143,Ajax,2610,Olympiacos,1,2,,,2610,Amsterdam
+2026,2046042,League Phase,0,50136,Napoli,52914,Chelsea,2,3,,,52914,Naples
+2026,2046043,League Phase,0,50023,Monaco,50139,Juventus,0,0,,,,Monaco
+2026,2046044,League Phase,0,64125,Union SG,52816,Atalanta,1,0,,,64125,Brussels
+2026,2046045,League Phase,0,50125,Athletic Club,50149,Sporting CP,2,3,,,50149,Bilbao
+2026,2046046,League Phase,0,2609532,Pafos,52498,Slavia Praha,4,1,,,2609532,Limassol
+2026,2047762,Knock-out Play-off,1,50067,Galatasaray,50139,Juventus,5,2,,,50067,Istanbul
+2026,2047761,Knock-out Play-off,1,50023,Monaco,52747,Paris,2,3,,,52747,Monaco
+2026,2047763,Knock-out Play-off,1,50147,Benfica,50051,Real Madrid,0,1,,,50051,Lisbon
+2026,2047764,Knock-out Play-off,1,52758,B. Dortmund,52816,Atalanta,2,0,,,52758,Dortmund
+2026,2047768,Knock-out Play-off,1,60609,Qarabağ,59324,Newcastle,1,6,,,59324,Baku
+2026,2047765,Knock-out Play-off,1,2610,Olympiacos,50109,Leverkusen,0,2,,,50109,Piraeus
+2026,2047766,Knock-out Play-off,1,59333,Bodø/Glimt,50138,Inter,3,1,,,59333,Bodø
+2026,2047767,Knock-out Play-off,1,50043,Club Brugge,50124,Atleti,3,3,,,,Bruges
+2026,2047775,Knock-out Play-off,1,50124,Atleti,50043,Club Brugge,4,1,,,50124,Madrid
+2026,2047773,Knock-out Play-off,1,50109,Leverkusen,2610,Olympiacos,0,0,,,,Leverkusen
+2026,2047774,Knock-out Play-off,1,50138,Inter,59333,Bodø/Glimt,1,2,,,59333,Milan
+2026,2047776,Knock-out Play-off,1,59324,Newcastle,60609,Qarabağ,3,2,,,59324,Newcastle
+2026,2047772,Knock-out Play-off,1,52816,Atalanta,52758,B. Dortmund,4,1,,,52816,Bergamo
+2026,2047769,Knock-out Play-off,1,52747,Paris,50023,Monaco,2,2,,,,Paris
+2026,2047770,Knock-out Play-off,1,50139,Juventus,50067,Galatasaray,3,2,,,50139,Turin
+2026,2047771,Knock-out Play-off,1,50051,Real Madrid,50147,Benfica,2,1,,,50051,Madrid
+2026,2048048,Round of 16,2,50067,Galatasaray,7889,Liverpool,1,0,,,50067,Istanbul
+2026,2048050,Round of 16,2,52816,Atalanta,50037,Bayern München,1,6,,,50037,Bergamo
+2026,2048051,Round of 16,2,59324,Newcastle,50080,Barcelona,1,1,,,,Newcastle
+2026,2048052,Round of 16,2,50124,Atleti,1652,Tottenham,5,2,,,50124,Madrid
+2026,2048054,Round of 16,2,50109,Leverkusen,52280,Arsenal,1,1,,,,Leverkusen
+2026,2048047,Round of 16,2,52747,Paris,52914,Chelsea,5,2,,,52747,Paris
+2026,2048049,Round of 16,2,50051,Real Madrid,52919,Man City,3,0,,,50051,Madrid
+2026,2048053,Round of 16,2,59333,Bodø/Glimt,50149,Sporting CP,3,0,,,59333,Bodø
+2026,2048061,Round of 16,2,50149,Sporting CP,59333,Bodø/Glimt,5,0,,,50149,Lisbon
+2026,2048055,Round of 16,2,52914,Chelsea,52747,Paris,0,3,,,52747,London
+2026,2048057,Round of 16,2,52919,Man City,50051,Real Madrid,1,2,,,50051,Manchester
+2026,2048062,Round of 16,2,52280,Arsenal,50109,Leverkusen,2,0,,,52280,London
+2026,2048059,Round of 16,2,50080,Barcelona,59324,Newcastle,7,2,,,50080,Barcelona
+2026,2048056,Round of 16,2,7889,Liverpool,50067,Galatasaray,4,0,,,7889,Liverpool
+2026,2048058,Round of 16,2,50037,Bayern München,52816,Atalanta,4,1,,,50037,Munich
+2026,2048060,Round of 16,2,1652,Tottenham,50124,Atleti,3,2,,,1652,London
+2026,2048064,Quarter-finals,3,50051,Real Madrid,50037,Bayern München,1,2,,,50037,Madrid
+2026,2048066,Quarter-finals,3,50149,Sporting CP,52280,Arsenal,0,1,,,52280,Lisbon
+2026,2048063,Quarter-finals,3,52747,Paris,7889,Liverpool,2,0,,,52747,Paris
+2026,2048065,Quarter-finals,3,50080,Barcelona,50124,Atleti,0,2,,,50124,Barcelona
+2026,2048067,Quarter-finals,3,50124,Atleti,50080,Barcelona,1,2,,,50080,Madrid
+2026,2048069,Quarter-finals,3,7889,Liverpool,52747,Paris,0,2,,,52747,Liverpool
+2026,2048068,Quarter-finals,3,52280,Arsenal,50149,Sporting CP,0,0,,,,London
+2026,2048070,Quarter-finals,3,50037,Bayern München,50051,Real Madrid,4,3,,,50037,Munich
+2026,2048072,Semi-finals,4,52747,Paris,50037,Bayern München,5,4,,,52747,Paris
+2026,2048071,Semi-finals,4,50124,Atleti,52280,Arsenal,1,1,,,,Madrid
+2026,2048074,Semi-finals,4,52280,Arsenal,50124,Atleti,1,0,,,52280,London
+2026,2048073,Semi-finals,4,50037,Bayern München,52747,Paris,1,1,,,,Munich
+2026,2047742,Final,5,52747,Paris,52280,Arsenal,1,1,4.0,3.0,52747,Budapest
