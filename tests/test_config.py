@@ -8,6 +8,12 @@ def test_sixteen_features_have_metadata_and_sources():
     assert set(config.FEATURE_GROUP) == set(config.FEATURES)
 
 
+def test_plausible_ranges_are_ordered_and_for_known_features():
+    # plausibility_errors skips a feature missing from the frame, so a typo here would switch a check off
+    assert set(config.PLAUSIBLE_RANGES) <= set(config.FEATURES)
+    assert all(low < high for low, high in config.PLAUSIBLE_RANGES.values())
+
+
 def test_season_helpers():
     assert config.season_label(2026) == "2025-26"
     assert config.season_label(2012) == "2011-12"

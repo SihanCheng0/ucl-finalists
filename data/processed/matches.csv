@@ -257,7 +257,7 @@ season,match_id,round,depth,home_id,home,away_id,away,home_goals,away_goals,home
 2014,2011772,Group stage,0,2610,Olympiacos,52747,Paris,1,4,,,52747,Piraeus
 2014,2011773,Group stage,0,50037,Bayern München,54266,CSKA Moskva,3,0,,,50037,Munich
 2014,2011774,Group stage,0,64388,Viktoria Plzeň,52919,Man City,0,3,,,52919,Plzen
-2014,2011759,Group stage,0,57388,Schalke,2614166,Steaua București,3,0,,,57388,Gelsenkirchen
+2014,2011759,Group stage,0,57388,Schalke,50065,Steaua București,3,0,,,57388,Gelsenkirchen
 2014,2011760,Group stage,0,52914,Chelsea,59856,Basel,1,2,,,59856,London
 2014,2011761,Group stage,0,52748,Marseille,52280,Arsenal,1,2,,,52280,Marseille
 2014,2011762,Group stage,0,50136,Napoli,52758,B. Dortmund,2,1,,,50136,Naples
@@ -267,7 +267,7 @@ season,match_id,round,depth,home_id,home,away_id,away,home_goals,away_goals,home
 2014,2011766,Group stage,0,50080,Barcelona,50143,Ajax,4,0,,,50080,Barcelona
 2014,2011787,Group stage,0,52826,Zenit,50110,Austria Wien,0,0,,,,St Petersburg
 2014,2011783,Group stage,0,59856,Basel,57388,Schalke,0,1,,,57388,Basel
-2014,2011784,Group stage,0,2614166,Steaua București,52914,Chelsea,0,4,,,52914,Bucharest
+2014,2011784,Group stage,0,50065,Steaua București,52914,Chelsea,0,4,,,52914,Bucharest
 2014,2011785,Group stage,0,52758,B. Dortmund,52748,Marseille,3,0,,,52758,Dortmund
 2014,2011786,Group stage,0,52280,Arsenal,50136,Napoli,2,0,,,52280,London
 2014,2011788,Group stage,0,50064,Porto,50124,Atleti,1,2,,,50124,Porto
@@ -281,7 +281,7 @@ season,match_id,round,depth,home_id,home,away_id,away,home_goals,away_goals,home
 2014,2011779,Group stage,0,52747,Paris,50147,Benfica,3,0,,,52747,Paris
 2014,2011780,Group stage,0,50074,Anderlecht,2610,Olympiacos,0,3,,,2610,Brussels
 2014,2011781,Group stage,0,52919,Man City,50037,Bayern München,1,3,,,50037,Manchester
-2014,2011799,Group stage,0,2614166,Steaua București,59856,Basel,1,1,,,,Bucharest
+2014,2011799,Group stage,0,50065,Steaua București,59856,Basel,1,1,,,,Bucharest
 2014,2011800,Group stage,0,57388,Schalke,52914,Chelsea,0,3,,,52914,Gelsenkirchen
 2014,2011801,Group stage,0,52280,Arsenal,52758,B. Dortmund,1,2,,,52758,London
 2014,2011802,Group stage,0,52748,Marseille,50136,Napoli,1,2,,,50136,Marseille
@@ -306,7 +306,7 @@ season,match_id,round,depth,home_id,home,away_id,away,home_goals,away_goals,home
 2014,2011821,Group stage,0,52919,Man City,54266,CSKA Moskva,5,2,,,52919,Manchester
 2014,2011822,Group stage,0,64388,Viktoria Plzeň,50037,Bayern München,0,1,,,50037,Plzen
 2014,2011811,Group stage,0,52826,Zenit,50064,Porto,1,1,,,,St Petersburg
-2014,2011807,Group stage,0,59856,Basel,2614166,Steaua București,1,1,,,,Basel
+2014,2011807,Group stage,0,59856,Basel,50065,Steaua București,1,1,,,,Basel
 2014,2011808,Group stage,0,52914,Chelsea,57388,Schalke,3,0,,,52914,London
 2014,2011809,Group stage,0,52758,B. Dortmund,52280,Arsenal,0,1,,,52280,Dortmund
 2014,2011810,Group stage,0,50136,Napoli,52748,Marseille,3,2,,,50136,Naples
@@ -314,7 +314,7 @@ season,match_id,round,depth,home_id,home,away_id,away,home_goals,away_goals,home
 2014,2011813,Group stage,0,50143,Ajax,50050,Celtic,1,0,,,50143,Amsterdam
 2014,2011814,Group stage,0,50080,Barcelona,50058,Milan,3,1,,,50080,Barcelona
 2014,2011836,Group stage,0,52826,Zenit,50124,Atleti,1,1,,,,St Petersburg
-2014,2011831,Group stage,0,2614166,Steaua București,57388,Schalke,0,0,,,,Bucharest
+2014,2011831,Group stage,0,50065,Steaua București,57388,Schalke,0,0,,,,Bucharest
 2014,2011832,Group stage,0,59856,Basel,52914,Chelsea,1,0,,,59856,Basel
 2014,2011833,Group stage,0,52280,Arsenal,52748,Marseille,2,0,,,52280,London
 2014,2011834,Group stage,0,52758,B. Dortmund,50136,Napoli,3,1,,,52758,Dortmund
@@ -338,7 +338,7 @@ season,match_id,round,depth,home_id,home,away_id,away,home_goals,away_goals,home
 2014,2011854,Group stage,0,64388,Viktoria Plzeň,54266,CSKA Moskva,2,1,,,64388,Plzen
 2014,2011849,Group stage,0,50067,Galatasaray,50139,Juventus,1,0,,,50067,Istanbul
 2014,2011839,Group stage,0,57388,Schalke,59856,Basel,2,0,,,57388,Gelsenkirchen
-2014,2011840,Group stage,0,52914,Chelsea,2614166,Steaua București,1,0,,,52914,London
+2014,2011840,Group stage,0,52914,Chelsea,50065,Steaua București,1,0,,,52914,London
 2014,2011841,Group stage,0,52748,Marseille,52758,B. Dortmund,1,2,,,52758,Marseille
 2014,2011842,Group stage,0,50136,Napoli,52280,Arsenal,2,0,,,50136,Naples
 2014,2011843,Group stage,0,50110,Austria Wien,52826,Zenit,4,1,,,50110,Vienna

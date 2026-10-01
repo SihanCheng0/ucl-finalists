@@ -129,6 +129,13 @@ COVERAGE_MIN = 0.90
 COEF_MATCH_MIN = 0.75
 MIN_MATCHES_WITH_STATS = 4
 
+# The match feed and the stats/coefficient feeds disagree on a few club ids; map match-feed ids to the canonical one.
+TEAM_ID_ALIASES = {"2614166": "50065"}  # Steaua București / FCSB
+# A match distance below this is partial tracking, not a real value.
+MIN_MATCH_DISTANCE_KM = 80.0
+# Plausible per-season averages; the build fails if a team-season falls outside (catches unit errors).
+PLAUSIBLE_RANGES = {"possession_pct": (20.0, 80.0), "distance_km_pg": (90.0, 140.0), "pass_accuracy": (0.4, 1.0)}
+
 GBR_PARAMS = {
     "n_estimators": 250, "learning_rate": 0.03, "max_depth": 2,
     "min_samples_leaf": 8, "subsample": 0.8, "random_state": 42,

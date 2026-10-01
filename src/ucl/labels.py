@@ -11,6 +11,11 @@ def _city(match: dict) -> str | None:
     return (((stadium.get("city") or {}).get("translations") or {}).get("name") or {}).get("EN")
 
 
+def _team_id(raw_id) -> str:
+    """The match feed's club id, mapped to the one the stats and coefficient feeds use."""
+    return config.TEAM_ID_ALIASES.get(str(raw_id), str(raw_id))
+
+
 def match_rows(raw_matches: list[dict], season: int) -> pd.DataFrame:
     """One row per match, keeping only the fields the pipeline uses."""
     rows = []
@@ -27,15 +32,15 @@ def match_rows(raw_matches: list[dict], season: int) -> pd.DataFrame:
             "match_id": str(m["id"]),
             "round": round_name,
             "depth": config.ROUND_DEPTH[round_name],
-            "home_id": str(m["homeTeam"]["id"]),
+            "home_id": _team_id(m["homeTeam"]["id"]),
             "home": m["homeTeam"]["internationalName"],
-            "away_id": str(m["awayTeam"]["id"]),
+            "away_id": _team_id(m["awayTeam"]["id"]),
             "away": m["awayTeam"]["internationalName"],
             "home_goals": total.get("home"),
             "away_goals": total.get("away"),
             "home_pens": pens.get("home"),
             "away_pens": pens.get("away"),
-            "winner_id": str(winner["id"]) if winner.get("id") is not None else None,
+            "winner_id": _team_id(winner["id"]) if winner.get("id") is not None else None,
             "city": _city(m),
         })
     return pd.DataFrame(rows)

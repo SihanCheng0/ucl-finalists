@@ -27,6 +27,17 @@ def test_unknown_round_name_raises():
         labels.match_rows([raw_match("1", "Play-in", "A", "B", 1, 0)], 2026)
 
 
+def test_aliased_club_ids_are_canonical():
+    # the match feed calls Steaua 2614166; the stats feed and the coefficient ranking call it 50065
+    raw = [raw_match("1", "Group stage", "2614166", "7889", 1, 0, winner="2614166"),
+           raw_match("2", "Group stage", "50051", "2614166", 0, 0)]
+    rows = labels.match_rows(raw, 2015)
+    assert rows[["home_id", "away_id"]].values.tolist() == [["50065", "7889"], ["50051", "50065"]]
+    assert rows.loc[0, "winner_id"] == "50065"
+    assert pd.isna(rows.loc[1, "winner_id"])
+    assert labels.stages(rows).set_index("team_id").loc["50065", "team"] == "Team 2614166"
+
+
 def test_penalty_final_2026_style():
     raw = raw_match("9", "Final", "52747", "52280", 1, 1, winner="52747", pens=(4, 3), reason="WIN_ON_PENALTIES")
     final = labels.finals_table(labels.match_rows([raw], 2026)).iloc[0]

@@ -14,6 +14,25 @@ BASE = dict(goals=0, attempts_on_target=0, attempts_off_target=0, ball_possessio
             fouls_committed=10, saves=0)
 
 
+def entry(*raw_stats):
+    return {"teamId": "1", "statistics": list(raw_stats)}
+
+
+def cleaned(name, value, attributes=None):
+    """What _stat_values keeps for one raw stat: its per-match value, or None if it is dropped."""
+    stat = {"name": name, "value": value}
+    if attributes:
+        stat["attributes"] = attributes
+    return features._stat_values(entry(stat)).get(name)
+
+
+def one_match(*entries):
+    matches = pd.DataFrame([{"season": 2013, "match_id": "a1", "round": "Group stage", "depth": 0,
+                             "home_id": "1", "home": "One", "away_id": "2", "away": "Two",
+                             "home_goals": 1, "away_goals": 0}])
+    return features.team_match_rows(matches, {"a1": list(entries)}).set_index("team_id")
+
+
 @pytest.fixture
 def two_matches():
     matches = pd.DataFrame([
@@ -54,6 +73,85 @@ def test_aliased_stats_team_id_is_matched_to_the_unmatched_side():
     assert tm.loc["2614166", "has_stats"]
     assert tm.loc["2614166", "attempts_on_target"] == 6
     assert tm.loc["1", "opp_attempts_on_target"] == 6
+
+
+@pytest.mark.parametrize("value, attributes, expected", [
+    ("1442", {"Fractional": "0.414"}, 41.4),   # value is seconds
+    ("64", {"Fractional": "0.636"}, 63.6),     # the fraction is finer than the rounded percentage
+    ("45", {"totalSeconds": "1488"}, 45),      # no fraction: value already is the percentage
+    ("1442", {"Fractional": "0.414", "Percentage": "41", "TotalMinutesAndSeconds": "24'02\""}, 41.4),
+    ("1442", {"Percentage": "41"}, 41),
+    ("55", None, 55),
+])
+def test_possession_is_a_percentage(value, attributes, expected):
+    assert cleaned("ball_possession", value, attributes) == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("value, attributes", [
+    ("1442", None),                       # seconds, and nothing to convert them with
+    ("1442", {"Fractional": "8.788"}),    # a fraction above 1
+])
+def test_possession_outside_0_to_100_is_dropped(value, attributes):
+    assert cleaned("ball_possession", value, attributes) is None
+
+
+@pytest.mark.parametrize("value, attributes, expected", [
+    ("106837", {"DistanceKilometers": "106.83"}, 106.83),   # value is metres
+    ("129.114", {"DistanceMeters": "129114"}, 129.114),
+    ("121.39", {"meter": "121388"}, 121.388),
+    ("106837", None, 106.837),                              # no attributes: metres, told apart by size
+    ("112.5", None, 112.5),
+    ("80", None, 80.0),                                     # the floor itself is kept
+])
+def test_distance_is_in_km(value, attributes, expected):
+    assert cleaned("distance_covered", value, attributes) == pytest.approx(expected)
+
+
+@pytest.mark.parametrize("value, attributes", [
+    ("1.59", None),
+    ("79.99", None),
+    ("42.1", {"DistanceMeters": "42100"}),
+])
+def test_partial_tracking_distance_is_dropped(value, attributes):
+    assert cleaned("distance_covered", value, attributes) is None
+
+
+def test_zero_attacks_is_a_placeholder():
+    assert cleaned("attacks", "0") is None
+    assert cleaned("attacks", "23") == 23
+
+
+def test_other_stats_are_taken_as_given():
+    values = features._stat_values(entry(
+        {"name": "fouls_committed", "value": "0"},   # zero is a real count for everything but attacks
+        {"name": "goals", "value": "3"},
+        {"name": "passing_distribution_by_delivery_zone", "value": "4,36,48"},   # unparsable: skipped
+    ))
+    assert values == {"fouls_committed": 0.0, "goals": 3.0}
+
+
+def test_old_feeds_omit_zero_shot_counts():
+    # the 2012-14 feeds leave out a shot count the team didn't have; nothing else is defaulted
+    tm = one_match(stats("1", goals=1, saves=3),
+                   stats("2", goals=0, attempts_on_target=4, attempts_off_target=2))
+    assert tm.loc["1", ["attempts_on_target", "attempts_off_target"]].tolist() == [0.0, 0.0]
+    assert tm.loc["1", "saves"] == 3 and np.isnan(tm.loc["1", "attacks"])
+    assert np.isnan(tm.loc["2", "saves"])
+
+
+def test_omitted_zero_shot_counts_also_reach_the_opponent_columns():
+    # shots_against_pg must not drop the games where the other side had no shots
+    tm = one_match(stats("1", goals=1), stats("2", goals=0, attempts_on_target=4, attempts_off_target=2))
+    assert tm.loc["2", ["opp_attempts_on_target", "opp_attempts_off_target"]].tolist() == [0.0, 0.0]
+    assert tm.loc["1", ["opp_attempts_on_target", "opp_attempts_off_target"]].tolist() == [4.0, 2.0]
+
+
+def test_distance_only_payload_is_not_with_stats_but_keeps_its_distance():
+    # real case: Sevilla v Mönchengladbach 2015-16 has only distance_covered and top_speed
+    tm = one_match(stats("1", distance_covered=112.5, top_speed=33.1), stats("2", **BASE))
+    assert not tm.loc["1", "has_stats"] and tm.loc["2", "has_stats"]
+    assert tm.loc["1", "distance_covered"] == 112.5
+    assert tm.loc["1", ["attempts_on_target", "attempts_off_target", "saves"]].isna().all()
 
 
 def test_season_features_follow_missing_stat_rules(two_matches):

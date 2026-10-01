@@ -7,21 +7,69 @@ import pandas as pd
 from . import config
 
 
+def _possession_pct(stat: dict) -> float | None:
+    """`value` is a percentage in most feeds but seconds in some; the attributes say which."""
+    attributes = stat.get("attributes") or {}
+    if "Fractional" in attributes:
+        pct = 100 * float(attributes["Fractional"])
+    elif "Percentage" in attributes:
+        pct = float(attributes["Percentage"])
+    else:
+        pct = float(stat["value"])
+    return pct if 0 <= pct <= 100 else None
+
+
+def _distance_km(stat: dict) -> float | None:
+    """`value` is km in most feeds but metres in some. Under the floor, only part of the match was tracked."""
+    attributes = stat.get("attributes") or {}
+    metres = attributes.get("DistanceMeters", attributes.get("meter"))
+    if "DistanceKilometers" in attributes:
+        km = float(attributes["DistanceKilometers"])
+    elif metres is not None:
+        km = float(metres) / 1000
+    else:
+        km = float(stat["value"])
+        if km > 1000:
+            km /= 1000
+    return km if km >= config.MIN_MATCH_DISTANCE_KM else None
+
+
+def _match_value(stat: dict) -> float | None:
+    """One stat's per-match value, or None when UEFA's number can't be trusted."""
+    name = stat["name"]
+    if name == "ball_possession":
+        return _possession_pct(stat)
+    if name == "distance_covered":
+        return _distance_km(stat)
+    value = float(stat["value"])
+    # 0 attacks is a placeholder: the team-matches that carry it made 274-775 passes
+    return None if name == "attacks" and value == 0 else value
+
+
 def _stat_values(entry: dict) -> dict[str, float]:
     values: dict[str, float] = {}
     for stat in entry.get("statistics", []):
         try:
-            values[stat["name"]] = float(stat["value"])
+            value = _match_value(stat)
         except (KeyError, TypeError, ValueError):
             continue
+        if value is not None:
+            values[stat["name"]] = value
     return values
+
+
+def _with_omitted_zeros(values: dict[str, float]) -> dict[str, float]:
+    """The 2012-14 feeds leave out zero shot counts, so a team with stats but no count had none."""
+    if "goals" not in values:
+        return values
+    return {"attempts_on_target": 0.0, "attempts_off_target": 0.0, **values}
 
 
 def team_match_rows(matches: pd.DataFrame, stats: dict[str, list[dict] | None]) -> pd.DataFrame:
     """One row per team per group/league-phase match: result, own stats, opponent shot stats."""
     rows = []
     for m in matches.loc[matches["depth"] == 0].itertuples(index=False):
-        by_team = {str(e["teamId"]): _stat_values(e) for e in (stats.get(m.match_id) or [])}
+        by_team = {str(e["teamId"]): _with_omitted_zeros(_stat_values(e)) for e in (stats.get(m.match_id) or [])}
         # The stats feed occasionally uses another id for a club than the match feed (Steaua 2614166
         # vs FCSB 50065). With one side unmatched and one entry left over, that entry is the unmatched side's.
         unmatched = [t for t in (m.home_id, m.away_id) if t not in by_team]
@@ -35,7 +83,8 @@ def team_match_rows(matches: pd.DataFrame, stats: dict[str, list[dict] | None]) 
             row = {
                 "season": int(m.season), "match_id": m.match_id, "team_id": team_id, "opp_id": opp_id,
                 "gf": gf, "ga": ga, "points": 3 if gf > ga else 1 if gf == ga else 0,
-                "has_stats": bool(own),
+                # a payload with only distance or top speed isn't "with stats", but its distance is still used
+                "has_stats": own is not None and "goals" in own,
             }
             for name in config.OWN_STATS:
                 row[name] = own.get(name, np.nan) if own else np.nan

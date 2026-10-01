@@ -1,16 +1,16 @@
 feature,group,label_text,importance,direction,logit_coef_mean,sign_agree_folds,rank,label
-attacks_pg,style,Attacks per game,0.24960332453286463,1,0.1505939579884913,15,1,robust
-goal_diff_pg,results,Goal difference per game,0.20147951698615807,1,0.6073061061519748,15,2,robust
-long_pass_share,style,Long passes (% of passes),0.13724932492180716,1,0.4093099906444714,15,3,robust
-passes_pg,style,Passes per game,0.12763380395779006,1,0.20898401477755202,15,4,robust
-fouls_pg,style,Fouls committed per game,0.08799140495550496,-1,0.03397498982694489,5,5,model-dependent
-conversion,style,Shot conversion (% of shots scored),0.08558203451504931,-1,-0.35813984433923196,15,6,robust
-distance_km_pg,style,Distance covered per game (km),0.07746929517417694,-1,-0.2746007500276476,15,7,
-shots_pg,style,Shots per game,0.07420325550072669,1,0.2762585784090855,15,8,
-points_pg,results,Points per game,0.0721448976946483,1,0.34220529613904005,15,9,
-coef_log,pedigree,Pre-season UEFA club coefficient (points),0.07201756164666506,1,0.16442073165385918,15,10,
-shot_accuracy,style,Shot accuracy (% on target),0.05527917306594814,1,0.3020151687592569,15,11,
-on_target_against_pg,style,Opponent shots on target per game,0.03553156959207118,-1,-0.30102356521910506,15,12,
-pass_accuracy,style,Pass accuracy (%),0.03499033630614637,1,0.0642634070224378,11,13,
-shots_against_pg,style,Opponent shots per game,0.02631952670263741,-1,-0.19302651506325513,15,14,
-possession_pct,style,Possession (%),0.021243915124749456,-1,-0.213501051532422,15,15,
+attacks_pg,style,Attacks per game,0.22853544306908455,1,0.11674458838351762,14,1,robust
+goal_diff_pg,results,Goal difference per game,0.1983201878220413,1,0.6045580836532647,15,2,robust
+long_pass_share,style,Long passes (% of passes),0.13508307398866504,1,0.4470540200445364,15,3,robust
+passes_pg,style,Passes per game,0.11868139170159533,1,0.3329709129692216,15,4,robust
+fouls_pg,style,Fouls committed per game,0.09426732516662996,-1,0.009403331852443953,6,5,model-dependent
+conversion,style,Shot conversion (% of shots scored),0.0861242056717478,-1,-0.35597647149150247,15,6,robust
+points_pg,results,Points per game,0.07758270275944604,1,0.35790102049994593,15,7,
+distance_km_pg,style,Distance covered per game (km),0.07687588999339437,-1,-0.2700236609511447,15,8,
+coef_log,pedigree,Pre-season UEFA club coefficient (points),0.06778947076099187,1,0.16273647047316098,15,9,
+shots_pg,style,Shots per game,0.06622614559415763,1,0.32343029393439626,15,10,
+shot_accuracy,style,Shot accuracy (% on target),0.04681289195212417,1,0.27246230923621456,15,11,
+on_target_against_pg,style,Opponent shots on target per game,0.04186995166127993,-1,-0.39559281757900105,15,12,
+pass_accuracy,style,Pass accuracy (%),0.03693388165426008,1,0.05911244000411683,11,13,
+possession_pct,style,Possession (%),0.034960655919588746,1,-0.3759591259355253,0,14,
+shots_against_pg,style,Opponent shots per game,0.028329265612297587,-1,-0.17976358160209385,15,15,

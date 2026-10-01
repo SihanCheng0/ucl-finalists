@@ -18,18 +18,18 @@
   ],
   "notes": {
     "coverage": {
-      "shots_pg": 0.9583333333333334,
-      "shot_accuracy": 0.9583333333333334,
-      "conversion": 0.9583333333333334,
+      "shots_pg": 0.9791666666666666,
+      "shot_accuracy": 0.9791666666666666,
+      "conversion": 0.9791666666666666,
       "attacks_pg": 0.9479166666666666,
-      "shots_against_pg": 0.9583333333333334,
-      "on_target_against_pg": 0.9635416666666666,
+      "shots_against_pg": 0.9791666666666666,
+      "on_target_against_pg": 0.9791666666666666,
       "save_pct": 0.8645833333333334,
       "possession_pct": 0.9791666666666666,
       "pass_accuracy": 0.9791666666666666,
       "passes_pg": 0.9791666666666666,
       "long_pass_share": 0.9791666666666666,
-      "distance_km_pg": 0.96875,
+      "distance_km_pg": 0.9635416666666666,
       "fouls_pg": 0.9791666666666666
     },
     "dropped_features": [
@@ -39,7 +39,7 @@
     "coef_match_rate": {
       "2012": 1.0,
       "2013": 0.96875,
-      "2014": 0.9375,
+      "2014": 0.96875,
       "2015": 0.96875,
       "2016": 1.0,
       "2017": 0.96875,
@@ -53,7 +53,7 @@
       "2025": 0.8888888888888888,
       "2026": 1.0
     },
-    "coef_imputed": 12,
-    "team_matches_without_stats": 2
+    "coef_imputed": 11,
+    "team_matches_without_stats": 4
   }
 }

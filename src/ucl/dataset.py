@@ -52,6 +52,19 @@ def fetch_all(client: UefaClient, seasons: list[int] = config.SEASONS,
     return failed_all
 
 
+def plausibility_errors(team_seasons: pd.DataFrame) -> list[str]:
+    """Team-seasons whose raw average is outside config.PLAUSIBLE_RANGES: a unit error that slipped through."""
+    errors = []
+    for feature, (low, high) in config.PLAUSIBLE_RANGES.items():
+        if feature not in team_seasons:
+            continue
+        values = team_seasons[feature]
+        bad = team_seasons[values.notna() & ~values.between(low, high)]
+        errors += [f"{season} {team}: {feature} = {value:g} is outside {low:g}-{high:g}"
+                   for season, team, value in bad[["season", "team", feature]].itertuples(index=False)]
+    return errors
+
+
 def build(client: UefaClient, seasons: list[int] = config.SEASONS) -> Dataset:
     matches = pd.concat([labels.match_rows(client.matches(s), s) for s in seasons], ignore_index=True)
     stats, failed = client.team_match_stats_many(matches.loc[matches["depth"] == 0, "match_id"].tolist())
@@ -63,6 +76,9 @@ def build(client: UefaClient, seasons: list[int] = config.SEASONS) -> Dataset:
     kept, coverage = feat.covered_features(tm, config.FEATURES)
 
     ts = labels.stages(matches).merge(feat.season_features(tm), on=["season", "team_id"], how="left")
+    errors = plausibility_errors(ts)  # observed averages only, so run before imputation fills the gaps
+    if errors:
+        raise ValidationError("\n".join(errors))
     coefs = feat.coefficient_table({s - 1: client.coefficients(s - 1) for s in seasons})
     ts, coef_rates = feat.attach_coefficients(ts, coefs)
     ts, n_imputed = feat.impute_season_median(ts, kept)

@@ -22,8 +22,8 @@ def cmd_build(args: argparse.Namespace) -> int:
     from . import dataset
     from .uefa import UefaClient
 
-    ds = dataset.build(UefaClient(), config.SEASONS)
     try:
+        ds = dataset.build(UefaClient(), config.SEASONS)
         dataset.validate(ds)
     except dataset.ValidationError as exc:
         print(f"dataset validation failed:\n{exc}", file=sys.stderr)
