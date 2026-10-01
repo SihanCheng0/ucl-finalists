@@ -9,7 +9,7 @@ Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
 - [x] Chunk 4: grounding checks, LM Studio client
 - [x] Chunk 5: fact sheets, analyst, analyze on the real data
 - [x] Chunk 6: charts and the report
-- [ ] Chunk 7: end-to-end run, verification, publish
+- [x] Chunk 7: end-to-end run, verification, publish
 
 ## Data notes (real build, cleaned)
 
@@ -27,4 +27,34 @@ Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
 - Top-6 drivers: attacks_pg (robust), goal_diff_pg (robust), long_pass_share (conditional), passes_pg (robust), fouls_pg (model-dependent), conversion (conditional). Conditional means the direction holds only with the other stats held fixed: long_pass_share and conversion do not point the same way on their own (Spearman with stage -0.28 and 0.07).
 
 ## Review
-(filled in at the end)
+
+- **Delivered.** `uv run ucl all` runs fetch → build → model → analyze → report end to end. `analyze` replays unchanged requests from `data/llm_cache`, so reruns are byte-identical. 290 tests pass.
+- **Metrics on the real data:**
+  - Spearman 0.45 [0.34, 0.54]
+  - AUC 0.73 [0.61, 0.83]
+  - Brier 0.098, against 0.103 for the base rate. The skill, 0.05 [-0.04, 0.13], is inconclusive.
+  - Finalists in the top 4: 47% [30%, 60%], against 24% by chance.
+
+  Group-stage play only modestly predicts deep runs.
+- **Drivers.**
+  - Robust: attacks, goal difference and passes per game.
+  - Conditional: long-pass share and shot conversion.
+  - Model-dependent: fouls.
+
+  Pedigree adds nothing once play is known (Spearman 0.45 with everything, 0.44 without pedigree), though the intervals overlap.
+- **Picks.** 3 of the 10 finalists ranked 1st or 2nd in their season: Liverpool 2021-22, Real Madrid 2023-24 and Arsenal 2025-26, all #2. Inter 2022-23 ranked #14 of 16.
+- **Dropped and imputed.** The coverage rule dropped `save_pct`. 4 team-matches have no stats, and 11 coefficients were imputed, none for a finalist. See Data notes.
+- **AI write-ups.**
+  - All 11 narratives are ok, and 0 figures are missing from the data, so all 12 badges in the report are green. That is 10 cards, plus the synthesis split across two sections.
+  - Fixes D to G narrowed the wording:
+    - plain-English facts
+    - the "teams beaten" framing
+    - format names
+    - length
+    - the final placed inside the first phase
+- **Left as is.** These are wording slips only; every figure is correct.
+  - Liverpool 2021-22 still says it lost "a 0-1 decider during the group stage". Its one retry repeated the sentence, and its `style` field records it.
+  - Dortmund 2023-24 "reached the 2023-24 Champions League final after navigating the group stage, where they ultimately lost to Real Madrid 0-2". The "where" is ambiguous.
+  - Real Madrid 2021-22 says "the club's actual probability", meaning the model's, and kept "most significantly" after its one retry.
+  - Inter 2022-23 says "12.9% of their total plays" about long passes.
+- **Not in this plan.** Publishing is done by hand, not by the pipeline. The interactive dashboard (UCL Lab) has its own spec and plans.
