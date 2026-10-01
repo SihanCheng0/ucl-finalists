@@ -2,7 +2,7 @@ import json
 
 from fakes import FakeLLM
 
-from ucl import analyst
+from ucl import analyst, facts
 from ucl.llm import ChatResult
 
 
@@ -13,6 +13,11 @@ def team_reply():
 
 def synth_reply():
     return ChatResult("## Why the best teams win\nx\n## Winners vs runners-up\ny", "stop")
+
+
+def padded(reply, words):
+    """`reply` with `words` filler words in its first paragraph."""
+    return ChatResult(reply.content.replace("\nx\n", "\n" + " ".join(["pad"] * words) + "\n"), "stop")
 
 
 def test_run_skipped_and_unavailable_paths(built):
@@ -94,6 +99,37 @@ def test_run_bans_loose_significance_wording_in_team_narratives_only(built):
     synth = analysis.narratives["synthesis"]
     assert (synth.calls, synth.style) == (1, []) and "significant" in synth.text  # a p-value comparison may use it
     assert analyst.BANNED_TEAM_WORDS == ("significant", "significantly", "significance")
+
+
+def test_run_holds_team_narratives_to_250_words_and_the_synthesis_to_450(built):
+    ds, res = built
+    # 300 words: over the team limit, inside the synthesis limit
+    llm = FakeLLM([padded(team_reply(), 300), team_reply()] * 10 + [padded(synth_reply(), 300)])
+    analysis = analyst.run(ds.team_seasons, ds.finals, res, llm=llm, log=lambda _: None)
+    teams = [n for k, n in analysis.narratives.items() if k != "synthesis"]
+    assert all((n.calls, n.style) == (2, []) for n in teams)  # retried once, then short enough
+    assert "250" in llm.requests[1][-1]["content"]
+    synth = analysis.narratives["synthesis"]
+    assert (synth.calls, synth.style) == (1, [])
+    # 500 words: over the synthesis limit too
+    llm = FakeLLM([team_reply()] * 10 + [padded(synth_reply(), 500), synth_reply()])
+    synth = analyst.run(ds.team_seasons, ds.finals, res, llm=llm, log=lambda _: None).narratives["synthesis"]
+    assert (synth.calls, synth.style) == (2, []) and "450" in llm.requests[-1][-1]["content"]
+
+
+def test_the_word_limits_match_the_ones_the_instructions_ask_for():
+    assert f"-{analyst.TEAM_MAX_WORDS} words" in analyst.TEAM_INSTRUCTIONS
+    assert f"-{analyst.SYNTH_MAX_WORDS} words" in analyst.SYNTH_INSTRUCTIONS
+
+
+def test_team_instructions_tell_the_model_to_name_the_first_phase_as_the_facts_do(built):
+    text = analyst.TEAM_INSTRUCTIONS
+    assert ("Call the first phase exactly as 'First-phase format that season' names it "
+            "(league phase or group stage).") in text
+    assert "Facts (JSON):" in text and text.endswith("\n")  # the facts follow straight after
+    ds, res = built
+    sheet = next(v for k, v in facts.build_facts(ds.team_seasons, ds.finals, res).items() if k != "synthesis")
+    assert "First-phase format that season" in sheet  # the key the instruction points at
 
 
 def test_synthesis_instructions_cover_intervals_labels_and_the_training_data():

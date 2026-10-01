@@ -57,6 +57,14 @@ def pick_verdict(rank: int) -> str:
     return f"No: ranked {rank}, outside the model's top two"
 
 
+def phase_format(season: int) -> str:
+    """The first phase's format, named outright: the other keys only say 'group/league phase', so the local model
+    guessed which one a season had."""
+    if config.is_league_format(season):
+        return "league phase (36 teams, 8 matches each)"
+    return "group stage (32 teams in groups of four, 6 matches each)"
+
+
 def beats(row: pd.Series, feature: str, scope: str) -> int:
     """Share of teams beaten on a stat. Percentiles are flipped where lower is better, because the local
     model kept reading a low percentile on those stats as a weakness."""
@@ -87,6 +95,7 @@ def team_fact_sheet(row: pd.Series, pred: pd.Series, shap_row: pd.Series, final,
     return {
         "Club": row["team_display"],
         "Season": config.season_label(int(row["season"])),
+        "First-phase format that season": phase_format(int(row["season"])),
         "Actual result": result_text(row["team_id"], final),
         "Knockout teams that season": int(pred["ko_size"]),
         "Base rate: chance a random knockout team reaches the final (%)": round(100 * float(pred["base_rate"]), 1),

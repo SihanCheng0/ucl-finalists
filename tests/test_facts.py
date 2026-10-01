@@ -26,6 +26,24 @@ def test_team_sheets_use_plain_labels_and_mark_lower_is_better(built):
     json.dumps(sheets, allow_nan=False)  # raises if any NaN slipped into the facts
 
 
+FORMAT = "First-phase format that season"
+LEAGUE_PHASE = "league phase (36 teams, 8 matches each)"
+GROUP_STAGE = "group stage (32 teams in groups of four, 6 matches each)"
+
+
+def test_team_sheets_name_the_first_phase_format_of_their_season(built):
+    # the other keys only say "group/league phase", so the local model guessed which one a season had
+    ds, res = built
+    sheets = facts.build_facts(ds.team_seasons, ds.finals, res)
+    format_of = {2022: GROUP_STAGE, 2023: GROUP_STAGE, 2024: GROUP_STAGE, 2025: LEAGUE_PHASE, 2026: LEAGUE_PHASE}
+    team_keys = [k for k in sheets if k != "synthesis"]
+    assert {int(k.split("-", 1)[0]) for k in team_keys} == set(format_of)
+    for key in team_keys:
+        assert sheets[key][FORMAT] == format_of[int(key.split("-", 1)[0])], key
+        keys = list(sheets[key])
+        assert keys[keys.index("Season") + 1] == FORMAT  # right after the season, ahead of any stat
+
+
 def test_better_than_shares_are_flipped_for_lower_is_better_stats(built):
     ds, res = built
     sheets = facts.build_facts(ds.team_seasons, ds.finals, res)

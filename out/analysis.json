@@ -6,16 +6,18 @@
     "2022-50051": {
       "key": "2022-50051",
       "status": "ok",
-      "text": "## How they got there\nReal Madrid secured the title by defeating Liverpool 1-0 in the final. Their path was defined by a profile of exceptional ball retention and discipline, featuring 670 passes per game where they performed better than 100% of teams, alongside a pre-season UEFA club coefficient of 127.0 points that beat 97% of peers. They also maintained superior control with only 7.8 fouls committed per game, outperforming 97% of the season's competitors in this metric.\n\n## Would the model have picked them?\nThe model would not have selected Real Madrid for the final, as they ranked fifth among knockout teams and fell outside its top two preference threshold. Although the model assigned a 19.0% probability of reaching the final compared to a base rate of 12.5%, it estimated their expected stage as semi-finals rather than the winner's circle. The prediction was pushed upward most by attacks per game, which contributed 0.37 to the score, and fouls committed per game, contributing 0.3. Conversely, the model viewed long passes (% of passes) as a negative factor with a contribution of -0.08, followed by opponent shots on target per game at -0.05.\n\n## Weak spots\nReal Madrid's long passes accounted for only 8.8% of their total volume, a figure that beat just 6% of teams in the group phase and 6% historically. They covered an average distance of 110.3 km per game, performing better than only 12% of their peers in the same season and 29% over the long term. Additionally, they conceded 9.0 opponent shots per game, a defensive metric where they beat just 44% of teams during the group stage and 61% historically.",
+      "text": "## How they got there\nReal Madrid won the 2021-22 Champions League by beating Liverpool 1-0 in the final. Their profile featured exceptional ball retention and discipline, recording 670 passes per game to finish better than 100% of teams that season while committing just 7.8 fouls per game to rank ahead of 97%. They also entered with a pre-season UEFA club coefficient of 127.0 points, placing them superior to 97% of peers in the group stage.\n\n## Would the model have picked them?\nThe model would not have selected Real Madrid for this run, as they ranked fifth among knockout teams and fell outside its top-two preference. Although the club's probability of reaching the final was estimated at 19.0%, this is higher than the base rate of 12.5% for a random team. The model expected them to reach the semi-finals, which is the stage nearest to their calculated expectation of 2.04 on its scale. This outlook was driven upward by an average of 66.0 attacks per game with a SHAP contribution of 0.37, while being pulled downward by a long pass rate of 8.8% carrying a negative contribution of -0.08.\n\n## Weak spots\nReal Madrid's long passes accounted for only 8.8% of their total volume, performing better than just 6% of teams in that season's group stage. They covered an average distance of 110.3 km per game, a figure that placed them ahead of only 12% of their counterparts during the league phase. Additionally, they faced 9.0 opponent shots per game, which was a metric where they outperformed just 44% of teams in the same period.",
       "unsupported": [],
       "calls": 2,
       "reason": null,
-      "style": []
+      "style": [
+        "over 250 words (251)"
+      ]
     },
     "2022-7889": {
       "key": "2022-7889",
       "status": "ok",
-      "text": "## How they got there\nLiverpool reached the final as runners-up after losing to Real Madrid 0-1. Their campaign was defined by a dominant profile, featuring a Points per game average of 3.0 that placed them better than 97% of teams in their group and league phase, alongside Shot accuracy at 59.2%, which beat 97% of peers. They also maintained high control with Possession at 59.5%, outperforming 97% of the season's teams on this metric.\n\n## Would the model have picked them?\nThe model would have selected Liverpool, ranking them second among all knockout teams and placing them inside its top two predictions. With a calculated probability of 31.7% to reach the final, the system viewed their chances as higher than the base rate of 12.5%. The nearest stage to the model's expectation of 2.23 was the semi-finals. This outlook was driven upward by Attacks per game with a value of 57.5 beating 84% of teams (SHAP contribution 0.44), while Pre-season UEFA club coefficient at 101.0 points, beating 75% of teams, pushed the prediction down most (SHAP contribution -0.07).\n\n## Weak spots\nDistance covered per game was recorded at 113.1 km, a figure that beat only 25% of teams in the group and league phase. Fouls committed per game stood at 12.0, which was better than just 38% of their seasonal peers despite being marked as lower is better. Long passes accounted for 13.1% of all passes, a metric that beat only 47% of teams in the group and league phase.",
+      "text": "## How they got there\nLiverpool reached the final as runners-up after losing to Real Madrid 0-1. Their campaign was defined by a dominant profile, securing points per game at a rate of 3.0 that placed them better than 97% of teams in the group stage and 99% historically. They also excelled with shot accuracy at 59.2%, beating 97% of their group phase peers, and maintained possession at 59.5%, outperforming 97% of that season's field.\n\n## Would the model have picked them?\nThe model would have selected Liverpool, ranking them second among all knockout teams for a spot in the final. With a calculated probability of 31.7%, they were more likely to reach the summit than the base rate of 12.5% for a random team. The algorithm's expectation aligns closest with reaching the semi-finals on its scoring scale. This outlook was driven upward by attacks per game at 57.5, which contributed 0.44 to the score, while pre-season UEFA club coefficient at 101.0 points pulled the prediction down by -0.07.\n\n## Weak spots\nTheir distance covered per game of 113.1 km was better than only 25% of teams in that season's group phase. Liverpool committed fouls at a rate of 12.0 per game, which placed them ahead of just 38% of their peers. Additionally, long passes accounted for 13.1% of their total passing volume, a figure superior to only 47% of teams in the same period.",
       "unsupported": [],
       "calls": 2,
       "reason": null,
@@ -24,34 +26,34 @@
     "2023-50138": {
       "key": "2023-50138",
       "status": "ok",
-      "text": "## How they got there\nInter reached the final as runners-up after losing to Manchester City 0-1. Their profile was defined by a 59.3% shot accuracy, better than 97% of teams in that season's group and league phase, alongside an 18.5% shot conversion rate that outperformed 62% of their peers. They also relied on long passes comprising 12.9% of all their passes, a metric where they beat 62% of the season's participants.\n\n## Would the model have picked them?\nThe model would not have picked Inter, as it ranked them 14th among knockout teams, placing them outside its top two selections. With a predicted probability of just 2.9% to reach the final compared to a base rate of 12.5%, the system expected them to go out before quarter-finals. The prediction was pushed up most by their 18.5% shot conversion (SHAP contribution: 0.09), while it was pulled down most by an average of 40.8 attacks per game (SHAP contribution: -0.2).\n\n## Weak spots\nInter allowed 5.7 opponent shots on target per game, a figure better than only 23% of teams in that season's group and league phase. They conceded 10.7 opponent shots per game, outperforming just 34% of their seasonal rivals. Additionally, they averaged 9.0 shots per game, a rate where they beat only 38% of the teams in that season's group and league phase.",
+      "text": "## How they got there\nInter reached the final as runners-up after losing to Manchester City 0-1. Their profile in the group stage was defined by exceptional efficiency, boasting a shot accuracy of 59.3% where they performed better than 97% of teams, alongside a shot conversion rate of 18.5% that beat 62% of their peers. They also relied on a direct approach with long passes comprising 12.9% of their total volume, a metric superior to 62% of the season's participants.\n\n## Would the model have picked them?\nThe model would not have selected Inter, as they ranked 14th out of 16 knockout teams and fell outside its top two predictions. With a probability of just 2.9%, their chances were lower than the base rate of 12.5% for any random team reaching the final. The algorithm's expectation aligns with them going out before quarter-finals, a stage nearest to the calculated value of 0.26. While Shot conversion at 18.5% pushed this prediction up by 0.09, the model was pulled down most by Attacks per game at 40.8, which contributed -0.2 to their expected progress.\n\n## Weak spots\nInter allowed 5.7 opponent shots on target per game, a figure where they did better than only 23% of teams in that season's group stage. Their defense conceded 10.7 opponent shots per game, performing better than just 34% of their peers during the same period. Additionally, they generated an average of 9.0 shots per game, a rate where they outperformed only 38% of the teams in that season's group phase.",
       "unsupported": [],
-      "calls": 1,
+      "calls": 2,
       "reason": null,
       "style": []
     },
     "2023-52919": {
       "key": "2023-52919",
       "status": "ok",
-      "text": "## How they got there\nManchester City won the trophy by defeating Inter 1-0 in the final. Their path was defined by a dominant profile featuring 69.2 attacks per game, where they performed better than 100% of teams in that season's group and league phase, alongside 64.1% possession which beat 100% of their peers in the same period. They also averaged 734 passes per game, outperforming every other team in the competition during those stages.\n\n## Would the model have picked them?\nThe model would not have selected Manchester City as a top-two pick, ranking them third despite being a leading contender. While their actual probability of reaching the final was 31.7%, this sits well above the base rate of 12.5% for a random knockout team. The stage on the model's scale nearest to its expectation is semi-finals, reflecting an anticipated exit before the last two rounds. This outlook was pushed up most by fouls committed per game at 8.2 (SHAP contribution 0.31), while long passes (% of passes) at 9.1 pulled the prediction down with a SHAP contribution of -0.15.\n\n## Weak spots\nManchester City's long passes (% of passes) value of 9.1 beat only 12% of teams in that season's group and league phase. Their shot accuracy (% on target) at 53.8 was superior to just 75% of teams during the same period.",
+      "text": "## How they got there\nManchester City won the tournament by beating Inter 1-0 in the final. Their profile was defined by elite control, leading all group stage teams with 69.2 attacks per game and 734 passes per game while also securing 100% of teams beaten figures for possession at 64.1%.\n\n## Would the model have picked them?\nThe verdict is that the model would not have picked them, as they ranked third among knockout teams despite being a leading contender outside the top two. The model assigned a 31.7% probability of reaching the final, which is higher than the 12.5% base rate for a random team. This expectation aligns most closely with the semi-finals stage on the provided scale. The prediction was pushed up most by fouls committed per game at 8.2 with a contribution of 0.31, while it was pulled down most by long passes (% of passes) at 9.1 with a contribution of -0.15.\n\n## Weak spots\nThe team beat only 12% of teams in that season's group/league phase for long passes (% of passes).",
       "unsupported": [],
-      "calls": 1,
+      "calls": 2,
       "reason": null,
       "style": []
     },
     "2024-50051": {
       "key": "2024-50051",
       "status": "ok",
-      "text": "## How they got there\nReal Madrid secured the title by defeating Borussia Dortmund 2-0 in the final. Their path was defined by a dominant profile, featuring 3.0 points per game to better than 98% of teams, 15.3 shots per game to outperform 97%, and 93.1% pass accuracy which beat 97% of their peers.\n\n## Would the model have picked them?\nThe model would have selected Real Madrid, ranking them second among all knockout teams. With a 32.7% probability of reaching the final, they outperformed the 12.5% base rate for a random team. The nearest stage to the model's expectation was the quarter-finals. This prediction was pushed up most by attacks per game at 61.0 (SHAP contribution 0.34), while long passes (% of passes) at 7.9 pulled it down most with a SHAP contribution of -0.63.\n\n## Weak spots\nReal Madrid's long passes (% of passes) value of 7.9 was better than only 3% of teams in the group phase and 2% historically. Their distance covered per game (km) at 113.1 beat just 9% of teams that season and 52% over the historical period.",
+      "text": "## How they got there\nReal Madrid won the title by beating Borussia Dortmund 2-0 in the final. Their path was defined by a dominant profile featuring 3.0 points per game, better than 98% of teams in that season's group stage, alongside 15.3 shots per game and 93.1% pass accuracy, each outperforming at least 97% of their peers during the league phase.\n\n## Would the model have picked them?\nThe model would have selected Real Madrid as a top contender, ranking them second among all knockout teams with a 32.7% probability of reaching the final compared to a 12.5% base rate for random teams. This expectation aligns nearest to the quarter-finals on the model's scale. The prediction was pushed up most by 61.0 attacks per game, which contributed 0.34 to the expected stage, while the view was pulled down most by 7.9 long passes (% of passes), contributing -0.63 to the projection.\n\n## Weak spots\nReal Madrid's 7.9% share of long passes beat only 3% of teams in that season's group phase. Their average distance covered per game of 113.1 km was superior to just 9% of their opponents during the same period.",
       "unsupported": [],
-      "calls": 2,
+      "calls": 1,
       "reason": null,
       "style": []
     },
     "2024-52758": {
       "key": "2024-52758",
       "status": "ok",
-      "text": "## How they got there\nBorussia Dortmund reached the 2023-24 final as runners-up after losing to Real Madrid. Their profile was defined by a strong pre-season UEFA club coefficient of 86.0, which placed them better than 75% of teams in that season's group phase. They also secured a goal difference per game of 0.5, beating 72% of their peers, while limiting opponent shots on target to 3.7 per game, a figure superior to 72% of the league phase competitors.\n\n## Would the model have picked them?\nThe model would not have selected Dortmund for the final, as they ranked eighth out of sixteen knockout teams with only a 9.1% probability compared to a base rate of 12.5%. The nearest stage to the model's expectation was out before quarter-finals, reflecting an expected value of 0.42 on its scale. Long passes at 13.7% pushed the prediction up most with a SHAP contribution of 0.11, while attacks per game at 39.8 pulled it down most with a contribution of -0.16.\n\n## Weak spots\nDortmund covered only 112.3 km per game, performing better than just 6% of teams in the group phase. Their shot conversion rate was 11.7%, which beat only 12% of their league phase rivals. Finally, they held possession for 44.8% of the time, a metric where they outperformed merely 19% of the season's participants.",
+      "text": "## How they got there\nBorussia Dortmund reached the final of the group stage (32 teams in groups of four, 6 matches each) before ultimately losing to Real Madrid 0-2. Their profile was defined by a pre-season UEFA club coefficient of 86.0 points, better than 75% of teams that season, alongside a goal difference per game of 0.5 which beat 72% of peers. They also limited opponents effectively with just 3.7 shots on target allowed per game, outperforming 72% of the field in this metric.\n\n## Would the model have picked them?\nThe model would not have picked Dortmund, as it ranked them eighth and outside its top two selections despite their runner-up finish. With a predicted probability of reaching the final at 9.1%, they fell below the base rate of 12.5% for a random knockout team. The stage nearest to the model's expectation was out before quarter-finals, reflecting an expected value of 0.42 on its scale. Long passes accounted for 66% of teams beaten with a SHAP contribution of 0.11 pushing the prediction up most, while attacks per game beat only 38% of teams and carried a -0.16 contribution pulling it down most.\n\n## Weak spots\nDortmund covered just 112.3 km per game, better than only 6% of that season's teams. Their shot conversion rate was 11.7%, beating merely 12% of peers. They held possession for 44.8% of the time, a figure superior to just 19% of the competition.",
       "unsupported": [],
       "calls": 1,
       "reason": null,
@@ -60,27 +62,25 @@
     "2025-50138": {
       "key": "2025-50138",
       "status": "ok",
-      "text": "## How they got there\nInter reached the final as runners-up after losing to Paris Saint-Germain with a score of 0-5. Their campaign was defined by exceptional efficiency, ranking in the top tier for Points per game at 2.38 where they were better than 94% of teams in the group phase. They also demonstrated elite defensive solidity, allowing just 2.9 opponent shots on target per game to be better than 89% of their peers, alongside a strong Goal difference per game of 1.25 that outperformed 88% of teams.\n\n## Would the model have picked them?\nThe model would not have selected Inter as a top-two finalist, ranking them ninth with a probability of 7.7%, which sits slightly below the base rate of 8.3%. Based on historical data from other seasons, the model's expected performance aligns nearest to the quarter-finals at an expectation level of 0.84. The prediction was pushed upward primarily by Long passes (% of passes) with a contribution of 0.14 and Shots per game contributing 0.08. Conversely, the outlook was dampened significantly by Attacks per game with a negative contribution of -0.16 and Shot accuracy (% on target) at -0.13.\n\n## Weak spots\nInter's Shot accuracy (% on target) stood at 39.2, performing better than only 8% of teams in the group phase. Their average of 38.4 Attacks per game was superior to just 35% of their league rivals. Finally, a Shot conversion rate of 13.9 meant they outperformed only 36% of teams in that metric during the group stage.",
+      "text": "## How they got there\nInter reached the final as runners-up after losing to Paris Saint-Germain by a score of 0-5. Their path was defined by an elite profile, leading in points per game at 2.38 where they were better than 94% of teams, while also excelling with opponent shots on target per game at 2.9 (better than 89%) and goal difference per game at 1.25 (better than 88%).\n\n## Would the model have picked them?\nThe model would not have selected Inter for the final, as they ranked ninth among knockout teams against a base rate of 8.3%. Although their predicted probability was 7.7%, the nearest expected stage on the scale is quarter-finals rather than the actual outcome. The prediction was pushed up most by long passes (% of passes) at 11.1 with a SHAP contribution of 0.14, while it was pulled down most by attacks per game at 38.4 with a contribution of -0.16.\n\n## Weak spots\nInter's shot accuracy of 39.2% was better than only 8% of teams in the league phase. Their average of 38.4 attacks per game beat just 35% of their peers. Additionally, a shot conversion rate of 13.9% placed them ahead of only 36% of teams.",
       "unsupported": [],
-      "calls": 2,
+      "calls": 1,
       "reason": null,
-      "style": [
-        "significantly"
-      ]
+      "style": []
     },
     "2025-52747": {
       "key": "2025-52747",
       "status": "ok",
-      "text": "## How they got there\nParis Saint-Germain secured the title by defeating Inter 5-0 in the final. Their path was defined by a profile of high-volume attacking play, evidenced by 65.5 attacks per game where they performed better than 94% of teams in the league phase and 97% historically. This offensive output was supported by 13.2 shots per game, beating 97% of their peers that season, while maintaining a tight defense with just 6.0 opponent shots per game, a figure superior to 94% of teams both locally and across the competition's history.\n\n## Would the model have picked them?\nThe model would not have selected Paris Saint-Germain as a primary finalist candidate, ranking them eighth against its top two choices despite their eventual victory. While the club achieved a 9.6% probability of reaching the final, this figure sits only slightly above the 8.3% base rate for a random knockout team. The model's expectation aligns closest with the quarter-finals stage rather than the ultimate prize. This assessment was driven upward by an SHAP contribution of 0.41 from 65.5 attacks per game and downward by -0.19 from 9.1 long passes (% of passes).\n\n## Weak spots\nParis Saint-Germain's reliance on only 9.1 long passes as a share of total passes placed them better than just 17% of teams in the league phase. Their efficiency in finishing was limited, with a shot conversion rate of 13.2% that outperformed only 26% of their divisional rivals. Additionally, they achieved shot accuracy on target at 46.2%, a metric where they surpassed merely 33% of teams during the group and league phases.",
+      "text": "## How they got there\nParis Saint-Germain advanced through the league phase of the 36-team format to reach the final, where they defeated Inter 5-0. Their profile was defined by elite offensive output, with 13.2 shots per game beating 97% of teams and 65.5 attacks per game beating 94%. They also maintained a tight defense, recording only 6.0 opponent shots per game to beat 94% of their peers in the league phase.\n\n## Would the model have picked them?\nThe model would not have selected this team for the final, as it ranked eighth among knockout teams and fell outside its top two preference threshold. While the club's actual probability of reaching the final was 9.6%, slightly higher than the 8.3% base rate for a random knockout side, the model expected them to stop at the quarter-finals. The prediction was pushed upward most by their 65.5 attacks per game with a SHAP contribution of 0.41, while being pulled downward primarily by their 9.1 long passes percentage which carried a negative SHAP contribution of -0.19.\n\n## Weak spots\nParis Saint-Germain's reliance on long passes was minimal, as they beat only 17% of teams in the league phase with a value of 9.1%. Their finishing efficiency was also limited, converting just 13.2% of shots to outperform 26% of teams. Additionally, their shot accuracy saw them beat only 33% of teams with a value of 46.2% on target.",
       "unsupported": [],
-      "calls": 1,
+      "calls": 2,
       "reason": null,
       "style": []
     },
     "2026-52280": {
       "key": "2026-52280",
       "status": "ok",
-      "text": "## How they got there\nArsenal reached the final as runners-up after losing to Paris Saint-Germain on penalties following a 1-1 draw. Their campaign was defined by an exceptional league profile, where they finished with 3.0 points per game and a goal difference of 2.38 per game, beating 100% of teams in the group phase for both metrics. They also limited opponents to just 2.8 shots on target per game, a defensive figure that placed them ahead of 97% of their peers during the league stage.\n\n## Would the model have picked them?\nThe model would have selected Arsenal as a top contender, ranking them second among all knockout teams with a 24.6% probability of reaching the final. This likelihood is higher than the 8.3% base rate for a random team to reach this stage, leading the algorithm to expect a semi-final exit rather than an early departure. The prediction was driven upward most by their goal difference per game of 2.38, which contributed 0.78 to the model's expected stage score. Conversely, the view was pulled downward primarily by their attacks per game value of 50.1, which carried a SHAP contribution of -0.16.\n\n## Weak spots\nArsenal committed fouls at a rate of 13.9 per game, beating only 11% of teams in the league phase for this metric where lower is better. Their reliance on long passes accounted for just 11.4% of their total volume, a figure that placed them ahead of only 36% of peers. Additionally, they averaged 450 passes per game, a statistic where they outperformed merely 39% of the teams in the same season's group phase.",
+      "text": "## How they got there\nArsenal finished as runners-up after losing the final to Paris Saint-Germain on penalties. Their campaign was defined by a dominant league phase profile, where they achieved a perfect 3.0 points per game and a 2.38 goal difference per game, beating 100% of teams in those categories during the season. They also excelled defensively with just 2.8 opponent shots on target per game, outperforming 97% of their league phase opponents.\n\n## Would the model have picked them?\nThe model would have selected Arsenal as a top contender, ranking them second among all knockout teams and placing them inside its top two predictions. With a calculated probability of 24.6% to reach the final, they outperformed the base rate of 8.3% for a random team. The model's expectation aligns closest with reaching the semi-finals on its scale. This high ranking was driven primarily by a positive SHAP contribution of 0.78 from their goal difference per game, while their attacks per game contributed -0.16 to the prediction.\n\n## Weak spots\nArsenal committed fouls at a rate that placed them below only 11% of teams in the league phase. Their long passing volume was lower than 36% of their peers during the same period. Additionally, they averaged fewer passes per game than 39% of the teams they faced in the league phase.",
       "unsupported": [],
       "calls": 2,
       "reason": null,
@@ -89,7 +89,7 @@
     "2026-52747": {
       "key": "2026-52747",
       "status": "ok",
-      "text": "## How they got there\nParis Saint-Germain secured the title by defeating Arsenal on penalties in a final that ended 1-1, with a 4-3 penalty shootout deciding the winner. The club's profile is defined by an overwhelming dominance in ball control and creation, boasting 100% of teams beaten for Shots per game (14.9), Possession (64.1%), and Passes per game (671) during the group phase. These metrics place them among the top performers historically, beating 94% to 99% of all Champions League teams since 2011-12 in these categories.\n\n## Would the model have picked them?\nThe model would not have selected Paris Saint-Germain as a primary pick, ranking them fourth among knockout teams despite their status as a leading contender outside its top two choices. While the base rate for any random team reaching the final is 8.3%, the model assigned this squad a 15.9% probability of success. The stage on the expected scale nearest to the model's expectation of 1.66 is the semi-finals, rather than the actual victory. This assessment was driven upward by Attacks per game (0.42) and Goal difference per game (0.2), while being pulled downward by Long passes (% of passes) (-0.19) and Shots per game (-0.1).\n\n## Weak spots\nParis Saint-Germain beat only 8% of teams in that season's group phase for Long passes (% of passes), a figure representing just 5% historically since 2011-12. The team also ranked poorly relative to peers in Distance covered per game (km), beating only 28% of the season's teams and 62% of all historical Champions League participants.",
+      "text": "## How they got there\nParis Saint-Germain reached the final by beating Arsenal on penalties in a 1-1 draw, winning 4-3 on spot-kicks. Their profile was defined by elite offensive volume and control, as they recorded 14.9 shots per game to beat 100% of teams that season, held 64.1% possession to top the league phase, and completed 671 passes per game, also beating every other side in their group or league stage.\n\n## Would the model have picked them?\nThe model would not have selected Paris Saint-Germain as a primary finalist, ranking them fourth among knockout teams despite being a leading contender outside its top two choices. While the base rate for any random team reaching the final was 8.3%, the model assigned this club a 15.9% probability, suggesting an expectation nearest to the semi-finals rather than the title. This assessment was driven upward by their 62.6 attacks per game with a SHAP contribution of 0.42, yet pulled downward by their low volume of long passes at 8.6%, which carried a negative SHAP contribution of -0.19.\n\n## Weak spots\nParis Saint-Germain beat only 8% of teams in the league phase for long passes as a percentage of total passes, with just 5% beating them historically since 2011-12. They covered less distance than most rivals, beating only 28% of teams that season on distance per game, though they ranked higher at 62% across all Champions League history.",
       "unsupported": [],
       "calls": 1,
       "reason": null,
@@ -109,6 +109,7 @@
     "2022-50051": {
       "Club": "Real Madrid",
       "Season": "2021-22",
+      "First-phase format that season": "group stage (32 teams in groups of four, 6 matches each)",
       "Actual result": "Winner: beat Liverpool 1-0 in the final",
       "Knockout teams that season": 16,
       "Base rate: chance a random knockout team reaches the final (%)": 12.5,
@@ -291,6 +292,7 @@
     "2022-7889": {
       "Club": "Liverpool",
       "Season": "2021-22",
+      "First-phase format that season": "group stage (32 teams in groups of four, 6 matches each)",
       "Actual result": "Runner-up: lost the final to Real Madrid 0-1",
       "Knockout teams that season": 16,
       "Base rate: chance a random knockout team reaches the final (%)": 12.5,
@@ -473,6 +475,7 @@
     "2023-50138": {
       "Club": "Inter",
       "Season": "2022-23",
+      "First-phase format that season": "group stage (32 teams in groups of four, 6 matches each)",
       "Actual result": "Runner-up: lost the final to Manchester City 0-1",
       "Knockout teams that season": 16,
       "Base rate: chance a random knockout team reaches the final (%)": 12.5,
@@ -655,6 +658,7 @@
     "2023-52919": {
       "Club": "Manchester City",
       "Season": "2022-23",
+      "First-phase format that season": "group stage (32 teams in groups of four, 6 matches each)",
       "Actual result": "Winner: beat Inter 1-0 in the final",
       "Knockout teams that season": 16,
       "Base rate: chance a random knockout team reaches the final (%)": 12.5,
@@ -825,6 +829,7 @@
     "2024-50051": {
       "Club": "Real Madrid",
       "Season": "2023-24",
+      "First-phase format that season": "group stage (32 teams in groups of four, 6 matches each)",
       "Actual result": "Winner: beat Borussia Dortmund 2-0 in the final",
       "Knockout teams that season": 16,
       "Base rate: chance a random knockout team reaches the final (%)": 12.5,
@@ -1001,6 +1006,7 @@
     "2024-52758": {
       "Club": "Borussia Dortmund",
       "Season": "2023-24",
+      "First-phase format that season": "group stage (32 teams in groups of four, 6 matches each)",
       "Actual result": "Runner-up: lost the final to Real Madrid 0-2",
       "Knockout teams that season": 16,
       "Base rate: chance a random knockout team reaches the final (%)": 12.5,
@@ -1183,6 +1189,7 @@
     "2025-50138": {
       "Club": "Inter",
       "Season": "2024-25",
+      "First-phase format that season": "league phase (36 teams, 8 matches each)",
       "Actual result": "Runner-up: lost the final to Paris Saint-Germain 0-5",
       "Knockout teams that season": 24,
       "Base rate: chance a random knockout team reaches the final (%)": 8.3,
@@ -1365,6 +1372,7 @@
     "2025-52747": {
       "Club": "Paris Saint-Germain",
       "Season": "2024-25",
+      "First-phase format that season": "league phase (36 teams, 8 matches each)",
       "Actual result": "Winner: beat Inter 5-0 in the final",
       "Knockout teams that season": 24,
       "Base rate: chance a random knockout team reaches the final (%)": 8.3,
@@ -1547,6 +1555,7 @@
     "2026-52280": {
       "Club": "Arsenal",
       "Season": "2025-26",
+      "First-phase format that season": "league phase (36 teams, 8 matches each)",
       "Actual result": "Runner-up: lost the final to Paris Saint-Germain on penalties (1-1, 3-4 on penalties)",
       "Knockout teams that season": 24,
       "Base rate: chance a random knockout team reaches the final (%)": 8.3,
@@ -1729,6 +1738,7 @@
     "2026-52747": {
       "Club": "Paris Saint-Germain",
       "Season": "2025-26",
+      "First-phase format that season": "league phase (36 teams, 8 matches each)",
       "Actual result": "Winner: beat Arsenal on penalties in the final (1-1, 4-3 on penalties)",
       "Knockout teams that season": 24,
       "Base rate: chance a random knockout team reaches the final (%)": 8.3,

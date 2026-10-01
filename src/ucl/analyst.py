@@ -20,6 +20,10 @@ SYNTH_HEADINGS = ["Why the best teams win", "Winners vs runners-up"]
 RETRY_EXCERPT_CHARS = 1500
 # The team facts hold no significance test, so these words in a team narrative are always unsupported.
 BANNED_TEAM_WORDS = ("significant", "significantly", "significance")
+# The most words the instructions ask for; a longer answer is a style issue, so it gets the one style retry.
+TEAM_MAX_WORDS, SYNTH_MAX_WORDS = 250, 450
+HEADING_LINE = re.compile(r"\s{0,3}#{1,6}(?:\s|$)")  # a markdown heading: 1-6 #s, then a space or the line's end
+OVER_LENGTH = re.compile(r"over (\d+) words \((\d+)\)")  # how style_issues lists an answer that runs long
 
 SYSTEM_PROMPT = (
     "You are a football performance analyst writing for a curious, data-literate reader. "
@@ -50,6 +54,10 @@ STYLE_FEEDBACK = (
     "Don't use these words, which imply a statistical test the facts don't contain: {words}. Rewrite the "
     "complete answer with the same headings, without them."
 )
+LENGTH_FEEDBACK = (
+    "Your answer is {count} words, not counting the headings, over the {limit}-word limit. Rewrite the complete "
+    "answer with the same headings, shorter and within {limit} words."
+)
 TEAM_INSTRUCTIONS = (
     "Write a scouting report on this Champions League finalist: 180-250 words of markdown in total, with one "
     "paragraph under each of exactly these three headings, in this order:\n"
@@ -64,7 +72,9 @@ TEAM_INSTRUCTIONS = (
     "other seasons, including later ones, so describe whether it would have picked them, not a forecast made at "
     "the time.\n"
     "Under 'Weak spots', write one sentence for each stat under 'Weakest stats', however few, and nothing else; "
-    "do not mention SHAP.\n\nFacts (JSON):\n"
+    "do not mention SHAP.\n"
+    "Call the first phase exactly as 'First-phase format that season' names it (league phase or group stage).\n\n"
+    "Facts (JSON):\n"
 )
 SYNTH_INSTRUCTIONS = (
     "Write 350-450 words of markdown in total, with exactly two paragraphs of about 80 words under each of "
@@ -105,7 +115,8 @@ class Narrative:
     unsupported: list[str] = field(default_factory=list)
     calls: int = 0
     reason: str | None = None
-    style: list[str] = field(default_factory=list)  # banned words still in the text; defaulted so old files load
+    # banned words and 'over N words (count)' still in the text; defaulted so old files load
+    style: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -117,27 +128,41 @@ class Analysis:
     reason: str | None = None  # why the LLM was unavailable
 
 
-def style_issues(text: str, banned: tuple[str, ...]) -> list[str]:
-    """The banned words in `text`, whole words only, ignoring case, each once in order of first appearance."""
-    if not banned:
-        return []
-    pattern = re.compile(r"\b(?:" + "|".join(re.escape(word) for word in banned) + r")\b", re.IGNORECASE)
-    return list(dict.fromkeys(match.group().lower() for match in pattern.finditer(text)))
+def word_count(text: str) -> int:
+    """Whitespace-separated words, not counting markdown heading lines."""
+    return sum(len(line.split()) for line in text.splitlines() if not HEADING_LINE.match(line))
+
+
+def style_issues(text: str, banned: tuple[str, ...], max_words: int | None = None) -> list[str]:
+    """The banned words in `text` (whole words only, ignoring case, each once in order of first appearance),
+    then 'over N words (count)' when it has more than `max_words` words."""
+    issues: list[str] = []
+    if banned:
+        pattern = re.compile(r"\b(?:" + "|".join(re.escape(word) for word in banned) + r")\b", re.IGNORECASE)
+        issues = list(dict.fromkeys(match.group().lower() for match in pattern.finditer(text)))
+    if max_words is not None and (count := word_count(text)) > max_words:
+        issues.append(f"over {max_words} words ({count})")
+    return issues
 
 
 def _feedback(unsupported: list[str], style: list[str]) -> str:
-    """What the one retry tells the model is wrong with its answer: numbers, wording or both."""
+    """What the one retry tells the model is wrong with its answer: numbers, wording, length or a mix."""
+    words = [issue for issue in style if not OVER_LENGTH.fullmatch(issue)]
+    over = next((match for match in map(OVER_LENGTH.fullmatch, style) if match), None)
     parts = []
     if unsupported:
         parts.append(GROUNDING_FEEDBACK.format(numbers=", ".join(unsupported)))
-    if style:
-        parts.append(STYLE_FEEDBACK.format(words=", ".join(style)))
+    if words:
+        parts.append(STYLE_FEEDBACK.format(words=", ".join(words)))
+    if over:
+        parts.append(LENGTH_FEEDBACK.format(limit=over[1], count=over[2]))
     return " ".join(parts)
 
 
 def write_narrative(llm, key: str, messages: list[dict], headings: list[str], facts: dict,
-                    banned: tuple[str, ...] = ()) -> Narrative:
-    """At most 3 calls: initial, one validity retry, one retry for unsupported numbers or banned words (spec §7)."""
+                    banned: tuple[str, ...] = (), max_words: int | None = None) -> Narrative:
+    """At most 3 calls: initial, one validity retry, one retry for unsupported numbers, banned words or an answer
+    over `max_words` (spec §7)."""
     calls = 0
     try:
         answer = llm.chat(messages)
@@ -159,7 +184,7 @@ def write_narrative(llm, key: str, messages: list[dict], headings: list[str], fa
         if reason:
             return Narrative(key, "unavailable", calls=calls, reason=reason)
     text = normalize_headings(strip_think(answer.content), headings)
-    unsupported, style = check_grounding(text, facts), style_issues(text, banned)
+    unsupported, style = check_grounding(text, facts), style_issues(text, banned, max_words)
     if unsupported or style:
         retry = messages + [
             {"role": "assistant", "content": text},
@@ -171,7 +196,7 @@ def write_narrative(llm, key: str, messages: list[dict], headings: list[str], fa
             if validate_output(second.content, second.finish_reason, headings) is None:
                 second_text = normalize_headings(strip_think(second.content), headings)
                 second_unsupported = check_grounding(second_text, facts)
-                second_style = style_issues(second_text, banned)
+                second_style = style_issues(second_text, banned, max_words)
                 if len(second_unsupported) + len(second_style) < len(unsupported) + len(style):
                     text, unsupported, style = second_text, second_unsupported, second_style
         except LLMError:
@@ -206,7 +231,8 @@ def run(
         synth = key == "synthesis"
         messages = _messages(SYNTH_INSTRUCTIONS if synth else TEAM_INSTRUCTIONS, sheet)
         narrative = write_narrative(llm, key, messages, SYNTH_HEADINGS if synth else TEAM_HEADINGS, sheet,
-                                    banned=() if synth else BANNED_TEAM_WORDS)
+                                    banned=() if synth else BANNED_TEAM_WORDS,
+                                    max_words=SYNTH_MAX_WORDS if synth else TEAM_MAX_WORDS)
         narratives[key] = narrative
         log(f"  {key}: {narrative.status}, {narrative.calls} call(s), {len(narrative.unsupported)} unsupported")
     return Analysis("ok", llm_model, narratives, sheets)
