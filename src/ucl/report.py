@@ -162,7 +162,7 @@ def _ai_notice(analysis: Analysis) -> str:
                 "and then <code>uv run ucl report</code> to add them.</p>")
     if analysis.status == "unavailable":
         why = f" ({escape(analysis.reason)})" if getattr(analysis, "reason", None) else ""
-        return (f'<p class="notice">LM Studio wasn\'t reachable{why}, so the AI write-ups are missing. Open LM Studio, '
+        return (f'<p class="notice">LM Studio wasn’t reachable{why}, so the AI write-ups are missing. Open LM Studio, '
                 "then run <code>uv run ucl analyze</code> and <code>uv run ucl report</code>.</p>")
     return ""
 
@@ -206,7 +206,7 @@ def _picks(targets: pd.DataFrame, m: dict) -> str:
         table_rows.append([t.team_display, season, result, f"{t.p_final:.1%}", rank,
                            f"{t.base_rate:.1%}", f"{t.exp_stage:.2f}"])
     picked = int((targets["rank_in_season"] <= 2).sum())
-    legend = charts.legend([("Model's probability of reaching the final", "var(--s1)", "dot"),
+    legend = charts.legend([("Model’s probability of reaching the final", "var(--s1)", "dot"),
                             ("Base rate for a random knockout team", "var(--muted)", "tick")])
     return (
         '<section aria-labelledby="picks-h"><h2 id="picks-h">Would the model have picked them?</h2>'
@@ -238,7 +238,7 @@ def _ablation(ablation: pd.DataFrame) -> str:
     return (
         "<h3>Pedigree, results or style?</h3>"
         "<p>The same models retrained on subsets of the stats. Dropping a group shows what it adds that the "
-        "others don't already carry. The 95% intervals overlap heavily, so treat the differences between "
+        "others don’t already carry. The 95% intervals overlap heavily, so treat the differences between "
         "groups as tentative.</p>"
         '<div class="pair">'
         + chart("spearman", 0.0, "Ranking teams within a season",
@@ -267,8 +267,8 @@ def _drivers(results: ModelResults, summary: Narrative | None, m: dict) -> str:
     legend = charts.legend([(GROUP_NAMES[g], color, "bar") for g, color in charts.GROUP_COLORS.items()])
     return (
         '<section aria-labelledby="drivers-h"><h2 id="drivers-h">What drives deep runs</h2>'
-        "<p>Bar length is how far each stat moved the model's expected stage on average, in knockout rounds "
-        "(mean absolute SHAP value, measured only on seasons the model didn't train on). The top "
+        "<p>Bar length is how far each stat moved the model’s expected stage on average, in knockout rounds "
+        "(mean absolute SHAP value, measured only on seasons the model didn’t train on). The top "
         f"{config.TOP_DRIVERS} carry a label. <strong>Robust</strong>: a simpler logistic model agrees on the "
         f"direction in at least {needed} of {m['n_seasons']} seasons, and the stat points the same way on its own. "
         "<strong>Conditional</strong>: the direction holds only with the other stats held fixed; on its own the "
@@ -300,7 +300,7 @@ def _card(row: pd.Series, pred: pd.Series, shap_row: pd.Series, final: pd.Series
     stats = [[stat_label(f), display_value(row, f), beats(row, f, "season"), beats(row, f, "all"),
               f"{contributions[f]:+.2f}"] for f in features]
     expected = float(pred["exp_stage"])
-    note = (f"▲ marks the model's expected stage, {expected:.2f} of 4. It gave a {float(pred['p_final']):.0%} "
+    note = (f"▲ marks the model’s expected stage, {expected:.2f} of 4. It gave a {float(pred['p_final']):.0%} "
             f"chance of reaching the final, #{int(pred['rank_in_season'])} of {int(pred['ko_size'])} knockout teams.")
     if ai_ran:
         story = _story(narrative) or badge(None)
@@ -335,7 +335,7 @@ def _cards(team_seasons, finals, results: ModelResults, analysis: Analysis, targ
     ai = ", with the AI scouting report" if ai_ran else ""
     return ('<section aria-labelledby="teams-h"><h2 id="teams-h">The finalists, one by one</h2>'
             "<p>Where each side finished, what the model expected, and the stats that moved its prediction "
-            f'most{ai}. "Teams beaten" is the share of teams a side did better than, so higher is always better, '
+            f"most{ai}. “Teams beaten” is the share of teams a side did better than, so higher is always better, "
             "including on the stats where a lower number is better.</p>"
             f'<div class="cards">{"".join(cards)}</div></section>')
 
@@ -359,8 +359,8 @@ def _winners(results: ModelResults, summary: Narrative | None, n_finals: int) ->
                else f"{significant} of {len(fc)} differences survive a Holm correction at p < {SIGNIFICANCE}.")
     return (
         '<section aria-labelledby="winners-h"><h2 id="winners-h">Winners vs runners-up</h2>'
-        f"<p>For each of the {n_finals} finals since 2011-12: the winner's group or league-phase stats minus the "
-        f"runner-up's, in within-season standard deviations. Under each value: the finals in which the winner was "
+        f"<p>For each of the {n_finals} finals since 2011-12: the winner’s group or league-phase stats minus the "
+        f"runner-up’s, in within-season standard deviations. Under each value: the finals in which the winner was "
         f"higher–lower–tied, and the Holm-adjusted p across all {len(fc)} stats. {verdict} With so few finals, "
         "read these as hints at most.</p>"
         f'<div class="chart">{charts.bar_chart(rows, fmt="{:+.2f}")}</div>'
@@ -385,16 +385,16 @@ def _method(team_seasons: pd.DataFrame, finals: pd.DataFrame, results: ModelResu
     skill_verdict = ("includes zero, so that edge is inconclusive" if skill_lo <= 0 <= skill_hi
                      else "lies entirely above zero")
     method = [
-        f"Data: UEFA's public match, team-statistics and club-coefficient feeds for {m['n_seasons']} seasons "
+        f"Data: UEFA’s public match, team-statistics and club-coefficient feeds for {m['n_seasons']} seasons "
         f"({first} to {last}). That covers {len(team_seasons)} group or league-phase team-seasons, of which "
         f"{m['n_knockout']} reached the knockouts.",
         f"Inputs: {len(feature_list(results))} per-game stats from group and league-phase matches only, "
-        "standardised within each season, plus the club's five-year UEFA coefficient from before the season. "
+        "standardised within each season, plus the club’s five-year UEFA coefficient from before the season. "
         "Save rate was dropped because the 2011-12 feed lacks saves for too many matches.",
         f"Validation: each season is predicted by models trained on the other {m['n_seasons'] - 1}. The ranking "
         f"correlation averages {m['spearman_mean']:.2f} (95% interval {_span(ci.get('spearman_mean', (0, 0)))}), "
         f"and the AUC for reaching the final is {m['auc']:.2f} ({_span(ci.get('auc', (0, 0)))}). "
-        f"{m['finalists_in_top4']:.0%} of finalists were in their season's predicted top four "
+        f"{m['finalists_in_top4']:.0%} of finalists were in their season’s predicted top four "
         f"({_span(ci.get('finalists_in_top4', (0, 0)), '{:.0%}')}), against "
         f"{m['finalists_in_top4_chance']:.0%} for a random ranking. Against always guessing the base rate, the "
         f"probabilities have a Brier skill of {m['brier_skill']:.2f}; its interval ({_span((skill_lo, skill_hi))}) "
@@ -411,18 +411,18 @@ def _method(team_seasons: pd.DataFrame, finals: pd.DataFrame, results: ModelResu
     caveats = [
         "Correlation is not causation, and group or league-phase stats depend on the opponents drawn.",
         "Knockout football is high-variance. The 2026 final was decided on penalties.",
-        f"{top_name} won {top_wins} of the {len(finals)} finals, so one club's profile weighs heavily on what "
+        f"{top_name} won {top_wins} of the {len(finals)} finals, so one club’s profile weighs heavily on what "
         "winning looks like.",
         "In 2024-25 and 2025-26 a top-eight league finish skips the play-off, which builds in an advantage "
         "for results.",
         "UEFA publishes no expected-goals data for these seasons, and the shot counts leave out blocked shots.",
-        "UEFA's feed reported possession in seconds and distance in metres for some 2014-16 matches. These were "
-        "converted using the feed's own figures, and partial tracking and placeholder zeros were ignored.",
+        "UEFA’s feed reported possession in seconds and distance in metres for some 2014-16 matches. These were "
+        "converted using the feed’s own figures, and partial tracking and placeholder zeros were ignored.",
         "Some stat definitions changed between seasons, so comparisons with all teams since 2011-12 mix them. "
         "The model itself only compares teams within a season.",
         f"{m['n_seasons']} seasons contain only {m['n_finalists']} finalists, so the probabilities are rough.",
         "Models are trained on seasons after the one being scored as well as before it.",
-        "UEFA's APIs are undocumented. Their values are used as published.",
+        "UEFA’s APIs are undocumented. Their values are used as published.",
         "The AI text is limited to the numbers and checked against them, but its interpretations are not "
         "causal evidence.",
     ]
