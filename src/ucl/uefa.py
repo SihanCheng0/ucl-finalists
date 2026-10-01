@@ -23,10 +23,12 @@ USER_AGENT = (
 MISSING_MARKER = {"__missing__": True}
 MISSING_CODES = {404, 410}
 RETRY_CODES = {408, 429}
+MAX_COEF_PAGES = 20
 # OSError covers URLError, TimeoutError, ConnectionError and ssl.SSLError.
 TRANSIENT_ERRORS = (OSError, http.client.HTTPException, json.JSONDecodeError)
 
 Fetch = Callable[[str, float], Any]
+Check = Callable[[Any], bool]
 
 
 class PermanentHTTPError(Exception):
@@ -50,6 +52,14 @@ def _atomic_write_json(path: Path, data: Any) -> None:
     os.replace(tmp, path)
 
 
+def _is_match_list(data: Any) -> bool:
+    return isinstance(data, list) and len(data) > 0
+
+
+def _is_coefficient_page(data: Any) -> bool:
+    return isinstance(data, dict) and isinstance((data.get("data") or {}).get("members"), list)
+
+
 class UefaClient:
     def __init__(
         self,
@@ -64,7 +74,7 @@ class UefaClient:
         self._sleep = sleep
 
     def matches(self, season: int) -> list[dict]:
-        return self._cached(f"matches/{season}", config.MATCHES_URL.format(season=season))
+        return self._cached(f"matches/{season}", config.MATCHES_URL.format(season=season), check=_is_match_list)
 
     def team_match_stats(self, match_id: str) -> list[dict] | None:
         """The two teams' stats for a match, or None if UEFA has none."""
@@ -75,43 +85,47 @@ class UefaClient:
 
     def team_match_stats_many(
         self, match_ids: Iterable[str]
-    ) -> tuple[dict[str, list[dict] | None], list[str]]:
-        """Fetch concurrently. Returns (results, ids that failed after retries)."""
+    ) -> tuple[dict[str, list[dict] | None], dict[str, str]]:
+        """Fetch concurrently. Returns (results, {failed id: reason})."""
 
         def one(match_id: str):
             try:
                 return match_id, self.team_match_stats(match_id), None
-            except Exception as exc:  # noqa: BLE001 - reported to the caller as a failed id
+            except Exception as exc:  # noqa: BLE001 - reported to the caller with its reason
                 return match_id, None, exc
 
         results: dict[str, list[dict] | None] = {}
-        failed: list[str] = []
+        failed: dict[str, str] = {}
         with ThreadPoolExecutor(max_workers=self.max_workers) as pool:
             for match_id, data, error in pool.map(one, list(dict.fromkeys(match_ids))):
                 if error is None:
                     results[match_id] = data
                 else:
-                    failed.append(match_id)
+                    failed[match_id] = f"{type(error).__name__}: {error}"
         return results, failed
 
     def coefficients(self, season: int) -> list[dict]:
         """All members of the 5-year club ranking for `season`, across pages."""
         members: list[dict] = []
-        page = 1
-        while True:
+        for page in range(1, MAX_COEF_PAGES + 1):
             data = self._cached(
-                f"coefficients/{season}_p{page}", config.COEF_URL.format(season=season, page=page)
+                f"coefficients/{season}_p{page}",
+                config.COEF_URL.format(season=season, page=page),
+                check=_is_coefficient_page,
             )
             batch = data["data"]["members"]
             members.extend(batch)
             if len(batch) < config.COEF_PAGE_SIZE:
                 return members
-            page += 1
+        raise RuntimeError(f"coefficient ranking {season} did not end within {MAX_COEF_PAGES} pages")
 
-    def _cached(self, key: str, url: str, missing_ok: bool = False) -> Any:
+    def _cached(self, key: str, url: str, missing_ok: bool = False, check: Check | None = None) -> Any:
         path = self.cache_dir / f"{key}.json"
         if path.exists():
-            data = json.loads(path.read_text())
+            try:
+                data = json.loads(path.read_text())
+            except json.JSONDecodeError as exc:
+                raise RuntimeError(f"corrupt cache file {path}: delete it and run `uv run ucl fetch` again") from exc
         else:
             try:
                 data = self._get(url)
@@ -120,6 +134,8 @@ class UefaClient:
                 if not (missing_ok and exc.code in MISSING_CODES):
                     raise
                 data = MISSING_MARKER
+            if check is not None and data != MISSING_MARKER and not check(data):
+                raise RuntimeError(f"unexpected response shape from {url}; nothing was cached")
             _atomic_write_json(path, data)
         return None if data == MISSING_MARKER else data
 
@@ -137,4 +153,4 @@ class UefaClient:
                 last = exc
             if attempt < len(delays):
                 self._sleep(delays[attempt] + random.uniform(0, 0.5))
-        raise RuntimeError(f"giving up on {url} after {len(delays) + 1} attempts: {last}")
+        raise RuntimeError(f"giving up on {url} after {len(delays) + 1} attempts: {last}") from last
