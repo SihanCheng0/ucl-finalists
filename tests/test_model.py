@@ -137,3 +137,15 @@ def test_evaluate_reports_the_spec_metrics(small):
     assert metrics["n_finalists"] == 12 and metrics["n_seasons"] == 6
     assert 0.0 <= metrics["auc"] <= 1.0
     assert 0.0 < metrics["finalists_in_top4_chance"] <= 1.0
+
+
+def test_run_reports_each_main_fold_then_each_ablation_set():
+    ds = make_synthetic_dataset(seasons=(2021, 2022, 2023))
+    events = []
+    model.run(ds.team_seasons, ds.finals, ds.features, progress=events.append)
+    folds = [e for e in events if "fold" in e]
+    sets = [e for e in events if "ablation_set" in e]
+    assert folds == [{"fold": k, "of": 3} for k in (1, 2, 3)]
+    assert sets == [{"ablation_set": name, "k": k, "of": 7}
+                    for k, name in enumerate(model.feature_sets(ds.features), 1)]
+    assert events == folds + sets  # the loso calls inside ablation never report as folds

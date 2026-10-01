@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import math
 import warnings
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -57,11 +58,14 @@ def scale_to_two(p) -> np.ndarray:
         capped |= newly
 
 
-def loso(ko: pd.DataFrame, features: list[str], with_shap: bool = True) -> LosoOutput:
-    """Each season predicted by models trained on the complete rows of the other seasons."""
+def loso(ko: pd.DataFrame, features: list[str], with_shap: bool = True,
+         on_fold: Callable[[int, int], None] | None = None) -> LosoOutput:
+    """Each season predicted by models trained on the complete rows of the other seasons. `on_fold(k, n)` is
+    called after each of the n folds."""
     cols = [f"z_{f}" for f in features]
     predictions, shap_frames, coefs = [], [], []
-    for season in sorted(ko["season"].unique()):
+    seasons = sorted(ko["season"].unique())
+    for k, season in enumerate(seasons, 1):
         train = ko.loc[(ko["season"] != season) & ko["complete"].astype(bool)]
         test = ko.loc[ko["season"] == season]
         gbr = GradientBoostingRegressor(**config.GBR_PARAMS).fit(train[cols], train["ko_stage"])
@@ -86,6 +90,8 @@ def loso(ko: pd.DataFrame, features: list[str], with_shap: bool = True) -> LosoO
             values.insert(0, "team_id", test["team_id"].to_numpy())
             values.insert(0, "season", test["season"].to_numpy())
             shap_frames.append(values)
+        if on_fold is not None:
+            on_fold(k, len(seasons))
     return LosoOutput(
         predictions=pd.concat(predictions, ignore_index=True),
         shap=pd.concat(shap_frames, ignore_index=True) if with_shap else None,
@@ -150,9 +156,10 @@ def feature_sets(features: list[str]) -> dict[str, list[str]]:
     return {name: fs for name, fs in sets.items() if fs}
 
 
-def ablation(ko: pd.DataFrame, features: list[str]) -> pd.DataFrame:
+def ablation(ko: pd.DataFrame, features: list[str], progress: Callable[[dict], None] | None = None) -> pd.DataFrame:
     rows = []
-    for name, fs in feature_sets(features).items():
+    sets = feature_sets(features)
+    for k, (name, fs) in enumerate(sets.items(), 1):
         pred = loso(ko, fs, with_shap=False).predictions
         metrics = evaluate(pred)
         ci = bootstrap_ci(pred)  # as for the headline, so the "all" row's interval is exactly the headline's
@@ -160,6 +167,8 @@ def ablation(ko: pd.DataFrame, features: list[str]) -> pd.DataFrame:
                      "spearman": metrics["spearman_mean"], "spearman_lo": ci["spearman_mean"][0],
                      "spearman_hi": ci["spearman_mean"][1],
                      "auc": metrics["auc"], "auc_lo": ci["auc"][0], "auc_hi": ci["auc"][1]})
+        if progress is not None:
+            progress({"ablation_set": name, "k": k, "of": len(sets)})
     return pd.DataFrame(rows)
 
 
@@ -238,15 +247,18 @@ def finals_compare(team_seasons: pd.DataFrame, finals: pd.DataFrame, features: l
     return out
 
 
-def run(team_seasons: pd.DataFrame, finals: pd.DataFrame, features: list[str]) -> ModelResults:
+def run(team_seasons: pd.DataFrame, finals: pd.DataFrame, features: list[str],
+        progress: Callable[[dict], None] | None = None) -> ModelResults:
+    """`progress` gets {"fold": k, "of": n} for each main LOSO fold, then {"ablation_set", "k", "of"} per set."""
     ko = knockout_population(team_seasons)
-    main = loso(ko, features)
+    on_fold = None if progress is None else (lambda k, n: progress({"fold": k, "of": n}))
+    main = loso(ko, features, on_fold=on_fold)
     display = team_seasons[["season", "team_id", "team_display", "is_target", "complete"]]
     return ModelResults(
         predictions=main.predictions.merge(display, on=["season", "team_id"], how="left"),
         shap=main.shap,
         drivers=drivers(ko, main.shap, main.fold_coefs, features),
-        ablation=ablation(ko, features),
+        ablation=ablation(ko, features, progress=progress),
         metrics={**evaluate(main.predictions), "ci": bootstrap_ci(main.predictions)},
         finals_compare=finals_compare(team_seasons, finals, features),
     )
