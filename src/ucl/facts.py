@@ -57,7 +57,7 @@ def pick_verdict(rank: int) -> str:
     return f"No: ranked {rank}, outside the model's top two"
 
 
-def _beats(row: pd.Series, feature: str, scope: str) -> int:
+def beats(row: pd.Series, feature: str, scope: str) -> int:
     """Share of teams beaten on a stat. Percentiles are flipped where lower is better, because the local
     model kept reading a low percentile on those stats as a weakness."""
     pct = int(row[f"pct_{scope}_{feature}"])
@@ -67,8 +67,8 @@ def _beats(row: pd.Series, feature: str, scope: str) -> int:
 def _stat_fact(row: pd.Series, feature: str) -> dict:
     return {
         "value": display_value(row, feature),
-        BEATS_SEASON: _beats(row, feature, "season"),
-        BEATS_ALL: _beats(row, feature, "all"),
+        BEATS_SEASON: beats(row, feature, "season"),
+        BEATS_ALL: beats(row, feature, "all"),
     }
 
 
@@ -82,7 +82,7 @@ def team_fact_sheet(row: pd.Series, pred: pd.Series, shap_row: pd.Series, final,
         return {**stat_entry(f), "SHAP contribution (knockout stages)": round(c, 2)}
 
     # picked here rather than left to the LLM, which chose them from the SHAP lists instead
-    ranked = sorted(features, key=lambda f: _beats(row, f, "season"), reverse=True)
+    ranked = sorted(features, key=lambda f: beats(row, f, "season"), reverse=True)
 
     return {
         "Club": row["team_display"],
@@ -97,7 +97,7 @@ def team_fact_sheet(row: pd.Series, pred: pd.Series, shap_row: pd.Series, final,
         "2 = semi-finals, 3 = lost final, 4 = won final)": round(float(pred["exp_stage"]), 2),
         "Stage on that scale nearest to the model's expectation": nearest_stage(round(float(pred["exp_stage"]), 2)),
         STRONGEST: [stat_entry(f) for f in ranked[:3]],
-        WEAKEST: [stat_entry(f) for f in reversed(ranked) if _beats(row, f, "season") < 50][:3] or NO_WEAK_STAT,
+        WEAKEST: [stat_entry(f) for f in reversed(ranked) if beats(row, f, "season") < 50][:3] or NO_WEAK_STAT,
         "Stats that pushed the prediction up most": [driver(f, c) for f, c in contributions if c > 0][:4],
         "Stats that pushed the prediction down most (the model's view; the team may still rank high on them)": [
             driver(f, c) for f, c in reversed(contributions) if c < 0
