@@ -1,0 +1,5 @@
+exit 0
+--- stdout
+2012: 4 matches, 3 phase matches, stats missing 1, failed 0
+2013: 4 matches, 3 phase matches, stats missing 1, failed 0
+--- stderr

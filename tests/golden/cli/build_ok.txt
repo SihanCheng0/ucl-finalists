@@ -1,0 +1,6 @@
+exit 0
+--- stdout
+built 488 team-seasons (256 knockout), 16 features
+dropped (coverage < 90%): save_pct
+imputed values: 0, coefficients imputed: 11, team-matches without stats: 4
+--- stderr

@@ -1,0 +1,6 @@
+exit 0
+--- stdout
+  2026-1: ok, 2 call(s), 1 unsupported
+  2026-2: unavailable, 3 call(s), 0 unsupported
+analysis ok with m/key: 2 narratives (1 unavailable), 1 figure(s) not found in the data
+--- stderr

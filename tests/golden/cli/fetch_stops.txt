@@ -1,0 +1,7 @@
+exit 1
+--- stdout
+2012: 4 matches, 3 phase matches, stats missing 0, failed 3
+  e.g. match 2012-0: RuntimeError: giving up after 5 attempts
+  every request failed for this season; stopping. Fix the cause above, then run `uv run ucl fetch` again.
+--- stderr
+3 match-stat requests failed; run `uv run ucl fetch` again to resume.

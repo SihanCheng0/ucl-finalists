@@ -1,0 +1,4 @@
+exit 0
+--- stdout
+analysis skipped with m/key: 0 narratives (0 unavailable), 0 figure(s) not found in the data
+--- stderr

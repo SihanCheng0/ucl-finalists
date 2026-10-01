@@ -1,0 +1,5 @@
+exit 2
+--- stdout
+--- stderr
+dataset validation failed:
+2016 Roma: distance_km_pg = 3.2 is outside 90-140
