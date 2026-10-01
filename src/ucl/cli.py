@@ -84,7 +84,14 @@ COMMANDS = {"fetch": cmd_fetch, "build": cmd_build, "model": cmd_model, "analyze
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="ucl", description="Why the best Champions League teams win.")
+    argv = sys.argv[1:] if argv is None else list(argv)
+    if argv[:1] == ["web"]:  # the dashboard has its own options, so it bypasses the stage parser
+        from .web.server import main as web_main
+
+        return web_main(argv[1:])
+    parser = argparse.ArgumentParser(
+        prog="ucl", description="Why the best Champions League teams win.",
+        epilog="ucl web [--port N] [--no-open] starts UCL Lab, the local dashboard.")
     parser.add_argument("command", choices=[*COMMANDS, "all"])
     parser.add_argument("--no-ai", action="store_true", help="skip the local-LLM analysis")
     parser.add_argument("--llm-model", default=config.LLM_MODEL, help="LM Studio model key")

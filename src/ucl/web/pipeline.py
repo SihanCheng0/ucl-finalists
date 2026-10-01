@@ -96,6 +96,10 @@ class PipelineRunner:
     def stage_names(self) -> list[str]:
         return list(self._names)
 
+    @property
+    def default_stages(self) -> list[str]:
+        return [name for name in CORE if name in self._stages]
+
     def _fresh_states(self) -> list[dict]:
         return [{"name": name, "status": "idle", "started": None, "finished": None, "message": ""}
                 for name in self._names]
@@ -103,7 +107,7 @@ class PipelineRunner:
     def start(self, stages: list[str] | None = None, skip_ai: bool = False) -> str:
         """Start a run of `stages` (default: the core five) in canonical order. Raises RunInProgress first,
         then BadRun."""
-        requested = [name for name in CORE if name in self._stages] if stages is None else list(stages)
+        requested = self.default_stages if stages is None else list(stages)
         unknown = [str(name) for name in requested if name not in self._stages]
         with self._lock:
             if self._running:

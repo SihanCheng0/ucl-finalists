@@ -1,0 +1,147 @@
+import threading
+
+import pytest
+from fastapi.testclient import TestClient
+
+from ucl import analyst, dataset, model
+from ucl.analyst import Analysis, Narrative
+from ucl.facts import build_facts
+from ucl.web.app import create_app
+from ucl.web.events import EventBus
+from ucl.web.pipeline import CORE, PipelineRunner, StageOutcome
+from ucl.web.services import Services
+from ucl.web.store import DataStore
+
+NOT_READY = {"error": {"code": "not_ready",
+                       "message": "Run the pipeline first: processed data or model outputs are missing."}}
+
+
+@pytest.fixture(scope="module")
+def outputs(tmp_path_factory, built):
+    ds, results = built
+    root = tmp_path_factory.mktemp("app")
+    processed, out = root / "processed", root / "out"
+    dataset.save(ds, processed)
+    model.save(results, out)
+    loaded = dataset.load(processed)
+    sheets = build_facts(loaded.team_seasons, loaded.finals, model.load(out))
+    narratives = {k: Narrative(k, "ok", text="## How they got there\nThey beat **everyone**.") for k in sheets}
+    analyst.save(Analysis("ok", "m", narratives, sheets), out / "analysis.json")
+    return processed, out
+
+
+def make_services(processed, out, gate=None):
+    """Real store and bus; fake stages that wait on `gate`, so a run can be held open."""
+    gate = gate or threading.Event()
+
+    def stage(ctx):
+        gate.wait(5)
+        return StageOutcome("done", "ok")
+
+    def missing(names):
+        return "model needs data/processed/dataset.json: run build first" if names == ["model"] else None
+
+    bus = EventBus(boot="b")
+    return Services(DataStore(processed, out), bus,
+                    PipelineRunner({name: stage for name in CORE}, bus, missing_inputs=missing))
+
+
+@pytest.fixture
+def api(outputs):
+    gate = threading.Event()
+    services = make_services(*outputs, gate=gate)
+    with TestClient(create_app(services, heartbeat=0.05)) as client:
+        yield client, services, gate
+    gate.set()
+    services.runner.wait(5)
+
+
+def error(response):
+    return response.status_code, response.json()["error"]["code"]
+
+
+def test_meta_reports_the_loaded_data(api):
+    client, _, _ = api
+    meta = client.get("/api/meta").json()
+    assert meta["ready"] is True and meta["seasons"][-1] == {"season": 2026, "label": "2025-26", "live": False}
+    assert len(meta["features"]) == 16 and meta["data"]["modelled_at"]
+
+
+def test_data_routes_answer_503_until_the_pipeline_has_run(tmp_path):
+    services = make_services(tmp_path / "processed", tmp_path / "out")
+    with TestClient(create_app(services)) as client:
+        assert client.get("/api/meta").json()["ready"] is False
+        for path in ("/api/summary", "/api/teams?q=team", "/api/teams/52280/seasons/2026",
+                     "/api/compare?a=1:2026&b=2:2026"):
+            response = client.get(path)
+            assert (response.status_code, response.json()) == (503, NOT_READY)
+        assert client.get("/api/pipeline/state").status_code == 200
+
+
+def test_summary_and_search(api):
+    client, _, _ = api
+    assert client.get("/api/summary").json()["synthesis"]["badge"]["kind"] == "good"
+    assert client.get("/api/teams", params={"q": "t"}).json() == []
+    hits = client.get("/api/teams", params={"q": "team 5228"}).json()
+    assert hits[0]["team_id"] == "52280" and hits[0]["seasons"][0]["season"] == 2026
+
+
+def test_profile_and_its_errors(api):
+    client, _, _ = api
+    profile = client.get("/api/teams/52280/seasons/2026").json()
+    assert profile["result"].startswith("Runner-up") and "<strong>everyone</strong>" in profile["narrative"]["html"]
+    assert error(client.get("/api/teams/52280/seasons/2012")) == (404, "not_found")
+    assert error(client.get("/api/teams/52280/seasons/abc")) == (422, "invalid_request")
+
+
+def test_compare_and_its_errors(api):
+    client, _, _ = api
+    out = client.get("/api/compare", params={"a": "52280:2026", "b": "52747:2026"}).json()
+    assert out["a"]["team_id"] == "52280" and {r["ahead"] for r in out["rows"]} <= {"a", "b", "tie"}
+    assert error(client.get("/api/compare", params={"a": "52280", "b": "52747:2026"})) == (422, "invalid_request")
+    assert error(client.get("/api/compare", params={"a": "52280:2026", "b": "nope:2026"})) == (404, "not_found")
+
+
+def test_a_run_starts_once_and_bad_runs_are_refused(api):
+    client, services, gate = api
+    response = client.post("/api/pipeline/runs", json={"stages": ["fetch"]})
+    assert (response.status_code, response.json()) == (202, {"run_id": "b-r1"})
+    assert error(client.post("/api/pipeline/runs", json={})) == (409, "run_in_progress")
+    state = client.get("/api/pipeline/state").json()
+    assert (state["running"], state["run_id"], state["boot"]) == (True, "b-r1", "b")
+    gate.set()
+    assert services.runner.wait(5)
+    assert error(client.post("/api/pipeline/runs", json={"stages": ["model"]})) == (422, "bad_run")
+    assert error(client.post("/api/pipeline/runs", json={"stages": ["train"]})) == (422, "bad_run")
+    assert error(client.post("/api/pipeline/runs", json={"refresh_live": True})) == (422, "bad_run")  # no live stage
+    assert error(client.post("/api/pipeline/runs", json={"skip_ai": "sometimes"})) == (422, "invalid_request")
+    assert client.post("/api/pipeline/runs").status_code == 202  # no body at all: every core stage
+
+
+def test_events_stream_the_backlog_and_resume_after_the_last_event_id(api):
+    client, services, _ = api
+    services.bus.publish("log", {"level": "info", "text": "one"})
+    services.bus.publish("log", {"level": "info", "text": "two"})
+    services.bus.close()  # the stream then ends after the backlog, so each response completes
+    response = client.get("/api/pipeline/events")
+    assert response.headers["content-type"].startswith("text/event-stream")
+    assert response.headers["cache-control"] == "no-cache"
+    assert [line for line in response.text.splitlines() if line.startswith("id: ")] == ["id: b-1", "id: b-2"]
+    resumed = client.get("/api/pipeline/events", headers={"Last-Event-ID": "b-1"})
+    assert [line for line in resumed.text.splitlines() if line.startswith("id: ")] == ["id: b-2"]
+
+
+def test_shutdown_closes_the_event_bus(outputs):
+    services = make_services(*outputs)
+    with TestClient(create_app(services)):
+        assert not services.bus.closed
+    assert services.bus.closed
+
+
+def test_the_built_spa_is_served_at_the_root(outputs, tmp_path):
+    dist = tmp_path / "dist"
+    dist.mkdir()
+    (dist / "index.html").write_text("<!doctype html><title>UCL Lab</title>")
+    with TestClient(create_app(make_services(*outputs), dist_dir=dist)) as client:
+        assert "UCL Lab" in client.get("/").text
+        assert client.get("/api/meta").json()["ready"] is True  # API routes win over the static mount
