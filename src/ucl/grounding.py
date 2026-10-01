@@ -6,8 +6,10 @@ import numbers
 import re
 
 _THINK_BLOCK = re.compile(r"<think>.*?</think>", re.S)
-_SEASON = re.compile(r"\b(?:19|20)\d{2}\s*[-–—/]\s*\d{2,4}\b")
+# hyphen-minus, U+2010-U+2015 (hyphen to horizontal bar), U+2212 (minus) or slash: models vary the dash
+_SEASON = re.compile(r"\b(?:19|20)\d{2}\s*[-\u2010-\u2015\u2212/]\s*\d{2,4}\b")
 _NUMBER = re.compile(r"(?<![\w.])[-−+]?\d+(?:,\d{3})*(?:\.\d+)?")
+_PERCENT = re.compile(r"\s*(?:%|percent\b)", re.IGNORECASE)
 
 
 def strip_think(text: str | None) -> str:
@@ -73,7 +75,7 @@ def fact_numbers(facts) -> list[float]:
             if math.isfinite(float(obj)):
                 found.append(float(obj))
         elif isinstance(obj, str):
-            found.extend(_value(t) for t in _NUMBER.findall(obj))
+            found.extend(_value(t) for t in _NUMBER.findall(_SEASON.sub(" ", obj)))
         elif isinstance(obj, dict):
             for key, value in obj.items():
                 walk(key)
@@ -94,15 +96,17 @@ def _ignored(token: str) -> bool:
 
 
 def check_grounding(text: str, facts) -> list[str]:
-    """Numbers in `text` that no fact supports, using the spec §7 tolerance rule."""
+    """Numbers in `text` that no fact supports (spec §7 tolerance); a fact is scaled x100 only for a percentage."""
     values = [abs(v) for v in fact_numbers(facts)]
-    candidates = [c for v in values for c in (v, v * 100, v / 100)]
     unsupported: list[str] = []
-    for token in _NUMBER.findall(_SEASON.sub(" ", text)):
+    text = _SEASON.sub(" ", text)
+    for match in _NUMBER.finditer(text):
+        token = match.group()
         if _ignored(token):
             continue
+        scales = (1, 100) if _PERCENT.match(text, match.end()) else (1,)
         target, tolerance = abs(_value(token)), 0.5 * 10 ** -_decimals(token) + 1e-9
-        if not any(abs(target - c) <= tolerance for c in candidates):
+        if not any(abs(target - value * scale) <= tolerance for value in values for scale in scales):
             clean = token.lstrip("+-−")
             if clean not in unsupported:
                 unsupported.append(clean)

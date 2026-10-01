@@ -93,6 +93,7 @@ class Analysis:
     model: str
     narratives: dict[str, Narrative] = field(default_factory=dict)
     facts: dict[str, dict] = field(default_factory=dict)
+    reason: str | None = None  # why the LLM was unavailable
 
 
 def write_narrative(llm, key: str, messages: list[dict], headings: list[str], facts: dict) -> Narrative:
@@ -157,7 +158,7 @@ def run(
         return Analysis("skipped", llm_model)
     llm = llm or LMStudio(model=llm_model)
     if not llm.ensure_ready():
-        return Analysis("unavailable", llm_model)
+        return Analysis("unavailable", llm_model, reason=getattr(llm, "reason", None))
     sheets = build_facts(team_seasons, finals, results)
     narratives: dict[str, Narrative] = {}
     for key, sheet in sheets.items():
@@ -175,6 +176,7 @@ def save(analysis: Analysis, path: Path = config.OUT_DIR / "analysis.json") -> N
     data = {
         "status": analysis.status,
         "model": analysis.model,
+        "reason": analysis.reason,
         "narratives": {k: asdict(n) for k, n in analysis.narratives.items()},
         "facts": analysis.facts,
     }
@@ -187,4 +189,4 @@ def load(path: Path = config.OUT_DIR / "analysis.json") -> Analysis:
         return Analysis("skipped", config.LLM_MODEL)
     data = json.loads(path.read_text())
     narratives = {k: Narrative(**n) for k, n in data["narratives"].items()}
-    return Analysis(data["status"], data["model"], narratives, data["facts"])
+    return Analysis(data["status"], data["model"], narratives, data["facts"], data.get("reason"))

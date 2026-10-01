@@ -73,6 +73,8 @@ def cmd_analyze(args: argparse.Namespace) -> int:
     unavailable = sum(n.status != "ok" for n in analysis.narratives.values())
     print(f"analysis {analysis.status} with {args.llm_model}: {len(analysis.narratives)} narratives "
           f"({unavailable} unavailable), {flagged} figure(s) not found in the data")
+    if analysis.status == "unavailable":
+        print(f"LM Studio not ready: {analysis.reason or 'unknown reason'}")
     return 0
 
 
