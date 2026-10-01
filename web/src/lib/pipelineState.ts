@@ -53,6 +53,9 @@ export function applyEvent(view: PipelineView, event: PipelineEvent): PipelineVi
   const known = runSeq(state.run_id);
   const incoming = runSeq(event.run_id);
   if (event.run_id && incoming < known) return next; // an earlier run's replayed event
+  // /state already says this run is over, so its events are a replay of the backlog: they fill in the stages and
+  // the outcome, but they don't restart the run or count as a run that just finished.
+  const replay = !!event.run_id && event.run_id === state.run_id && !state.running;
   let current = state;
   let outcome = next.outcome;
   if (event.run_id && incoming > known) {
@@ -62,15 +65,15 @@ export function applyEvent(view: PipelineView, event: PipelineEvent): PipelineVi
   }
   switch (event.type) {
     case "stage":
-      return { ...next, outcome, state: { ...current, running: true,
+      return { ...next, outcome, state: { ...current, running: !replay,
         stages: current.stages.map((s) => (s.name === event.data.name ? event.data : s)) } };
     case "progress":
       return { ...next, outcome, state: { ...current, counters: event.data.counters } };
     case "done":
-      return { ...next, finished: next.finished + 1, state: { ...current, running: false },
+      return { ...next, finished: next.finished + (replay ? 0 : 1), state: { ...current, running: false },
         outcome: { status: event.data.status, errors: [], runId: event.run_id } };
     case "run_failed":
-      return { ...next, finished: next.finished + 1, state: { ...current, running: false },
+      return { ...next, finished: next.finished + (replay ? 0 : 1), state: { ...current, running: false },
         outcome: { status: "failed", errors: event.data.errors, runId: event.run_id } };
   }
   return next;

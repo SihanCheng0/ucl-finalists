@@ -90,6 +90,7 @@ class PlayerService:
         self._index: dict[str, set[tuple[int, str]]] = {}
         self._failures: dict[tuple[int, str], float] = {}  # request-time failures, remembered briefly
         self._refreshing: set[tuple[int, str]] = set()
+        self._refresh_failed: set[tuple[int, str]] = set()  # live squads whose last refresh couldn't reach UEFA
         self.unavailable: set[tuple[int, str]] = set()  # squads the last index job couldn't fetch
         self.running = False
         for season, team_id in self.cached():
@@ -123,9 +124,8 @@ class PlayerService:
         path = self._path(season, team_id)
         if path.exists():
             fetched = self._request.squad(season, team_id, max_age=None)  # the cached copy, no network
-            age = self._clock() - path.stat().st_mtime
-            stale = season == config.LIVE_SEASON and age > config.LIVE_MAX_AGE_S
-            if stale:
+            stale = key in self._refresh_failed  # what we knew before this request's own refresh
+            if season == config.LIVE_SEASON and self._clock() - path.stat().st_mtime > config.LIVE_MAX_AGE_S:
                 self._refresh_later(season, team_id)
             return self._payload(fetched.data, stale, fetched.fetched_at)
         failed_at = self._failures.get(key)
@@ -147,16 +147,34 @@ class PlayerService:
             self._refreshing.add(key)
 
         def refresh() -> None:
+            failed = True
             try:
                 fetched = self._background.squad(season, team_id, max_age=0)
                 self._add(season, team_id, fetched.data)
+                failed = fetched.stale
             except Exception:  # noqa: BLE001 - the old copy stays
                 pass
             finally:
                 with self._lock:
                     self._refreshing.discard(key)
+                    (self._refresh_failed.add if failed else self._refresh_failed.discard)(key)
 
         threading.Thread(target=refresh, daemon=True, name=f"squad-{season}-{team_id}").start()
+
+    def freshness(self, season: int, team_id: str):
+        """(stale, fetched_at) for a cached squad: stale only once a refresh has failed."""
+        path = self._path(season, team_id)
+        fetched_at = None
+        if path.exists():
+            from datetime import datetime, timezone
+
+            fetched_at = datetime.fromtimestamp(path.stat().st_mtime, tz=timezone.utc)
+        return (season, team_id) in self._refresh_failed, fetched_at
+
+    @property
+    def refreshing(self) -> bool:
+        with self._lock:
+            return bool(self._refreshing) or self.running
 
     @staticmethod
     def _payload(rows: list[dict], stale: bool, fetched_at) -> dict:

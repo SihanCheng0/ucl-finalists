@@ -69,9 +69,8 @@ def main(argv: list[str]) -> int:
         server.run()
     except KeyboardInterrupt:  # uvicorn re-raises the signal after its graceful shutdown
         pass
-    if services.runner.state()["running"]:
-        # A stage's fetch pool would otherwise finish every queued request before Python exits.
-        sys.stdout.flush()
-        sys.stderr.flush()
-        os._exit(0)
-    return 0
+    # A pipeline run, a live refresh or a squad refresh may still be working through a pool of UEFA requests,
+    # and Python would wait for every queued one before exiting. The server is already down, so leave now.
+    sys.stdout.flush()
+    sys.stderr.flush()
+    os._exit(0)

@@ -258,7 +258,7 @@ main > *, .overview > *, .explore-grid > *, .squad-layout > *, .side > * { min-w
 .pitch { display: block; width: 100%; height: auto; }
 .pitch .chalk { fill: none; stroke: var(--chalk); stroke-width: 2; }
 .pitch .spot { fill: var(--chalk); }
-.player { cursor: pointer; transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1), opacity 300ms ease; }
+.player { cursor: pointer; transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1); animation: enter 350ms ease both; }
 .player .disc { transition: transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1), fill 450ms ease; stroke: rgba(10, 30, 22, 0.75); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
 .player .disc.unknown { stroke: var(--chalk); stroke-dasharray: 3 3; }
 .player .shirt { font: 700 12px var(--font-display); fill: #0d1422; text-anchor: middle; dominant-baseline: central; pointer-events: none; }
@@ -266,7 +266,6 @@ main > *, .overview > *, .explore-grid > *, .squad-layout > *, .side > * { min-w
 .player .tag { font: 600 12px var(--font-body); fill: var(--pitch-ink); text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(8, 28, 20, 0.85); stroke-width: 3px; }
 .player.leaving { animation: leave 300ms ease forwards; pointer-events: none; }
 @keyframes leave { to { opacity: 0; } }
-.player.entering { animation: enter 350ms ease both; }
 @keyframes enter { from { opacity: 0; } }
 .player:focus { outline: none; }
 .player:focus-visible .disc, .player.selected .disc { stroke: #ffffff; stroke-width: 3; }

@@ -78,7 +78,7 @@ def squad_url(offset):
 
 def test_a_squad_is_read_page_by_page_until_a_page_is_empty_and_cached(tmp_path):
     page0 = [{"playerId": str(i)} for i in range(3)]
-    c, script = client(tmp_path, {squad_url(0): [page0], squad_url(100): [[]]}, [0])
+    c, script = client(tmp_path, {squad_url(0): [page0], squad_url(3): [[]]}, [0])
     assert c.squad(2026, "52280").data == page0
     assert c.squad(2026, "52280").data == page0 and len(script.calls) == 2
     assert (tmp_path / "players" / "2026" / "52280.json").exists()
@@ -86,16 +86,23 @@ def test_a_squad_is_read_page_by_page_until_a_page_is_empty_and_cached(tmp_path)
 
 def test_a_feed_that_ignores_the_offset_does_not_loop(tmp_path):
     page0 = [{"playerId": "1"}]
-    c, script = client(tmp_path, {squad_url(0): [page0], squad_url(100): [page0]}, [0])
+    c, script = client(tmp_path, {squad_url(0): [page0], squad_url(1): [page0]}, [0])
     assert c.squad(2026, "52280").data == page0 and len(script.calls) == 2
 
 
 def test_a_live_squad_falls_back_to_its_stale_copy(tmp_path):
     shift = [0]
     page0 = [{"playerId": "1"}]
-    c, _ = client(tmp_path, {squad_url(0): [page0, OSError("offline")], squad_url(100): [[]]}, shift,
+    c, _ = client(tmp_path, {squad_url(0): [page0, OSError("offline")], squad_url(1): [[]]}, shift,
                   retry_delays=())
     c.squad(2026, "52280", max_age=HOUR)
     shift[0] = 2 * HOUR
     again = c.squad(2026, "52280", max_age=HOUR)
     assert (again.data, again.stale) == (page0, True)
+
+
+def test_a_feed_that_caps_pages_below_the_size_asked_for_still_gives_the_whole_squad(tmp_path):
+    squad = [{"playerId": str(i)} for i in range(5)]
+    pages = {squad_url(0): [squad[0:2]], squad_url(2): [squad[2:4]], squad_url(4): [squad[4:]], squad_url(5): [[]]}
+    c, _ = client(tmp_path, pages, [0])
+    assert c.squad(2026, "52280").data == squad

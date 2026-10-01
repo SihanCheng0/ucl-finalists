@@ -23,7 +23,7 @@ export function PlayerPanel({ player, stat, stats, onClose, onBuildIndex, runnin
   const shown = KEY_STATS.map((key) => meta.get(key)).filter((m): m is PlayerStatMeta => !!m)
     .filter((m) => player.stats[m.key] !== null && player.stats[m.key] !== undefined);
   const entries = history.data?.history ?? [];
-  const trace = [...entries].reverse().map((e) => ({ label: e.label,
+  const trace = [...entries].reverse().map((e) => ({ key: `${e.season}-${e.team_id}`, label: e.label,
     value: colourValue({ ...player, minutes: e.minutes, stats: e.stats }, stat) }));
   const known = trace.filter((t) => t.value !== null) as { label: string; value: number }[];
   const top = Math.max(...known.map((t) => t.value), 0);
@@ -58,7 +58,7 @@ export function PlayerPanel({ player, stat, stats, onClose, onBuildIndex, runnin
           <svg viewBox={`0 0 ${Math.max(trace.length * 34, 120)} 64`} width="100%" height="64" role="img"
                aria-label={known.map((t) => `${t.label}: ${num(t.value, stat.decimals)}`).join(", ")}>
             {trace.map((t, i) => t.value !== null && (
-              <g key={t.label} transform={`translate(${i * 34 + 6} 0)`}>
+              <g key={t.key} transform={`translate(${i * 34 + 6} 0)`}>
                 <rect y={50 - (t.value / (top || 1)) * 44} width={22} height={Math.max((t.value / (top || 1)) * 44, 1)} rx={3}
                       fill={i === trace.length - 1 ? "var(--accent)" : "var(--rule)"} />
                 <text x={11} y={62} textAnchor="middle" fontSize="9" fill="var(--muted)">{t.label.slice(2)}</text>

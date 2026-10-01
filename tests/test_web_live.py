@@ -85,11 +85,12 @@ class FakeClient:
         return COEFS
 
 
-def test_build_snapshot_caches_settled_matches_for_good_and_refetches_recent_ones():
+def test_build_snapshot_keeps_settled_copies_and_refetches_recent_ones():
     client = FakeClient()
     after_a_week = pd.Timestamp("2026-09-23T21:00:00Z").timestamp()
     snapshot = build_snapshot(client, HISTORY, FEATURES, season=2027, clock=lambda: after_a_week)
-    assert client.ages == {"m1": None} and snapshot.finished_matches == 1 and not snapshot.stale
+    # settled six days ago: a copy written before that (while UEFA was still completing it) is fetched again
+    assert client.ages == {"m1": 6 * 86400} and snapshot.finished_matches == 1 and not snapshot.stale
     client = FakeClient(stale=True)
     an_hour_later = pd.Timestamp("2026-09-16T22:00:00Z").timestamp()
     snapshot = build_snapshot(client, HISTORY, FEATURES, force=True, season=2027, clock=lambda: an_hour_later)
@@ -149,3 +150,39 @@ def test_refreshes_are_single_flight():
     service.refresh()  # waits for the running one, then finds the snapshot fresh
     assert calls == [False]
     assert service.refresh(force=True).status == "ready" and calls == [False, True]
+
+
+def test_a_snapshot_built_from_stale_copies_is_retried_after_the_back_off():
+    now = [0.0]
+    service = LiveService(lambda force: snap(stale=True, built_at=now[0]), clock=lambda: now[0], max_age=3600,
+                          retry_after=300)
+    assert service.refresh().status == "stale"
+    now[0] = 200
+    assert not service.due()
+    now[0] = 301
+    assert service.due()  # not six hours later
+
+
+def test_a_match_stats_copy_written_before_settling_is_fetched_once_more(tmp_path):
+    import json
+    import os
+
+    from ucl.uefa import UefaClient
+
+    url = config.MATCH_STATS_URL.format(match_id="m1")
+    calls = []
+
+    def fetch(u, timeout):
+        calls.append(u)
+        return STATS["m1"]
+
+    cache = tmp_path / "stats"
+    cache.mkdir()
+    early = cache / "m1.json"
+    early.write_text(json.dumps([{"teamId": "1", "statistics": []}]))  # an early, incomplete copy
+    full_time = pd.Timestamp("2026-09-16T21:00:00Z").timestamp()
+    os.utime(early, (full_time + 3600, full_time + 3600))
+    client = UefaClient(cache_dir=tmp_path, fetch=fetch, sleep=lambda _: None)
+    later = full_time + 30 * 3600
+    assert client.team_match_stats_fresh("m1", later - (full_time + config.LIVE_SETTLED_S)).data == STATS["m1"]
+    assert calls == [url]

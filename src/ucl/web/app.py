@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .. import config
 from . import queries
@@ -21,6 +22,8 @@ from .pipeline import BadRun, RunInProgress
 from .services import Services
 
 NOT_READY = "Run the pipeline first: processed data or model outputs are missing."
+# Another site's page can't reach the API by DNS rebinding: its requests carry its own Host header.
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 HTTP_CODES = {404: "not_found", 405: "method_not_allowed"}
 
 
@@ -53,13 +56,15 @@ def _error(status: int, code: str, message: str) -> JSONResponse:
     return JSONResponse({"error": {"code": code, "message": message}}, status_code=status)
 
 
-def create_app(services: Services, dist_dir: Path | None = None, heartbeat: float = HEARTBEAT_S) -> FastAPI:
+def create_app(services: Services, dist_dir: Path | None = None, heartbeat: float = HEARTBEAT_S,
+               allowed_hosts: list[str] | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         yield
         services.bus.close()  # a backstop: `ucl web` closes the bus before uvicorn waits for connections
 
     app = FastAPI(title="UCL Lab", lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
+    app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts or ALLOWED_HOSTS)
 
     @app.exception_handler(ApiError)
     async def api_error(request: Request, exc: ApiError) -> JSONResponse:
@@ -162,13 +167,14 @@ def create_app(services: Services, dist_dir: Path | None = None, heartbeat: floa
         if history is None:
             raise ApiError(404, "not_found", f"no player {player_id} in the cached squads")
         live_entry = next((h for h in history["history"] if h["live"]), None)
-        state = live_state(revalidate=False)
-        return to_jsonable({**history, "stale": bool(live_entry and state and state.status == "stale"),
-                            "fetched_at": state.fetched_at if live_entry and state else None})
+        stale, fetched_at = (services.players.freshness(live_entry["season"], live_entry["team_id"])
+                             if live_entry else (False, None))
+        return to_jsonable({**history, "stale": stale, "fetched_at": fetched_at})
 
     @app.post("/api/pipeline/runs", status_code=202)
-    def start_run(body: RunBody | None = None):
-        body = body or RunBody()
+    def start_run(body: RunBody):
+        # The JSON body is required: a cross-site form or no-cors fetch can't send one without a preflight, which
+        # this server never approves, so another page can't start runs on your machine.
         stages = body.stages
         if body.refresh_live:
             stages = [*(stages if stages is not None else services.runner.default_stages), "live"]

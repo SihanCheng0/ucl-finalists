@@ -134,3 +134,23 @@ def test_the_index_job_can_use_its_own_client(tmp_path):
     other = FakeClient(tmp_path, SQUADS)
     players.build_index(lambda done, of: None, log=lambda line: None, workers=1, client=other)
     assert background.calls == [] and len(other.calls) == 4
+
+
+def test_a_live_squad_is_stale_only_after_a_refresh_failed(tmp_path):
+    import os
+
+    clock = [time.time()]
+    players, client = service(tmp_path, clock=lambda: clock[0])
+    players.squad("52280", 2027)
+    path = tmp_path / "players" / "2027" / "52280.json"
+    old = clock[0] - config.LIVE_MAX_AGE_S - 60
+    os.utime(path, (old, old))
+    client.fail.add((2027, "52280"))
+    first = players.squad("52280", 2027)  # old, so a refresh starts; nothing has failed yet
+    assert first["stale"] is False
+    for _ in range(100):
+        if not players.refreshing:
+            break
+        time.sleep(0.01)
+    assert players.squad("52280", 2027)["stale"] is True
+    assert players.freshness(2027, "52280")[0] is True

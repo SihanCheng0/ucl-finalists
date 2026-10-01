@@ -12,6 +12,11 @@ from ucl.web.pipeline import CORE, PipelineRunner, StageOutcome
 from ucl.web.services import Services
 from ucl.web.store import DataStore
 
+def local(app):
+    """A client that talks to the app as a browser on this machine does (the app only answers to local hosts)."""
+    return TestClient(app, base_url="http://127.0.0.1")
+
+
 NOT_READY = {"error": {"code": "not_ready",
                        "message": "Run the pipeline first: processed data or model outputs are missing."}}
 
@@ -50,7 +55,7 @@ def make_services(processed, out, gate=None):
 def api(outputs):
     gate = threading.Event()
     services = make_services(*outputs, gate=gate)
-    with TestClient(create_app(services, heartbeat=0.05)) as client:
+    with local(create_app(services, heartbeat=0.05)) as client:
         yield client, services, gate
     gate.set()
     services.runner.wait(5)
@@ -69,7 +74,7 @@ def test_meta_reports_the_loaded_data(api):
 
 def test_data_routes_answer_503_until_the_pipeline_has_run(tmp_path):
     services = make_services(tmp_path / "processed", tmp_path / "out")
-    with TestClient(create_app(services)) as client:
+    with local(create_app(services)) as client:
         assert client.get("/api/meta").json()["ready"] is False
         for path in ("/api/summary", "/api/teams?q=team", "/api/teams/52280/seasons/2026",
                      "/api/compare?a=1:2026&b=2:2026"):
@@ -115,7 +120,7 @@ def test_a_run_starts_once_and_bad_runs_are_refused(api):
     assert error(client.post("/api/pipeline/runs", json={"stages": ["train"]})) == (422, "bad_run")
     assert error(client.post("/api/pipeline/runs", json={"refresh_live": True})) == (422, "bad_run")  # no live stage
     assert error(client.post("/api/pipeline/runs", json={"skip_ai": "sometimes"})) == (422, "invalid_request")
-    assert client.post("/api/pipeline/runs").status_code == 202  # no body at all: every core stage
+    assert client.post("/api/pipeline/runs", json={}).status_code == 202  # an empty body: every core stage
 
 
 def test_events_stream_the_backlog_and_resume_after_the_last_event_id(api):
@@ -133,7 +138,7 @@ def test_events_stream_the_backlog_and_resume_after_the_last_event_id(api):
 
 def test_shutdown_closes_the_event_bus(outputs):
     services = make_services(*outputs)
-    with TestClient(create_app(services)):
+    with local(create_app(services)):
         assert not services.bus.closed
     assert services.bus.closed
 
@@ -142,7 +147,7 @@ def test_the_built_spa_is_served_at_the_root(outputs, tmp_path):
     dist = tmp_path / "dist"
     dist.mkdir()
     (dist / "index.html").write_text("<!doctype html><title>UCL Lab</title>")
-    with TestClient(create_app(make_services(*outputs), dist_dir=dist)) as client:
+    with local(create_app(make_services(*outputs), dist_dir=dist)) as client:
         page = client.get("/")
         assert "UCL Lab" in page.text and page.headers["cache-control"] == "no-cache"
         assert client.get("/api/meta").json()["ready"] is True  # API routes win over the static mount
@@ -178,6 +183,9 @@ class FakePlayers:
         return {"players": [{"player_id": "1", "name": "Bukayo Saka", "position": "FWD", "minutes": 90.0,
                              "stats": {"goals": 1.0}}], "minutes_published": True, "stale": False, "fetched_at": None}
 
+    def freshness(self, season, team_id):
+        return False, None
+
     def history(self, player_id):
         if player_id == "nobody":
             return None
@@ -195,7 +203,7 @@ def live_api(outputs):
     row["season"], row["n_matches"], row["ko_stage"] = 2027, 1, float("nan")
     row["stage_label"], row["live"], row["provisional"] = "League phase (in progress)", True, True
     services.live, services.players = FakeLive(row.reset_index(drop=True)), FakePlayers()
-    with TestClient(create_app(services)) as client:
+    with local(create_app(services)) as client:
         yield client, services
 
 
@@ -268,3 +276,15 @@ def test_ctrl_c_with_an_event_stream_open_stops_the_server_at_once(outputs):
     thread.join(5)
     stream.close()
     assert not thread.is_alive() and time.monotonic() - began < 1.5
+
+
+def test_another_site_cannot_start_a_run_or_reach_the_api(outputs):
+    services = make_services(*outputs)
+    services.runner._stages = {}  # nothing may run
+    with local(create_app(services)) as client:
+        assert error(client.post("/api/pipeline/runs")) == (422, "invalid_request")  # no JSON body, no run
+        form = client.post("/api/pipeline/runs", data={"stages": "fetch"}, headers={"Origin": "https://evil.test"})
+        assert form.status_code == 422
+    with TestClient(create_app(services), base_url="http://evil.test") as rebound:
+        assert rebound.get("/api/meta").status_code == 400  # DNS rebinding: a foreign Host header is refused
+    assert services.runner.state()["run_id"] is None

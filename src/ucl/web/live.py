@@ -106,8 +106,9 @@ def _age_s(iso: str | None, now: float) -> float:
 
 def build_snapshot(client, history: pd.DataFrame, features: list[str], force: bool = False,
                    season: int = config.LIVE_SEASON, clock: Callable[[], float] = time.time) -> LiveSnapshot:
-    """Fetch the live season and build its snapshot. A match's stats are cached for good once it finished more
-    than a day ago; until then they are refetched when older than LIVE_MAX_AGE_S (or always, with `force`)."""
+    """Fetch the live season and build its snapshot. A match's stats settle a day after full time: a copy written
+    after that is kept for good, and one written earlier is fetched once more. Until then they are refetched when
+    older than LIVE_MAX_AGE_S (or always, with `force`)."""
     max_age = 0 if force else config.LIVE_MAX_AGE_S
     matches = client.matches_fresh(season, max_age)
     raw = matches.data or []
@@ -120,9 +121,11 @@ def build_snapshot(client, history: pd.DataFrame, features: list[str], force: bo
     now = clock()
 
     def one(match_id: str):
-        settled = _age_s(full_time.get(match_id), now) > config.LIVE_SETTLED_S
+        settled_for = _age_s(full_time.get(match_id), now) - config.LIVE_SETTLED_S
+        # once settled, a copy younger than the time since settling was written after it, so it is final
+        age_limit = settled_for if settled_for > 0 else max_age
         try:
-            return match_id, client.team_match_stats_fresh(match_id, None if settled else max_age)
+            return match_id, client.team_match_stats_fresh(match_id, age_limit)
         except Exception:  # noqa: BLE001 - one unreachable match leaves a gap, not a failed snapshot
             return match_id, None
 
@@ -160,7 +163,12 @@ class LiveService:
         now = self._clock()
         if failed_at is not None and now - failed_at < self._retry_after:
             return False
-        return snapshot is None or now - snapshot.built_at > self._max_age
+        return snapshot is None or snapshot.stale or now - snapshot.built_at > self._max_age
+
+    @property
+    def refreshing(self) -> bool:
+        with self._lock:
+            return self._pending or self._flight.locked()
 
     def refresh(self, force: bool = False) -> LiveState:
         """Build a snapshot now and wait for it. A refresh already running is waited for, and then not repeated
@@ -177,7 +185,9 @@ class LiveService:
                     self._message = f"{type(exc).__name__}: {exc}"
                 return self.current()
             with self._lock:
-                self._snapshot, self._failed_at = snapshot, None
+                self._snapshot = snapshot
+                # a snapshot built from cached copies because UEFA was unreachable is retried like a failure
+                self._failed_at = self._clock() if snapshot.stale else None
                 self._status, self._message = ("stale" if snapshot.stale else "ready"), ""
             return self.current()
 

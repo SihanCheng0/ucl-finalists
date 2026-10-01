@@ -41,10 +41,10 @@ export function plural(n: number, one: string, many = `${one}s`): string {
 /** Elapsed seconds: "0.4 s", "12 s", "3 min 05 s". */
 export function duration(seconds: number | null | undefined): string {
   if (seconds === null || seconds === undefined || !Number.isFinite(seconds) || seconds < 0) return DASH;
-  if (seconds < 10) return `${seconds.toFixed(1)} s`;
-  if (seconds < 60) return `${Math.round(seconds)} s`;
-  const minutes = Math.floor(seconds / 60);
-  return `${minutes} min ${String(Math.round(seconds % 60)).padStart(2, "0")} s`;
+  if (seconds < 9.95) return `${seconds.toFixed(1)} s`;
+  const whole = Math.round(seconds); // round first, so 59.6 s reads "1 min 00 s", never "60 s"
+  if (whole < 60) return `${whole} s`;
+  return `${Math.floor(whole / 60)} min ${String(whole % 60).padStart(2, "0")} s`;
 }
 
 export function clockTime(epochSeconds: number): string {
@@ -55,7 +55,9 @@ export function ago(iso: string | null | undefined, now: number = Date.now()): s
   if (!iso) return DASH;
   const seconds = Math.max(0, (now - new Date(iso).getTime()) / 1000);
   if (seconds < 60) return "just now";
-  if (seconds < 3600) return `${Math.round(seconds / 60)} min ago`;
-  if (seconds < 86400) return `${Math.round(seconds / 3600)} h ago`;
+  const minutes = Math.round(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.round(seconds / 3600);
+  if (hours < 24) return `${hours} h ago`;
   return plural(Math.round(seconds / 86400), "day") + " ago";
 }

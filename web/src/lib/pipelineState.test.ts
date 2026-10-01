@@ -39,6 +39,15 @@ describe("pipeline view", () => {
     expect(view.state?.running).toBe(false);
     expect(view.finished).toBe(1);
   });
+  it("replays a finished run's events without restarting it or counting it as just finished", () => {
+    let view = withState(initialView(), { ...STATE, run_id: "b-r1", running: false });
+    view = applyEvent(view, ev("b-1", { type: "stage", run_id: "b-r1",
+      data: { name: "fetch", status: "running", started: 1, finished: null, message: "" } }));
+    expect(view.state?.running).toBe(false);
+    view = applyEvent(view, ev("b-2", { type: "done", run_id: "b-r1", data: { status: "done", stages: [] } }));
+    expect(view.finished).toBe(0);
+    expect(view.outcome?.status).toBe("done");
+  });
   it("ignores an earlier run's replayed events except for the log", () => {
     let view = withState(initialView(), { ...STATE, run_id: "b-r3" });
     view = applyEvent(view, ev("b-5", { type: "done", run_id: "b-r2", data: { status: "done", stages: [] } }));

@@ -30,10 +30,14 @@ describe("format", () => {
     expect(duration(0.42)).toBe("0.4 s");
     expect(duration(42.4)).toBe("42 s");
     expect(duration(185)).toBe("3 min 05 s");
+    expect(duration(59.6)).toBe("1 min 00 s");
+    expect(duration(119.6)).toBe("2 min 00 s");
+    expect(duration(9.97)).toBe("10 s");
     expect(duration(null)).toBe("–");
     const now = Date.parse("2026-10-01T12:00:00Z");
     expect(ago("2026-10-01T11:59:30Z", now)).toBe("just now");
     expect(ago("2026-10-01T11:00:00Z", now)).toBe("1 h ago");
     expect(ago("2026-09-28T12:00:00Z", now)).toBe("3 days ago");
+    expect(ago("2026-10-01T11:00:30Z", now)).toBe("1 h ago"); // 59.5 minutes, not "60 min ago"
   });
 });

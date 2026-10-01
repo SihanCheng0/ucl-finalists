@@ -166,10 +166,10 @@ class UefaClient:
         try:
             rows: list[dict] = []
             seen: set[str] = set()
-            for page in range(config.PLAYER_MAX_PAGES):
+            offset = 0
+            for _ in range(config.PLAYER_MAX_PAGES):
                 batch = self._get(config.PLAYERS_URL.format(season=season, team_id=team_id,
-                                                            limit=config.PLAYER_PAGE_SIZE,
-                                                            offset=page * config.PLAYER_PAGE_SIZE))
+                                                            limit=config.PLAYER_PAGE_SIZE, offset=offset))
                 if not isinstance(batch, list):
                     raise RuntimeError(f"unexpected player-ranking response for {key}")
                 fresh = [r for r in batch if str(r.get("playerId")) not in seen]
@@ -177,6 +177,7 @@ class UefaClient:
                     break
                 seen.update(str(r.get("playerId")) for r in fresh)
                 rows.extend(fresh)
+                offset += len(batch)  # by what came back, in case UEFA caps a page below the size asked for
         except Exception:
             if cached is not None:
                 return Fetched(cached, True, _utc(written))

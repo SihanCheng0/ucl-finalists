@@ -44,22 +44,23 @@ export function Pitch({ players, stat, minutesPublished, selected, onSelect }: {
   players: SquadPlayer[]; stat: PlayerStatMeta; minutesPublished: boolean;
   selected: string | null; onSelect: (playerId: string) => void;
 }) {
-  const layout = useMemo(() => layoutSquad(players, stat, W, H, minutesPublished), [players, stat, minutesPublished]);
+  const { key: statKey, kind: statKind } = stat;
+  const layout = useMemo(() => layoutSquad(players, { key: statKey, kind: statKind }, W, H, minutesPublished),
+                         [players, statKey, statKind, minutesPublished]);
   const byId = useMemo(() => new Map(players.map((p) => [p.player_id, p])), [players]);
   const [hover, setHover] = useState<{ circle: Circle; x: number; y: number } | null>(null);
   const [leaving, setLeaving] = useState<Circle[]>([]);
   const previous = useRef<Circle[]>([]);
-  const seen = useRef<Set<string>>(new Set());
   const wrap = useRef<HTMLDivElement>(null);
 
+  // A player who arrives fades in by CSS when their circle mounts; one who leaves is drawn a little longer, fading
+  // out, and each batch of leavers expires on its own timer so a quick second change can't cut it short.
   useEffect(() => {
     const now = new Set(layout.circles.map((c) => c.player_id));
     const gone = previous.current.filter((c) => !now.has(c.player_id));
     previous.current = layout.circles;
-    setLeaving(gone);
-    const timer = window.setTimeout(() => setLeaving([]), 320);
-    const fresh = window.setTimeout(() => { seen.current = now; }, 400);
-    return () => { window.clearTimeout(timer); window.clearTimeout(fresh); };
+    setLeaving((list) => [...list.filter((c) => !now.has(c.player_id)), ...gone]);
+    if (gone.length) window.setTimeout(() => setLeaving((list) => list.filter((c) => !gone.includes(c))), 320);
   }, [layout]);
 
   const unit = perNinety(stat) ? " per 90" : "";
@@ -88,11 +89,10 @@ export function Pitch({ players, stat, minutesPublished, selected, onSelect }: {
         ))}
         {layout.circles.map((c) => {
           const p = byId.get(c.player_id);
-          const isNew = !seen.current.has(c.player_id);
           const dark = c.value01 !== null && c.value01 < 0.45;
           return (
             <g key={c.player_id} tabIndex={0} role="button" aria-label={describe(c)}
-               className={`player${isNew ? " entering" : ""}${selected === c.player_id ? " selected" : ""}`}
+               className={`player${selected === c.player_id ? " selected" : ""}`}
                style={{ transform: `translate(${c.x}px, ${c.y}px)` }}
                onClick={() => onSelect(c.player_id)}
                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(c.player_id); } }}
