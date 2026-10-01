@@ -1,6 +1,6 @@
 from fakes import FakeLLM
 
-from ucl.analyst import TEAM_HEADINGS, write_narrative
+from ucl.analyst import BANNED_TEAM_WORDS, TEAM_HEADINGS, style_issues, write_narrative
 from ucl.llm import ChatResult, LLMError
 
 FACTS = {"Shots per game": 17.4}
@@ -8,6 +8,9 @@ GOOD = "## How they got there\nThey averaged 17.4 shots.\n## Would the model hav
 UNGROUNDED_1 = GOOD.replace("Few.", "A 47% risk.")
 UNGROUNDED_1B = GOOD.replace("Few.", "A 48% risk.")
 UNGROUNDED_2 = GOOD.replace("Few.", "A 47% risk and 88 problems.")
+LOOSE = GOOD.replace("They averaged", "They significantly outshot rivals, averaging")
+LOOSE_B = LOOSE.replace("rivals", "opponents")
+LOOSE_AND_UNGROUNDED = LOOSE.replace("Few.", "A 47% risk.")
 INVALID = ChatResult("", "length")
 MESSAGES = [{"role": "user", "content": "write"}]
 
@@ -78,3 +81,62 @@ def test_timeout_on_grounding_retry_keeps_the_earlier_text():
 def test_first_call_failure_is_unavailable():
     n = write_narrative(FakeLLM([LLMError("refused")]), "k", MESSAGES, TEAM_HEADINGS, FACTS)
     assert n.status == "unavailable" and "refused" in n.reason
+
+
+def test_a_banned_word_triggers_exactly_one_retry_that_names_it():
+    llm = FakeLLM([ok(LOOSE), ok(GOOD)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, banned=BANNED_TEAM_WORDS)
+    assert n.calls == 2 and len(llm.requests) == 2
+    last = llm.requests[1][-1]
+    assert last["role"] == "user" and "significantly" in last["content"]
+
+
+def test_a_clean_second_answer_replaces_one_with_a_banned_word():
+    n = write_narrative(FakeLLM([ok(LOOSE), ok(GOOD)]), "k", MESSAGES, TEAM_HEADINGS, FACTS,
+                        banned=BANNED_TEAM_WORDS)
+    assert (n.status, n.text, n.style, n.unsupported) == ("ok", GOOD, [], [])
+
+
+def test_a_second_answer_that_still_has_the_banned_word_keeps_the_first():
+    n = write_narrative(FakeLLM([ok(LOOSE), ok(LOOSE_B)]), "k", MESSAGES, TEAM_HEADINGS, FACTS,
+                        banned=BANNED_TEAM_WORDS)
+    assert (n.text, n.style, n.calls) == (LOOSE, ["significantly"], 2)
+
+
+def test_without_banned_words_the_word_is_not_retried():
+    llm = FakeLLM([ok(LOOSE)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS)  # the synthesis path passes no banned words
+    assert (n.calls, n.text, n.style) == (1, LOOSE, []) and len(llm.requests) == 1
+
+
+def test_one_retry_names_the_unsupported_numbers_and_the_banned_words_together():
+    llm = FakeLLM([ok(LOOSE_AND_UNGROUNDED), ok(GOOD)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, banned=BANNED_TEAM_WORDS)
+    assert (n.calls, n.text, n.unsupported, n.style) == (2, GOOD, [], [])
+    feedback = llm.requests[1][-1]["content"]
+    assert "47" in feedback and "significantly" in feedback
+
+
+def test_the_second_answer_must_have_strictly_fewer_problems_of_both_kinds():
+    # one banned word in the first answer, one unsupported number in the second: no better, so the first stays
+    n = write_narrative(FakeLLM([ok(LOOSE), ok(UNGROUNDED_1)]), "k", MESSAGES, TEAM_HEADINGS, FACTS,
+                        banned=BANNED_TEAM_WORDS)
+    assert (n.text, n.unsupported, n.style) == (LOOSE, [], ["significantly"])
+    # a number and a banned word, then only the banned word left: fewer in total, so the second is kept
+    n = write_narrative(FakeLLM([ok(LOOSE_AND_UNGROUNDED), ok(LOOSE)]), "k", MESSAGES, TEAM_HEADINGS, FACTS,
+                        banned=BANNED_TEAM_WORDS)
+    assert (n.text, n.unsupported, n.style) == (LOOSE, [], ["significantly"])
+
+
+def test_the_banned_word_retry_shares_the_three_call_cap():
+    llm = FakeLLM([INVALID, ok(LOOSE), ok(LOOSE_B)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, banned=BANNED_TEAM_WORDS)
+    assert n.calls == 3 and len(llm.requests) == 3
+    assert (n.text, n.style) == (LOOSE, ["significantly"])
+
+
+def test_style_issues_are_whole_words_found_ignoring_case_once_each():
+    text = "Significantly ahead, and significantly so. Not insignificant; the significance is unproven."
+    assert style_issues(text, BANNED_TEAM_WORDS) == ["significantly", "significance"]
+    assert style_issues("A clear, statistically sound lead.", BANNED_TEAM_WORDS) == []
+    assert style_issues(text, ()) == []

@@ -89,6 +89,23 @@ def test_run_reports_intervals_for_the_headline_metrics(results):
     assert all(len(bounds) == 2 and bounds[0] <= bounds[1] for bounds in ci.values())
 
 
+def test_the_all_row_interval_is_the_headline_interval(results):
+    # same predictions, same seed and the same number of resamples, so the intervals match exactly
+    _, res = results
+    row = res.ablation.set_index("feature_set").loc["all"]
+    assert [row["spearman_lo"], row["spearman_hi"]] == res.metrics["ci"]["spearman_mean"]
+    assert [row["auc_lo"], row["auc_hi"]] == res.metrics["ci"]["auc"]
+
+
+def test_bootstrap_ci_reads_the_config_when_called(results, monkeypatch):
+    _, res = results
+    monkeypatch.setattr(config, "BOOTSTRAP_SAMPLES", 40)
+    monkeypatch.setattr(config, "BOOTSTRAP_SEED", 3)
+    ci = model.bootstrap_ci(res.predictions)
+    assert ci == model.bootstrap_ci(res.predictions, n=40, seed=3)
+    assert ci != model.bootstrap_ci(res.predictions, n=40, seed=4)  # the seed is not ignored
+
+
 def test_finals_compare_counts_every_final(results):
     ds, res = results
     fc = res.finals_compare

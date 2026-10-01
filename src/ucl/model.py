@@ -122,10 +122,13 @@ def evaluate(pred: pd.DataFrame) -> dict:
 CI_METRICS = ("spearman_mean", "auc", "brier_skill", "finalists_in_top4")
 
 
-def bootstrap_ci(pred: pd.DataFrame, n: int = config.BOOTSTRAP_SAMPLES,
-                 seed: int = config.BOOTSTRAP_SEED) -> dict[str, list[float]]:
-    """95% interval per headline metric from resampling whole seasons, the unit the metrics average over."""
-    rng = np.random.default_rng(seed)
+def bootstrap_ci(pred: pd.DataFrame, n: int | None = None, seed: int | None = None) -> dict[str, list[float]]:
+    """95% interval per headline metric from resampling whole seasons, the unit the metrics average over.
+
+    The sample count and seed come from `config` at call time unless given.
+    """
+    n = config.BOOTSTRAP_SAMPLES if n is None else n
+    rng = np.random.default_rng(config.BOOTSTRAP_SEED if seed is None else seed)
     seasons = [g for _, g in pred.groupby("season")]
     draws: dict[str, list[float]] = {m: [] for m in CI_METRICS}
     for _ in range(n):
@@ -152,7 +155,7 @@ def ablation(ko: pd.DataFrame, features: list[str]) -> pd.DataFrame:
     for name, fs in feature_sets(features).items():
         pred = loso(ko, fs, with_shap=False).predictions
         metrics = evaluate(pred)
-        ci = bootstrap_ci(pred, n=500)  # seven sets, so half the headline samples keeps `ucl model` quick
+        ci = bootstrap_ci(pred)  # as for the headline, so the "all" row's interval is exactly the headline's
         rows.append({"feature_set": name, "n_features": len(fs),
                      "spearman": metrics["spearman_mean"], "spearman_lo": ci["spearman_mean"][0],
                      "spearman_hi": ci["spearman_mean"][1],

@@ -106,9 +106,26 @@ def team_fact_sheet(row: pd.Series, pred: pd.Series, shap_row: pd.Series, final,
     }
 
 
+def _interval(bounds, digits: int, scale: float = 1.0) -> list[float]:
+    """A [lo, hi] pair rounded like the point value it goes with."""
+    return [round(scale * b, digits) for b in bounds]
+
+
+def vs_no_skill(bounds, no_skill: float, edge: str) -> str:
+    """Whether an interval reaches its no-skill value, stated outright: the local model kept calling 30.0-60.0
+    'inconclusive' against 23.9 when left to compare them."""
+    lo, hi = bounds
+    if lo <= no_skill <= hi:
+        return f"Yes: the {edge} is inconclusive"
+    return f"No: the whole interval is {'above' if lo > no_skill else 'below'} it"
+
+
 def synthesis_facts(team_seasons: pd.DataFrame, results: ModelResults) -> dict:
     m = results.metrics
+    ci = m["ci"]
     needed = math.ceil(config.ROBUST_SHARE * m["n_seasons"])
+    skill_ci, top4_ci = _interval(ci["brier_skill"], 2), _interval(ci["finalists_in_top4"], 1, 100)
+    top4_chance = round(100 * m["finalists_in_top4_chance"], 1)
     finalists = results.predictions.loc[results.predictions["is_target"].astype(bool)].sort_values(
         ["season", "ko_stage"], ascending=[True, False]
     )
@@ -122,23 +139,43 @@ def synthesis_facts(team_seasons: pd.DataFrame, results: ModelResults) -> dict:
                 m["n_knockout"],
         },
         "Model quality (each season scored by a model trained on the other seasons)": {
+            "Intervals": "95% intervals from resampling seasons",
             "Mean within-season Spearman correlation, predicted vs actual stage": round(m["spearman_mean"], 2),
+            "95% interval for the mean Spearman correlation": _interval(ci["spearman_mean"], 2),
             "Share of actual finalists in the model's top 4 of their season (%)": round(100 * m["finalists_in_top4"], 1),
+            "95% interval for the share of finalists in the model's top 4 (%)": top4_ci,
+            "Share of finalists a random ranking would put in the top 4 (%)": top4_chance,
+            "Does the top-4 share interval include the random-ranking share?":
+                vs_no_skill(top4_ci, top4_chance, "edge over a random ranking"),
             "AUC for reaching the final": round(m["auc"], 2),
+            "95% interval for the AUC": _interval(ci["auc"], 2),
             "Brier score": round(m["brier"], 3),
             "Brier score of the base-rate guess": round(m["brier_base_rate"], 3),
+            "Brier skill vs the base-rate guess (0 = no better, 1 = perfect)": round(m["brier_skill"], 2),
+            "95% interval for the Brier skill": skill_ci,
+            "Does the Brier skill interval include 0 (no skill)?":
+                vs_no_skill(skill_ci, 0, "edge over the base-rate guess"),
         },
-        "Robustness rule": f"robust = the logistic model agrees on the direction in at least {needed} of "
-                           f"{m['n_seasons']} seasons; only the top {config.TOP_DRIVERS} stats get a robustness label",
+        "Robustness rule": f"Only the top {config.TOP_DRIVERS} stats are labelled. "
+                           f"robust = the logistic model agrees on the direction in at least {needed} of "
+                           f"{m['n_seasons']} seasons and the stat points that way on its own too; "
+                           f"conditional = the logistic model agrees in at least {needed} of {m['n_seasons']} "
+                           "seasons, but on its own the stat points the other way or barely at all, so the "
+                           "direction holds only with the other stats held fixed; "
+                           f"model-dependent = the logistic model agrees in fewer than {needed} of "
+                           f"{m['n_seasons']} seasons, so the direction depends on the model used",
         "What drives deep runs, most important first": [
             {"stat": stat_label(r.feature), "group": r.group,
              "importance (mean |SHAP|, knockout stages)": round(r.importance, 3),
-             "direction": DIRECTION[int(r.direction)], "robustness label": r.label or f"not in top {config.TOP_DRIVERS}"}
+             "direction": DIRECTION[int(r.direction)],
+             "direction on its own (Spearman with knockout stage)": round(r.marginal_rho, 2),
+             "robustness label": r.label or f"not in top {config.TOP_DRIVERS}"}
             for r in results.drivers.head(8).itertuples()
         ],
         "Feature-set comparison (Spearman / AUC)": [
             {"feature set": r.feature_set, "number of stats": int(r.n_features),
-             "Spearman": round(r.spearman, 2), "AUC": round(r.auc, 2)}
+             "Spearman": round(r.spearman, 2), "Spearman 95% interval": _interval((r.spearman_lo, r.spearman_hi), 2),
+             "AUC": round(r.auc, 2), "AUC 95% interval": _interval((r.auc_lo, r.auc_hi), 2)}
             for r in results.ablation.itertuples()
         ],
         "The 10 finalists": [

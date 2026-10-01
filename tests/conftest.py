@@ -1,6 +1,10 @@
 import pytest
 from synthetic import make_synthetic_dataset
 
+from ucl import config
+
+config.BOOTSTRAP_SAMPLES = 60  # keep test runs fast; production uses the config default
+
 
 @pytest.fixture
 def synthetic_ds():

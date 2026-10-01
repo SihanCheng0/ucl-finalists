@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Callable
@@ -17,6 +18,8 @@ from .model import ModelResults
 TEAM_HEADINGS = ["How they got there", "Would the model have picked them?", "Weak spots"]
 SYNTH_HEADINGS = ["Why the best teams win", "Winners vs runners-up"]
 RETRY_EXCERPT_CHARS = 1500
+# The team facts hold no significance test, so these words in a team narrative are always unsupported.
+BANNED_TEAM_WORDS = ("significant", "significantly", "significance")
 
 SYSTEM_PROMPT = (
     "You are a football performance analyst writing for a curious, data-literate reader. "
@@ -43,6 +46,10 @@ GROUNDING_FEEDBACK = (
     "same headings, quoting only numbers that appear in the facts (same rounding), or describe those points "
     "without numbers."
 )
+STYLE_FEEDBACK = (
+    "Don't use these words, which imply a statistical test the facts don't contain: {words}. Rewrite the "
+    "complete answer with the same headings, without them."
+)
 TEAM_INSTRUCTIONS = (
     "Write a scouting report on this Champions League finalist: 180-250 words of markdown in total, with one "
     "paragraph under each of exactly these three headings, in this order:\n"
@@ -60,20 +67,33 @@ TEAM_INSTRUCTIONS = (
     "do not mention SHAP.\n\nFacts (JSON):\n"
 )
 SYNTH_INSTRUCTIONS = (
-    "Write 350-450 words of markdown in total, two paragraphs of about 100 words under each of exactly these two "
-    "headings, in this order:\n## Why the best teams win\n## Winners vs runners-up\n\n"
-    "Explain which stats are associated with deep knockout runs and whether pedigree, results or style matters "
-    "most, using the feature-set comparison. Say how well the model does by comparing its Brier score with the "
-    "base-rate Brier score and stating what share of the finalists were in its top 4; the model's edge over the "
-    "base-rate guess was not tested, so do not call it significant or superior. 'Importance' is the average size "
-    "of a stat's push on the expected stage, in either direction. The model learns from the knockout team-seasons, "
-    "using each team's group/league-phase stats. Report findings only: do not explain how SHAP or the model works. "
-    "Only call a stat 'robust' if its robustness label is robust. "
-    "Winners vs runners-up compares those same group/league-phase stats, not what happened in the final; discuss "
-    "only the first four stats in that comparison (it is sorted from smallest to largest Holm-adjusted p) and say "
-    "whether any difference was significant. "
-    "Never call a winners-vs-runners-up difference significant unless its Holm-adjusted p is below the "
-    "significance threshold in the facts.\n\nFacts (JSON):\n"
+    "Write 350-450 words of markdown in total, with exactly two paragraphs of about 80 words under each of "
+    "exactly these two headings, in this order:\n"
+    "## Why the best teams win\n"
+    "## Winners vs runners-up\n\n"
+    "Under 'Why the best teams win', the first paragraph says how well the model does: its Brier score against "
+    "the base-rate Brier score, and what share of the finalists were in its top 4 against the share a random "
+    "ranking would give; give the Spearman, AUC, Brier skill and top-4 share each with its 95% interval. For the "
+    "Brier skill and the top-4 share the facts say whether the interval includes its no-skill value: where it "
+    "does, say the model's edge on that measure is inconclusive; where it does not, say which side of that value "
+    "the whole interval lies on. Describe the model's edge only that way, never as significant or superior. The "
+    "model learns from the knockout team-seasons, using each team's group/league-phase stats: give the knockout "
+    "count, not the group/league-phase count, as what it learns from. The second paragraph says which stats are "
+    "associated with deep knockout runs and whether pedigree, results or style matters most, using the "
+    "feature-set comparison in a sentence without quoting its intervals: they overlap, so the differences between "
+    "pedigree, results and style are tentative (do not use 'significant' or 'significantly' for them: nothing "
+    "about the feature sets was tested). 'Importance' is the average size of a stat's push on the expected stage, "
+    "in either direction. Only call a stat 'robust' if its robustness label is robust. A 'conditional' stat helps "
+    "only alongside the other stats (on its own it points the other way or barely at all) and a 'model-dependent' "
+    "stat is unstable: describe each that way.\n"
+    "Under 'Winners vs runners-up', which compares those same group/league-phase stats, not what happened in the "
+    "final, discuss only the first four stats in that comparison (it is sorted from smallest to largest "
+    "Holm-adjusted p) and no other stat from it: the first paragraph gives each one's mean difference and "
+    "Holm-adjusted p, the second says in how many finals the winner was higher and in how many lower, and whether "
+    "any difference was significant. Never call a difference significant unless its Holm-adjusted p is below the "
+    "significance threshold in the facts.\n"
+    "Report findings only, with no summary or implication, and do not explain how SHAP or the model works.\n\n"
+    "Facts (JSON):\n"
 )
 
 
@@ -85,6 +105,7 @@ class Narrative:
     unsupported: list[str] = field(default_factory=list)
     calls: int = 0
     reason: str | None = None
+    style: list[str] = field(default_factory=list)  # banned words still in the text; defaulted so old files load
 
 
 @dataclass
@@ -96,8 +117,27 @@ class Analysis:
     reason: str | None = None  # why the LLM was unavailable
 
 
-def write_narrative(llm, key: str, messages: list[dict], headings: list[str], facts: dict) -> Narrative:
-    """At most 3 calls: initial, one validity retry, one grounding retry (spec §7)."""
+def style_issues(text: str, banned: tuple[str, ...]) -> list[str]:
+    """The banned words in `text`, whole words only, ignoring case, each once in order of first appearance."""
+    if not banned:
+        return []
+    pattern = re.compile(r"\b(?:" + "|".join(re.escape(word) for word in banned) + r")\b", re.IGNORECASE)
+    return list(dict.fromkeys(match.group().lower() for match in pattern.finditer(text)))
+
+
+def _feedback(unsupported: list[str], style: list[str]) -> str:
+    """What the one retry tells the model is wrong with its answer: numbers, wording or both."""
+    parts = []
+    if unsupported:
+        parts.append(GROUNDING_FEEDBACK.format(numbers=", ".join(unsupported)))
+    if style:
+        parts.append(STYLE_FEEDBACK.format(words=", ".join(style)))
+    return " ".join(parts)
+
+
+def write_narrative(llm, key: str, messages: list[dict], headings: list[str], facts: dict,
+                    banned: tuple[str, ...] = ()) -> Narrative:
+    """At most 3 calls: initial, one validity retry, one retry for unsupported numbers or banned words (spec §7)."""
     calls = 0
     try:
         answer = llm.chat(messages)
@@ -119,11 +159,11 @@ def write_narrative(llm, key: str, messages: list[dict], headings: list[str], fa
         if reason:
             return Narrative(key, "unavailable", calls=calls, reason=reason)
     text = normalize_headings(strip_think(answer.content), headings)
-    unsupported = check_grounding(text, facts)
-    if unsupported:
+    unsupported, style = check_grounding(text, facts), style_issues(text, banned)
+    if unsupported or style:
         retry = messages + [
             {"role": "assistant", "content": text},
-            {"role": "user", "content": GROUNDING_FEEDBACK.format(numbers=", ".join(unsupported))},
+            {"role": "user", "content": _feedback(unsupported, style)},
         ]
         try:
             second = llm.chat(retry)
@@ -131,11 +171,12 @@ def write_narrative(llm, key: str, messages: list[dict], headings: list[str], fa
             if validate_output(second.content, second.finish_reason, headings) is None:
                 second_text = normalize_headings(strip_think(second.content), headings)
                 second_unsupported = check_grounding(second_text, facts)
-                if len(second_unsupported) < len(unsupported):
-                    text, unsupported = second_text, second_unsupported
+                second_style = style_issues(second_text, banned)
+                if len(second_unsupported) + len(second_style) < len(unsupported) + len(style):
+                    text, unsupported, style = second_text, second_unsupported, second_style
         except LLMError:
             pass  # keep the earlier valid text with its flags
-    return Narrative(key, "ok", text=text, unsupported=unsupported, calls=calls)
+    return Narrative(key, "ok", text=text, unsupported=unsupported, calls=calls, style=style)
 
 
 def _messages(instructions: str, sheet: dict) -> list[dict]:
@@ -164,7 +205,8 @@ def run(
     for key, sheet in sheets.items():
         synth = key == "synthesis"
         messages = _messages(SYNTH_INSTRUCTIONS if synth else TEAM_INSTRUCTIONS, sheet)
-        narrative = write_narrative(llm, key, messages, SYNTH_HEADINGS if synth else TEAM_HEADINGS, sheet)
+        narrative = write_narrative(llm, key, messages, SYNTH_HEADINGS if synth else TEAM_HEADINGS, sheet,
+                                    banned=() if synth else BANNED_TEAM_WORDS)
         narratives[key] = narrative
         log(f"  {key}: {narrative.status}, {narrative.calls} call(s), {len(narrative.unsupported)} unsupported")
     return Analysis("ok", llm_model, narratives, sheets)
