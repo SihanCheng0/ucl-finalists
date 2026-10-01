@@ -31,6 +31,14 @@ HEDGE = r"group\s*/\s*league|league\s*/\s*group|group\s+or\s+league|league\s+or\
 WRONG_NAME = {True: r"group[\s-]+(?:stage|phase)|groups", False: r"league[\s-]+phase"}
 # how format_issues lists a wrong name, so that _feedback can tell it from a banned word
 WRONG_FORMAT = re.compile(r"says '.+' but this season had a (?:league phase|group stage)")
+# A final placed inside the first phase. The local model read the result and the format facts together and wrote
+# "reached the final of the league phase" or "a 0-1 decider during the group stage".
+MISPLACED_FINAL = re.compile(
+    r"\b(?:final|decider)\b[^.;:!?]{0,40}?\b(?:of|in|during)\s+the\s+(?:\d{4}-\d{2}\s+)?"
+    r"(?:group[\s-]+stage|league[\s-]+phase)\b",
+    re.IGNORECASE,
+)
+FINAL_ISSUE = re.compile(r"puts the final in the first phase \('(.+)'\)")  # how final_issues lists a hit
 
 SYSTEM_PROMPT = (
     "You are a football performance analyst writing for a curious, data-literate reader. "
@@ -65,6 +73,12 @@ FORMAT_FEEDBACK = (
     "Your answer names the first phase wrongly: {issues}. Rewrite the complete answer with the same headings, "
     "calling the first phase only by the name given for 'First-phase format that season' and never hedging "
     "between the two names."
+)
+FINAL_FEEDBACK = (
+    "Your answer places the final inside the first phase: {issues}. The final is the Champions League final, "
+    "played after the knockout rounds; the first phase (league phase or group stage) comes before them. Rewrite "
+    "the complete answer with the same headings, saying the team reached, won or lost the Champions League final, "
+    "and describing the first phase separately."
 )
 LENGTH_FEEDBACK = (
     "Your answer is {count} words, not counting the headings, over the {limit}-word limit. Rewrite the complete "
@@ -155,27 +169,36 @@ def format_issues(text: str, league_format: bool) -> list[str]:
     return [f"says '{name}' but this season had a {FORMAT_NAME[league_format]}" for name in said]
 
 
+def final_issues(text: str) -> list[str]:
+    """The phrases in `text` that put the final inside the first phase (ignoring case, each once in order of first
+    appearance), each worded like "puts the final in the first phase ('final of the league phase')"."""
+    said = dict.fromkeys(" ".join(match.group().lower().split()) for match in MISPLACED_FINAL.finditer(text))
+    return [f"puts the final in the first phase ('{phrase}')" for phrase in said]
+
+
 def style_issues(text: str, banned: tuple[str, ...], max_words: int | None = None,
                  league_format: bool | None = None) -> list[str]:
-    """The banned words in `text` (whole words only, ignoring case, each once in order of first appearance), then
-    its wrong first-phase names when `league_format` is given, then 'over N words (count)' when it has more than
-    `max_words` words."""
+    """The banned words in `text` (whole words only, ignoring case, each once in order of first appearance), then,
+    when `league_format` is given, its wrong first-phase names and any final placed inside the first phase, then
+    'over N words (count)' when it has more than `max_words` words."""
     issues: list[str] = []
     if banned:
         pattern = re.compile(r"\b(?:" + "|".join(re.escape(word) for word in banned) + r")\b", re.IGNORECASE)
         issues = list(dict.fromkeys(match.group().lower() for match in pattern.finditer(text)))
     if league_format is not None:
-        issues += format_issues(text, league_format)
+        issues += format_issues(text, league_format) + final_issues(text)
     if max_words is not None and (count := word_count(text)) > max_words:
         issues.append(f"over {max_words} words ({count})")
     return issues
 
 
 def _feedback(unsupported: list[str], style: list[str]) -> str:
-    """What the one retry tells the model is wrong with its answer: numbers, wording, first-phase names, length or
-    a mix."""
+    """What the one retry tells the model is wrong with its answer: numbers, wording, first-phase names, a final
+    placed inside the first phase, length or a mix."""
     names = [issue for issue in style if WRONG_FORMAT.fullmatch(issue)]
-    words = [issue for issue in style if issue not in names and not OVER_LENGTH.fullmatch(issue)]
+    finals = [match for match in map(FINAL_ISSUE.fullmatch, style) if match]
+    words = [issue for issue in style
+             if issue not in names and not FINAL_ISSUE.fullmatch(issue) and not OVER_LENGTH.fullmatch(issue)]
     over = next((match for match in map(OVER_LENGTH.fullmatch, style) if match), None)
     parts = []
     if unsupported:
@@ -184,6 +207,8 @@ def _feedback(unsupported: list[str], style: list[str]) -> str:
         parts.append(STYLE_FEEDBACK.format(words=", ".join(words)))
     if names:
         parts.append(FORMAT_FEEDBACK.format(issues="; ".join(names)))
+    if finals:
+        parts.append(FINAL_FEEDBACK.format(issues="; ".join(f"'{match[1]}'" for match in finals)))
     if over:
         parts.append(LENGTH_FEEDBACK.format(limit=over[1], count=over[2]))
     return " ".join(parts)
@@ -193,7 +218,8 @@ def write_narrative(llm, key: str, messages: list[dict], headings: list[str], fa
                     banned: tuple[str, ...] = (), max_words: int | None = None,
                     league_format: bool | None = None) -> Narrative:
     """At most 3 calls: initial, one validity retry, one retry for unsupported numbers, banned words, a wrong
-    first-phase name (checked when `league_format` is given) or an answer over `max_words` (spec §7)."""
+    first-phase name or a final placed inside it (both checked when `league_format` is given) or an answer over
+    `max_words` (spec §7)."""
     calls = 0
     try:
         answer = llm.chat(messages)

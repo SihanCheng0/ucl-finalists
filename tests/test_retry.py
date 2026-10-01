@@ -1,7 +1,8 @@
 from fakes import FakeLLM
 
 from ucl import facts
-from ucl.analyst import BANNED_TEAM_WORDS, TEAM_HEADINGS, format_issues, style_issues, word_count, write_narrative
+from ucl.analyst import (BANNED_TEAM_WORDS, TEAM_HEADINGS, final_issues, format_issues, style_issues, word_count,
+                         write_narrative)
 from ucl.llm import ChatResult, LLMError
 
 FACTS = {"Shots per game": 17.4}
@@ -308,3 +309,50 @@ def test_one_retry_covers_a_wrong_first_phase_name_with_the_other_style_issues()
     feedback = llm.requests[1][-1]["content"]
     assert WRONG_FOR_LEAGUE in feedback and "significantly" in feedback and "250" in feedback
     assert "contain: significantly." in feedback  # the wrong name is not passed off as a banned word
+
+
+MISPLACED = GOOD.replace("They averaged", "They reached the final of the league phase and averaged")
+MISPLACED_ISSUE = "puts the final in the first phase ('final of the league phase')"
+
+
+def test_final_issues_flag_a_final_placed_inside_the_first_phase_ignoring_case_once_each():
+    assert final_issues("Arsenal reached the final of the league phase in the 2025-26 season.") == [MISPLACED_ISSUE]
+    assert final_issues("Borussia Dortmund reached the final of the 2023-24 group stage, where they lost.") == [
+        "puts the final in the first phase ('final of the 2023-24 group stage')"]
+    assert final_issues("They lost to Real Madrid in a 0-1 decider during the group stage.") == [
+        "puts the final in the first phase ('decider during the group stage')"]
+    assert final_issues("The FINAL of the League Phase, then the final of the league phase.") == [MISPLACED_ISSUE]
+
+
+def test_final_issues_pass_the_final_and_the_first_phase_described_apart():
+    for text in (
+        "They advanced through the league phase before winning the final by beating Inter 5-0.",
+        "They beat Liverpool 1-0 in the final. In the group stage they topped the table.",
+        "Inter reached the final as runners-up after losing to Manchester City 0-1. In the group stage, "
+        "their profile was strong.",
+        "They beat 98% of teams in the group stage.",
+    ):
+        assert final_issues(text) == [], text
+
+
+def test_style_issues_check_the_final_only_for_team_narratives():
+    assert style_issues(MISPLACED, (), league_format=True) == [MISPLACED_ISSUE]
+    assert style_issues(MISPLACED, ()) == []  # the synthesis path
+
+
+def test_a_final_placed_in_the_first_phase_triggers_one_retry_and_a_corrected_answer_is_kept():
+    llm = FakeLLM([ok(MISPLACED), ok(GOOD)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, league_format=True)
+    assert (n.calls, n.text, n.unsupported, n.style) == (2, GOOD, [], [])
+    feedback = llm.requests[1][-1]["content"]
+    assert "'final of the league phase'" in feedback and "after the knockout rounds" in feedback
+
+
+def test_one_retry_names_a_wrong_first_phase_name_and_a_misplaced_final_separately():
+    messy = GOOD.replace("They averaged", "They significantly reached the final of the group stage and averaged")
+    llm = FakeLLM([ok(messy), ok(GOOD)])
+    n = write_narrative(llm, "k", MESSAGES, TEAM_HEADINGS, FACTS, banned=BANNED_TEAM_WORDS, league_format=True)
+    assert (n.calls, n.text, n.style) == (2, GOOD, [])
+    feedback = llm.requests[1][-1]["content"]
+    assert WRONG_FOR_LEAGUE in feedback and "'final of the group stage'" in feedback
+    assert "contain: significantly." in feedback  # neither first-phase issue is passed off as a banned word
