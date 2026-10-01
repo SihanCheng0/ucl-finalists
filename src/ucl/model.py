@@ -100,17 +100,42 @@ def evaluate(pred: pd.DataFrame) -> dict:
     finalists = pred["reached_final"].astype(bool)
     stage_rank = pred.groupby("season")["exp_stage"].rank(ascending=False, method="min")
     y = finalists.astype(int)
+    brier = float(brier_score_loss(y, pred["p_final"]))
+    brier_base_rate = float(brier_score_loss(y, pred["base_rate"]))
+    ko_size = pred.loc[finalists, "ko_size"]
     return {
         "spearman_mean": float(np.nanmean(list(rho.values()))),
         "spearman_by_season": rho,
         "finalists_in_top4": float((stage_rank[finalists] <= 4).mean()),
+        # what a random ranking would score: a finalist lands in the top 4 of n teams with chance 4/n
+        "finalists_in_top4_chance": float((np.minimum(4, ko_size) / ko_size).mean()),
         "auc": float(roc_auc_score(y, pred["p_final"])),
-        "brier": float(brier_score_loss(y, pred["p_final"])),
-        "brier_base_rate": float(brier_score_loss(y, pred["base_rate"])),
+        "brier": brier,
+        "brier_base_rate": brier_base_rate,
+        "brier_skill": 1 - brier / brier_base_rate,
         "n_knockout": int(len(pred)),
         "n_finalists": int(y.sum()),
         "n_seasons": int(pred["season"].nunique()),
     }
+
+
+CI_METRICS = ("spearman_mean", "auc", "brier_skill", "finalists_in_top4")
+
+
+def bootstrap_ci(pred: pd.DataFrame, n: int = config.BOOTSTRAP_SAMPLES,
+                 seed: int = config.BOOTSTRAP_SEED) -> dict[str, list[float]]:
+    """95% interval per headline metric from resampling whole seasons, the unit the metrics average over."""
+    rng = np.random.default_rng(seed)
+    seasons = [g for _, g in pred.groupby("season")]
+    draws: dict[str, list[float]] = {m: [] for m in CI_METRICS}
+    for _ in range(n):
+        picked = rng.integers(len(seasons), size=len(seasons))
+        # a season drawn twice gets two keys, so evaluate ranks and correlates each copy on its own
+        sample = pd.concat([seasons[j].assign(season=k) for k, j in enumerate(picked)], ignore_index=True)
+        metrics = evaluate(sample)
+        for m in CI_METRICS:
+            draws[m].append(metrics[m])
+    return {m: [round(float(q), 4) for q in np.percentile(values, [2.5, 97.5])] for m, values in draws.items()}
 
 
 def feature_sets(features: list[str]) -> dict[str, list[str]]:
@@ -125,15 +150,20 @@ def feature_sets(features: list[str]) -> dict[str, list[str]]:
 def ablation(ko: pd.DataFrame, features: list[str]) -> pd.DataFrame:
     rows = []
     for name, fs in feature_sets(features).items():
-        metrics = evaluate(loso(ko, fs, with_shap=False).predictions)
+        pred = loso(ko, fs, with_shap=False).predictions
+        metrics = evaluate(pred)
+        ci = bootstrap_ci(pred, n=500)  # seven sets, so half the headline samples keeps `ucl model` quick
         rows.append({"feature_set": name, "n_features": len(fs),
-                     "spearman": metrics["spearman_mean"], "auc": metrics["auc"]})
+                     "spearman": metrics["spearman_mean"], "spearman_lo": ci["spearman_mean"][0],
+                     "spearman_hi": ci["spearman_mean"][1],
+                     "auc": metrics["auc"], "auc_lo": ci["auc"][0], "auc_hi": ci["auc"][1]})
     return pd.DataFrame(rows)
 
 
 def drivers(ko: pd.DataFrame, shap_df: pd.DataFrame, fold_coefs: list[np.ndarray],
             features: list[str]) -> pd.DataFrame:
-    merged = shap_df.merge(ko[["season", "team_id", *[f"z_{f}" for f in features]]], on=["season", "team_id"])
+    merged = shap_df.merge(ko[["season", "team_id", "ko_stage", *[f"z_{f}" for f in features]]],
+                           on=["season", "team_id"])
     coefs = np.vstack(fold_coefs)
     rows = []
     for i, f in enumerate(features):
@@ -141,6 +171,7 @@ def drivers(ko: pd.DataFrame, shap_df: pd.DataFrame, fold_coefs: list[np.ndarray
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             corr = spearmanr(merged[f"z_{f}"].to_numpy(), values).statistic
+            marginal = spearmanr(merged[f"z_{f}"].to_numpy(), merged["ko_stage"].to_numpy()).statistic
         direction = 0 if np.isnan(corr) or corr == 0 else int(np.sign(corr))
         rows.append({
             "feature": f,
@@ -148,14 +179,19 @@ def drivers(ko: pd.DataFrame, shap_df: pd.DataFrame, fold_coefs: list[np.ndarray
             "label_text": config.FEATURE_META[f][0],
             "importance": float(np.mean(np.abs(values))),
             "direction": direction,
+            "marginal_rho": float(marginal),
             "logit_coef_mean": float(coefs[:, i].mean()),
             "sign_agree_folds": int((np.sign(coefs[:, i]) == direction).sum()) if direction else 0,
         })
     out = pd.DataFrame(rows).sort_values("importance", ascending=False, kind="stable").reset_index(drop=True)
     out["rank"] = np.arange(1, len(out) + 1)
     top = out["rank"] <= config.TOP_DRIVERS
-    robust = out["sign_agree_folds"] >= math.ceil(config.ROBUST_SHARE * len(fold_coefs))
-    out["label"] = np.where(top & robust, "robust", np.where(top, "model-dependent", ""))
+    # any two folds share all but one training season, so their sign agreement is close to automatic;
+    # a stat only counts as robust if it also points the same way on its own
+    folds_agree = out["sign_agree_folds"] >= math.ceil(config.ROBUST_SHARE * len(fold_coefs))
+    holds_alone = out["direction"] * out["marginal_rho"] >= config.MARGINAL_MIN
+    label = np.where(folds_agree, np.where(holds_alone, "robust", "conditional"), "model-dependent")
+    out["label"] = np.where(top, label, "")
     return out
 
 
@@ -208,7 +244,7 @@ def run(team_seasons: pd.DataFrame, finals: pd.DataFrame, features: list[str]) -
         shap=main.shap,
         drivers=drivers(ko, main.shap, main.fold_coefs, features),
         ablation=ablation(ko, features),
-        metrics=evaluate(main.predictions),
+        metrics={**evaluate(main.predictions), "ci": bootstrap_ci(main.predictions)},
         finals_compare=finals_compare(team_seasons, finals, features),
     )
 
@@ -242,4 +278,7 @@ def load(directory: Path = config.OUT_DIR) -> ModelResults:
     directory = Path(directory)
     frames = {attr: read_csv(directory / name) for attr, name in FRAMES.items()}
     frames["drivers"]["label"] = frames["drivers"]["label"].fillna("")
-    return ModelResults(metrics=json.loads((directory / "metrics.json").read_text()), **frames)
+    metrics = json.loads((directory / "metrics.json").read_text())
+    # JSON object keys come back as strings; run() has them as ints
+    metrics["spearman_by_season"] = {int(s): rho for s, rho in metrics["spearman_by_season"].items()}
+    return ModelResults(metrics=metrics, **frames)

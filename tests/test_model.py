@@ -29,25 +29,68 @@ def test_scale_to_two_sums_to_two_and_caps_at_one():
     assert model.scale_to_two([0.9, 0.05, 0.05]) == pytest.approx([1.0, 0.5, 0.5])
 
 
-def test_evaluate_matches_hand_computed_values():
-    pred = pd.DataFrame({
+@pytest.fixture
+def hand_built():
+    return pd.DataFrame({
         "season": [1] * 5 + [2] * 5,
         "ko_stage": [4, 3, 2, 1, 0] * 2,
         "exp_stage": [5, 1, 4, 3, 2, 1, 5, 4, 3, 2],
         "reached_final": [True, True, False, False, False] * 2,
         "p_final": [0.6, 0.1, 0.3, 0.2, 0.05, 0.4, 0.5, 0.45, 0.1, 0.05],
         "base_rate": [0.4] * 10,
+        "ko_size": [5] * 10,
     })
-    m = model.evaluate(pred)
+
+
+def test_evaluate_matches_hand_computed_values(hand_built):
+    m = model.evaluate(hand_built)
     # rho: 1 - 6*12/120 = 0.4 and 1 - 6*20/120 = 0.0; one finalist per season ranks 5th by expected stage;
-    # AUC = 19.5 / 24; Brier = 1.9275 / 10; base-rate Brier = (4*0.36 + 6*0.16) / 10
+    # AUC = 19.5 / 24; Brier = 1.9275 / 10; base-rate Brier = (4*0.36 + 6*0.16) / 10;
+    # picking 4 of 5 teams at random lands a finalist in the top 4 with chance 4/5
     assert m["spearman_by_season"] == {1: pytest.approx(0.4), 2: pytest.approx(0.0, abs=1e-12)}
     assert m["spearman_mean"] == pytest.approx(0.2)
     assert m["finalists_in_top4"] == pytest.approx(0.5)
+    assert m["finalists_in_top4_chance"] == pytest.approx(0.8)
     assert m["auc"] == pytest.approx(0.8125)
     assert m["brier"] == pytest.approx(0.19275)
     assert m["brier_base_rate"] == pytest.approx(0.24)
+    assert m["brier_skill"] == pytest.approx(1 - 0.19275 / 0.24)  # 0.196875
     assert (m["n_knockout"], m["n_finalists"], m["n_seasons"]) == (10, 4, 2)
+
+
+def test_top4_chance_averages_over_finalists_and_caps_at_one(hand_built):
+    # season 1: one finalist, 3 teams, min(4, 3) / 3 = 1; season 2: two finalists, 20 teams, 4 / 20 = 0.2 each
+    pred = hand_built.assign(ko_size=[3] * 5 + [20] * 5,
+                             reached_final=[True, False, False, False, False] + [True, True, False, False, False])
+    assert model.evaluate(pred)["finalists_in_top4_chance"] == pytest.approx((1.0 + 0.2 + 0.2) / 3)
+
+
+def test_bootstrap_ci_is_deterministic_ordered_and_bounded(hand_built):
+    ci = model.bootstrap_ci(hand_built, n=200)
+    assert ci == model.bootstrap_ci(hand_built, n=200)
+    assert set(ci) == {"spearman_mean", "auc", "brier_skill", "finalists_in_top4"}
+    for lo, hi in ci.values():
+        assert lo <= hi
+        assert round(lo, 4) == lo and round(hi, 4) == hi
+    lo, hi = ci["auc"]
+    assert 0.0 <= lo <= hi <= 1.0
+
+
+def test_bootstrap_ci_keeps_repeated_seasons_apart():
+    # three identical seasons in which the finalist ranked 3rd by expected stage is in the top 4
+    one = pd.DataFrame({
+        "ko_stage": [4, 3, 2, 1, 0, 0], "exp_stage": [6.0, 4.0, 5.0, 3.0, 2.0, 1.0],
+        "reached_final": [True, True, False, False, False, False],
+        "p_final": [0.5, 0.3, 0.1, 0.05, 0.03, 0.02], "base_rate": [2 / 6] * 6, "ko_size": [6] * 6,
+    })
+    pred = pd.concat([one.assign(season=s) for s in (1, 2, 3)], ignore_index=True)
+    point = model.evaluate(pred)
+    assert point["finalists_in_top4"] == pytest.approx(1.0)
+    # a resample that draws a season twice must rank each copy on its own: merged into one season of 12 teams,
+    # that finalist would fall to 5th and the interval would no longer collapse onto the point estimate
+    ci = model.bootstrap_ci(pred, n=200)
+    for key, (lo, hi) in ci.items():
+        assert lo == pytest.approx(point[key], abs=1e-4) and hi == pytest.approx(point[key], abs=1e-4)
 
 
 def test_loso_never_trains_on_held_out_season_or_incomplete_rows(small, monkeypatch):
@@ -88,7 +131,9 @@ def test_shap_values_add_up_to_the_prediction(small):
 def test_evaluate_reports_the_spec_metrics(small):
     ds, ko = small
     metrics = model.evaluate(model.loso(ko, ds.features, with_shap=False).predictions)
-    assert set(metrics) >= {"spearman_mean", "spearman_by_season", "finalists_in_top4", "auc", "brier",
-                            "brier_base_rate", "n_knockout", "n_finalists", "n_seasons"}
+    assert set(metrics) >= {"spearman_mean", "spearman_by_season", "finalists_in_top4", "finalists_in_top4_chance",
+                            "auc", "brier", "brier_base_rate", "brier_skill", "n_knockout", "n_finalists",
+                            "n_seasons"}
     assert metrics["n_finalists"] == 12 and metrics["n_seasons"] == 6
     assert 0.0 <= metrics["auc"] <= 1.0
+    assert 0.0 < metrics["finalists_in_top4_chance"] <= 1.0

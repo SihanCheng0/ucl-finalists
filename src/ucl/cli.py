@@ -38,6 +38,11 @@ def cmd_build(args: argparse.Namespace) -> int:
     return 0
 
 
+def _with_ci(m: dict, key: str, fmt: str) -> str:
+    lo, hi = m["ci"][key]
+    return f"{m[key]:{fmt}} [{lo:{fmt}}, {hi:{fmt}}]"
+
+
 def cmd_model(args: argparse.Namespace) -> int:
     from . import dataset, model
 
@@ -45,11 +50,15 @@ def cmd_model(args: argparse.Namespace) -> int:
     results = model.run(ds.team_seasons, ds.finals, ds.features)
     model.save(results)
     m = results.metrics
-    print(f"Spearman {m['spearman_mean']:.2f} | AUC {m['auc']:.2f} | Brier {m['brier']:.3f} "
-          f"(base rate {m['brier_base_rate']:.3f}) | finalists in top 4: {m['finalists_in_top4']:.0%}")
-    print(results.drivers.head(config.TOP_DRIVERS)[["feature", "importance", "direction", "label"]]
-          .to_string(index=False))
-    print(results.ablation.to_string(index=False))
+    print(f"Spearman {_with_ci(m, 'spearman_mean', '.2f')} | AUC {_with_ci(m, 'auc', '.2f')} | "
+          f"Brier skill {_with_ci(m, 'brier_skill', '.2f')} "
+          f"(Brier {m['brier']:.3f}, base rate {m['brier_base_rate']:.3f})")
+    print(f"finalists in top 4: {_with_ci(m, 'finalists_in_top4', '.0%')}, chance {m['finalists_in_top4_chance']:.0%} "
+          "(brackets: 95% intervals from resampling seasons)")
+    print(results.drivers.head(config.TOP_DRIVERS)[
+        ["feature", "importance", "direction", "marginal_rho", "sign_agree_folds", "label"]
+    ].to_string(index=False, float_format="{:.3f}".format))
+    print(results.ablation.to_string(index=False, float_format="{:.2f}".format))
     return 0
 
 

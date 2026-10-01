@@ -143,6 +143,9 @@ GBR_PARAMS = {
 LOGIT_PARAMS = {"C": 0.3, "max_iter": 2000}
 TOP_DRIVERS = 6
 ROBUST_SHARE = 0.8  # same sign in >= 80% of LOSO fits = 12 of 15 (spec §6)
+MARGINAL_MIN = 0.05  # |Spearman| below this means a stat has no clear direction on its own
+BOOTSTRAP_SAMPLES = 1000
+BOOTSTRAP_SEED = 42
 
 MATCHES_URL = (
     "https://match.uefa.com/v5/matches?competitionId=1&seasonYear={season}"

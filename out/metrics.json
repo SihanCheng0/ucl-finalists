@@ -18,10 +18,30 @@
     "2026": 0.44133233724946164
   },
   "finalists_in_top4": 0.4666666666666667,
+  "finalists_in_top4_chance": 0.23888888888888893,
   "auc": 0.7328908554572271,
   "brier": 0.09797786494816813,
   "brier_base_rate": 0.10319010416666667,
+  "brier_skill": 0.05051103747390384,
   "n_knockout": 256,
   "n_finalists": 30,
-  "n_seasons": 15
+  "n_seasons": 15,
+  "ci": {
+    "spearman_mean": [
+      0.3424,
+      0.5391
+    ],
+    "auc": [
+      0.615,
+      0.827
+    ],
+    "brier_skill": [
+      -0.0354,
+      0.1344
+    ],
+    "finalists_in_top4": [
+      0.3,
+      0.6
+    ]
+  }
 }
