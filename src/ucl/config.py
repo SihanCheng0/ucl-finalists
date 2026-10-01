@@ -197,3 +197,46 @@ TEAM_SEARCH_ALIASES = {
     "bayern munich": "50037",
     "gladbach": "52757",
 }
+
+# --- UCL Lab, Plan B: the live season and players (spec §3.2, §3.3) ---
+LIVE_SEASON = 2027  # 2026-27: never part of SEASONS, the dataset or the model
+LIVE_MAX_AGE_S = 6 * 3600  # live data is refetched when older than this
+LIVE_SETTLED_S = 24 * 3600  # a match's stats are cached for good once it finished this long ago
+LIVE_RETRY_S = 300  # after a failed live refresh, the next automatic attempt waits this long
+REQUEST_TIMEOUT_S = 8  # on-demand fetches made while a browser waits: one attempt only
+REQUEST_FAILURE_MEMORY_S = 60
+PLAYERS_DIR = RAW_DIR / "players"
+PLAYER_PAGE_SIZE = 100
+PLAYER_MAX_PAGES = 30
+# key, label, kind, decimals, colourable on the pitch
+PLAYER_STATS = [
+    ("minutes_played_official", "Minutes", "minutes", 0, False),
+    ("matches_appearance", "Appearances", "count", 0, False),
+    ("goals", "Goals", "count", 2, True),
+    ("assists", "Assists", "count", 2, True),
+    ("key_passes", "Key passes", "count", 2, True),
+    ("attempts", "Shots", "count", 2, True),
+    ("attempts_on_target", "Shots on target", "count", 2, True),
+    ("passes_attempted", "Passes attempted", "count", 1, False),
+    ("passes_completed", "Passes completed", "count", 1, False),
+    ("passes_accuracy", "Pass accuracy (%)", "rate", 1, True),
+    ("distance_covered", "Distance covered (km)", "distance", 2, True),
+    ("top_speed", "Top speed (km/h)", "speed", 1, True),
+    ("tackles", "Tackles", "count", 2, False),
+    ("tackles_won", "Tackles won", "count", 2, True),
+    ("dribbling", "Dribbles", "count", 2, False),
+    ("dribbling_successful", "Successful dribbles", "count", 2, True),
+    ("fouls_committed", "Fouls committed", "count", 2, False),
+    ("yellow_cards", "Yellow cards", "count", 0, False),
+    ("red_cards", "Red cards", "count", 0, False),
+    ("saves", "Saves", "count", 2, True),
+    ("clean_sheet", "Clean sheets", "count", 0, False),
+    ("goals_conceded", "Goals conceded", "count", 0, False),
+]
+# Plausible values, checked when a squad is parsed: per 90 minutes for distance, raw for the rest.
+PLAYER_STAT_RANGES = {"distance_covered": (3.0, 16.0), "top_speed": (10.0, 40.0), "passes_accuracy": (0.0, 100.0)}
+PLAYERS_URL = (
+    "https://compstats.uefa.com/v1/player-ranking?competitionId=1&seasonYear={season}&phase=TOURNAMENT&order=DESC"
+    "&optionalFields=PLAYER,TEAM&teamId={team_id}&limit={limit}&offset={offset}&stats="
+    + ",".join(key for key, *_ in PLAYER_STATS)
+)

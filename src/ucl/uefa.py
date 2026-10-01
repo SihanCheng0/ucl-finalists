@@ -10,6 +10,8 @@ import time
 import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
@@ -29,6 +31,20 @@ TRANSIENT_ERRORS = (OSError, http.client.HTTPException, json.JSONDecodeError)
 
 Fetch = Callable[[str, float], Any]
 Check = Callable[[Any], bool]
+
+
+@dataclass(frozen=True)
+class Fetched:
+    """One resource with its freshness, returned per call so concurrent callers never share flags (spec §4.1).
+    `stale` means a refetch was due and failed, so the cached copy was served; `fetched_at` is when the copy
+    was written."""
+    data: Any
+    stale: bool
+    fetched_at: datetime | None
+
+
+def _utc(timestamp: float | None) -> datetime | None:
+    return None if timestamp is None else datetime.fromtimestamp(timestamp, tz=timezone.utc)
 
 
 class PermanentHTTPError(Exception):
@@ -68,12 +84,18 @@ class UefaClient:
         fetch: Fetch = http_get_json,
         sleep: Callable[[float], None] = time.sleep,
         on_request: Callable[[str, str, str], None] | None = None,
+        retry_delays: tuple[float, ...] | None = None,
+        timeout: float | None = None,
+        clock: Callable[[], float] = time.time,
     ):
         self.cache_dir = Path(cache_dir)
         self.max_workers = max_workers
         self._fetch = fetch
         self._sleep = sleep
         self._on_request = on_request
+        self._retry_delays = retry_delays  # None: config.HTTP_RETRY_DELAYS_S, read when a request is made
+        self._timeout = timeout
+        self._clock = clock
 
     def matches(self, season: int) -> list[dict]:
         return self._cached(f"matches/{season}", config.MATCHES_URL.format(season=season), check=_is_match_list)
@@ -121,6 +143,83 @@ class UefaClient:
                 return members
         raise RuntimeError(f"coefficient ranking {season} did not end within {MAX_COEF_PAGES} pages")
 
+    def matches_fresh(self, season: int, max_age: float | None) -> Fetched:
+        """The season's matches, refetched when the cached copy is older than `max_age` seconds (the live season)."""
+        return self._fresh(f"matches/{season}", config.MATCHES_URL.format(season=season), max_age,
+                           check=_is_match_list)
+
+    def team_match_stats_fresh(self, match_id: str, max_age: float | None, cache_missing: bool = False) -> Fetched:
+        """A match's team stats with freshness. With cache_missing=False an empty or missing response is not
+        cached, so a live match UEFA hasn't finished publishing is asked for again next time."""
+        return self._fresh(f"stats/{match_id}", config.MATCH_STATS_URL.format(match_id=match_id), max_age,
+                           missing_ok=True, cache_missing=cache_missing)
+
+    def squad(self, season: int, team_id: str, max_age: float | None = None) -> Fetched:
+        """Every player of a team-season with their stats (spec §3.3), fetched page by page until a page comes
+        back empty, and cached as one file."""
+        key = f"players/{season}/{team_id}"
+        path = self.cache_dir / f"{key}.json"
+        cached, written = self._read_cache(path)
+        if cached is not None and (max_age is None or self._clock() - written <= max_age):
+            self._notify(key, "cache")
+            return Fetched(cached, False, _utc(written))
+        try:
+            rows: list[dict] = []
+            seen: set[str] = set()
+            for page in range(config.PLAYER_MAX_PAGES):
+                batch = self._get(config.PLAYERS_URL.format(season=season, team_id=team_id,
+                                                            limit=config.PLAYER_PAGE_SIZE,
+                                                            offset=page * config.PLAYER_PAGE_SIZE))
+                if not isinstance(batch, list):
+                    raise RuntimeError(f"unexpected player-ranking response for {key}")
+                fresh = [r for r in batch if str(r.get("playerId")) not in seen]
+                if not fresh:
+                    break
+                seen.update(str(r.get("playerId")) for r in fresh)
+                rows.extend(fresh)
+        except Exception:
+            if cached is not None:
+                return Fetched(cached, True, _utc(written))
+            raise
+        _atomic_write_json(path, rows)
+        self._notify(key, "network")
+        return Fetched(rows, False, _utc(path.stat().st_mtime))
+
+    def _read_cache(self, path: Path) -> tuple[Any, float | None]:
+        if not path.exists():
+            return None, None
+        try:
+            return json.loads(path.read_text()), path.stat().st_mtime
+        except json.JSONDecodeError:
+            return None, None  # a broken copy is refetched rather than trusted
+
+    def _fresh(self, key: str, url: str, max_age: float | None, check: Check | None = None,
+               missing_ok: bool = False, cache_missing: bool = True) -> Fetched:
+        path = self.cache_dir / f"{key}.json"
+        cached, written = self._read_cache(path)
+        if cached is not None and (max_age is None or self._clock() - written <= max_age):
+            self._notify(key, "cache")
+            return Fetched(None if cached == MISSING_MARKER else cached, False, _utc(written))
+        try:
+            try:
+                data = self._get(url)
+            except PermanentHTTPError as exc:
+                if not (missing_ok and exc.code in MISSING_CODES):
+                    raise
+                data = MISSING_MARKER
+            if check is not None and data != MISSING_MARKER and not check(data):
+                raise RuntimeError(f"unexpected response shape from {url}; nothing was cached")
+        except Exception:
+            if cached is not None:
+                return Fetched(None if cached == MISSING_MARKER else cached, True, _utc(written))
+            raise
+        written = self._clock()
+        if cache_missing or data not in (MISSING_MARKER, [], {}, None):
+            _atomic_write_json(path, data)
+            written = path.stat().st_mtime  # fetched_at is always the cached copy's write time
+        self._notify(key, "network")
+        return Fetched(None if data == MISSING_MARKER else data, False, _utc(written))
+
     def _cached(self, key: str, url: str, missing_ok: bool = False, check: Check | None = None) -> Any:
         path = self.cache_dir / f"{key}.json"
         if path.exists():
@@ -155,11 +254,12 @@ class UefaClient:
             pass
 
     def _get(self, url: str) -> Any:
-        delays = config.HTTP_RETRY_DELAYS_S
+        delays = config.HTTP_RETRY_DELAYS_S if self._retry_delays is None else self._retry_delays
+        timeout = config.HTTP_TIMEOUT_S if self._timeout is None else self._timeout
         last: Exception | None = None
         for attempt in range(len(delays) + 1):
             try:
-                return self._fetch(url, config.HTTP_TIMEOUT_S)
+                return self._fetch(url, timeout)
             except urllib.error.HTTPError as exc:
                 if 400 <= exc.code < 500 and exc.code not in RETRY_CODES:
                     raise PermanentHTTPError(f"HTTP {exc.code} for {url}", exc.code) from exc
