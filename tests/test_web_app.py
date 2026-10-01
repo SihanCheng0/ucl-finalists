@@ -143,7 +143,8 @@ def test_the_built_spa_is_served_at_the_root(outputs, tmp_path):
     dist.mkdir()
     (dist / "index.html").write_text("<!doctype html><title>UCL Lab</title>")
     with TestClient(create_app(make_services(*outputs), dist_dir=dist)) as client:
-        assert "UCL Lab" in client.get("/").text
+        page = client.get("/")
+        assert "UCL Lab" in page.text and page.headers["cache-control"] == "no-cache"
         assert client.get("/api/meta").json()["ready"] is True  # API routes win over the static mount
 
 

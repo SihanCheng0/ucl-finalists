@@ -30,6 +30,17 @@ class ApiError(Exception):
         self.status, self.code, self.message = status, code, message
 
 
+class SpaFiles(StaticFiles):
+    """The built SPA. Pages go out with Cache-Control: no-cache, so a rebuild shows at the next load; the hashed
+    assets they point to can be cached."""
+
+    def file_response(self, full_path, stat_result, scope, status_code=200):
+        response = super().file_response(full_path, stat_result, scope, status_code)
+        if str(full_path).endswith(".html"):
+            response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
 class RunBody(BaseModel):
     model_config = ConfigDict(extra="forbid")  # a typo like "stage" must not start every stage
 
@@ -184,5 +195,5 @@ def create_app(services: Services, dist_dir: Path | None = None, heartbeat: floa
                                  headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"})
 
     if dist_dir is not None:
-        app.mount("/", StaticFiles(directory=dist_dir, html=True), name="spa")
+        app.mount("/", SpaFiles(directory=dist_dir, html=True), name="spa")
     return app

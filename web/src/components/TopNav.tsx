@@ -1,0 +1,71 @@
+import { useEffect, useState } from "react";
+import type { Screen } from "../lib/route";
+import type { PipelineView } from "../lib/pipelineState";
+import { AutoIcon, Mark, MoonIcon, SunIcon } from "./Icons";
+
+const TABS: { screen: Screen; label: string }[] = [
+  { screen: "pipeline", label: "Pipeline" },
+  { screen: "explore", label: "Explore" },
+  { screen: "compare", label: "Compare" },
+  { screen: "squad", label: "Squad" },
+];
+type Theme = "system" | "light" | "dark";
+const NEXT: Record<Theme, Theme> = { system: "light", light: "dark", dark: "system" };
+
+function storedTheme(): Theme {
+  try {
+    const value = localStorage.getItem("ucl-lab-theme");
+    return value === "light" || value === "dark" ? value : "system";
+  } catch {
+    return "system";
+  }
+}
+
+function runLabel(view: PipelineView, connected: boolean): { tone: string; text: string } {
+  if (!connected && view.state === null) return { tone: "offline", text: "Server offline" };
+  const state = view.state;
+  if (state?.running) {
+    const stage = state.stages.find((s) => s.status === "running");
+    return { tone: "running", text: stage ? `Running ${stage.name}` : "Running" };
+  }
+  if (view.outcome?.status === "failed") return { tone: "failed", text: "Last run failed" };
+  if (view.outcome?.status === "warning") return { tone: "warning", text: "Last run had warnings" };
+  return { tone: "done", text: "Idle" };
+}
+
+export function TopNav({ screen, view, connected }: { screen: Screen; view: PipelineView; connected: boolean }) {
+  const [theme, setTheme] = useState<Theme>(storedTheme);
+  useEffect(() => {
+    if (theme === "system") delete document.documentElement.dataset.theme;
+    else document.documentElement.dataset.theme = theme;
+    try {
+      if (theme === "system") localStorage.removeItem("ucl-lab-theme");
+      else localStorage.setItem("ucl-lab-theme", theme);
+    } catch {
+      /* the choice just isn't remembered */
+    }
+  }, [theme]);
+  const run = runLabel(view, connected);
+  const ThemeIcon = theme === "light" ? SunIcon : theme === "dark" ? MoonIcon : AutoIcon;
+  return (
+    <header className="topbar">
+      <div className="topbar-inner">
+        <a className="wordmark" href="#/explore" aria-label="UCL Lab"><Mark /><span className="name">UCL Lab</span></a>
+        <nav className="nav" aria-label="Screens">
+          {TABS.map((tab) => (
+            <a key={tab.screen} href={`#/${tab.screen}`} aria-current={tab.screen === screen ? "page" : undefined}>{tab.label}</a>
+          ))}
+        </nav>
+        <div className="topbar-end">
+          <a className="run-pill" href="#/pipeline" title="Pipeline status">
+            <span className={`dot ${run.tone}`} /><span className="text">{run.text}</span>
+          </a>
+          <button className="icon-button" type="button" onClick={() => setTheme(NEXT[theme])}
+                  aria-label={`Theme: ${theme}. Switch to ${NEXT[theme]}`} title={`Theme: ${theme}`}>
+            <ThemeIcon />
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}

@@ -6,3 +6,7 @@ __pycache__/
 .claude/settings.local.json
 data/raw/
 data/llm_cache/
+
+# UCL Lab frontend
+web/node_modules/
+web/dist/
