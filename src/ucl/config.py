@@ -167,3 +167,33 @@ LLM_PARAMS = {"temperature": 0.3, "max_tokens": 8000, "reasoning_effort": "none"
 LLM_TIMEOUT_S = 300
 LLM_CONTEXT_LENGTH = 16384
 LMS_BIN = Path.home() / ".lmstudio" / "bin" / "lms"
+
+# --- UCL Lab, the local dashboard (spec 2026-10-01-ucl-lab-dashboard-design.md) ---
+WEB_PORT = 8787
+WEB_DIR = ROOT / "web"
+# How Explore groups the stats. save_pct is listed so a dataset that keeps it still has a home for it.
+STAT_SECTIONS = {
+    "Results": ["points_pg", "goal_diff_pg"],
+    "Attack": ["shots_pg", "shot_accuracy", "conversion", "attacks_pg"],
+    "Defence": ["shots_against_pg", "on_target_against_pg", "save_pct"],
+    "Control": ["possession_pct", "pass_accuracy", "passes_pg", "long_pass_share"],
+    "Intensity": ["distance_km_pg", "fouls_pg"],
+    "Pedigree": ["coef_log"],
+}
+# Names people type that UEFA's names don't contain, matched without case or accents.
+TEAM_SEARCH_ALIASES = {
+    "psg": "52747",
+    "man city": "52919",
+    "man united": "52682",
+    "manchester united": "52682",
+    "barca": "50080",
+    "atletico madrid": "50124",
+    "spurs": "1652",
+    "bvb": "52758",
+    "inter milan": "50138",
+    "internazionale": "50138",
+    "ac milan": "50058",
+    "juve": "50139",
+    "bayern munich": "50037",
+    "gladbach": "52757",
+}
