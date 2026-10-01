@@ -58,3 +58,33 @@ Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
   - Real Madrid 2021-22 says "the club's actual probability", meaning the model's, and kept "most significantly" after its one retry.
   - Inter 2022-23 says "12.9% of their total plays" about long passes.
 - **Not in this plan.** Publishing is done by hand, not by the pipeline. The interactive dashboard (UCL Lab) has its own spec and plans.
+
+# UCL Lab — local dashboard (spec: ~/docs/superpowers/specs/2026-10-01-ucl-lab-dashboard-design.md, rev 3)
+
+Plan A: ~/docs/superpowers/plans/2026-10-01-ucl-lab-plan-a.md (chunks 1–5 reviewed; the frontend and Plan B were
+built straight from the spec overnight, as asked).
+
+- [x] CLI characterization tests (tests/golden/cli), progress hooks, stages.py shared by the CLI and the web runner
+- [x] DataStore, EventBus (boot-scoped SSE), PipelineRunner, real stage wiring, queries, FastAPI app, `ucl web`
+- [x] Live 2026-27 season (in memory, background refresh) and players (squads on demand, player index, histories)
+- [x] React SPA: Pipeline, Explore, Compare, Squad (animated pitch, player panel)
+- [x] Verification in the browser pane (below)
+
+## Review (UCL Lab)
+
+- Tests: 436 Python (incl. 14 CLI goldens) and 20 vitest. `npm --prefix web run build` type-checks with TypeScript 7.
+- Verified in the browser pane:
+  - Run all with "Skip AI" and "Refresh live season" from the Pipeline screen: fetch 0.6 s, build 0.9 s, model
+    36 s (Spearman 0.45, AUC 0.73), analyze skipped, report, live (36 teams, 18 finished matches). `git status`
+    clean afterwards, so the UI run regenerates every committed output byte for byte.
+  - Player index: 524 of 524 squads in 88 s, none failed. Gabriel Jesus's history spans Manchester City
+    (2017-18 to 2021-22), Arsenal (2023-24 to 2025-26) and Barcelona (2026-27, live).
+  - Explore: search "arsenal", live 2026-27 profile ("in progress, 1 match of 8", early-season flags), 2025-26
+    with model card and AI report. Compare Arsenal vs PSG 2025-26. Squad Arsenal 2025-26 coloured by goals and
+    by distance, player panel.
+  - Dark and light themes; no horizontal scroll at 473 px and 768 px.
+- Reviews that changed the code: runner hangs on a bad stage result, final event before the run ended, 409 vs 422
+  order; event payloads validated at publish; ø/æ in search; Ctrl-C tracebacks and slow shutdown with an open
+  event stream; the SPA page served uncached.
+- Not done: the live season's model card (the model only scores completed seasons, by design); the live stage's
+  requests aren't counted in the run counters (its client is the live service's own).
