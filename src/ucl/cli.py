@@ -8,10 +8,10 @@ from . import config
 
 
 def cmd_fetch(args: argparse.Namespace) -> int:
-    from .dataset import fetch_all
+    from . import stages
     from .uefa import UefaClient
 
-    failed = fetch_all(UefaClient(), config.SEASONS)
+    failed = stages.fetch(UefaClient()).failed
     if failed:
         print(f"{len(failed)} match-stat requests failed; run `uv run ucl fetch` again to resume.", file=sys.stderr)
         return 1
@@ -19,16 +19,14 @@ def cmd_fetch(args: argparse.Namespace) -> int:
 
 
 def cmd_build(args: argparse.Namespace) -> int:
-    from . import dataset
+    from . import dataset, stages
     from .uefa import UefaClient
 
     try:
-        ds = dataset.build(UefaClient(), config.SEASONS)
-        dataset.validate(ds)
+        ds = stages.build(UefaClient())
     except dataset.ValidationError as exc:
         print(f"dataset validation failed:\n{exc}", file=sys.stderr)
         return 2
-    dataset.save(ds)
     ts, notes = ds.team_seasons, ds.notes
     print(f"built {len(ts)} team-seasons ({int(ts['in_ko'].sum())} knockout), {len(ds.features)} features")
     if notes["dropped_features"]:
@@ -44,11 +42,9 @@ def _with_ci(m: dict, key: str, fmt: str) -> str:
 
 
 def cmd_model(args: argparse.Namespace) -> int:
-    from . import dataset, model
+    from . import dataset, stages
 
-    ds = dataset.load()
-    results = model.run(ds.team_seasons, ds.finals, ds.features)
-    model.save(results)
+    results = stages.model(dataset.load())
     m = results.metrics
     print(f"Spearman {_with_ci(m, 'spearman_mean', '.2f')} | AUC {_with_ci(m, 'auc', '.2f')} | "
           f"Brier skill {_with_ci(m, 'brier_skill', '.2f')} "
@@ -63,12 +59,9 @@ def cmd_model(args: argparse.Namespace) -> int:
 
 
 def cmd_analyze(args: argparse.Namespace) -> int:
-    from . import analyst, dataset, model
+    from . import dataset, model, stages
 
-    ds = dataset.load()
-    analysis = analyst.run(ds.team_seasons, ds.finals, model.load(), llm_model=args.llm_model,
-                           enabled=not args.no_ai)
-    analyst.save(analysis)
+    analysis = stages.analyze(dataset.load(), model.load(), args.llm_model, not args.no_ai).analysis
     flagged = sum(len(n.unsupported) for n in analysis.narratives.values())
     unavailable = sum(n.status != "ok" for n in analysis.narratives.values())
     print(f"analysis {analysis.status} with {args.llm_model}: {len(analysis.narratives)} narratives "
@@ -79,14 +72,10 @@ def cmd_analyze(args: argparse.Namespace) -> int:
 
 
 def cmd_report(args: argparse.Namespace) -> int:
-    from . import analyst, dataset, model, report
+    from . import analyst, dataset, model, stages
 
-    ds = dataset.load()
-    page = report.render(ds.team_seasons, ds.finals, model.load(), analyst.load())
-    config.OUT_DIR.mkdir(parents=True, exist_ok=True)
-    (config.OUT_DIR / "report_page.html").write_text(page)  # artifact-ready fragment
-    (config.OUT_DIR / "report.html").write_text(report.standalone(page))
-    print(f"wrote {config.OUT_DIR / 'report.html'} and report_page.html")
+    path = stages.report(dataset.load(), model.load(), analyst.load())
+    print(f"wrote {path} and report_page.html")
     return 0
 
 
