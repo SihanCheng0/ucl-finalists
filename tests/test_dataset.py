@@ -115,3 +115,30 @@ def test_save_and_load_roundtrip_keeps_id_strings(tmp_path):
     assert loaded.features == ds.features
     assert loaded.team_seasons["in_ko"].dtype == bool
     assert (tmp_path / "missing_stats.csv").exists()
+
+
+class DownClient(FakeClient):
+    """Every first-phase stats request fails."""
+
+    def team_match_stats_many(self, match_ids):
+        return {}, {m: "RuntimeError: down" for m in match_ids}
+
+
+def test_fetch_all_reports_progress_once_per_season():
+    events, lines = [], []
+    failed = dataset.fetch_all(FakeClient(possession=55), [2012, 2013], log=lines.append, progress=events.append)
+    assert failed == {}
+    assert events == [{"season": s, "matches": 2, "phase_matches": 1, "missing": 0, "failed": 0}
+                      for s in (2012, 2013)]
+    assert lines == [f"{s}: 2 matches, 1 phase matches, stats missing 0, failed 0" for s in (2012, 2013)]
+
+
+def test_fetch_all_reports_a_season_that_stops_the_fetch():
+    events, lines = [], []
+    failed = dataset.fetch_all(DownClient(possession=55), [2012, 2013], log=lines.append, progress=events.append)
+    assert failed == {"m1": "RuntimeError: down"}
+    assert events == [{"season": 2012, "matches": 2, "phase_matches": 1, "missing": 0, "failed": 1}]
+    assert lines == ["2012: 2 matches, 1 phase matches, stats missing 0, failed 1",
+                     "  e.g. match m1: RuntimeError: down",
+                     "  every request failed for this season; stopping. Fix the cause above, then run "
+                     "`uv run ucl fetch` again."]

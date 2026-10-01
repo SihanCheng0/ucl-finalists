@@ -31,8 +31,10 @@ class Dataset:
 
 
 def fetch_all(client: UefaClient, seasons: list[int] = config.SEASONS,
-              log: Callable[[str], None] = print) -> dict[str, str]:
-    """Fill the raw cache. Returns {match id: reason} for stats that failed after retries."""
+              log: Callable[[str], None] = print,
+              progress: Callable[[dict], None] | None = None) -> dict[str, str]:
+    """Fill the raw cache. Returns {match id: reason} for stats that failed after retries. `progress` gets one
+    {season, matches, phase_matches, missing, failed} per season, including a season that stops the fetch."""
     failed_all: dict[str, str] = {}
     for season in seasons:
         matches = labels.match_rows(client.matches(season), season)
@@ -45,6 +47,9 @@ def fetch_all(client: UefaClient, seasons: list[int] = config.SEASONS,
         if failed:
             match_id, reason = next(iter(failed.items()))
             log(f"  e.g. match {match_id}: {reason}")
+        if progress is not None:
+            progress({"season": season, "matches": len(matches), "phase_matches": len(phase_ids),
+                      "missing": missing, "failed": len(failed)})
         failed_all.update(failed)
         if phase_ids and len(failed) == len(phase_ids):
             log("  every request failed for this season; stopping. Fix the cause above, then run `uv run ucl fetch` again.")
