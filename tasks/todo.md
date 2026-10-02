@@ -1,7 +1,7 @@
 # UCL Finalists — task list
 
-Plan: ~/docs/superpowers/plans/2026-10-01-ucl-finalists.md
-Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
+Plan: docs/plans/2026-10-01-ucl-finalists.md
+Spec: docs/specs/2026-10-01-ucl-finalists-design.md
 
 - [x] Chunk 1: scaffold, config, UEFA client
 - [x] Chunk 2: labels, features, dataset
@@ -59,9 +59,9 @@ Spec: ~/docs/superpowers/specs/2026-10-01-ucl-finalists-design.md
   - Inter 2022-23 says "12.9% of their total plays" about long passes.
 - **Not in this plan.** Publishing is done by hand, not by the pipeline. The interactive dashboard (UCL Lab) has its own spec and plans.
 
-# UCL Lab — local dashboard (spec: ~/docs/superpowers/specs/2026-10-01-ucl-lab-dashboard-design.md, rev 3)
+# UCL Lab — local dashboard (spec: docs/specs/2026-10-01-ucl-lab-dashboard-design.md, rev 3)
 
-Plan A: ~/docs/superpowers/plans/2026-10-01-ucl-lab-plan-a.md (chunks 1–5 reviewed; the frontend and Plan B were
+Plan A: docs/plans/2026-10-01-ucl-lab-plan-a.md (chunks 1–5 reviewed; the frontend and Plan B were
 built straight from the spec overnight, as asked).
 
 - [x] CLI characterization tests (tests/golden/cli), progress hooks, stages.py shared by the CLI and the web runner
@@ -88,3 +88,19 @@ built straight from the spec overnight, as asked).
   event stream; the SPA page served uncached.
 - Not done: the live season's model card (the model only scores completed seasons, by design); the live stage's
   requests aren't counted in the run counters (its client is the live service's own).
+
+# Shared GitHub repo for the team (SihanCheng0/ucl-finalists, private)
+
+- [x] Analyze replays saved answers before touching LM Studio, so a clone with the committed cache rebuilds the
+      write-ups offline (`analyst.run`: offline replay first, `ensure_ready` only on a cache miss)
+- [x] Specs and plans copied into `docs/`; light-mode screenshots in `docs/images/` (`scripts/screenshots.py`)
+- [x] README for teammates, `docs/how-it-works.md`, `docs/README.md`, `CONTRIBUTING.md`, `Makefile`
+- [x] CI: Python tests, frontend tests and build (`.github/workflows/ci.yml`)
+- [x] Data committed: `data/raw` (2,110 UEFA responses, 267 MB), `data/llm_cache` (165 answers), processed data, `out/`
+
+## Review (GitHub repo)
+
+- Replay checked on the real data with LM Studio blocked (no server start, no request): status ok, all 11 write-ups
+  identical to `out/analysis.json`.
+- Squad screen keeps the selected player in the URL (`&p=`), so a link opens straight to a player.
+- `out/report*.html` regenerated from the committed `analysis.json`; `uv run ucl report` reproduces them byte for byte.
