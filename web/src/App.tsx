@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { api } from "./api";
+import { AboutDrawer } from "./components/AboutDrawer";
 import { TopNav } from "./components/TopNav";
 import { useApi } from "./hooks/useApi";
 import { useChecks } from "./hooks/useChecks";
@@ -16,6 +17,9 @@ export function App() {
   const dataVersion = pipeline.view.finished; // every finished run may have rewritten the outputs
   const meta = useApi(() => api.meta(), [dataVersion]);
   const checks = useChecks(dataVersion);
+  const [about, setAbout] = useState(false);
+  const openAbout = useCallback(() => setAbout(true), []);
+  const closeAbout = useCallback(() => setAbout(false), []);
   const liveLoading = meta.data?.live_status === "loading";
   useEffect(() => {
     if (!liveLoading) return;
@@ -40,12 +44,14 @@ export function App() {
   } else if (route.screen === "squad") {
     content = <SquadScreen meta={meta.data} route={route} navigate={navigate} pipeline={pipeline} />;
   } else {
-    content = <ExploreScreen meta={meta.data} route={route} navigate={navigate} dataVersion={dataVersion} />;
+    content = <ExploreScreen meta={meta.data} route={route} navigate={navigate} dataVersion={dataVersion} onAbout={openAbout} />;
   }
   return (
     <div className="app">
-      <TopNav screen={route.screen} view={pipeline.view} connected={pipeline.connected} checks={checks.data} />
+      <TopNav screen={route.screen} view={pipeline.view} connected={pipeline.connected} checks={checks.data}
+              onAbout={openAbout} />
       <main>{content}</main>
+      {about && meta.data && <AboutDrawer meta={meta.data} onClose={closeAbout} />}
     </div>
   );
 }

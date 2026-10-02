@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Screen } from "../lib/route";
 import type { PipelineView } from "../lib/pipelineState";
 import type { CheckReport } from "../types";
-import { AutoIcon, Mark, MoonIcon, SunIcon } from "./Icons";
+import { AutoIcon, InfoIcon, Mark, MoonIcon, SunIcon } from "./Icons";
 
 const TABS: { screen: Screen; label: string }[] = [
   { screen: "pipeline", label: "Pipeline" },
@@ -42,8 +42,8 @@ function healthLabel(checks: CheckReport | null): { tone: string; text: string }
   return { tone: "done", text: "All checks passed" };
 }
 
-export function TopNav({ screen, view, connected, checks }: {
-  screen: Screen; view: PipelineView; connected: boolean; checks: CheckReport | null;
+export function TopNav({ screen, view, connected, checks, onAbout }: {
+  screen: Screen; view: PipelineView; connected: boolean; checks: CheckReport | null; onAbout: () => void;
 }) {
   const [theme, setTheme] = useState<Theme>(storedTheme);
   useEffect(() => {
@@ -77,6 +77,9 @@ export function TopNav({ screen, view, connected, checks }: {
           <a className="run-pill" href="#/pipeline" title="Pipeline status">
             <span className={`dot ${run.tone}`} /><span className="text">{run.text}</span>
           </a>
+          <button className="about-button" type="button" onClick={onAbout} aria-haspopup="dialog">
+            <InfoIcon /><span className="text">About</span>
+          </button>
           <button className="icon-button" type="button" onClick={() => setTheme(NEXT[theme])}
                   aria-label={`Theme: ${theme}. Switch to ${NEXT[theme]}`} title={`Theme: ${theme}`}>
             <ThemeIcon />

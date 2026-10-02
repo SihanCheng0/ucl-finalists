@@ -6,7 +6,7 @@ const GROUP_COLOR: Record<string, string> = { pedigree: "var(--s1)", results: "v
 const GROUP_NAME: Record<string, string> = { pedigree: "Pedigree", results: "Results", style: "Style" };
 
 /** What the model learned, before any team is picked. */
-export function Overview({ summary }: { summary: Summary }) {
+export function Overview({ summary, onAbout }: { summary: Summary; onAbout: () => void }) {
   const m = summary.metrics;
   const top = Math.max(...summary.drivers.map((d) => d.importance), 0.01);
   const ci = (lo: number, hi: number, f: (v: number) => string) => `95% interval ${f(lo)} to ${f(hi)}`;
@@ -16,6 +16,7 @@ export function Overview({ summary }: { summary: Summary }) {
         <h1>What makes a Champions League finalist?</h1>
         <p>Fifteen seasons of group and league-phase stats, a model tested on seasons it never saw, and a local AI
           that writes up what it found. Search a club to explore one season, or compare two.</p>
+        <p><button className="link-button" type="button" onClick={onAbout} aria-haspopup="dialog">How it works, step by step</button></p>
       </div>
       <div className="metric-grid">
         <div className="panel metric">

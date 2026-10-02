@@ -68,8 +68,8 @@ function TeamView({ profile, meta, navigate }: { profile: Profile; meta: Meta; n
   );
 }
 
-export function ExploreScreen({ meta, route, navigate, dataVersion }: {
-  meta: Meta; route: Route; navigate: (route: Route) => void; dataVersion: number;
+export function ExploreScreen({ meta, route, navigate, dataVersion, onAbout }: {
+  meta: Meta; route: Route; navigate: (route: Route) => void; dataVersion: number; onAbout: () => void;
 }) {
   const teamId = route.params.t ?? null;
   const season = Number(route.params.s) || null;
@@ -85,7 +85,7 @@ export function ExploreScreen({ meta, route, navigate, dataVersion }: {
       </div>
       {profile.error && <p className="error-note">{profile.error.message}</p>}
       {profile.data && <TeamView profile={profile.data} meta={meta} navigate={navigate} />}
-      {!teamId && summary.data && <Overview summary={summary.data} />}
+      {!teamId && summary.data && <Overview summary={summary.data} onAbout={onAbout} />}
       {!teamId && summary.error && <p className="error-note">{summary.error.message}</p>}
     </>
   );

@@ -14,6 +14,7 @@ export const SunIcon = (p: SVGProps<SVGSVGElement>) => <svg {...base} {...p}><ci
 export const MoonIcon = (p: SVGProps<SVGSVGElement>) => <svg {...base} {...p}><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" /></svg>;
 export const AutoIcon = (p: SVGProps<SVGSVGElement>) => <svg {...base} {...p}><circle cx="12" cy="12" r="8" /><path d="M12 4a8 8 0 0 0 0 16Z" fill="currentColor" /></svg>;
 export const CloseIcon = CrossIcon;
+export const InfoIcon = (p: SVGProps<SVGSVGElement>) => <svg {...base} {...p}><circle cx="12" cy="12" r="9" /><path d="M12 11v5.5M12 7.5v.5" /></svg>;
 
 /** The starball, reduced to a ring of eight points: a nod to the competition, not its mark. */
 export const Mark = (p: SVGProps<SVGSVGElement>) => (

@@ -50,6 +50,9 @@ uv run ucl web                           # serves http://127.0.0.1:8787 and open
 - **Squad:** the squad on the pitch. Circles grow with minutes and glow with the chosen stat (per 90 for
   counts and distance). Pick a player for this season's numbers and every cached season at any club.
 
+**About** (top bar, or "How it works" on the overview) slides in a plain-language walk through the whole
+process: the five pipeline stages, how to read each screen, what the model found and what to keep in mind.
+
 The live season is built in memory from UEFA's feeds and refreshed in the background; it is never written
 to `data/processed` or modelled. Squads are cached in `data/raw/players/`.
 
