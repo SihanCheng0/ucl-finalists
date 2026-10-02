@@ -1,5 +1,7 @@
 # UCL Finalists
 
+[![CI](https://github.com/SihanCheng0/ucl-finalists/actions/workflows/ci.yml/badge.svg)](https://github.com/SihanCheng0/ucl-finalists/actions/workflows/ci.yml)
+
 What do Champions League finalists have in common? This project collects 15 seasons of UEFA data (2011-12 to
 2025-26) and tests which first-phase numbers go with deep knockout runs, on seasons the model never saw. A local
 LLM (Qwen 3.5 in LM Studio) then writes a scouting report on each of the 10 finalists of 2022 to 2026. **UCL Lab**,
@@ -158,3 +160,9 @@ standings. CI runs both test suites and the frontend build on every pull request
   [implementation plan](docs/plans/2026-10-01-ucl-finalists.md)
 - [UCL Lab design](docs/specs/2026-10-01-ucl-lab-dashboard-design.md) and its
   [implementation plan](docs/plans/2026-10-01-ucl-lab-plan-a.md)
+
+## License
+
+The code is released under the [MIT License](LICENSE). The UEFA data in `data/raw/` comes from UEFA's public feeds
+and isn't covered by that license: UEFA's terms apply to it. Player photos load from UEFA's servers and aren't part of
+the repo.

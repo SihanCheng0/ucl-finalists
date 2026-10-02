@@ -89,7 +89,7 @@ built straight from the spec overnight, as asked).
 - Not done: the live season's model card (the model only scores completed seasons, by design); the live stage's
   requests aren't counted in the run counters (its client is the live service's own).
 
-# Shared GitHub repo for the team (SihanCheng0/ucl-finalists, private)
+# Shared GitHub repo for the team (SihanCheng0/ucl-finalists, public, code under MIT)
 
 - [x] Analyze replays saved answers before touching LM Studio, so a clone with the committed cache rebuilds the
       write-ups offline (`analyst.run`: offline replay first, `ensure_ready` only on a cache miss)
@@ -104,3 +104,5 @@ built straight from the spec overnight, as asked).
   identical to `out/analysis.json`.
 - Squad screen keeps the selected player in the URL (`&p=`), so a link opens straight to a player.
 - `out/report*.html` regenerated from the committed `analysis.json`; `uv run ucl report` reproduces them byte for byte.
+- Made public on 2026-10-02 at the user's request. Before that, the history was rewritten so every commit uses the
+  GitHub noreply address instead of a personal email, and the code got an MIT license (UEFA's data excluded).
