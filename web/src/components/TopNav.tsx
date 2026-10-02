@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Screen } from "../lib/route";
 import type { PipelineView } from "../lib/pipelineState";
+import type { CheckReport } from "../types";
 import { AutoIcon, Mark, MoonIcon, SunIcon } from "./Icons";
 
 const TABS: { screen: Screen; label: string }[] = [
@@ -33,7 +34,17 @@ function runLabel(view: PipelineView, connected: boolean): { tone: string; text:
   return { tone: "done", text: "Idle" };
 }
 
-export function TopNav({ screen, view, connected }: { screen: Screen; view: PipelineView; connected: boolean }) {
+function healthLabel(checks: CheckReport | null): { tone: string; text: string } | null {
+  if (!checks) return null;
+  const { warn, fail } = checks.summary;
+  if (fail) return { tone: "failed", text: `${fail} ${fail === 1 ? "problem" : "problems"} to fix` };
+  if (warn) return { tone: "warning", text: `${warn} ${warn === 1 ? "check" : "checks"} to look at` };
+  return { tone: "done", text: "All checks passed" };
+}
+
+export function TopNav({ screen, view, connected, checks }: {
+  screen: Screen; view: PipelineView; connected: boolean; checks: CheckReport | null;
+}) {
   const [theme, setTheme] = useState<Theme>(storedTheme);
   useEffect(() => {
     if (theme === "system") delete document.documentElement.dataset.theme;
@@ -46,6 +57,7 @@ export function TopNav({ screen, view, connected }: { screen: Screen; view: Pipe
     }
   }, [theme]);
   const run = runLabel(view, connected);
+  const health = healthLabel(checks);
   const ThemeIcon = theme === "light" ? SunIcon : theme === "dark" ? MoonIcon : AutoIcon;
   return (
     <header className="topbar">
@@ -57,6 +69,11 @@ export function TopNav({ screen, view, connected }: { screen: Screen; view: Pipe
           ))}
         </nav>
         <div className="topbar-end">
+          {health && (
+            <a className="run-pill" href="#/pipeline" title="Checks before a run: LM Studio, UEFA and the outputs">
+              <span className={`dot ${health.tone}`} /><span className="text">{health.text}</span>
+            </a>
+          )}
           <a className="run-pill" href="#/pipeline" title="Pipeline status">
             <span className={`dot ${run.tone}`} /><span className="text">{run.text}</span>
           </a>

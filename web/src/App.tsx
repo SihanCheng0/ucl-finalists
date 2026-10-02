@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { api } from "./api";
 import { TopNav } from "./components/TopNav";
 import { useApi } from "./hooks/useApi";
+import { useChecks } from "./hooks/useChecks";
 import { useHashRoute } from "./hooks/useHashRoute";
 import { usePipeline } from "./hooks/usePipeline";
 import { CompareScreen } from "./screens/CompareScreen";
@@ -14,6 +15,7 @@ export function App() {
   const pipeline = usePipeline();
   const dataVersion = pipeline.view.finished; // every finished run may have rewritten the outputs
   const meta = useApi(() => api.meta(), [dataVersion]);
+  const checks = useChecks(dataVersion);
   const liveLoading = meta.data?.live_status === "loading";
   useEffect(() => {
     if (!liveLoading) return;
@@ -28,7 +30,7 @@ export function App() {
   } else if (!meta.data) {
     content = <div className="empty"><p>Loading…</p></div>;
   } else if (route.screen === "pipeline") {
-    content = <PipelineScreen meta={meta.data} pipeline={pipeline} />;
+    content = <PipelineScreen meta={meta.data} pipeline={pipeline} checks={checks} />;
   } else if (!meta.data.ready) {
     content = <div className="empty"><h2>Run the pipeline first</h2>
       <p>{meta.data.problems.join(". ") || "Processed data or model outputs are missing."}</p>
@@ -42,7 +44,7 @@ export function App() {
   }
   return (
     <div className="app">
-      <TopNav screen={route.screen} view={pipeline.view} connected={pipeline.connected} />
+      <TopNav screen={route.screen} view={pipeline.view} connected={pipeline.connected} checks={checks.data} />
       <main>{content}</main>
     </div>
   );

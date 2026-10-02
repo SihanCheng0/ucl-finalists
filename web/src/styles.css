@@ -296,6 +296,30 @@ table.data tbody tr { cursor: pointer; }
 table.data tbody tr:hover td { background: var(--sunk); }
 .table-scroll { overflow-x: auto; }
 
+/* ---------- checks ---------- */
+.checks { padding: 14px 16px; display: grid; gap: 12px; }
+.checks-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 20px; }
+.checks-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.check-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px 28px; }
+.check-group { display: grid; gap: 6px; align-content: start; }
+.check-group h4 { font-size: 13px; color: var(--ink-2); padding-bottom: 4px; border-bottom: 1px solid var(--hair); }
+.check-row { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px; align-items: start; font-size: 13.5px; }
+.check-label { font-weight: 600; }
+.check-fix { margin-top: 2px; font-size: 13px; color: var(--ink-2); }
+.check-row.fail .check-fix { color: var(--bad-ink); }
+.check-row.warn .check-fix { color: var(--warn-ink); }
+.check-fix code, .model-test code { font: 12px var(--font-mono); background: var(--sunk); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+.check-mark { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font: 700 11px var(--font-display); }
+.check-mark svg { width: 12px; height: 12px; }
+.check-mark.ok { background: color-mix(in oklab, var(--good) 16%, transparent); color: var(--good-ink); }
+.check-mark.warn { background: color-mix(in oklab, var(--warn) 24%, transparent); color: var(--warn-ink); }
+.check-mark.fail { background: color-mix(in oklab, var(--neg) 18%, transparent); color: var(--bad-ink); }
+.check-mark.info { background: var(--sunk); color: var(--muted); }
+.model-test { font-size: 13.5px; padding: 9px 12px; border-radius: 8px; }
+.model-test.ok { background: color-mix(in oklab, var(--good) 12%, transparent); color: var(--good-ink); }
+.model-test.fail { background: color-mix(in oklab, var(--neg) 10%, transparent); color: var(--bad-ink); }
+.model-test.busy { background: var(--sunk); color: var(--ink-2); }
+
 /* ---------- pipeline ---------- */
 .rail { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)) repeat(2, minmax(0, 0.85fr)); gap: 0; position: relative; }
 .stage { padding: 0 12px 0 0; display: grid; gap: 8px; align-content: start; position: relative; }

@@ -44,6 +44,12 @@ class SpaFiles(StaticFiles):
         return response
 
 
+class ModelTestBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    load: bool = True  # load the model first, as the analyze stage would
+
+
 class RunBody(BaseModel):
     model_config = ConfigDict(extra="forbid")  # a typo like "stage" must not start every stage
 
@@ -184,6 +190,18 @@ def create_app(services: Services, dist_dir: Path | None = None, heartbeat: floa
             raise ApiError(409, "run_in_progress", str(exc)) from exc
         except BadRun as exc:
             raise ApiError(422, "bad_run", str(exc)) from exc
+
+    @app.get("/api/checks")
+    def run_checks():
+        from . import checks
+
+        return checks.run_checks(services, services.llm_model)
+
+    @app.post("/api/checks/model")
+    def try_model(body: ModelTestBody):
+        from . import checks
+
+        return checks.try_model(services.llm_model, load=body.load)
 
     @app.get("/api/pipeline/state")
     def pipeline_state():

@@ -91,3 +91,12 @@ export type PipelineEvent =
   | (EventBase & { type: "log"; data: { level: LogLevel; text: string } })
   | (EventBase & { type: "done"; data: { status: "done" | "warning"; stages: { name: string; status: Status }[] } })
   | (EventBase & { type: "run_failed"; data: { stage: string | null; errors: string[] } });
+
+export type CheckStatus = "ok" | "warn" | "fail" | "info";
+export interface CheckItem { id: string; group: string; label: string; status: CheckStatus; detail: string; fix: string }
+export interface CheckReport {
+  checked_at: string; model: string; summary: Record<CheckStatus, number>; checks: CheckItem[];
+}
+export interface ModelTest {
+  ok: boolean; detail: string; reply: string | null; load_seconds: number | null; answer_seconds: number | null;
+}

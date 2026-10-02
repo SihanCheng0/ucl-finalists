@@ -26,6 +26,7 @@ class Services:
     runner: PipelineRunner
     live: object | None = None  # LiveService (live.py)
     players: object | None = None  # PlayerService (players.py)
+    llm_model: str = config.LLM_MODEL
 
     def live_state(self):
         return self.live.current() if self.live is not None else None
@@ -218,4 +219,4 @@ def build_services(processed_dir: Path = config.PROCESSED_DIR, out_dir: Path = c
                             missing_inputs=lambda names: missing_inputs(names, processed_dir, out_dir))
     if start_live:
         live.refresh_in_background()
-    return Services(store, bus, runner, live, players)
+    return Services(store, bus, runner, live, players, llm_model)

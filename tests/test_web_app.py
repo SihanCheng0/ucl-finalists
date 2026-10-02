@@ -288,3 +288,19 @@ def test_another_site_cannot_start_a_run_or_reach_the_api(outputs):
     with TestClient(create_app(services), base_url="http://evil.test") as rebound:
         assert rebound.get("/api/meta").status_code == 400  # DNS rebinding: a foreign Host header is refused
     assert services.runner.state()["run_id"] is None
+
+
+def test_the_checks_routes_run_the_checks_and_try_the_model(outputs, monkeypatch):
+    from ucl.web import checks
+
+    seen = []
+    monkeypatch.setattr(checks, "run_checks", lambda services, model: seen.append(("checks", model)) or {"summary": {}})
+    monkeypatch.setattr(checks, "try_model", lambda model, load: seen.append(("try", model, load)) or {"ok": True})
+    services = make_services(*outputs)
+    services.llm_model = "other/model"
+    with local(create_app(services)) as client:
+        assert client.get("/api/checks").json() == {"summary": {}}
+        assert client.post("/api/checks/model", json={}).json() == {"ok": True}
+        assert client.post("/api/checks/model", json={"load": False}).status_code == 200
+        assert error(client.post("/api/checks/model")) == (422, "invalid_request")  # JSON only, like starting a run
+    assert seen == [("checks", "other/model"), ("try", "other/model", True), ("try", "other/model", False)]

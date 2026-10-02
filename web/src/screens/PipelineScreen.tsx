@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { Checks } from "../components/Checks";
 import { CounterStrip } from "../components/CounterStrip";
 import { EventLog } from "../components/EventLog";
 import { StageRail } from "../components/StageRail";
+import type { Loaded } from "../hooks/useApi";
+import { localAiState } from "../hooks/useChecks";
 import type { Pipeline } from "../hooks/usePipeline";
 import { ago } from "../lib/format";
-import type { Meta } from "../types";
+import type { CheckReport, Meta } from "../types";
 
-export function PipelineScreen({ meta, pipeline }: { meta: Meta; pipeline: Pipeline }) {
+export function PipelineScreen({ meta, pipeline, checks }: { meta: Meta; pipeline: Pipeline; checks: Loaded<CheckReport> }) {
   const { view, start, startError, connected } = pipeline;
   const [skipAi, setSkipAi] = useState(false);
   const [refreshLive, setRefreshLive] = useState(false);
@@ -18,6 +21,7 @@ export function PipelineScreen({ meta, pipeline }: { meta: Meta; pipeline: Pipel
   }
   const running = state.running;
   const outcome = view.outcome;
+  const ai = localAiState(checks.data);
   return (
     <>
       <div className="section-head">
@@ -28,6 +32,7 @@ export function PipelineScreen({ meta, pipeline }: { meta: Meta; pipeline: Pipel
         </div>
         {!connected && <span className="chip">Reconnecting to the event stream…</span>}
       </div>
+      <Checks checks={checks} />
       <section className="panel controls" aria-label="Run controls">
         <button className="button primary" type="button" disabled={running}
                 onClick={() => start({ skip_ai: skipAi, refresh_live: refreshLive && hasLive })}>Run all stages</button>
@@ -35,6 +40,14 @@ export function PipelineScreen({ meta, pipeline }: { meta: Meta; pipeline: Pipel
         {hasLive && <label className="check"><input type="checkbox" checked={refreshLive} onChange={(e) => setRefreshLive(e.target.checked)} />Also refresh the live season</label>}
         {hasPlayers && <button className="button" type="button" disabled={running} onClick={() => start({ stages: ["players"] })}>Build player index</button>}
         <span className="note">The AI step needs LM Studio open. Inputs that haven't changed replay from the cache, so a rerun takes seconds.</span>
+        {!ai.ready && !skipAi && (
+          <p className={ai.blocking ? "error-note" : "warn-note"} role="status">
+            {ai.note} {ai.blocking
+              ? "The AI step would stop with a warning, so tick Skip AI write-ups or fix it first (see Before you run)."
+              : "The AI step starts LM Studio and loads the model when it gets there, which adds a minute or two."}
+            {ai.blocking && <> <button className="button small" type="button" onClick={() => setSkipAi(true)}>Skip AI this time</button></>}
+          </p>
+        )}
         {startError && <p className="error-note" role="alert">{startError}</p>}
       </section>
       <StageRail stages={state.stages} meta={meta.stages} running={running}

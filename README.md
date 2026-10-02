@@ -31,6 +31,12 @@ uv run ucl web                           # serves http://127.0.0.1:8787 and open
 `ucl web` listens on 127.0.0.1 only. `--port N` changes the port, `--no-open` skips the browser and
 `--llm-model KEY` picks the LM Studio model for the analyze stage.
 
+- **Before you run:** the top of the Pipeline screen checks everything a run depends on, in under a
+  second: the `lms` command, the LM Studio server, whether the model is downloaded and loaded with the
+  16,384-token context the write-ups need, the four UEFA feeds, the cached data and every pipeline output,
+  the live season, the player index and the dashboard build. Anything that isn't ready says how to fix it.
+  "Test the local model" loads the model if needed and asks it one question, so you know it really answers.
+  A problem also shows in the top bar, and the run controls offer to skip the AI step when the model can't run.
 - **Pipeline:** run every stage, or one at a time, and watch it live: the stage rail, counters (UEFA requests,
   seasons, folds, feature sets, write-ups, squads) and the event log. "Skip AI write-ups" runs without
   LM Studio. "Also refresh the live season" refetches 2026-27. "Build player index" fetches every squad since
