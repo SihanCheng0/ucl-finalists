@@ -1,0 +1,10 @@
+# Cached UEFA responses and saved LLM answers: large JSON, shown as binary in diffs and collapsed on GitHub
+data/raw/** -diff linguist-generated
+data/llm_cache/** -diff linguist-generated
+
+# Pipeline outputs, lockfiles and golden files: diffable, but collapsed on GitHub
+data/processed/** linguist-generated
+out/** linguist-generated
+tests/golden/** linguist-generated
+uv.lock linguist-generated
+web/package-lock.json linguist-generated
