@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { api } from "../api";
 import { Pitch } from "../components/Pitch";
 import { PlayerPanel } from "../components/PlayerPanel";
@@ -43,20 +42,19 @@ export function SquadScreen({ meta, route, navigate, pipeline }: {
   const stats = meta.player_stats.filter((s) => s.colourable);
   const stat = stats.find((s) => s.key === route.params.stat) ?? stats[0];
   const squad = useApi(teamId && season ? () => api.squad(teamId, season) : null, [teamId, season]);
-  const [selected, setSelected] = useState<string | null>(null);
   const players = squad.data?.players ?? [];
-  useEffect(() => {
-    if (selected && !players.some((p) => p.player_id === selected)) setSelected(null);
-  }, [players, selected]);
   const params = (changes: Record<string, string>) => navigate({ screen: "squad", params: { ...route.params, ...changes } });
-  const chosen = players.find((p) => p.player_id === selected) ?? null;
+  // the selected player lives in the URL (&p=), so a link can open straight to a player
+  const chosen = players.find((p) => p.player_id === route.params.p) ?? null;
+  const selected = chosen?.player_id ?? null;
+  const setSelected = (playerId: string | null) => params({ p: playerId ?? "" });
   const listed = squad.data?.minutes_published ? players.filter((p) => p.minutes > 0) : players;
   if (!stat) return <div className="empty"><h2>Squads aren't available</h2><p>This server has no player data.</p></div>;
   return (
     <>
       <div className="squad-bar">
         <TeamPicker value={teamId && season ? { teamId, season } : null} label="Club and season"
-                    onChange={(pick) => params({ t: pick.teamId, s: String(pick.season) })} />
+                    onChange={(pick) => params({ t: pick.teamId, s: String(pick.season), p: "" })} />
         <div className="segmented" role="group" aria-label="Colour the players by">
           {stats.map((s) => (
             <button key={s.key} type="button" aria-pressed={s.key === stat.key} onClick={() => params({ stat: s.key })}>{s.label}</button>
