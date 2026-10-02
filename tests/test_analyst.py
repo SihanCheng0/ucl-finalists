@@ -45,6 +45,48 @@ def test_run_writes_eleven_normalised_narratives(built, tmp_path):
     assert loaded.narratives["synthesis"].text == analysis.narratives["synthesis"].text
 
 
+class Offline(FakeLLM):
+    """LM Studio is down: only saved answers can be given."""
+
+    def ensure_ready(self):
+        self.asked_ready = True
+        return False
+
+
+def test_a_rerun_with_every_answer_saved_replays_without_lm_studio(built):
+    ds, res = built
+    first = FakeLLM([team_reply()] * 10 + [synth_reply()])
+    before = analyst.run(ds.team_seasons, ds.finals, res, llm=first, log=lambda _: None)
+    offline = Offline([])
+    offline.cache = first.cache
+    lines = []
+    again = analyst.run(ds.team_seasons, ds.finals, res, llm=offline, log=lines.append)
+    assert again.status == "ok" and not hasattr(offline, "asked_ready") and offline.requests == []
+    assert again.narratives == before.narratives
+    assert lines[0].startswith("Every answer was saved") and len(lines) == 12
+
+
+def test_one_new_question_needs_lm_studio_and_nothing_is_asked_twice(built):
+    ds, res = built
+    first = FakeLLM([team_reply()] * 10 + [synth_reply()])
+    analyst.run(ds.team_seasons, ds.finals, res, llm=first, log=lambda _: None)
+    synthesis = next(m for m in first.requests if m[1]["content"].startswith(analyst.SYNTH_INSTRUCTIONS))
+    partial = dict(first.cache)
+    del partial[json.dumps(synthesis, sort_keys=True)]
+
+    offline = Offline([])
+    offline.cache = dict(partial)
+    lines = []
+    down = analyst.run(ds.team_seasons, ds.finals, res, llm=offline, log=lines.append)
+    assert down.status == "unavailable" and offline.asked_ready and offline.requests == []
+    assert lines == ["Some answers aren't saved yet, so LM Studio is needed (loading the model can take a few minutes)"]
+
+    online = FakeLLM([synth_reply()])  # only the missing answer is asked for
+    online.cache = dict(partial)
+    analysis = analyst.run(ds.team_seasons, ds.finals, res, llm=online, log=lambda _: None)
+    assert analysis.status == "ok" and len(online.requests) == 1 and len(analysis.narratives) == 11
+
+
 def test_load_without_a_file_is_skipped(tmp_path):
     assert analyst.load(tmp_path / "missing.json").status == "skipped"
 
@@ -123,7 +165,9 @@ class SaysGroupStage(FakeLLM):
     def __init__(self):
         super().__init__([])
 
-    def chat(self, messages):
+    def chat(self, messages, offline=False):
+        if offline:  # nothing is saved, so the replay stops at once
+            return super().chat(messages, offline=True)
         self.requests.append(messages)
         if "## Why the best teams win" in messages[1]["content"]:
             return ChatResult(synth_reply().content.replace("\nx\n", "\nThe group/league-phase stats.\n"), "stop")

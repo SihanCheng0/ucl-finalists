@@ -118,8 +118,6 @@ def stage_registry(store, llm_model: str = config.LLM_MODEL,
         return StageOutcome("done", f"Spearman {metrics['spearman_mean']:.2f}, AUC {metrics['auc']:.2f}")
 
     def analyze(ctx: StageContext) -> StageOutcome:
-        ctx.log("Checking LM Studio; loading the model can take a few minutes")
-
         def log(line: str) -> None:
             ctx.log(line.strip())
             if NARRATIVE_LINE.match(line):

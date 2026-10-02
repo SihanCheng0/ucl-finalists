@@ -27,6 +27,10 @@ class LLMError(Exception):
     """A chat call failed: network, timeout, HTTP error or malformed response."""
 
 
+class CacheMiss(Exception):
+    """An offline chat found no saved answer for its request. Not an LLMError: nothing failed, nothing was asked."""
+
+
 @dataclass(frozen=True)
 class ChatResult:
     content: str
@@ -116,14 +120,17 @@ class LMStudio:
         self.reason: str | None = None  # why ensure_ready last said no
         self._lms_error = ""  # first line lms printed (or why it could not run) on its last failed call
 
-    def chat(self, messages: list[dict]) -> ChatResult:
-        """Every response, valid or not, is cached under its full request; failures are not."""
+    def chat(self, messages: list[dict], offline: bool = False) -> ChatResult:
+        """Every response, valid or not, is cached under its full request; failures are not. `offline` answers from
+        the cache only and raises CacheMiss instead of asking the model."""
         body = {"model": self.model, "messages": messages, **config.LLM_PARAMS}
         key = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
         path = self.cache_dir / f"{key}.json"
         cached = _read_cache(path)
         if cached is not None:
             return cached
+        if offline:
+            raise CacheMiss(key)
         try:
             choice = self._post(f"{self.base_url}/chat/completions", body, config.LLM_TIMEOUT_S)["choices"][0]
             content = choice["message"].get("content")

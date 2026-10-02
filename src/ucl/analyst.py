@@ -12,7 +12,7 @@ import pandas as pd
 from . import config
 from .facts import build_facts
 from .grounding import check_grounding, normalize_headings, strip_think, validate_output
-from .llm import LLMError, LMStudio
+from .llm import CacheMiss, LLMError, LMStudio
 from .model import ModelResults
 
 TEAM_HEADINGS = ["How they got there", "Would the model have picked them?", "Weak spots"]
@@ -269,21 +269,17 @@ def _messages(instructions: str, sheet: dict) -> list[dict]:
     ]
 
 
-def run(
-    team_seasons: pd.DataFrame,
-    finals: pd.DataFrame,
-    results: ModelResults,
-    llm_model: str = config.LLM_MODEL,
-    enabled: bool = True,
-    llm=None,
-    log: Callable[[str], None] = print,
-) -> Analysis:
-    if not enabled:
-        return Analysis("skipped", llm_model)
-    llm = llm or LMStudio(model=llm_model)
-    if not llm.ensure_ready():
-        return Analysis("unavailable", llm_model, reason=getattr(llm, "reason", None))
-    sheets = build_facts(team_seasons, finals, results)
+class _Replay:
+    """Answers from saved responses only, raising CacheMiss for anything new."""
+
+    def __init__(self, llm):
+        self.llm = llm
+
+    def chat(self, messages: list[dict]):
+        return self.llm.chat(messages, offline=True)
+
+
+def _write_all(llm, sheets: dict[str, dict], log: Callable[[str], None]) -> dict[str, Narrative]:
     narratives: dict[str, Narrative] = {}
     for key, sheet in sheets.items():
         synth = key == "synthesis"
@@ -296,7 +292,37 @@ def run(
                                     league_format=league_format)
         narratives[key] = narrative
         log(f"  {key}: {narrative.status}, {narrative.calls} call(s), {len(narrative.unsupported)} unsupported")
-    return Analysis("ok", llm_model, narratives, sheets)
+    return narratives
+
+
+def run(
+    team_seasons: pd.DataFrame,
+    finals: pd.DataFrame,
+    results: ModelResults,
+    llm_model: str = config.LLM_MODEL,
+    enabled: bool = True,
+    llm=None,
+    log: Callable[[str], None] = print,
+) -> Analysis:
+    """Replay first: when every question has a saved answer, the write-ups are rebuilt without LM Studio. Only a new
+    question (changed facts, another model) starts the server and loads the model."""
+    if not enabled:
+        return Analysis("skipped", llm_model)
+    llm = llm or LMStudio(model=llm_model)
+    sheets = build_facts(team_seasons, finals, results)
+    replayed: list[str] = []
+    try:
+        narratives = _write_all(_Replay(llm), sheets, replayed.append)
+    except CacheMiss:
+        log("Some answers aren't saved yet, so LM Studio is needed (loading the model can take a few minutes)")
+    else:
+        log("Every answer was saved, so the write-ups replay without LM Studio")
+        for line in replayed:
+            log(line)
+        return Analysis("ok", llm_model, narratives, sheets)
+    if not llm.ensure_ready():
+        return Analysis("unavailable", llm_model, reason=getattr(llm, "reason", None))
+    return Analysis("ok", llm_model, _write_all(llm, sheets, log), sheets)
 
 
 def save(analysis: Analysis, path: Path = config.OUT_DIR / "analysis.json") -> None:

@@ -258,7 +258,7 @@ def report_check(snapshot, out_dir: Path) -> Check:
 def llm_cache_check(cache_dir: Path) -> Check:
     saved = len(list(cache_dir.glob("*.json"))) if cache_dir.exists() else 0
     return Check("llm_cache", "Pipeline outputs", "Saved AI answers", INFO,
-                 f"{saved:,} saved: write-ups whose facts haven't changed replay without LM Studio")
+                 f"{saved:,} saved: if no fact has changed, analyze replays them without LM Studio")
 
 
 # --- Live season and players ---

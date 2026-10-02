@@ -120,8 +120,8 @@ def test_analyze_counts_narratives_and_warns_about_any_it_could_not_write(monkey
     assert stage["message"] == ("1 write-up could not be written this time "
                                 "(earlier text kept where there was one): synthesis")
     logs = [e["text"] for e in events_of(bus, "log")]
-    assert logs[0] == "Checking LM Studio; loading the model can take a few minutes"
-    assert "2026-52280: ok, 2 call(s), 0 unsupported" in logs  # stripped of the CLI's indent
+    assert logs[:2] == ["2026-52280: ok, 2 call(s), 0 unsupported",  # stripped of the CLI's indent
+                        "synthesis: unavailable, 3 call(s), 0 unsupported"]
     assert store.reloads == [("analysis",)]
 
 
