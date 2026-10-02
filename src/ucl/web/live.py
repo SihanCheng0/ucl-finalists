@@ -12,7 +12,7 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 
-from .. import config, labels
+from .. import config, forecast, labels
 from .. import features as feat
 
 STAGE_LABEL = "League phase (in progress)"
@@ -26,6 +26,7 @@ class LiveSnapshot:
     fetched_at: datetime | None  # when the match list was fetched
     finished_matches: int
     built_at: float
+    fixtures: pd.DataFrame | None = None  # every match of the season, played or not (forecast.fixture_rows)
 
 
 @dataclass(frozen=True)
@@ -134,7 +135,8 @@ def build_snapshot(client, history: pd.DataFrame, features: list[str], force: bo
     stats = {match_id: (r.data if r is not None else None) for match_id, r in results.items()}
     stale = matches.stale or any(r is None or r.stale for r in results.values())
     frame = live_frame(raw, stats, client.coefficients(season - 1), history, features, season)
-    return LiveSnapshot(season, frame, stale, matches.fetched_at, len(phase_ids), clock())
+    return LiveSnapshot(season, frame, stale, matches.fetched_at, len(phase_ids), clock(),
+                        forecast.fixture_rows(raw, season))
 
 
 class LiveService:

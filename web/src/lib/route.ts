@@ -1,8 +1,8 @@
 // Selections live in the URL hash: #/explore?t=52280&s=2026, #/compare?a=52280:2026&b=52747:2026 (spec §6).
 
-export type Screen = "pipeline" | "explore" | "compare" | "squad";
+export type Screen = "pipeline" | "explore" | "compare" | "squad" | "predict";
 export interface Route { screen: Screen; params: Record<string, string> }
-export const SCREENS: Screen[] = ["pipeline", "explore", "compare", "squad"];
+export const SCREENS: Screen[] = ["pipeline", "explore", "compare", "squad", "predict"];
 
 export function parseHash(hash: string): Route {
   const raw = hash.replace(/^#\/?/, "");

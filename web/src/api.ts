@@ -1,5 +1,5 @@
-import type { CheckReport, Comparison, Meta, ModelTest, PipelineState, PlayerHistory, Profile, Squad, Summary,
-  TeamHit } from "./types";
+import type { CheckReport, Comparison, Forecast, HeadToHead, Meta, ModelTest, PipelineState, PlayerHistory, Profile,
+  Squad, Summary, TeamHit, Venue } from "./types";
 
 export class ApiError extends Error {
   constructor(public status: number, public code: string, message: string) {
@@ -32,6 +32,9 @@ export const api = {
   compare: (a: string, b: string) => request<Comparison>(`/api/compare?a=${id(a)}&b=${id(b)}`),
   squad: (teamId: string, season: number) => request<Squad>(`/api/squads/${id(teamId)}/${season}`),
   player: (playerId: string) => request<PlayerHistory>(`/api/players/${id(playerId)}`),
+  forecast: () => request<Forecast>("/api/forecast"),
+  headToHead: (a: string, b: string, venue: Venue) =>
+    request<HeadToHead>(`/api/forecast/h2h?a=${id(a)}&b=${id(b)}&venue=${venue}`),
   checks: () => request<CheckReport>("/api/checks"),
   testModel: (load: boolean) => request<ModelTest>("/api/checks/model", {
     method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ load }),

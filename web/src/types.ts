@@ -92,6 +92,37 @@ export type PipelineEvent =
   | (EventBase & { type: "done"; data: { status: "done" | "warning"; stages: { name: string; status: Status }[] } })
   | (EventBase & { type: "run_failed"; data: { stage: string | null; errors: string[] } });
 
+export type StageKey = "p_win" | "p_final" | "p_sf" | "p_qf" | "p_r16" | "p_ko" | "p_top8";
+export type ForecastTeam = {
+  team_id: string; name: string; rating: number; played: number; points: number; goal_diff: number;
+} & Record<StageKey, number>;
+export interface TitleBacktest {
+  season: number; label: string; winner_id: string; winner: string; p_winner: number; winner_rank: number | null;
+  favourite_id: string; favourite: string; p_favourite: number; teams_left: number;
+}
+export interface TrackRecord {
+  seasons: [string, string];
+  matches: {
+    matches: number; log_loss: number; rps: number; accuracy: number; draws_predicted: number; draws_seen: number;
+    pedigree_log_loss: number; base_rate_log_loss: number;
+  };
+  ties: { ties: number; predicted: number; happened: number };
+  titles: TitleBacktest[];
+}
+export interface Forecast {
+  season: number; label: string; played: number; league_matches: number; as_of: string | null;
+  fetched_at: string | null; stale: boolean; simulations: number; teams: ForecastTeam[]; track_record: TrackRecord;
+}
+export type Venue = "neutral" | "a" | "b";
+export interface HeadToHeadSide {
+  team_id: string; name: string; season: number; label: string; live: boolean; rating: number; title: number | null;
+}
+export interface HeadToHead {
+  a: HeadToHeadSide; b: HeadToHeadSide; title_label: string | null; venue: Venue;
+  win: number; draw: number; loss: number; xg_a: number; xg_b: number;
+  likely_scores: { a: number; b: number; p: number }[]; tie: number; final: number;
+}
+
 export type CheckStatus = "ok" | "warn" | "fail" | "info";
 export interface CheckItem { id: string; group: string; label: string; status: CheckStatus; detail: string; fix: string }
 export interface CheckReport {

@@ -304,3 +304,41 @@ def test_the_checks_routes_run_the_checks_and_try_the_model(outputs, monkeypatch
         assert client.post("/api/checks/model", json={"load": False}).status_code == 200
         assert error(client.post("/api/checks/model")) == (422, "invalid_request")  # JSON only, like starting a run
     assert seen == [("checks", "other/model"), ("try", "other/model", True), ("try", "other/model", False)]
+
+
+class FakeForecasts:
+    """Records what the routes ask for; raises what it's told to."""
+
+    def __init__(self, fail=None):
+        self.fail, self.seen = fail, []
+
+    def title_odds(self, snapshot, live_state):
+        if self.fail:
+            raise self.fail
+        return {"teams": []}
+
+    def head_to_head(self, snapshot, live_state, a, b, venue):
+        self.seen.append((a, b, venue))
+        if self.fail:
+            raise self.fail
+        return {"win": 0.5}
+
+
+def test_the_forecast_routes_map_each_failure_to_its_status(outputs):
+    from ucl.web import forecasts
+
+    services = make_services(*outputs)
+    with local(create_app(services)) as client:
+        assert error(client.get("/api/forecast")) == (503, "forecast_unavailable")  # no forecast service at all
+        services.forecasts = fake = FakeForecasts()
+        assert client.get("/api/forecast").json() == {"teams": []}
+        assert client.get("/api/forecast/h2h?a=52280:2027&b=52747:2026&venue=a").json() == {"win": 0.5}
+        assert fake.seen == [(("52280", 2027), ("52747", 2026), "a")]
+        assert error(client.get("/api/forecast/h2h?a=52280&b=52747:2026")) == (422, "invalid_request")
+        for exc, expected in ((ValueError("venue"), (422, "invalid_request")),
+                              (forecasts.NotFound("no rating"), (404, "not_found")),
+                              (forecasts.Unavailable("no live season"), (503, "forecast_unavailable"))):
+            services.forecasts = FakeForecasts(fail=exc)
+            assert error(client.get("/api/forecast/h2h?a=52280:2027&b=52747:2027")) == expected
+        services.forecasts = FakeForecasts(fail=forecasts.Unavailable("The live season isn't loaded yet"))
+        assert client.get("/api/forecast").json()["error"]["message"] == "The live season isn't loaded yet"

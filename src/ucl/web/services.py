@@ -27,6 +27,7 @@ class Services:
     live: object | None = None  # LiveService (live.py)
     players: object | None = None  # PlayerService (players.py)
     llm_model: str = config.LLM_MODEL
+    forecasts: object | None = None  # ForecastService (forecasts.py)
 
     def live_state(self):
         return self.live.current() if self.live is not None else None
@@ -195,7 +196,9 @@ def build_services(processed_dir: Path = config.PROCESSED_DIR, out_dir: Path = c
                    llm_model: str = config.LLM_MODEL, start_live: bool = True) -> Services:
     """Everything the app needs. The stages themselves always use the config paths, so tests that point this
     at tmp_path must not start real runs."""
+    from .. import forecast
     from ..uefa import UefaClient
+    from .forecasts import ForecastService
     from .live import LiveService, build_snapshot
     from .players import PlayerService
 
@@ -215,6 +218,7 @@ def build_services(processed_dir: Path = config.PROCESSED_DIR, out_dir: Path = c
     registry = {**stage_registry(store, llm_model), "live": live_stage(live), "players": players_stage(players)}
     runner = PipelineRunner(registry, bus,
                             missing_inputs=lambda names: missing_inputs(names, processed_dir, out_dir))
+    forecasts = ForecastService(lambda seasons: forecast.load_fixtures(UefaClient(), seasons))
     if start_live:
         live.refresh_in_background()
-    return Services(store, bus, runner, live, players, llm_model)
+    return Services(store, bus, runner, live, players, llm_model, forecasts)

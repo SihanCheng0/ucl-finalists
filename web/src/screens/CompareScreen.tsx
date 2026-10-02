@@ -1,8 +1,10 @@
 import { api } from "../api";
 import { SwapIcon } from "../components/Icons";
+import { HeadToHeadCard } from "../components/HeadToHeadCard";
 import { MirrorRow } from "../components/MirrorRow";
 import { TeamPicker } from "../components/TeamPicker";
 import { useApi } from "../hooks/useApi";
+import { parseVenue, swapVenue } from "../lib/predict";
 import { formatPick, parsePick, type Pick, type Route } from "../lib/route";
 import type { Meta } from "../types";
 
@@ -22,7 +24,8 @@ export function CompareScreen({ meta, route, navigate, dataVersion }: {
       <div className="pickers">
         <TeamPicker value={a} onChange={(pick) => set("a", pick)} side="a" label="First team" />
         <button className="icon-button" type="button" aria-label="Swap the teams" title="Swap the teams"
-                disabled={!a && !b} onClick={() => navigate({ screen: "compare", params: { a: route.params.b ?? "", b: route.params.a ?? "" } })}>
+                disabled={!a && !b} onClick={() => navigate({ screen: "compare", params: { a: route.params.b ?? "", b: route.params.a ?? "",
+                  v: swapVenue(parseVenue(route.params.v)) } })}>
           <SwapIcon />
         </button>
         <TeamPicker value={b} onChange={(pick) => set("b", pick)} side="b" label="Second team" />
@@ -30,6 +33,8 @@ export function CompareScreen({ meta, route, navigate, dataVersion }: {
       {(!a || !b) && <div className="empty"><h2>Pick two team-seasons</h2>
         <p>Any club, any season since 2011-12, including the live one. Each stat is drawn against its own season's average,
           so teams from different seasons compare fairly.</p></div>}
+      {a && b && <HeadToHeadCard a={a} b={b} venue={parseVenue(route.params.v)} dataVersion={dataVersion}
+                                 onVenue={(v) => navigate({ screen: "compare", params: { ...route.params, v } })} />}
       {data.error && <p className="error-note">{data.error.message}</p>}
       {data.data && (
         <section className="panel card" aria-label="Comparison">

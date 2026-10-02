@@ -115,7 +115,21 @@ export function AboutDrawer({ meta, onClose }: { meta: Meta; onClose: () => void
               average, and better always points outward.</li>
             <li><strong>Squad:</strong> circles grow with minutes played and glow brighter with the stat you pick. Counts are per
               90 minutes, so substitutes and starters compare fairly.</li>
+            <li><strong>Predict:</strong> each club's chance of reaching every round of {live ? live.label : "the current season"} and
+              of winning it, a head-to-head between any two team-seasons, and how well these odds did on past seasons.</li>
           </ul>
+        </section>
+
+        <section>
+          <h3>Predictions</h3>
+          <p>The Predict screen and the "If they met" card on Compare share one model. Every Champions League match since {first}
+            moves a rating for each club, by the result and the margin, and each season starts by pulling ratings part of the
+            way back toward the club's UEFA coefficient. A rating gap becomes expected goals, so the same numbers give one match,
+            a two-legged tie and a final. The deeper the round, the less a gap counts: that's what past knockouts show.</p>
+          <p>Title odds come from playing the rest of the season 20,000 times, with the league-phase table, the play-offs and the
+            seeded bracket as UEFA runs them. The ratings were tuned on 2013-14 to 2018-19 and tested on the seasons after.</p>
+          <p className="small muted">They see only Champions League matches, not domestic form, injuries or transfers. Even a clear
+            favourite usually doesn't win the trophy.</p>
         </section>
 
         <section>

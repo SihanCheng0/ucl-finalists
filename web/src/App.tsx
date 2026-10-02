@@ -9,6 +9,7 @@ import { usePipeline } from "./hooks/usePipeline";
 import { CompareScreen } from "./screens/CompareScreen";
 import { ExploreScreen } from "./screens/ExploreScreen";
 import { PipelineScreen } from "./screens/PipelineScreen";
+import { PredictScreen } from "./screens/PredictScreen";
 import { SquadScreen } from "./screens/SquadScreen";
 
 export function App() {
@@ -41,6 +42,8 @@ export function App() {
       <a className="button primary" href="#/pipeline">Open the pipeline</a></div>;
   } else if (route.screen === "compare") {
     content = <CompareScreen meta={meta.data} route={route} navigate={navigate} dataVersion={dataVersion} />;
+  } else if (route.screen === "predict") {
+    content = <PredictScreen meta={meta.data} route={route} navigate={navigate} dataVersion={dataVersion} />;
   } else if (route.screen === "squad") {
     content = <SquadScreen meta={meta.data} route={route} navigate={navigate} pipeline={pipeline} />;
   } else {

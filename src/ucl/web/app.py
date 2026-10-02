@@ -15,7 +15,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from .. import config
-from . import queries
+from . import forecasts, queries
 from .events import HEARTBEAT_S
 from .jsonsafe import to_jsonable
 from .pipeline import BadRun, RunInProgress
@@ -145,6 +145,34 @@ def create_app(services: Services, dist_dir: Path | None = None, heartbeat: floa
             return queries.compare(snapshot, *picks, team_seasons=services.team_seasons(snapshot, live_state()))
         except queries.NotFound as exc:
             raise ApiError(404, "not_found", str(exc)) from exc
+
+    @app.get("/api/forecast")
+    def title_forecast():
+        snapshot = ready()
+        if services.forecasts is None:
+            raise ApiError(503, "forecast_unavailable", "Forecasts aren't available in this app")
+        try:
+            return services.forecasts.title_odds(snapshot, live_state())
+        except forecasts.Unavailable as exc:
+            raise ApiError(503, "forecast_unavailable", str(exc)) from exc
+
+    @app.get("/api/forecast/h2h")
+    def head_to_head(a: str = "", b: str = "", venue: str = "neutral"):
+        try:
+            picks = queries.parse_pick(a), queries.parse_pick(b)
+        except ValueError as exc:
+            raise ApiError(422, "invalid_request", str(exc)) from exc
+        snapshot = ready()
+        if services.forecasts is None:
+            raise ApiError(503, "forecast_unavailable", "Forecasts aren't available in this app")
+        try:
+            return services.forecasts.head_to_head(snapshot, live_state(), *picks, venue)
+        except ValueError as exc:
+            raise ApiError(422, "invalid_request", str(exc)) from exc
+        except forecasts.NotFound as exc:
+            raise ApiError(404, "not_found", str(exc)) from exc
+        except forecasts.Unavailable as exc:
+            raise ApiError(503, "forecast_unavailable", str(exc)) from exc
 
     @app.get("/api/squads/{team_id}/{season}")
     def squad(team_id: str, season: int):

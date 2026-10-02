@@ -9,6 +9,7 @@ const TABS: { screen: Screen; label: string }[] = [
   { screen: "explore", label: "Explore" },
   { screen: "compare", label: "Compare" },
   { screen: "squad", label: "Squad" },
+  { screen: "predict", label: "Predict" },
 ];
 type Theme = "system" | "light" | "dark";
 const NEXT: Record<Theme, Theme> = { system: "light", light: "dark", dark: "system" };
