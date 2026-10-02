@@ -106,3 +106,24 @@ built straight from the spec overnight, as asked).
 - `out/report*.html` regenerated from the committed `analysis.json`; `uv run ucl report` reproduces them byte for byte.
 - Made public on 2026-10-02 at the user's request. Before that, the history was rewritten so every commit uses the
   GitHub noreply address instead of a personal email, and the code got an MIT license (UEFA's data excluded).
+
+
+# Predictions: title odds and head to head (2026-10-02)
+
+- [x] `src/ucl/forecast.py`: Elo ratings from every match since 2011-12 (season pull toward the coefficient prior),
+      Poisson goals models for the league phase, early and late knockouts, analytic head-to-heads, and a vectorised
+      simulation of a season under UEFA's format (league table, play-off and round-of-16 seeding, bracket halves)
+- [x] Tuning on 2013-14 to 2018-19, test on 2019-20 to 2025-26 (`scripts/tune_forecast.py`), track record in the UI
+- [x] `/api/forecast` and `/api/forecast/h2h`, rebuilt when the dataset or the live season changes
+- [x] Predict screen (title odds, head to head, track record) and the "If they met" card on Compare
+
+## Review (predictions)
+
+- Test seasons: likeliest result right in 58% of 997 matches; log loss 0.925 against 1.008 (coefficient only) and 1.040
+  (base rates). Two-legged ties: favourites went through 67%, predicted 69%. Title odds when the knockouts began: the
+  winner had 11% on average (6% for a random pick); the favourite won 0 of 7.
+- One goals model overrated favourites from the quarter-finals on (predicted 65%, actual 54%); separate stage models
+  fixed most of it (62% against 57%) and improved out-of-sample log loss. Damping big margins or weighting knockout
+  results more changed little.
+- Known bias: ratings see only Champions League matches, so group-stage dominance rates highly (Bayern was the
+  favourite in 5 of the 7 test seasons). The track record card says so.

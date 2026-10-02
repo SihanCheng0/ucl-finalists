@@ -40,7 +40,7 @@ Run `make` to list every command. [CONTRIBUTING.md](CONTRIBUTING.md) explains ho
 | [`data/llm_cache/`](data/llm_cache) | Every answer the local LLM gave, saved under its exact request, so reruns replay them |
 | [`out/`](out) | Model outputs, the AI write-ups (`analysis.json`) and the report |
 | [`docs/`](docs) | [How it works](docs/how-it-works.md), the design specs and the implementation plans |
-| [`scripts/`](scripts) | Standings check against UEFA, and the README screenshots |
+| [`scripts/`](scripts) | Standings check against UEFA, the forecast's tuning and test, and the README screenshots |
 | [`tasks/todo.md`](tasks/todo.md) | Build log and review notes |
 
 ## How it works
@@ -89,13 +89,17 @@ the process and how to read each screen.
 
 | Explore | Compare |
 |-|-|
-| ![Explore: Arsenal 2025-26, with each stat's share of teams beaten, the model card and the AI scouting report](docs/images/explore.png) | ![Compare: Arsenal and Paris Saint-Germain 2025-26, stat by stat](docs/images/compare.png) |
-| Search any club, pick a season and see the share of that season's teams it beat on each stat, with its trend, the model card and the AI scouting report. Nicknames like "PSG" or "Barca" work. | Two team-seasons from any seasons, stat by stat. Each bar is the team's distance from its own season's average, so different eras compare fairly. |
+| ![Explore: Arsenal 2025-26, with each stat's share of teams beaten, the model card and the AI scouting report](docs/images/explore.png) | ![Compare: Arsenal and Paris Saint-Germain 2025-26, who would win if they met, then stat by stat](docs/images/compare.png) |
+| Search any club, pick a season and see the share of that season's teams it beat on each stat, with its trend, the model card and the AI scouting report. Nicknames like "PSG" or "Barca" work. | Two team-seasons from any seasons. First who would win if they met (one match, two legs, a final) and which club is likelier to win this season's Champions League, then stat by stat: each bar is the team's distance from its own season's average, so different eras compare fairly. |
 
 | Squad | Pipeline |
 |-|-|
 | ![Squad: Arsenal 2025-26 on the pitch, with Bukayo Saka's numbers and history](docs/images/squad.png) | ![Pipeline: the pre-run checks, run controls, stage rail, counters and event log](docs/images/pipeline.png) |
 | The squad on the pitch. Circles grow with minutes and glow with the chosen stat, per 90 for counts. Pick a player for their numbers at every club since 2011-12. | Run every stage or one at a time and watch it live. **Before you run** checks LM Studio, the UEFA feeds, the saved data and the dashboard build, and says how to fix anything that isn't ready. |
+
+| Predict | |
+|-|-|
+| ![Predict: every club's chance of winning the 2026-27 Champions League, with the round-by-round odds](docs/images/predict.png) | Who wins the 2026-27 Champions League: each club's chance of reaching every round, from 20,000 simulations of the rest of the season. Below it, a head-to-head between any two team-seasons (one match, a two-legged tie and a final) and how well these odds did on past seasons. Compare shows the same head-to-head for its two teams. |
 
 The live season (2026-27) is built in memory from UEFA's feeds, refreshed every six hours and never used to train
 the model. Squads are cached in `data/raw/players/`.
@@ -132,6 +136,11 @@ the model's top-two pick in their season.
   the direction in at least 12 of 15 seasons, and the stat points the same way on its own. *Conditional:* the
   direction holds only with the other stats held fixed. *Model-dependent:* the logistic model disagrees too often.
 - **Winners vs runners-up.** Sign tests over the 15 finals, with a Holm adjustment across the 15 stats.
+- **Predictions.** Elo ratings from every Champions League match, pulled toward the club coefficient each season, feed
+  a Poisson goals model with one version per stage: the deeper the round, the less a rating gap counts. Title odds
+  come from 20,000 simulations of the rest of the season under UEFA's format. Tuned on 2013-14 to 2018-19 and tested on
+  the seven seasons after: the likeliest result happened in 58% of matches, and the eventual winner had 11% on average
+  when the knockouts began, against 6% for a random pick. [How it works](docs/how-it-works.md#predictions).
 - **Local AI.** The LLM sees only a plain-English fact sheet. Each answer is checked for its structure, for
   numbers that aren't in the facts and for wording slips: significance words in team reports, length, the wrong
   name for the first phase, or the final placed inside it. One retry fixes what it can, and the better answer is

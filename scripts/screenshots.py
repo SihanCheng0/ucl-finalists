@@ -26,6 +26,7 @@ SHOTS = [  # name, hash route, a selector that appears once the screen has its d
     ("compare", "#/compare?a=52280:2026&b=52747:2026", ".mirror-row"),  # against PSG, the final
     ("squad", "#/squad?t=52280&s=2026&stat=goals&p=250106939", ".player-panel table"),  # Saka selected
     ("pipeline", "#/pipeline", ".checks-head p"),
+    ("predict", "#/predict", ".h2h .figures"),
 ]
 
 

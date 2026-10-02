@@ -82,6 +82,43 @@ Code: `src/ucl/report.py`, `src/ucl/charts.py`.
 - **Player index** downloads every squad since 2011-12 (524 tables), so a player's seasons line up across all
   their clubs.
 
+## Predictions
+
+The **Predict** screen and the **If they met** card on Compare share one model, in `src/ucl/forecast.py`.
+
+- **Ratings.** Every Champions League match since 2011-12 moves an Elo rating per club: a win against the odds moves
+  it further than an expected one, and a bigger margin moves it a little further still. Each season starts by pulling a
+  club's rating 10% of the way back toward a prior set by its UEFA club coefficient, once for every season since it
+  last played, so a newcomer starts at its prior.
+- **Goals.** A rating gap becomes expected goals for each side (a Poisson model), which gives the chance of each score.
+  There are three versions, fitted on past matches: the group stage and league phase, the play-offs and round of 16,
+  and the quarter-finals onward. The deeper the round, the less a rating gap is worth. On seasons it wasn't fitted
+  on, this forecasts knockout matches better than one model for everything.
+- **Simulation.** Title odds come from playing the rest of the season 20,000 times: the league-phase table with
+  UEFA's tie-breakers, the knockout play-offs (9th-10th against 23rd-24th and so on), the round of 16 (1st-2nd against
+  the winners of the 15th-18th play-offs and so on) and the bracket, in which each half holds one club from each
+  seeding pair. Rounds already drawn use the real ties and any legs already played.
+- **Head to head.** One match uses the league-phase model, at a neutral venue or at either club's ground. A two-legged
+  tie uses the round-of-16 model and a final the late-round model. A past team-season is rated as it finished that
+  season, so two eras can meet.
+
+**How good is it?** The settings were tuned on 2013-14 to 2018-19 and tested on 2019-20 to 2025-26:
+
+| Test | Result |
+|-|-|
+| The likeliest 90-minute result happened | 58% of 997 matches |
+| Log loss of win/draw/loss chances (lower is better) | 0.925, against 1.008 from club coefficients alone and 1.040 from base rates |
+| Favourites going through two-legged ties | 67% of 108, when the model said 69% |
+| The eventual winner's chance when the knockouts began | 11% on average, against 6% for a random pick |
+
+The favourite won none of those seven seasons: knockout football is close to a coin flip between the best clubs. The
+ratings see only Champions League matches, so a club that dominates its group rates highly (Bayern München was the
+favourite in five of the seven). They know nothing of domestic form, injuries or transfers. Ratings stay fixed within a
+simulated season, penalties are a coin flip, and between the round-of-16 draw and the quarter-final fixtures the
+bracket's halves are drawn at random.
+
+`uv run python scripts/tune_forecast.py` reruns the tuning and the test.
+
 ## Reading the screens
 
 - **Pipeline** shows each stage as it runs, with live counters and the log. *Before you run* checks LM Studio,
@@ -95,6 +132,8 @@ Code: `src/ucl/report.py`, `src/ucl/charts.py`.
   and better always points outward.
 - **Squad:** circles grow with minutes played and glow brighter with the stat you pick. Counts are per 90 minutes,
   so substitutes and starters compare fairly.
+- **Predict:** each club's chance of reaching every round and of winning the trophy, a head-to-head between any two
+  team-seasons, and how well these odds did on past seasons. Compare shows the same head-to-head for its two teams.
 
 ## What it found
 
