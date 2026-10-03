@@ -67,14 +67,15 @@ collapses them in diffs.
 
 ## The local LLM
 
-The analyze stage uses `qwen/qwen3.5-35b-a3b` in [LM Studio](https://lmstudio.ai/), with a 16,384-token context.
+The analyze stage uses `qwen/qwen3.8-27b` in [LM Studio](https://lmstudio.ai/), with a 16,384-token context.
 Every answer is saved in `data/llm_cache/` under its exact request, and analyze tries the saved answers first. When
 every question has been asked before, it rebuilds the write-ups without LM Studio.
 
 A new question, from changed facts or a different model, needs LM Studio:
 
 1. Install LM Studio and open it once, then run `~/.lmstudio/bin/lms bootstrap` so the `lms` command works.
-2. Download the model: `lms get qwen/qwen3.5-35b-a3b` (about 22 GB).
+2. Download the model: `lms get qwen/qwen3.8-27b` (about 16 GB). It needs LM Studio's MLX engine 1.11 or newer:
+   `lms runtime update mlx` updates it. Older engines fail to load it with "Unrecognized image processor".
 3. Run `uv run ucl analyze`. It starts LM Studio's server and loads the model with the right context if needed.
 
 In UCL Lab, **Before you run** on the Pipeline screen checks each of these, and **Test the local model** asks the

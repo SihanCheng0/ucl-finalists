@@ -162,7 +162,7 @@ HTTP_TIMEOUT_S = 25
 HTTP_RETRY_DELAYS_S = (1, 2, 4, 8)
 
 LLM_BASE_URL = "http://localhost:1234/v1"
-LLM_MODEL = "qwen/qwen3.5-35b-a3b"
+LLM_MODEL = "qwen/qwen3.8-27b"
 LLM_PARAMS = {"temperature": 0.3, "max_tokens": 8000, "reasoning_effort": "none"}
 LLM_TIMEOUT_S = 300
 LLM_CONTEXT_LENGTH = 16384

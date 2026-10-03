@@ -4,7 +4,7 @@
 
 What do Champions League finalists have in common? This project collects 15 seasons of UEFA data (2011-12 to
 2025-26) and tests which first-phase numbers go with deep knockout runs, on seasons the model never saw. A local
-LLM (Qwen 3.5 in LM Studio) then writes a scouting report on each of the 10 finalists of 2022 to 2026. **UCL Lab**,
+LLM (Qwen 3.8 in LM Studio) then writes a scouting report on each of the 10 finalists of 2022 to 2026. **UCL Lab**,
 a local dashboard, lets you explore all of it.
 
 ![UCL Lab: the overview, with the model's headline results and the stats that drive deep runs](docs/images/overview.png)
@@ -55,7 +55,7 @@ flowchart LR
     model --> outputs["out: predictions, SHAP, metrics"]
     outputs --> analyze
     cache[("data/llm_cache")] -. "saved answers" .-> analyze
-    lms["LM Studio, Qwen 3.5"] -. "new questions only" .-> analyze
+    lms["LM Studio, Qwen 3.8"] -. "new questions only" .-> analyze
     analyze --> analysis["out/analysis.json"]
     analysis --> report
     report --> html["out/report.html"]
@@ -76,7 +76,7 @@ Run every stage with `make pipeline` (`uv run ucl all`), or one at a time with
 
 **Do I need LM Studio?** Only for new AI write-ups. Analyze tries the saved answers in `data/llm_cache/` first.
 If every question has been asked before, it rebuilds the write-ups without LM Studio. If the facts have changed
-(new data, a different model), it starts LM Studio's server and loads `qwen/qwen3.5-35b-a3b` with a 16,384-token
+(new data, a different model), it starts LM Studio's server and loads `qwen/qwen3.8-27b` with a 16,384-token
 context. That needs LM Studio with its `lms` command line tool.
 
 [docs/how-it-works.md](docs/how-it-works.md) walks through the whole process in plain language.

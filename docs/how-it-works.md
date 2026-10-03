@@ -54,7 +54,7 @@ Code: `src/ucl/model.py`. Outputs: `out/predictions.csv`, `shap.csv`, `drivers.c
 
 ### 4. Analyze
 
-A local AI model, Qwen 3.5 running in LM Studio on your computer, writes a scouting report on each finalist of 2022
+A local AI model, Qwen 3.8 running in LM Studio on your computer, writes a scouting report on each finalist of 2022
 to 2026 and a summary of the findings. It sees only a fact sheet of the numbers, never the internet.
 
 Every figure it writes is checked against the facts, and so is its wording: the right name for the first phase
