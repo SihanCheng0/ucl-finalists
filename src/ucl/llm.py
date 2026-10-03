@@ -6,6 +6,7 @@ import hashlib
 import http.client
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -85,9 +86,16 @@ def _write_cache(path: Path, entry: dict) -> None:
             tmp.unlink(missing_ok=True)
 
 
-def _first_line(text: str, limit: int = 200) -> str:
-    """The first non-blank line of `text`, trimmed and capped, so that a failure reason stays short."""
-    return next((line.strip() for line in text.splitlines() if line.strip()), "")[:limit]
+TERMINAL_CODES = re.compile(r"\x1b\[[0-9;?]*[ -/]*[@-~]")
+
+
+def _failure_reason(text: str, limit: int = 200) -> str:
+    """Why an lms call failed, from what it printed: without terminal codes or progress spinners, the last line that
+    mentions an error (lms prints its summary first and the cause after), else the first line; trimmed and capped."""
+    lines = [line.strip() for line in TERMINAL_CODES.sub("", text).replace("\r", "\n").splitlines() if line.strip()]
+    errors = [line for line in lines if "error" in line.lower()]
+    reason = errors[-1] if errors else (lines[0] if lines else "")
+    return reason.replace(str(Path.home()), "~")[:limit]
 
 
 def parse_loaded(ps_json: str, model: str) -> int | None:
@@ -118,7 +126,7 @@ class LMStudio:
         self.cache_dir = Path(cache_dir)
         self._post = post
         self.reason: str | None = None  # why ensure_ready last said no
-        self._lms_error = ""  # first line lms printed (or why it could not run) on its last failed call
+        self._lms_error = ""  # what lms said went wrong (or why it could not run) on its last failed call
 
     def chat(self, messages: list[dict], offline: bool = False) -> ChatResult:
         """Every response, valid or not, is cached under its full request; failures are not. `offline` answers from
@@ -204,7 +212,7 @@ class LMStudio:
 
     def _lms(self, *args: str, timeout: float) -> bool:
         code, output = self._run_lms(*args, timeout=timeout)
-        self._lms_error = "" if code == 0 else (_first_line(output) or f"exit status {code}")
+        self._lms_error = "" if code == 0 else (_failure_reason(output) or f"exit status {code}")
         return code == 0
 
     def _lms_output(self, *args: str, timeout: float) -> str | None:

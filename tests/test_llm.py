@@ -5,6 +5,7 @@ import subprocess
 import sys
 import threading
 import urllib.error
+from pathlib import Path
 
 import pytest
 
@@ -371,11 +372,18 @@ def test_ensure_ready_gives_up_when_the_load_command_fails(tmp_path, monkeypatch
     assert llm.reason == "load failed"
 
 
+SPINNER_THEN_CAUSE = (
+    "\x1b[?25l\rLoading m/key \u2834\rLoading m/key \u2826\n\x1b[31mError: Failed to load model.\x1b[39m\n   (X) CAUSE  \n"
+    f"Error when loading model: ValueError: Unrecognized image processor in {Path.home()}/.lmstudio/models/m\n\x1b[?25h")
+
+
 @pytest.mark.parametrize("printed, reason", [
     ("\n  Error: not enough memory  \nsecond line\n", "load failed: Error: not enough memory"),
     ("", "load failed: exit status 1"),
     ("x" * 500, "load failed: " + "x" * 200),
-], ids=["first non-blank line", "silent failure", "long line capped"])
+    (SPINNER_THEN_CAUSE, "load failed: Error when loading model: ValueError: Unrecognized image processor in "
+                         "~/.lmstudio/models/m"),
+], ids=["first non-blank line", "silent failure", "long line capped", "terminal codes and the cause"])
 def test_ensure_ready_says_why_the_load_failed_from_what_lms_printed(tmp_path, monkeypatch, printed, reason):
     llm = LMStudio(cache_dir=tmp_path)
     monkeypatch.setattr(llm, "_server_up", lambda: True)
