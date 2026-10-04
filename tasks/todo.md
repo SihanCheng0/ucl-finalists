@@ -127,3 +127,34 @@ built straight from the spec overnight, as asked).
   results more changed little.
 - Known bias: ratings see only Champions League matches, so group-stage dominance rates highly (Bayern was the
   favourite in 5 of the 7 test seasons). The track record card says so.
+
+# Hosted model and website (OpenRouter, Vercel, a nightly GitHub Actions run)
+
+- [x] llm.py: one cache-first base for LM Studio and OpenRouter (same question, same cache key, so saved answers
+      replay on either); OpenRouter keeps reasoning off and reports tokens and cost; `make_llm` picks the provider
+- [x] analyst, stages, cli, report: provider-neutral wording; log the tokens and cost of new answers
+- [x] checks: an "AI model" group for whichever provider is in use (OpenRouter: key, account, model served)
+- [x] forecasts: the head-to-head inputs as data, and a fixture that pins the browser's port of the math
+- [x] `ucl publish`: run stages headless, record the run, save every page's data as static JSON for Vercel
+- [x] web: a static data source (search, compare, head-to-head in the browser), the nightly run replayed on the
+      Pipeline screen, read-only controls; `npm run build:site`
+- [x] .github/workflows/nightly.yml: refresh, checks, deploy to Vercel, commit new saved answers
+- [x] docs: README (site, nightly run, token costs, setup), CONTRIBUTING, how-it-works
+- [x] verify: pytest, vitest, both builds, a local preview of the static site
+- [ ] deploy and push, each after the user's OK
+
+## Review
+
+- Token cost, measured from the last full analyze run (the 14 qwen/qwen3.8-27b cache entries, counted with the
+  model's own tokenizer): 44,313 input and 4,752 output tokens. On OpenRouter's bf16/fp16/fp8 providers that is
+  $0.015 (Ionstream) to $0.051 (Cerebras) for all 11 write-ups. A nightly run asks nothing: the write-ups cover
+  finished seasons and replay from the cache. For comparison (Anthropic list prices, 2026-09-25, up to 35% more
+  tokens for Claude's tokenizer): Haiku 4.5 $0.07-0.09, Sonnet 5.5 $0.14-0.18, Opus 5.5 $0.30-0.50 per full run.
+- The user picked Qwen3.8-27B on OpenRouter: the same model id, so the 14 saved answers still replay.
+- The website is a static export, not a Python function: the API's GET routes are saved as JSON (1,155 files,
+  28 MB) and the browser does search, comparisons and head-to-heads. Checked in a local preview: the browser's
+  head-to-head (Bayern v PSG, neutral) matched the server's to the displayed precision (41/25/34, 56%, 52%, 1-1).
+- The nightly job runs on GitHub Actions rather than Vercel Cron: Hobby cron only calls a short function, which
+  can't load pandas, wait on UEFA and keep files. `ucl publish --run live,players` took 12 s locally.
+- Data times come from file mtimes, which a checkout resets, so the workflow dates the outputs by their last commits.
+- Python 525 passed, web 39 passed, both builds pass.

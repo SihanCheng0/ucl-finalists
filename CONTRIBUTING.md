@@ -9,7 +9,7 @@ make setup   # uv sync, npm ci in web/, and the dashboard build
 make test    # everything should pass before you change anything
 ```
 
-LM Studio is optional. You need it only to write new AI write-ups (see [The local LLM](#the-local-llm)).
+The AI model is optional. You need it only to write new AI write-ups (see [The AI model](#the-ai-model)).
 
 ## Workflow
 
@@ -31,7 +31,7 @@ types used are `feat`, `fix`, `docs`, `test` and `refactor`.
 | `uv run pytest tests/test_analyst.py -q` | One file |
 | `npm --prefix web test` | The frontend tests (Vitest), in `web/src/lib/*.test.ts` |
 
-Tests never touch the network or LM Studio: UEFA and the LLM are replaced with fakes (`tests/fakes.py`,
+Tests never touch the network, LM Studio or OpenRouter: UEFA and the LLM are replaced with fakes (`tests/fakes.py`,
 `tests/synthetic.py`). Keep it that way, so the suite stays fast and runs in CI.
 
 **Golden files.** `tests/test_cli_characterization.py` compares the CLI's output with `tests/golden/cli/*.txt`. When
@@ -65,18 +65,34 @@ request, so the numbers in `out/` always match the code. If you ran the pipeline
 `git restore data out` puts the committed files back. Large data files are marked in `.gitattributes`, so GitHub
 collapses them in diffs.
 
-## The local LLM
+## The AI model
 
-The analyze stage uses `qwen/qwen3.8-27b` in [LM Studio](https://lmstudio.ai/), with a 16,384-token context.
-Every answer is saved in `data/llm_cache/` under its exact request, and analyze tries the saved answers first. When
-every question has been asked before, it rebuilds the write-ups without LM Studio.
+The analyze stage uses `qwen/qwen3.8-27b`, hosted on [OpenRouter](https://openrouter.ai/) or run in
+[LM Studio](https://lmstudio.ai/). Every answer is saved in `data/llm_cache/` under its exact request, which is the
+same for both, and analyze tries the saved answers first. When every question has been asked before, it rebuilds the
+write-ups without the model.
 
-A new question, from changed facts or a different model, needs LM Studio:
+A new question, from changed facts or a different model, goes to OpenRouter when `OPENROUTER_API_KEY` is set and to
+LM Studio otherwise. `UCL_LLM_PROVIDER=openrouter` or `lmstudio` picks one outright.
+
+**OpenRouter.** Make a key at openrouter.ai/settings/keys, add a few dollars of credit (all 11 write-ups from scratch
+cost 1.5 to 5 cents), then `export OPENROUTER_API_KEY=...` and run `uv run ucl analyze`. Only providers running
+the model at bf16, fp16 or fp8 may answer (`config.OPENROUTER_QUANTIZATIONS`), and analyze logs the tokens and cost
+of what it asked.
+
+**LM Studio.** It runs the model on your computer:
 
 1. Install LM Studio and open it once, then run `~/.lmstudio/bin/lms bootstrap` so the `lms` command works.
 2. Download the model: `lms get qwen/qwen3.8-27b` (about 16 GB). It needs LM Studio's MLX engine 1.11 or newer:
    `lms runtime update mlx` updates it. Older engines fail to load it with "Unrecognized image processor".
 3. Run `uv run ucl analyze`. It starts LM Studio's server and loads the model with the right context if needed.
 
-In UCL Lab, **Before you run** on the Pipeline screen checks each of these, and **Test the local model** asks the
-model one question to prove it answers. `uv run ucl all --no-ai` runs everything except the write-ups.
+In UCL Lab, **Before you run** on the Pipeline screen checks whichever of these is in use, and **Test the local
+model** (or **Test the hosted model**) asks the model one question to prove it answers. `uv run ucl all --no-ai`
+runs everything except the write-ups.
+
+## The website
+
+`make site` writes the website into `.vercel/output`, and the nightly workflow deploys it (see the README). The
+browser's search, comparison and head-to-head code mirrors the Python, and tests keep them in step: after changing
+`forecast.head_to_head`, run `uv run python scripts/h2h_fixture.py` and make `web/src/lib/h2h.ts` agree again.

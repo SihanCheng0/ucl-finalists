@@ -2,14 +2,14 @@
 
 The project asks one question: what do Champions League finalists have in common? It collects 15 seasons of UEFA
 data (2011-12 to 2025-26), learns which first-phase numbers go with deep knockout runs, tests that on seasons it
-never saw, and has a local AI explain the result. This page follows that process from start to end. The
+never saw, and has an AI model explain the result. This page follows that process from start to end. The
 **About** panel in UCL Lab tells the same story.
 
 ```mermaid
 flowchart LR
     fetch["Fetch<br/>UEFA's feeds"] --> build["Build<br/>15 per-game stats"]
     build --> model["Model<br/>leave one season out"]
-    model --> analyze["Analyze<br/>local AI write-ups"]
+    model --> analyze["Analyze<br/>AI write-ups"]
     analyze --> report["Report<br/>one shareable page"]
 ```
 
@@ -54,19 +54,21 @@ Code: `src/ucl/model.py`. Outputs: `out/predictions.csv`, `shap.csv`, `drivers.c
 
 ### 4. Analyze
 
-A local AI model, Qwen 3.8 running in LM Studio on your computer, writes a scouting report on each finalist of 2022
-to 2026 and a summary of the findings. It sees only a fact sheet of the numbers, never the internet.
+An open-weights AI model, Qwen3.8-27B, writes a scouting report on each finalist of 2022 to 2026 and a summary of
+the findings. It runs in LM Studio on your computer or, with an `OPENROUTER_API_KEY`, on OpenRouter's hosted copy of
+the same model. It sees only a fact sheet of the numbers, never the internet.
 
 Every figure it writes is checked against the facts, and so is its wording: the right name for the first phase
 (group stage until 2023-24, league phase from 2024-25), no significance claims in team reports, and a word limit. An
 answer with a slip gets one retry, and the better answer is kept. The badge on each report says whether all its
 figures were found.
 
-Every answer is saved in `data/llm_cache/` under its exact question. Analyze replays saved answers first, so it
-needs LM Studio only when a question is new: when the data or the model has changed.
+Every answer is saved in `data/llm_cache/` under its exact question, which is the same for both, so an answer from
+one replays for the other. Analyze replays saved answers first, so it needs the model only when a question is new:
+when the data or the model has changed. All 11 write-ups from scratch cost 1.5 to 5 US cents on OpenRouter.
 
 Code: `src/ucl/facts.py` (the fact sheets), `src/ucl/analyst.py` (prompts and retries), `src/ucl/grounding.py`
-(the checks), `src/ucl/llm.py` (LM Studio and the cache). Output: `out/analysis.json`.
+(the checks), `src/ucl/llm.py` (LM Studio, OpenRouter and the cache). Output: `out/analysis.json`.
 
 ### 5. Report
 
@@ -121,8 +123,8 @@ bracket's halves are drawn at random.
 
 ## Reading the screens
 
-- **Pipeline** shows each stage as it runs, with live counters and the log. *Before you run* checks LM Studio,
-  UEFA and the saved data first.
+- **Pipeline** shows each stage as it runs, with live counters and the log. *Before you run* checks the AI model,
+  UEFA and the saved data first. On the website it replays the nightly run that published the site instead.
 - **Explore:** each bar is the share of that season's teams this one did better than, so a longer bar is always
   better, even for stats where lower wins. The small tick marks the same share against every team since 2011-12.
   The line beside it traces that share across the club's seasons.

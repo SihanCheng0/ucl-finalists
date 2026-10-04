@@ -1,4 +1,4 @@
-.PHONY: help setup web dev test pipeline report
+.PHONY: help setup web dev test pipeline report site
 
 help:  ## List the commands
 	@grep -E '^[a-z]+:.*## ' Makefile | awk 'BEGIN {FS = ":.*## "} {printf "  make %-9s %s\n", $$1, $$2}'
@@ -23,3 +23,7 @@ pipeline:  ## Run every stage: fetch, build, model, analyze, report
 
 report:  ## Rebuild out/report.html from the saved outputs
 	uv run ucl report
+
+site:  ## Write the website into .vercel/output: its frontend build and every page's data
+	npm --prefix web run build:site
+	uv run ucl publish

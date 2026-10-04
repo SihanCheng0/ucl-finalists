@@ -1,0 +1,84 @@
+name: Nightly
+
+# Every night: refresh the live season and the squads from UEFA, run the checks, publish the website to Vercel and
+# fail loudly if a check failed. Run it by hand with "full" to rerun every stage (after changing the prompts, say);
+# that run commits any new AI answers so that they are never paid for twice.
+on:
+  schedule:
+    - cron: "17 5 * * *" # 05:17 UTC, when last night's results are in
+  workflow_dispatch:
+    inputs:
+      full:
+        description: "Rerun every stage, not just the live season and the squads"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write # only a full run's commit step uses it, through the token it is handed
+
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      UCL_LLM_PROVIDER: openrouter
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # the history dates the data (next step)
+          persist-credentials: false # no token in .git/config for the steps that don't push
+      - name: Date the data by its last commits
+        # a checkout stamps every file with today's date, and the site dates its data by file times
+        run: python3 scripts/date_from_git.py data out
+      - uses: astral-sh/setup-uv@v10.2.0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: uv sync --locked
+      - name: Build the website's frontend
+        working-directory: web
+        run: npm ci && npm run build:site
+      - name: Link the Vercel project
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx --yes vercel@62 pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - name: Refresh, check and write the site
+        id: publish
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: uv run ucl publish --run "${{ inputs.full && 'fetch,build,model,analyze,report,live,players' || 'live,players' }}"
+      - name: Keep the new AI answers
+        # even when publishing failed: answers that were paid for are kept, and the outputs only if it worked
+        if: ${{ !cancelled() && inputs.full }}
+        env:
+          PUBLISHED: ${{ steps.publish.outcome }}
+          TOKEN: ${{ github.token }}
+        run: |
+          git add data/llm_cache
+          if [ "$PUBLISHED" = success ]; then git add data/processed out; fi
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore: a full nightly run's AI answers and outputs [skip ci]"
+            git pull --rebase --autostash origin main
+            git push "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
+          fi
+      - name: Deploy to Vercel
+        if: ${{ !cancelled() && steps.publish.outcome == 'success' }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: npx --yes vercel@62 deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      - name: Fail if a check failed
+        if: ${{ !cancelled() && steps.publish.outcome == 'success' }}
+        run: |
+          checks=.vercel/output/static/data/checks.json
+          jq -r '.checks[] | select(.status == "fail") | "::error::\(.label): \(.detail)"' "$checks"
+          jq -e '.summary.fail == 0' "$checks" > /dev/null
