@@ -19,6 +19,7 @@ from . import forecasts, queries
 from .events import HEARTBEAT_S
 from .jsonsafe import to_jsonable
 from .pipeline import BadRun, RunInProgress
+from .players import with_freshness
 from .services import Services
 
 NOT_READY = "Run the pipeline first: processed data or model outputs are missing."
@@ -200,10 +201,7 @@ def create_app(services: Services, dist_dir: Path | None = None, heartbeat: floa
         history = services.players.history(player_id)
         if history is None:
             raise ApiError(404, "not_found", f"no player {player_id} in the cached squads")
-        live_entry = next((h for h in history["history"] if h["live"]), None)
-        stale, fetched_at = (services.players.freshness(live_entry["season"], live_entry["team_id"])
-                             if live_entry else (False, None))
-        return to_jsonable({**history, "stale": stale, "fetched_at": fetched_at})
+        return to_jsonable(with_freshness(services.players, history))
 
     @app.post("/api/pipeline/runs", status_code=202)
     def start_run(body: RunBody):

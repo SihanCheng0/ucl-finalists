@@ -1,5 +1,5 @@
 exit 0
 --- stdout
 analysis unavailable with m/key: 0 narratives (0 unavailable), 0 figure(s) not found in the data
-LM Studio not ready: server did not start: lms not found
+AI model not ready: server did not start: lms not found
 --- stderr

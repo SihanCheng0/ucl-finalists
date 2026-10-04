@@ -8,3 +8,7 @@ __pycache__/
 # UCL Lab frontend
 web/node_modules/
 web/dist/
+web/dist-site/
+
+# the website build that `ucl publish` writes, and the Vercel CLI's project link
+.vercel/

@@ -67,34 +67,46 @@ def fold(text: str) -> str:
     return " ".join("".join(c if c.isalnum() else " " for c in plain).split())
 
 
+def search_index(team_seasons: pd.DataFrame) -> list[dict]:
+    """Every team with the folded names a search matches (display name, UEFA name, aliases), its latest season and
+    its seasons newest first. search() reads it here; the website searches it in the browser."""
+    aliases: dict[str, list[str]] = {}
+    for alias, team_id in config.TEAM_SEARCH_ALIASES.items():
+        aliases.setdefault(team_id, []).append(alias)
+    index = []
+    for team_id, rows in team_seasons.groupby("team_id", sort=False):
+        rows = rows.sort_values("season", ascending=False)
+        latest = rows.iloc[0]
+        index.append({
+            "team_id": team_id,
+            "name": latest["team_display"],
+            "names": sorted({fold(n) for n in (*rows["team_display"], *rows["team"], *aliases.get(team_id, []))}),
+            "key": fold(latest["team_display"]),
+            "latest": int(latest["season"]),
+            "seasons": [{"season": int(s), "label": config.season_label(int(s)), "stage_label": label}
+                        for s, label in zip(rows["season"], rows["stage_label"])],
+        })
+    return to_jsonable(index)
+
+
 def search(team_seasons: pd.DataFrame, q: str, limit: int = SEARCH_LIMIT) -> list[dict]:
     """Teams whose display name, UEFA name or alias contains `q`; names that start with it come first, then the
     most recent season."""
     query = fold(q)
     if len(query) < MIN_QUERY:
         return []
-    aliases: dict[str, list[str]] = {}
-    for alias, team_id in config.TEAM_SEARCH_ALIASES.items():
-        aliases.setdefault(team_id, []).append(alias)
     hits = []
-    for team_id, rows in team_seasons.groupby("team_id", sort=False):
-        rows = rows.sort_values("season", ascending=False)
-        names = {fold(n) for n in (*rows["team_display"], *rows["team"], *aliases.get(team_id, []))}
-        if any(n.startswith(query) for n in names):
+    for team in search_index(team_seasons):
+        if any(n.startswith(query) for n in team["names"]):
             rank = 0
-        elif any(query in n for n in names):
+        elif any(query in n for n in team["names"]):
             rank = 1
         else:
             continue
-        latest = rows.iloc[0]
-        hits.append((rank, -int(latest["season"]), fold(latest["team_display"]), {
-            "team_id": team_id,
-            "name": latest["team_display"],
-            "seasons": [{"season": int(s), "label": config.season_label(int(s)), "stage_label": label}
-                        for s, label in zip(rows["season"], rows["stage_label"])],
-        }))
+        hits.append((rank, -team["latest"], team["key"],
+                     {"team_id": team["team_id"], "name": team["name"], "seasons": team["seasons"]}))
     hits.sort(key=lambda hit: hit[:3])
-    return to_jsonable([hit[3] for hit in hits[:limit]])
+    return [hit[3] for hit in hits[:limit]]
 
 
 def _row(team_seasons: pd.DataFrame, team_id: str, season: int) -> pd.Series:

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Screen } from "../lib/route";
+import { ago } from "../lib/format";
 import type { PipelineView } from "../lib/pipelineState";
+import { STATIC_SITE } from "../site";
 import type { CheckReport } from "../types";
 import { AutoIcon, InfoIcon, Mark, MoonIcon, SunIcon } from "./Icons";
 
@@ -23,7 +25,12 @@ function storedTheme(): Theme {
   }
 }
 
-function runLabel(view: PipelineView, connected: boolean): { tone: string; text: string } {
+export function runLabel(view: PipelineView, connected: boolean, publishedAt: string | null = null): { tone: string; text: string } {
+  if (STATIC_SITE) {
+    if (view.outcome?.status === "failed") return { tone: "failed", text: "Last nightly run failed" };
+    if (view.outcome?.status === "warning") return { tone: "warning", text: `Updated ${ago(publishedAt)}, with warnings` };
+    return { tone: "done", text: publishedAt ? `Updated ${ago(publishedAt)}` : "Loading…" };
+  }
   if (!connected && view.state === null) return { tone: "offline", text: "Server offline" };
   const state = view.state;
   if (state?.running) {
@@ -43,8 +50,9 @@ function healthLabel(checks: CheckReport | null): { tone: string; text: string }
   return { tone: "done", text: "All checks passed" };
 }
 
-export function TopNav({ screen, view, connected, checks, onAbout }: {
-  screen: Screen; view: PipelineView; connected: boolean; checks: CheckReport | null; onAbout: () => void;
+export function TopNav({ screen, view, connected, publishedAt, checks, onAbout }: {
+  screen: Screen; view: PipelineView; connected: boolean; publishedAt: string | null; checks: CheckReport | null;
+  onAbout: () => void;
 }) {
   const [theme, setTheme] = useState<Theme>(storedTheme);
   useEffect(() => {
@@ -57,7 +65,7 @@ export function TopNav({ screen, view, connected, checks, onAbout }: {
       /* the choice just isn't remembered */
     }
   }, [theme]);
-  const run = runLabel(view, connected);
+  const run = runLabel(view, connected, publishedAt);
   const health = healthLabel(checks);
   const ThemeIcon = theme === "light" ? SunIcon : theme === "dark" ? MoonIcon : AutoIcon;
   return (
@@ -71,11 +79,11 @@ export function TopNav({ screen, view, connected, checks, onAbout }: {
         </nav>
         <div className="topbar-end">
           {health && (
-            <a className="run-pill" href="#/pipeline" title="Checks before a run: LM Studio, UEFA and the outputs">
+            <a className="run-pill" href="#/pipeline" title="Checks of the AI model, UEFA and the outputs">
               <span className={`dot ${health.tone}`} /><span className="text">{health.text}</span>
             </a>
           )}
-          <a className="run-pill" href="#/pipeline" title="Pipeline status">
+          <a className="run-pill" href="#/pipeline" title={STATIC_SITE ? "The nightly run that published this site" : "Pipeline status"}>
             <span className={`dot ${run.tone}`} /><span className="text">{run.text}</span>
           </a>
           <button className="about-button" type="button" onClick={onAbout} aria-haspopup="dialog">

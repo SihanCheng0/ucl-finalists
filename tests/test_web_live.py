@@ -186,3 +186,12 @@ def test_a_match_stats_copy_written_before_settling_is_fetched_once_more(tmp_pat
     later = full_time + 30 * 3600
     assert client.team_match_stats_fresh("m1", later - (full_time + config.LIVE_SETTLED_S)).data == STATS["m1"]
     assert calls == [url]
+
+
+def test_a_service_without_background_refreshes_never_starts_one():
+    """The website export: requests read what the stages fetched and start nothing behind its back."""
+    calls = []
+    service = LiveService(lambda force: calls.append(force) or snap(built_at=0.0), clock=lambda: 0.0,
+                          background=False)
+    assert service.refresh_in_background() is False and calls == []
+    assert service.refresh().status == "ready" and calls == [False]  # an explicit refresh still works

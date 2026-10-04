@@ -1,4 +1,6 @@
-"""LM Studio client: readiness checks and cached chat completions (spec §7)."""
+"""The model clients, LM Studio on this machine or OpenRouter's hosted copy of the same model: readiness checks and
+cached chat completions (spec §7). Both ask the same question (model, messages, LLM_PARAMS) under the same cache
+key, so an answer saved from one replays for the other."""
 from __future__ import annotations
 
 import contextlib
@@ -12,6 +14,7 @@ import subprocess
 import tempfile
 import threading
 import time
+import urllib.error
 import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
@@ -19,9 +22,11 @@ from typing import Callable
 
 from . import config
 
-Post = Callable[[str, dict, float], dict]
+Post = Callable[..., dict]  # (url, body, timeout[, headers]) -> the JSON response
+Get = Callable[[str, float, dict], dict]  # (url, timeout, headers) -> the JSON response
 # OSError covers URLError, TimeoutError and ConnectionError; the rest cover malformed responses.
 CALL_ERRORS = (OSError, http.client.HTTPException, KeyError, IndexError, TypeError, ValueError, AttributeError)
+PROVIDERS = ("lmstudio", "openrouter")
 
 
 class LLMError(Exception):
@@ -38,10 +43,57 @@ class ChatResult:
     finish_reason: str | None
 
 
-def http_post_json(url: str, body: dict, timeout: float) -> dict:
+@dataclass
+class Usage:
+    """What the questions this client actually sent used up. Only OpenRouter reports a cost (in US dollars)."""
+    calls: int = 0
+    input_tokens: int = 0
+    output_tokens: int = 0
+    cost: float | None = None
+
+    def add(self, usage: dict | None) -> None:
+        """Count one answered call. Never raises: an answer that was paid for must still be saved."""
+        usage = usage if isinstance(usage, dict) else {}
+        self.calls += 1
+        self.input_tokens += _count(usage.get("prompt_tokens"))
+        self.output_tokens += _count(usage.get("completion_tokens"))
+        if _number(usage.get("cost")):
+            self.cost = (self.cost or 0.0) + float(usage["cost"])
+
+    def describe(self) -> str:
+        cost = "" if self.cost is None else f", ${self.cost:.4f}"
+        return (f"{self.calls} call{'s' if self.calls != 1 else ''}, {self.input_tokens:,} input and "
+                f"{self.output_tokens:,} output tokens{cost}")
+
+
+def _number(value) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
+def _count(value) -> int:
+    return int(value) if _number(value) and value >= 0 else 0
+
+
+def key_problem(key: str) -> str | None:
+    """Why an API key can't be sent, without repeating any of it: none set, or spaces or line breaks pasted in with
+    it (a header carrying those fails with an error that would quote the key)."""
+    if not key:
+        return f"{config.OPENROUTER_KEY_ENV} isn't set"
+    if any(c.isspace() or not c.isprintable() for c in key):
+        return f"{config.OPENROUTER_KEY_ENV} has spaces or line breaks in it: set it again without them"
+    return None
+
+
+def http_post_json(url: str, body: dict, timeout: float, headers: dict | None = None) -> dict:
     request = urllib.request.Request(
-        url, data=json.dumps(body).encode(), headers={"Content-Type": "application/json"}
+        url, data=json.dumps(body).encode(), headers={"Content-Type": "application/json", **(headers or {})}
     )
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        return json.loads(response.read())
+
+
+def http_get_json(url: str, timeout: float, headers: dict | None = None) -> dict:
+    request = urllib.request.Request(url, headers={"Accept": "application/json", **(headers or {})})
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.loads(response.read())
 
@@ -113,20 +165,18 @@ def parse_loaded(ps_json: str, model: str) -> int | None:
     return None
 
 
-class LMStudio:
-    def __init__(
-        self,
-        model: str = config.LLM_MODEL,
-        base_url: str = config.LLM_BASE_URL,
-        cache_dir: Path = config.LLM_CACHE_DIR,
-        post: Post = http_post_json,
-    ):
+class CachedChat:
+    """Chat completions that answer from the cache first. A subclass says how to send one request (`send`, which
+    skips the cache) and how to get ready for one (`ensure_ready`, which never raises and leaves its reason in
+    `reason`)."""
+    name = "the model"
+
+    def __init__(self, model: str, cache_dir: Path, post: Post):
         self.model = model
-        self.base_url = base_url.rstrip("/")
         self.cache_dir = Path(cache_dir)
         self._post = post
         self.reason: str | None = None  # why ensure_ready last said no
-        self._lms_error = ""  # what lms said went wrong (or why it could not run) on its last failed call
+        self.spent = Usage()
 
     def chat(self, messages: list[dict], offline: bool = False) -> ChatResult:
         """Every response, valid or not, is cached under its full request; failures are not. `offline` answers from
@@ -140,15 +190,122 @@ class LMStudio:
         if offline:
             raise CacheMiss(key)
         try:
-            choice = self._post(f"{self.base_url}/chat/completions", body, config.LLM_TIMEOUT_S)["choices"][0]
+            response = self.send(body)
+            choice = response["choices"][0]
+            if choice.get("error") or choice.get("finish_reason") == "error":  # OpenRouter: the provider failed
+                error = choice.get("error")
+                detail = error.get("message") if isinstance(error, dict) else error
+                raise LLMError(f"the provider failed mid-answer: {self.scrub(str(detail or 'no detail'))}")
             content = choice["message"].get("content")
             if content is not None and not isinstance(content, str):
                 raise LLMError(f"message content is {type(content).__name__}, not text")
             result = ChatResult(content or "", choice.get("finish_reason"))
         except CALL_ERRORS as exc:
-            raise LLMError(f"{type(exc).__name__}: {exc}") from exc
-        _write_cache(path, {"content": result.content, "finish_reason": result.finish_reason, "request": body})
+            raise LLMError(self.scrub(f"{type(exc).__name__}: {exc}")) from None
+        usage = response.get("usage") if isinstance(response.get("usage"), dict) else None
+        self.spent.add(usage)
+        entry = {"content": result.content, "finish_reason": result.finish_reason, "request": body}
+        _write_cache(path, {**entry, "usage": usage} if usage else entry)
         return result
+
+    def send(self, body: dict, timeout: float = config.LLM_TIMEOUT_S) -> dict:
+        raise NotImplementedError
+
+    def ensure_ready(self) -> bool:
+        raise NotImplementedError
+
+    def scrub(self, text: str) -> str:
+        """Text about a failure, safe to log and to publish (OpenRouter takes out its key)."""
+        return text
+
+
+class OpenRouter(CachedChat):
+    """The same model hosted on OpenRouter, which passes each request to one of the providers serving it. Reasoning
+    stays off, as in LM Studio, and each response reports its tokens and cost."""
+    name = "OpenRouter"
+
+    def __init__(self, model: str = config.LLM_MODEL, base_url: str = config.OPENROUTER_BASE_URL,
+                 cache_dir: Path = config.LLM_CACHE_DIR, post: Post = http_post_json, get: Get = http_get_json,
+                 api_key: str | None = None):
+        super().__init__(model, cache_dir, post)
+        self.base_url = base_url.rstrip("/")
+        self._get = get
+        self._key = (os.environ.get(config.OPENROUTER_KEY_ENV, "") if api_key is None else api_key).strip()
+
+    def headers(self) -> dict:
+        return {"Authorization": f"Bearer {self._key}", "X-Title": "UCL Lab", "User-Agent": "ucl-lab"}
+
+    def scrub(self, text: str) -> str:
+        return text.replace(self._key, "<key>") if self._key else text
+
+    def send(self, body: dict, timeout: float = config.LLM_TIMEOUT_S) -> dict:
+        problem = key_problem(self._key)
+        if problem:  # never put a key that can't be sent into a header: the error would quote it
+            raise LLMError(problem)
+        return self._post(f"{self.base_url}/chat/completions", openrouter_body(body), timeout, self.headers())
+
+    def ensure_ready(self) -> bool:
+        """The key is set and OpenRouter accepts it. Never raises: see `reason`."""
+        self.reason = self._not_ready_reason()
+        return self.reason is None
+
+    def _not_ready_reason(self) -> str | None:
+        problem = key_problem(self._key)
+        if problem:
+            return problem
+        try:
+            self._get(f"{self.base_url}/key", config.OPENROUTER_CHECK_TIMEOUT_S, self.headers())
+        except urllib.error.HTTPError as exc:
+            if exc.code in (401, 403):
+                return f"OpenRouter turned the key down (HTTP {exc.code})"
+            return f"OpenRouter answered HTTP {exc.code}"
+        except Exception as exc:  # noqa: BLE001 - readiness must never crash the pipeline
+            return self.scrub(f"OpenRouter isn't reachable ({type(exc).__name__}: {exc})")
+        return None
+
+
+def openrouter_body(body: dict) -> dict:
+    """An LM Studio request in OpenRouter's terms: `reasoning_effort` becomes its `reasoning` object, only providers
+    with full or 8-bit weights may answer, and usage accounting is on so that each response carries its cost."""
+    sent = {key: value for key, value in body.items() if key != "reasoning_effort"}
+    effort = body.get("reasoning_effort")
+    if effort is not None:
+        sent["reasoning"] = {"enabled": False} if effort == "none" else {"effort": effort}
+    sent["provider"] = {"quantizations": list(config.OPENROUTER_QUANTIZATIONS)}
+    sent["usage"] = {"include": True}
+    return sent
+
+
+def provider() -> str:
+    """Who answers new questions: UCL_LLM_PROVIDER when it is set, else OpenRouter when its key is, else LM Studio."""
+    chosen = os.environ.get(config.LLM_PROVIDER_ENV, "").strip().lower()
+    if chosen:
+        if chosen not in PROVIDERS:
+            raise ValueError(f"{config.LLM_PROVIDER_ENV} must be one of {', '.join(PROVIDERS)}, not {chosen!r}")
+        return chosen
+    return "openrouter" if os.environ.get(config.OPENROUTER_KEY_ENV) else "lmstudio"
+
+
+def make_llm(model: str = config.LLM_MODEL) -> CachedChat:
+    return OpenRouter(model=model) if provider() == "openrouter" else LMStudio(model=model)
+
+
+class LMStudio(CachedChat):
+    name = "LM Studio"
+
+    def __init__(
+        self,
+        model: str = config.LLM_MODEL,
+        base_url: str = config.LLM_BASE_URL,
+        cache_dir: Path = config.LLM_CACHE_DIR,
+        post: Post = http_post_json,
+    ):
+        super().__init__(model, cache_dir, post)
+        self.base_url = base_url.rstrip("/")
+        self._lms_error = ""  # what lms said went wrong (or why it could not run) on its last failed call
+
+    def send(self, body: dict, timeout: float = config.LLM_TIMEOUT_S) -> dict:
+        return self._post(f"{self.base_url}/chat/completions", body, timeout)
 
     def ensure_ready(self) -> bool:
         """Start the server and load the model with the configured context if needed. Never raises: see `reason`."""

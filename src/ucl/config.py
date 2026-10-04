@@ -167,6 +167,14 @@ LLM_PARAMS = {"temperature": 0.3, "max_tokens": 8000, "reasoning_effort": "none"
 LLM_TIMEOUT_S = 300
 LLM_CONTEXT_LENGTH = 16384
 LMS_BIN = Path.home() / ".lmstudio" / "bin" / "lms"
+# The same model hosted on OpenRouter (its id there matches LM Studio's). It answers when UCL_LLM_PROVIDER is
+# "openrouter", or when that is unset and OPENROUTER_API_KEY is.
+LLM_PROVIDER_ENV = "UCL_LLM_PROVIDER"
+OPENROUTER_KEY_ENV = "OPENROUTER_API_KEY"
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
+OPENROUTER_CHECK_TIMEOUT_S = 10
+# Only providers that run the weights at 16 or 8 bits: none of the 4-bit or undisclosed ones (the local copy is 4-bit)
+OPENROUTER_QUANTIZATIONS = ["bf16", "fp16", "fp8"]
 
 # --- UCL Lab, the local dashboard (spec 2026-10-01-ucl-lab-dashboard-design.md) ---
 WEB_PORT = 8787

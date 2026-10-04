@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { api, ApiError, EVENTS_URL } from "../api";
-import { applyEvent, initialView, withState, type PipelineView } from "../lib/pipelineState";
+import { applyEvent, initialView, replay, withState, type PipelineView } from "../lib/pipelineState";
+import { STATIC_SITE } from "../site";
+import { pipelineRecord } from "../staticApi";
 import type { PipelineEvent } from "../types";
 
 const TYPES = ["stage", "progress", "log", "done", "run_failed"] as const;
@@ -11,16 +13,32 @@ export interface Pipeline {
   connected: boolean;
   start: (body: { stages?: string[]; skip_ai?: boolean; refresh_live?: boolean }) => Promise<boolean>;
   startError: string | null;
+  publishedAt: string | null; // the website: when the nightly run published it
 }
 
 /** /state first, then the event stream (its backlog fills the log). EventSource reconnects by itself and sends the
- * last id it saw; a new boot means the server restarted, and the reducer then starts over. */
+ * last id it saw; a new boot means the server restarted, and the reducer then starts over. The website has no
+ * server: it replays the nightly run that published it, and starting a run says why it can't. */
 export function usePipeline(): Pipeline {
   const [view, setView] = useState<PipelineView>(initialView);
   const [connected, setConnected] = useState(false);
   const [startError, setStartError] = useState<string | null>(null);
+  const [publishedAt, setPublishedAt] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!STATIC_SITE) return;
+    let closed = false;
+    pipelineRecord().then((record) => {
+      if (closed) return;
+      setView(replay(record.state, record.events));
+      setPublishedAt(record.published_at);
+      setConnected(true);
+    }, () => undefined);
+    return () => { closed = true; };
+  }, []);
+
+  useEffect(() => {
+    if (STATIC_SITE) return;
     let source: EventSource | null = null;
     let closed = false;
     let retry: number | undefined;
@@ -67,5 +85,5 @@ export function usePipeline(): Pipeline {
     }
   }, []);
 
-  return { view, connected, start, startError };
+  return { view, connected, start, startError, publishedAt };
 }

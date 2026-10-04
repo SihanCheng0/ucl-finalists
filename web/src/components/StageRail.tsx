@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { duration } from "../lib/format";
+import { STATIC_SITE } from "../site";
 import type { StageMeta, StageState } from "../types";
 import { AlertIcon, CheckIcon, CrossIcon, SkipIcon } from "./Icons";
 
-const WORDS: Record<string, string> = { idle: "Waiting", running: "Running", done: "Done", warning: "Done with a warning",
-  skipped: "Skipped", failed: "Failed" };
+const WORDS: Record<string, string> = { idle: STATIC_SITE ? "Not in this run" : "Waiting", running: "Running", done: "Done",
+  warning: "Done with a warning", skipped: "Skipped", failed: "Failed" };
 
 function Ring({ status }: { status: string }) {
   const Icon = status === "done" ? CheckIcon : status === "failed" ? CrossIcon : status === "warning" ? AlertIcon
@@ -14,7 +15,7 @@ function Ring({ status }: { status: string }) {
 
 /** The stages left to right, in the order they run; a running stage counts its time up. */
 export function StageRail({ stages, meta, running, onRun }: {
-  stages: StageState[]; meta: StageMeta[]; running: boolean; onRun: (stage: string) => void;
+  stages: StageState[]; meta: StageMeta[]; running: boolean; onRun?: (stage: string) => void;
 }) {
   const [now, setNow] = useState(() => Date.now() / 1000);
   const ticking = stages.some((s) => s.status === "running");
@@ -38,8 +39,8 @@ export function StageRail({ stages, meta, running, onRun }: {
               {elapsed !== null && <span className="muted num">{duration(elapsed)}</span>}
             </div>
             {stage.message && <div className="message" title={stage.message}>{stage.message}</div>}
-            <div><button className="button small" type="button" disabled={running} onClick={() => onRun(stage.name)}>
-              Run {info?.label.toLowerCase() ?? stage.name}</button></div>
+            {onRun && <div><button className="button small" type="button" disabled={running} onClick={() => onRun(stage.name)}>
+              Run {info?.label.toLowerCase() ?? stage.name}</button></div>}
           </div>
         );
       })}

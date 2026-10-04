@@ -49,7 +49,7 @@ def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(prog="ucl web", description="Start UCL Lab, the local dashboard.")
     parser.add_argument("--port", type=int, default=config.WEB_PORT)
     parser.add_argument("--no-open", action="store_true", help="don't open the browser")
-    parser.add_argument("--llm-model", default=config.LLM_MODEL, help="LM Studio model key for the analyze stage")
+    parser.add_argument("--llm-model", default=config.LLM_MODEL, help="model id for the analyze stage: an LM Studio key or an OpenRouter slug")
     args = parser.parse_args(argv)
     dist = config.WEB_DIR / "dist"
     if not (dist / "index.html").exists():

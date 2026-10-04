@@ -294,7 +294,8 @@ def head_to_head(rating_a: float, rating_b: float, models: Models, home: float =
     xg_a, xg_b = models.league.rates(diff)
     m = score_matrix(float(xg_a), float(xg_b))
     win, draw, loss = outcome(m)
-    likeliest = np.argsort(m, axis=None)[::-1][:3]
+    # likeliest first; equally likely scores in the grid's reading order (0-1 before 1-0), as the browser's port does
+    likeliest = np.lexsort((np.arange(m.size), -m.ravel()))[:3]
     scores = [{"a": int(i), "b": int(j), "p": float(m[i, j])} for i, j in zip(*np.unravel_index(likeliest, m.shape))]
     final_win, final_draw, _ = outcome(score_matrix(*map(float, models.late.rates(gap))))
     return {

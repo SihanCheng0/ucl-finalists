@@ -1,11 +1,10 @@
+import { ApiError } from "./apiError";
+import { STATIC_SITE } from "./site";
+import { staticApi } from "./staticApi";
 import type { CheckReport, Comparison, Forecast, HeadToHead, Meta, ModelTest, PipelineState, PlayerHistory, Profile,
   Squad, Summary, TeamHit, Venue } from "./types";
 
-export class ApiError extends Error {
-  constructor(public status: number, public code: string, message: string) {
-    super(message);
-  }
-}
+export { ApiError };
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
@@ -24,7 +23,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 const id = encodeURIComponent;
 
-export const api = {
+const serverApi = {
   meta: () => request<Meta>("/api/meta"),
   summary: () => request<Summary>("/api/summary"),
   teams: (q: string) => request<TeamHit[]>(`/api/teams?q=${id(q)}`),
@@ -45,5 +44,9 @@ export const api = {
       method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body),
     }),
 };
+
+export type Api = typeof serverApi;
+/** The local server's API, or on the website the files `ucl publish` wrote (staticApi.ts). */
+export const api: Api = STATIC_SITE ? staticApi : serverApi;
 
 export const EVENTS_URL = "/api/pipeline/events";

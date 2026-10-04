@@ -14,7 +14,7 @@ export function Overview({ summary, onAbout }: { summary: Summary; onAbout: () =
     <div className="overview">
       <div className="overview-lede">
         <h1>What makes a Champions League finalist?</h1>
-        <p>Fifteen seasons of group and league-phase stats, a model tested on seasons it never saw, and a local AI
+        <p>Fifteen seasons of group and league-phase stats, a model tested on seasons it never saw, and an AI model
           that writes up what it found. Search a club to explore one season, or compare two.</p>
         <p><button className="link-button" type="button" onClick={onAbout} aria-haspopup="dialog">How it works, step by step</button></p>
       </div>

@@ -6,6 +6,7 @@ import { useApi } from "./hooks/useApi";
 import { useChecks } from "./hooks/useChecks";
 import { useHashRoute } from "./hooks/useHashRoute";
 import { usePipeline } from "./hooks/usePipeline";
+import { STATIC_SITE } from "./site";
 import { CompareScreen } from "./screens/CompareScreen";
 import { ExploreScreen } from "./screens/ExploreScreen";
 import { PipelineScreen } from "./screens/PipelineScreen";
@@ -30,7 +31,7 @@ export function App() {
 
   let content;
   if (meta.error) {
-    content = <div className="empty"><h2>Can't reach the UCL Lab server</h2><p>{meta.error.message}</p>
+    content = <div className="empty"><h2>{STATIC_SITE ? "The site's data didn't load" : "Can't reach the UCL Lab server"}</h2><p>{meta.error.message}</p>
       <button className="button" type="button" onClick={meta.reload}>Try again</button></div>;
   } else if (!meta.data) {
     content = <div className="empty"><p>Loading…</p></div>;
@@ -51,8 +52,8 @@ export function App() {
   }
   return (
     <div className="app">
-      <TopNav screen={route.screen} view={pipeline.view} connected={pipeline.connected} checks={checks.data}
-              onAbout={openAbout} />
+      <TopNav screen={route.screen} view={pipeline.view} connected={pipeline.connected} publishedAt={pipeline.publishedAt}
+              checks={checks.data} onAbout={openAbout} />
       <main>{content}</main>
       {about && meta.data && <AboutDrawer meta={meta.data} onClose={closeAbout} />}
     </div>

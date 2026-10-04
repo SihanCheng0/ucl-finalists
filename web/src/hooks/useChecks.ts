@@ -24,10 +24,10 @@ export function useChecks(dataVersion: number): Loaded<CheckReport> {
   return checks;
 }
 
-/** What the run controls need to know about the local model. */
-export function localAiState(report: CheckReport | null): { ready: boolean; blocking: boolean; note: string } {
+/** What the run controls need to know about the AI model (LM Studio or OpenRouter). */
+export function aiState(report: CheckReport | null): { ready: boolean; blocking: boolean; note: string } {
   if (!report) return { ready: true, blocking: false, note: "" };
-  const ai = report.checks.filter((c) => c.group === "Local AI");
+  const ai = report.checks.filter((c) => c.group === "AI model");
   const failed = ai.find((c) => c.status === "fail");
   if (failed) return { ready: false, blocking: true, note: `${failed.label}: ${failed.detail}.` };
   const warned = ai.find((c) => c.status === "warn");

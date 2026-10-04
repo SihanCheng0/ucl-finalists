@@ -4,6 +4,7 @@ import { useApi } from "../hooks/useApi";
 import { num, share } from "../lib/format";
 import type { Meta } from "../types";
 import { CloseIcon } from "./Icons";
+import { STATIC_SITE } from "../site";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
@@ -51,7 +52,7 @@ export function AboutDrawer({ meta, onClose }: { meta: Meta; onClose: () => void
         <p className="drawer-lede">
           UCL Lab asks one question: what do Champions League finalists have in common? It collects {historical.length} seasons
           of UEFA data ({first} to {last}), learns which first-phase numbers go with deep knockout runs, tests that on
-          seasons it never saw, and has a local AI explain the result. This page follows that process from start to end.
+          seasons it never saw, and has an AI model explain the result. This page follows that process from start to end.
         </p>
 
         <div className="flow" aria-hidden>
@@ -85,7 +86,7 @@ export function AboutDrawer({ meta, onClose }: { meta: Meta; onClose: () => void
             </li>
             <li>
               <h4>Analyze</h4>
-              <p>A local AI model, Qwen running in LM Studio on this computer, writes a scouting report on each finalist of
+              <p>An open-weights AI model, Qwen3.8-27B (in LM Studio on your computer, or hosted on OpenRouter), writes a scouting report on each finalist of
                 2022 to 2026 and a summary of the findings. It sees only a fact sheet of the numbers, never the internet.
                 Every figure it writes is checked against the data, and answers with a slip in wording get one retry.
                 The badge on each report says whether all its figures were found.</p>
@@ -96,7 +97,7 @@ export function AboutDrawer({ meta, onClose }: { meta: Meta; onClose: () => void
             </li>
           </ol>
           <p className="small muted">Two optional stages sit beside the pipeline. <strong>Live season</strong> builds
-            {live ? ` ${live.label}` : " the current season"} from the matches finished so far, refreshed every six hours. It's shown
+            {live ? ` ${live.label}` : " the current season"} from the matches finished so far, refreshed {STATIC_SITE ? "every night" : "every six hours"}. It's shown
             for comparison only and never used to train the model. <strong>Player index</strong> downloads every squad since {first},
             so a player's seasons line up across all their clubs.</p>
         </section>
@@ -105,7 +106,7 @@ export function AboutDrawer({ meta, onClose }: { meta: Meta; onClose: () => void
           <h3>Reading the screens</h3>
           <ul className="reading">
             <li><strong>Pipeline</strong> shows each stage as it runs, with live counters and the log. <em>Before you run</em> checks
-              LM Studio, UEFA and the saved data first.</li>
+              the AI model, UEFA and the saved data first. On the website it shows the nightly run that published the site.</li>
             <li><strong>Explore:</strong> each bar is the share of that season's teams this one did better than, so a longer bar
               is always better, even for stats where lower wins. The small tick marks the same share against every team since
               {` ${first}`}. The line beside it traces that share across the club's seasons.</li>

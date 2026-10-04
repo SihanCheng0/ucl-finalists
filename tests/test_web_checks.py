@@ -32,7 +32,7 @@ def down(url, timeout):
     raise OSError("Connection refused")
 
 
-# --- Local AI ---
+# --- AI model: LM Studio ---
 
 def test_the_lms_command_is_found_or_its_install_explained(monkeypatch, tmp_path):
     exe = tmp_path / "lms"
@@ -69,33 +69,56 @@ def test_the_model_should_be_loaded_with_the_context_the_write_ups_need():
 
 
 class FakeLLM:
-    def __init__(self, ready=True):
+    name = "LM Studio"
+
+    def __init__(self, ready=True, response=None, error=None):
         self.ready, self.reason = ready, None if ready else "server did not start: lms not found"
+        self.response = response or {"choices": [{"message": {"content": " ready \n"}}]}
+        self.error, self.sent = error, []
 
     def ensure_ready(self):
         return self.ready
 
+    def send(self, body, timeout=None):
+        self.sent.append((body, timeout))
+        if self.error:
+            raise self.error
+        return self.response
+
+    def scrub(self, text):
+        return text
+
 
 def test_trying_the_model_loads_it_then_asks_one_uncached_question():
-    posted = []
-
-    def post(url, body, timeout):
-        posted.append((url, body))
-        return {"choices": [{"message": {"content": " ready \n"}}]}
-
+    llm = FakeLLM()
     ticks = iter([0.0, 2.0, 2.5])
-    result = checks.try_model("m", llm_factory=lambda name: FakeLLM(), post=post, clock=lambda: next(ticks))
-    assert result == {"ok": True, "detail": "m answered in 0.5 s", "reply": "ready", "load_seconds": 2.0,
-                      "answer_seconds": 0.5}
-    url, body = posted[0]
-    assert url == f"{config.LLM_BASE_URL}/chat/completions" and (body["model"], body["max_tokens"]) == ("m", 16)
+    result = checks.try_model("m", llm_factory=lambda name: llm, clock=lambda: next(ticks))
+    assert result == {"ok": True, "detail": "m answered through LM Studio in 0.5 s", "reply": "ready",
+                      "load_seconds": 2.0, "answer_seconds": 0.5}
+    ((body, timeout),) = llm.sent
+    assert (body["model"], body["max_tokens"], body["reasoning_effort"]) == ("m", 16, "none")
+    assert timeout == checks.MODEL_TEST_TIMEOUT_S  # one tiny question, not a write-up's five minutes
+
+
+def test_trying_the_model_reports_what_openrouter_charged():
+    llm = FakeLLM(response={"choices": [{"message": {"content": "ready"}}], "usage": {"cost": 0.0000042}})
+    llm.name = "OpenRouter"
+    result = checks.try_model("m", llm_factory=lambda name: llm, clock=lambda: 0.0)
+    assert result["detail"] == "m answered through OpenRouter in 0.0 s for $0.000004"
 
 
 def test_trying_the_model_says_why_it_failed():
     not_ready = checks.try_model("m", llm_factory=lambda name: FakeLLM(ready=False), clock=lambda: 0.0)
-    assert not not_ready["ok"] and "lms not found" in not_ready["detail"]
-    silent = checks.try_model("m", llm_factory=lambda name: FakeLLM(), post=lambda *a: down(*a[:2]), clock=lambda: 0.0)
+    assert not not_ready["ok"] and not_ready["detail"] == "LM Studio isn't ready: server did not start: lms not found"
+    silent = checks.try_model("m", llm_factory=lambda name: FakeLLM(error=OSError("Connection refused")),
+                              clock=lambda: 0.0)
     assert not silent["ok"] and silent["detail"].startswith("The model didn't answer: OSError")
+
+
+def test_trying_the_model_with_an_unknown_provider_says_so(monkeypatch):
+    monkeypatch.setenv(config.LLM_PROVIDER_ENV, "elsewhere")
+    result = checks.try_model("m")
+    assert not result["ok"] and "UCL_LLM_PROVIDER" in result["detail"]
 
 
 # --- UEFA feeds ---
@@ -241,8 +264,134 @@ def test_run_checks_groups_everything_in_order_with_a_summary(outputs, tmp_path,
                                raw_dir=tmp_path / "raw", out_dir=out, cache_dir=tmp_path / "cache",
                                web_dir=tmp_path / "web")
     groups = [check["group"] for check in report["checks"]]
-    assert groups == sorted(groups, key=checks.GROUPS.index) and groups[0] == "Local AI"
-    assert report["model"] == MODEL and sum(report["summary"].values()) == len(report["checks"]) == 17
+    assert groups == sorted(groups, key=checks.GROUPS.index) and groups[0] == "AI model"
+    assert (report["model"], report["provider"]) == (MODEL, "lmstudio")
+    assert sum(report["summary"].values()) == len(report["checks"]) == 17
     by_id = {check["id"]: check for check in report["checks"]}
     assert by_id["lm_model_loaded"]["status"] == OK and by_id["frontend"]["status"] == FAIL
     json.dumps(report, allow_nan=False)
+
+
+# --- AI model: OpenRouter ---
+
+def answers(table):
+    """A fake GET for JSON: {url suffix: a dict to return or an exception to raise}."""
+    def get(url, timeout, headers):
+        for suffix, answer in table.items():
+            if url.endswith(suffix):
+                if isinstance(answer, Exception):
+                    raise answer
+                return answer
+        raise AssertionError(url)
+    return get
+
+
+def http_error(code):
+    import urllib.error
+    return urllib.error.HTTPError("https://openrouter.ai/api/v1/x", code, "no", {}, None)
+
+
+def endpoint(quantization, prompt, completion):
+    return {"quantization": quantization, "pricing": {"prompt": str(prompt / 1e6), "completion": str(completion / 1e6)}}
+
+
+def test_the_openrouter_key_must_be_set(monkeypatch):
+    assert checks.openrouter_key().status == FAIL
+    monkeypatch.setenv(config.OPENROUTER_KEY_ENV, "sk-or-x")
+    check = checks.openrouter_key()
+    assert check.status == OK and "sk-or-x" not in check.detail
+
+
+def test_the_openrouter_account_reports_spending_and_what_is_left(monkeypatch):
+    monkeypatch.setenv(config.OPENROUTER_KEY_ENV, "sk-or-x")
+    unlimited = checks.openrouter_account(answers({"/key": {"data": {"usage": 0.04, "limit_remaining": None}}}), True)
+    assert (unlimited.status, unlimited.detail) == (OK, "The key works: $0.04 spent with this key")
+    capped = checks.openrouter_account(answers({"/key": {"data": {"usage": 1.5, "limit_remaining": 8.5}}}), True)
+    assert capped.status == OK and capped.detail.endswith("$8.50 left")
+    low = checks.openrouter_account(answers({"/key": {"data": {"usage": 9.7, "limit_remaining": 0.3}}}), True)
+    assert low.status == WARN and "$0.30" in low.detail
+
+
+def test_the_openrouter_account_check_says_what_went_wrong(monkeypatch):
+    monkeypatch.setenv(config.OPENROUTER_KEY_ENV, "sk-or-x")
+    assert checks.openrouter_account(answers({"/key": {}}), False).status == INFO
+    assert checks.openrouter_account(answers({"/key": http_error(401)}), True).status == FAIL
+    assert checks.openrouter_account(answers({"/key": http_error(502)}), True).status == WARN
+    assert checks.openrouter_account(answers({"/key": OSError("down")}), True).status == WARN
+
+
+def test_the_model_check_counts_providers_with_allowed_weights_and_their_prices():
+    listing = {"data": {"endpoints": [endpoint("bf16", 0.15, 1.875), endpoint("fp8", 0.40, 3.0),
+                                      endpoint("fp4", 0.05, 2.2), endpoint("unknown", 0.02, 4.35)]}}
+    check = checks.openrouter_model(answers({"/endpoints": listing}), MODEL)
+    assert check.status == OK
+    assert check.detail == (f"2 of 4 providers serve {MODEL} at bf16, fp16, fp8; per million tokens in and out, "
+                            "from $0.15 and $1.88 to $0.40 and $3.00")
+
+
+def test_the_model_check_fails_when_no_allowed_provider_or_no_model():
+    only_fp4 = {"data": {"endpoints": [endpoint("fp4", 0.05, 2.2)]}}
+    assert checks.openrouter_model(answers({"/endpoints": only_fp4}), MODEL).status == FAIL
+    assert checks.openrouter_model(answers({"/endpoints": http_error(404)}), MODEL).status == FAIL
+    assert checks.openrouter_model(answers({"/endpoints": {"data": {}}}), MODEL).status == WARN
+    assert checks.openrouter_model(answers({"/endpoints": OSError("down")}), MODEL).status == WARN
+
+
+def test_run_checks_uses_the_openrouter_checks_when_it_answers(outputs, tmp_path, monkeypatch):
+    monkeypatch.setenv(config.OPENROUTER_KEY_ENV, "sk-or-x")
+    processed, out = outputs
+    services = SimpleNamespace(store=DataStore(processed, out), live=None, players=None)
+    listing = {"data": {"endpoints": [endpoint("bf16", 0.15, 1.875)]}}
+    report = checks.run_checks(services, MODEL, get=lambda url, timeout: b"{}", raw_dir=tmp_path / "raw",
+                               out_dir=out, cache_dir=tmp_path / "cache", web_dir=tmp_path / "web",
+                               get_json=answers({"/key": {"data": {"usage": 0.0}}, "/endpoints": listing}))
+    ai = [check for check in report["checks"] if check["group"] == "AI model"]
+    assert report["provider"] == "openrouter"
+    assert [(c["id"], c["status"]) for c in ai] == [("openrouter_key", OK), ("openrouter_account", OK),
+                                                    ("openrouter_model", OK)]
+
+
+def test_an_unknown_provider_is_a_failed_check(outputs, tmp_path, monkeypatch):
+    monkeypatch.setenv(config.LLM_PROVIDER_ENV, "elsewhere")
+    processed, out = outputs
+    services = SimpleNamespace(store=DataStore(processed, out), live=None, players=None)
+    report = checks.run_checks(services, MODEL, get=lambda url, timeout: b"{}", raw_dir=tmp_path / "raw",
+                               out_dir=out, cache_dir=tmp_path / "cache", web_dir=tmp_path / "web")
+    first = report["checks"][0]
+    assert (report["provider"], first["id"], first["status"]) == ("unknown", "llm_provider", FAIL)
+
+
+def test_the_website_build_is_checked_with_its_own_command(tmp_path):
+    check = checks.frontend_check(tmp_path, "dist-site")
+    assert check.status == FAIL and check.detail == "web/dist-site is missing" and "npm run build:site" in check.fix
+
+
+def test_a_key_pasted_with_a_line_break_fails_without_being_repeated(monkeypatch):
+    monkeypatch.setenv(config.OPENROUTER_KEY_ENV, "sk-or-v1-secret\r\nmore")
+    check = checks.openrouter_key()
+    assert check.status == FAIL and "secret" not in check.detail and "line breaks" in check.detail
+
+
+def test_the_website_leaves_out_what_the_key_has_spent(monkeypatch):
+    monkeypatch.setenv(config.OPENROUTER_KEY_ENV, "sk-or-x")
+    get = answers({"/key": {"data": {"usage": 1.5, "limit_remaining": 8.5}}})
+    assert checks.openrouter_account(get, True, show_spending=False).detail == "The key works"
+    low = checks.openrouter_account(answers({"/key": {"data": {"usage": 9.7, "limit_remaining": 0.3}}}), True,
+                                    show_spending=False)
+    assert low.status == WARN and "$" not in low.detail
+
+
+def stages(*pairs, run_id="b-r1", running=False):
+    return {"running": running, "run_id": run_id,
+            "stages": [{"name": name, "status": status, "message": message} for name, status, message in pairs]}
+
+
+def test_the_last_run_check_follows_the_runner():
+    assert checks.last_run_check(stages(("live", "idle", ""), run_id=None)).status == INFO
+    assert checks.last_run_check(stages(("live", "running", ""), running=True)).detail == "Running now"
+    done = checks.last_run_check(stages(("fetch", "idle", ""), ("live", "done", "36 teams"), ("players", "done", "")))
+    assert (done.status, done.detail) == (OK, "Done: live, players")
+    warned = checks.last_run_check(stages(("live", "warning", "UEFA couldn't be reached"), ("players", "done", "")))
+    assert warned.status == WARN and "UEFA couldn't be reached" in warned.detail
+    failed = checks.last_run_check(stages(("live", "done", ""), ("players", "failed", "timed out")))
+    assert (failed.status, failed.detail) == (FAIL, "players failed: timed out")

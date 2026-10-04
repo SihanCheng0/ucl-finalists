@@ -130,7 +130,7 @@ def test_analyze_warns_when_lm_studio_is_not_ready(monkeypatch, loaders):
     monkeypatch.setattr(stages, "analyze", fake_analyze(stages.AnalyzeResult(unavailable)))
     stage, _, _, _ = run_stage("analyze")
     assert stage["status"] == "warning"
-    assert stage["message"] == "LM Studio not ready (server did not start: lms not found); earlier write-ups kept"
+    assert stage["message"] == "AI model not ready (server did not start: lms not found); earlier write-ups kept"
 
 
 def test_analyze_uses_the_chosen_llm_model(monkeypatch, loaders):

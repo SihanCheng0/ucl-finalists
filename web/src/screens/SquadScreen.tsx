@@ -7,6 +7,7 @@ import type { Pipeline } from "../hooks/usePipeline";
 import { ago, num } from "../lib/format";
 import { colourValue, perNinety } from "../lib/pitchLayout";
 import type { Route } from "../lib/route";
+import { STATIC_SITE } from "../site";
 import type { Meta, PlayerStatMeta, SquadPlayer } from "../types";
 
 function SquadTable({ players, stat, selected, onSelect }: {
@@ -82,7 +83,7 @@ export function SquadScreen({ meta, route, navigate, pipeline }: {
             {chosen ? (
               <PlayerPanel player={chosen} stat={stat} stats={meta.player_stats} onClose={() => setSelected(null)}
                            running={pipeline.view.state?.running ?? false}
-                           onBuildIndex={() => { void pipeline.start({ stages: ["players"] }); }} />
+                           onBuildIndex={STATIC_SITE ? undefined : () => { void pipeline.start({ stages: ["players"] }); }} />
             ) : (
               <aside className="panel card player-panel"><h3>Pick a player</h3>
                 <p className="small muted">Click a circle or a table row for that player's numbers this season and every season

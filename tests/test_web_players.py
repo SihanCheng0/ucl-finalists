@@ -154,3 +154,15 @@ def test_a_live_squad_is_stale_only_after_a_refresh_failed(tmp_path):
         time.sleep(0.01)
     assert players.squad("52280", 2027)["stale"] is True
     assert players.freshness(2027, "52280")[0] is True
+
+
+def test_without_background_refreshes_an_old_live_squad_is_served_as_it_is(tmp_path):
+    import os
+
+    client = FakeClient(tmp_path, SQUADS, ())
+    players = PlayerService(client, client, lambda: list(SQUADS), cache_dir=tmp_path / "players", background=False)
+    players.squad("52280", 2027)
+    path = tmp_path / "players" / "2027" / "52280.json"
+    old = time.time() - config.LIVE_MAX_AGE_S - 60
+    os.utime(path, (old, old))
+    assert players.squad("52280", 2027)["players"] and not players.refreshing

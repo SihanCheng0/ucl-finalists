@@ -58,11 +58,11 @@ def test_a_failed_narrative_shows_the_unavailable_badge(built):
 
 
 def test_skipped_and_unavailable_runs_show_notices_without_ai_claims(built):
-    for status, notice in [("skipped", "AI write-ups were skipped"), ("unavailable", "LM Studio wasn’t reachable")]:
+    for status, notice in [("skipped", "AI write-ups were skipped"), ("unavailable", "The AI model wasn’t reachable")]:
         page = render(built, Analysis(status, "test/model"))
         assert notice in page
         assert "All figures found in the data" not in page
-        assert "running locally in LM Studio" not in page
+        assert "an open-weights model" not in page
         assert page.count("No AI write-up for this run.") == 10
 
 

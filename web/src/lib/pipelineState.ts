@@ -30,6 +30,12 @@ function runSeq(runId: string | null): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+/** A recorded run (the website's pipeline.json): its final state, then its events, as a dashboard that connected
+ * after the run ended would have seen them. */
+export function replay(state: PipelineState, events: PipelineEvent[]): PipelineView {
+  return events.reduce(applyEvent, withState(initialView(), state));
+}
+
 /** A fresh /state snapshot is the truth for stages and counters. */
 export function withState(view: PipelineView, state: PipelineState): PipelineView {
   if (view.boot !== null && view.boot !== state.boot) return { ...initialView(), boot: state.boot, state };

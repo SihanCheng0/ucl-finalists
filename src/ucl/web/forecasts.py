@@ -118,23 +118,44 @@ class ForecastService:
             "track_record": {**{k: v for k, v in record.items() if k != "titles"}, "titles": titles},
         })
 
+    @staticmethod
+    def _title(built: Built) -> dict[str, float]:
+        return {} if built.odds is None else dict(zip(built.odds["team_id"], built.odds["p_win"]))
+
+    @staticmethod
+    def _side(built: Built, title: dict[str, float], team_id: str, season: int) -> dict:
+        rating = built.ratings.season_end.get((season, team_id))
+        if rating is None:
+            raise NotFound(f"no rating for team {team_id} in {config.season_label(season)}")
+        return {"team_id": team_id, "name": built.names.get(team_id, team_id), "season": season,
+                "label": config.season_label(season), "live": season == config.LIVE_SEASON,
+                "rating": round(rating), "title": title.get(team_id)}
+
+    @staticmethod
+    def _title_label(live_snapshot) -> str | None:
+        return None if live_snapshot is None else config.season_label(int(live_snapshot.season))
+
     def head_to_head(self, snapshot, live_state, a: tuple[str, int], b: tuple[str, int], venue: str) -> dict:
         if venue not in VENUES:
             raise ValueError(f"venue must be one of {', '.join(VENUES)}, not {venue!r}")
         live_snapshot = live_state.snapshot if live_state is not None else None
         built = self._build(snapshot, live_snapshot)
-        title = {} if built.odds is None else dict(zip(built.odds["team_id"], built.odds["p_win"]))
-
-        def side(team_id: str, season: int) -> dict:
-            rating = built.ratings.season_end.get((season, team_id))
-            if rating is None:
-                raise NotFound(f"no rating for team {team_id} in {config.season_label(season)}")
-            return {"team_id": team_id, "name": built.names.get(team_id, team_id), "season": season,
-                    "label": config.season_label(season), "live": season == config.LIVE_SEASON,
-                    "rating": round(rating), "title": title.get(team_id)}
-
-        side_a, side_b = side(*a), side(*b)
+        title = self._title(built)
+        side_a, side_b = self._side(built, title, *a), self._side(built, title, *b)
         result = forecast.head_to_head(built.ratings.season_end[(a[1], a[0])], built.ratings.season_end[(b[1], b[0])],
                                        built.models, forecast.PARAMS.home, venue)
-        title_label = None if live_snapshot is None else config.season_label(int(live_snapshot.season))
-        return to_jsonable({"a": side_a, "b": side_b, "title_label": title_label, **result})
+        return to_jsonable({"a": side_a, "b": side_b, "title_label": self._title_label(live_snapshot), **result})
+
+    def matchups(self, snapshot, live_state) -> dict:
+        """What any head-to-head needs, for every rated team-season at once: each side as head_to_head shows it plus
+        its exact rating, the three goals models and the home advantage. The website plays head-to-heads in the
+        browser from this (web/src/lib/h2h.ts)."""
+        live_snapshot = live_state.snapshot if live_state is not None else None
+        built = self._build(snapshot, live_snapshot)
+        title = self._title(built)
+        sides = {f"{team_id}:{season}": {**self._side(built, title, team_id, season), "exact": float(rating)}
+                 for (season, team_id), rating in sorted(built.ratings.season_end.items())}
+        models = {stage: {"base": goals.base, "slope": goals.slope} for stage, goals in
+                  (("league", built.models.league), ("early", built.models.early), ("late", built.models.late))}
+        return to_jsonable({"home": forecast.PARAMS.home, "max_goals": forecast.MAX_GOALS, "models": models,
+                            "title_label": self._title_label(live_snapshot), "sides": sides})

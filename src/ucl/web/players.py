@@ -83,8 +83,10 @@ class PlayerService:
     job uses `background_client` (the full retry ladder). `pairs()` lists every (season, team_id) there is."""
 
     def __init__(self, request_client, background_client, pairs: Callable[[], list[tuple[int, str]]],
-                 cache_dir: Path = config.PLAYERS_DIR, clock: Callable[[], float] = time.time):
+                 cache_dir: Path = config.PLAYERS_DIR, clock: Callable[[], float] = time.time,
+                 background: bool = True):
         self._request, self._background, self._pairs = request_client, background_client, pairs
+        self._refreshes = background  # False: serving an old live squad never starts a refresh (the website export)
         self._cache_dir, self._clock = Path(cache_dir), clock
         self._lock = threading.Lock()
         self._index: dict[str, set[tuple[int, str]]] = {}
@@ -125,7 +127,8 @@ class PlayerService:
         if path.exists():
             fetched = self._request.squad(season, team_id, max_age=None)  # the cached copy, no network
             stale = key in self._refresh_failed  # what we knew before this request's own refresh
-            if season == config.LIVE_SEASON and self._clock() - path.stat().st_mtime > config.LIVE_MAX_AGE_S:
+            if self._refreshes and season == config.LIVE_SEASON \
+                    and self._clock() - path.stat().st_mtime > config.LIVE_MAX_AGE_S:
                 self._refresh_later(season, team_id)
             return self._payload(fetched.data, stale, fetched.fetched_at)
         failed_at = self._failures.get(key)
@@ -193,10 +196,23 @@ class PlayerService:
         know."""
         with self._lock:
             pairs = sorted(self._index.get(str(player_id), ()), reverse=True)
+        squads = {pair: {p["player_id"]: p for p in parse_squad(self._read(*pair))} for pair in pairs}
+        return self._history(str(player_id), pairs, squads, self.index_status())
+
+    def histories(self) -> dict[str, dict]:
+        """Every indexed player's history at once, reading each cached squad once (for the website's export)."""
+        with self._lock:
+            index = {player_id: sorted(pairs, reverse=True) for player_id, pairs in self._index.items()}
+        squads = {pair: {p["player_id"]: p for p in parse_squad(self._read(*pair))}
+                  for pair in sorted({pair for pairs in index.values() for pair in pairs})}
+        status = self.index_status()
+        everyone = {player_id: self._history(player_id, pairs, squads, status) for player_id, pairs in index.items()}
+        return {player_id: history for player_id, history in everyone.items() if history is not None}
+
+    def _history(self, player_id: str, pairs: list[tuple[int, str]], squads: dict, status: dict) -> dict | None:
         entries, info = [], None
         for season, team_id in pairs:
-            players = {p["player_id"]: p for p in parse_squad(self._read(season, team_id))}
-            player = players.get(str(player_id))
+            player = squads[(season, team_id)].get(player_id)
             if player is None:
                 continue
             info = info or player
@@ -210,7 +226,7 @@ class PlayerService:
             "player": {key: info[key] for key in ("player_id", "name", "position", "shirt", "age", "country",
                                                   "image_url")},
             "history": entries,
-            "index": self.index_status(),
+            "index": status,
             "unavailable_seasons": sorted({config.season_label(season) for season, _ in self.unavailable}),
         }
 
@@ -249,3 +265,11 @@ class PlayerService:
             self.running = False
         self.unavailable = {pair for pair, _ in failures}
         return failures
+
+
+def with_freshness(players, history: dict) -> dict:
+    """A player's history as the API sends it: plus whether the live-season squad in it is stale and when that squad
+    was fetched. `players` needs only freshness(season, team_id)."""
+    live_entry = next((h for h in history["history"] if h["live"]), None)
+    stale, fetched_at = players.freshness(live_entry["season"], live_entry["team_id"]) if live_entry else (False, None)
+    return {**history, "stale": stale, "fetched_at": fetched_at}

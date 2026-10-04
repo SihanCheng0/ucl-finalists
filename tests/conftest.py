@@ -6,6 +6,13 @@ from ucl import config
 config.BOOTSTRAP_SAMPLES = 60  # keep test runs fast; production uses the config default
 
 
+@pytest.fixture(autouse=True)
+def local_model_by_default(monkeypatch):
+    """Tests ask LM Studio unless they choose OpenRouter themselves, whatever keys this shell happens to export."""
+    monkeypatch.delenv(config.LLM_PROVIDER_ENV, raising=False)
+    monkeypatch.delenv(config.OPENROUTER_KEY_ENV, raising=False)
+
+
 @pytest.fixture
 def synthetic_ds():
     return make_synthetic_dataset()

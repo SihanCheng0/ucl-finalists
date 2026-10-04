@@ -129,7 +129,7 @@ def stage_registry(store, llm_model: str = config.LLM_MODEL,
         analysis = result.analysis
         if analysis.status != "ok":
             return StageOutcome("warning",
-                                f"LM Studio not ready ({analysis.reason or 'unknown reason'}); earlier write-ups kept")
+                                f"AI model not ready ({analysis.reason or 'unknown reason'}); earlier write-ups kept")
         if result.unavailable:
             n = len(result.unavailable)
             return StageOutcome("warning", f"{n} write-up{'s' if n != 1 else ''} could not be written this time "
@@ -193,9 +193,10 @@ def all_pairs(store: DataStore, live) -> list[tuple[int, str]]:
 
 
 def build_services(processed_dir: Path = config.PROCESSED_DIR, out_dir: Path = config.OUT_DIR,
-                   llm_model: str = config.LLM_MODEL, start_live: bool = True) -> Services:
+                   llm_model: str = config.LLM_MODEL, start_live: bool = True, background: bool = True) -> Services:
     """Everything the app needs. The stages themselves always use the config paths, so tests that point this
-    at tmp_path must not start real runs."""
+    at tmp_path must not start real runs. `background=False` (the website export) means requests never start a
+    refresh of the live season or a squad: only the stages fetch."""
     from .. import forecast
     from ..uefa import UefaClient
     from .forecasts import ForecastService
@@ -212,9 +213,9 @@ def build_services(processed_dir: Path = config.PROCESSED_DIR, out_dir: Path = c
             raise RuntimeError("the historical dataset isn't built yet: run build first")
         return build_snapshot(live_client, dataset.team_seasons, dataset.features, force=force)
 
-    live = LiveService(build_live)
+    live = LiveService(build_live, background=background)
     request_client = UefaClient(retry_delays=(), timeout=config.REQUEST_TIMEOUT_S)
-    players = PlayerService(request_client, UefaClient(), lambda: all_pairs(store, live))
+    players = PlayerService(request_client, UefaClient(), lambda: all_pairs(store, live), background=background)
     registry = {**stage_registry(store, llm_model), "live": live_stage(live), "players": players_stage(players)}
     runner = PipelineRunner(registry, bus,
                             missing_inputs=lambda names: missing_inputs(names, processed_dir, out_dir))

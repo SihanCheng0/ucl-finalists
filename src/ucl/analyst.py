@@ -12,7 +12,7 @@ import pandas as pd
 from . import config
 from .facts import build_facts
 from .grounding import check_grounding, normalize_headings, strip_think, validate_output
-from .llm import CacheMiss, LLMError, LMStudio
+from .llm import CacheMiss, CachedChat, LLMError, make_llm
 from .model import ModelResults
 
 TEAM_HEADINGS = ["How they got there", "Would the model have picked them?", "Weak spots"]
@@ -304,25 +304,41 @@ def run(
     llm=None,
     log: Callable[[str], None] = print,
 ) -> Analysis:
-    """Replay first: when every question has a saved answer, the write-ups are rebuilt without LM Studio. Only a new
-    question (changed facts, another model) starts the server and loads the model."""
+    """Replay first: when every question has a saved answer, the write-ups are rebuilt without asking the model. Only
+    a new question (changed facts, another model) goes to it: LM Studio (started and loaded as needed) or OpenRouter,
+    whichever `make_llm` picks."""
     if not enabled:
         return Analysis("skipped", llm_model)
-    llm = llm or LMStudio(model=llm_model)
     sheets = build_facts(team_seasons, finals, results)
     replayed: list[str] = []
+    # the saved answers are the same whoever gave them, so replaying needs no provider
+    saved = llm or CachedChat(llm_model, config.LLM_CACHE_DIR, post=None)
     try:
-        narratives = _write_all(_Replay(llm), sheets, replayed.append)
+        narratives = _write_all(_Replay(saved), sheets, replayed.append)
     except CacheMiss:
-        log("Some answers aren't saved yet, so LM Studio is needed (loading the model can take a few minutes)")
+        pass
     else:
-        log("Every answer was saved, so the write-ups replay without LM Studio")
+        log("Every answer was saved, so the write-ups replay without asking the model")
         for line in replayed:
             log(line)
         return Analysis("ok", llm_model, narratives, sheets)
+    if llm is None:
+        try:
+            llm = make_llm(llm_model)
+        except ValueError as exc:  # UCL_LLM_PROVIDER names no provider
+            return Analysis("unavailable", llm_model, reason=str(exc))
+    name = getattr(llm, "name", "the model")
+    wait = " (loading the model can take a few minutes)" if name == "LM Studio" else ""
+    log(f"Some answers aren't saved yet, so {name} is needed{wait}")
     if not llm.ensure_ready():
-        return Analysis("unavailable", llm_model, reason=getattr(llm, "reason", None))
-    return Analysis("ok", llm_model, _write_all(llm, sheets, log), sheets)
+        reason = getattr(llm, "reason", None)
+        named = reason and hasattr(llm, "name")  # "LM Studio: …" or "OpenRouter: …", so you know whose fault it is
+        return Analysis("unavailable", llm_model, reason=f"{llm.name}: {reason}" if named else reason)
+    narratives = _write_all(llm, sheets, log)
+    spent = getattr(llm, "spent", None)
+    if spent is not None and spent.calls:
+        log(f"{name} used {spent.describe()}")
+    return Analysis("ok", llm_model, narratives, sheets)
 
 
 def save(analysis: Analysis, path: Path = config.OUT_DIR / "analysis.json") -> None:

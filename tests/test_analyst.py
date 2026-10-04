@@ -1,3 +1,4 @@
+import hashlib
 import json
 
 from fakes import FakeLLM
@@ -47,6 +48,7 @@ def test_run_writes_eleven_normalised_narratives(built, tmp_path):
 
 class Offline(FakeLLM):
     """LM Studio is down: only saved answers can be given."""
+    name = "LM Studio"
 
     def ensure_ready(self):
         self.asked_ready = True
@@ -227,3 +229,27 @@ def test_synthesis_instructions_cover_intervals_labels_and_the_training_data():
                    "'conditional'", "'model-dependent'", "knockout count", "first four stats"):
         assert needed in text, needed
     assert "Facts (JSON):" in text and text.endswith("\n")  # the facts follow straight after
+
+
+def test_saved_answers_replay_without_any_provider(built, tmp_path, monkeypatch):
+    ds, res = built
+    first = FakeLLM([team_reply()] * 10 + [synth_reply()])
+    analyst.run(ds.team_seasons, ds.finals, res, llm=first, log=lambda _: None)
+    monkeypatch.setattr(config, "LLM_CACHE_DIR", tmp_path)
+    for request, content in first.cache.items():  # the fake's answers, saved where the real clients look
+        body = {"model": config.LLM_MODEL, "messages": json.loads(request), **config.LLM_PARAMS}
+        key = hashlib.sha256(json.dumps(body, sort_keys=True).encode()).hexdigest()
+        (tmp_path / f"{key}.json").write_text(json.dumps({"content": content.content, "finish_reason": "stop"}))
+    monkeypatch.setenv(config.LLM_PROVIDER_ENV, "elsewhere")  # no provider at all: replaying needs none
+    lines = []
+    analysis = analyst.run(ds.team_seasons, ds.finals, res, log=lines.append)
+    assert analysis.status == "ok" and len(analysis.narratives) == 11
+    assert lines[0] == "Every answer was saved, so the write-ups replay without asking the model"
+
+
+def test_a_new_question_with_no_provider_says_why(built, monkeypatch, tmp_path):
+    ds, res = built
+    monkeypatch.setattr(config, "LLM_CACHE_DIR", tmp_path)
+    monkeypatch.setenv(config.LLM_PROVIDER_ENV, "elsewhere")
+    analysis = analyst.run(ds.team_seasons, ds.finals, res, log=lambda _: None)
+    assert analysis.status == "unavailable" and "UCL_LLM_PROVIDER" in analysis.reason

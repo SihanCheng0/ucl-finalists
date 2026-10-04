@@ -1,4 +1,4 @@
-"""Command line: uv run ucl fetch | build | model | analyze | report | all."""
+"""Command line: uv run ucl fetch | build | model | analyze | report | all, and ucl web | publish."""
 from __future__ import annotations
 
 import argparse
@@ -67,7 +67,7 @@ def cmd_analyze(args: argparse.Namespace) -> int:
     print(f"analysis {analysis.status} with {args.llm_model}: {len(analysis.narratives)} narratives "
           f"({unavailable} unavailable), {flagged} figure(s) not found in the data")
     if analysis.status == "unavailable":
-        print(f"LM Studio not ready: {analysis.reason or 'unknown reason'}")
+        print(f"AI model not ready: {analysis.reason or 'unknown reason'}")
     return 0
 
 
@@ -89,12 +89,17 @@ def main(argv: list[str] | None = None) -> int:
         from .web.server import main as web_main
 
         return web_main(argv[1:])
+    if argv[:1] == ["publish"]:  # so does the website
+        from .web.publish import main as publish_main
+
+        return publish_main(argv[1:])
     parser = argparse.ArgumentParser(
         prog="ucl", description="Why the best Champions League teams win.",
-        epilog="ucl web [--port N] [--no-open] [--llm-model KEY] starts UCL Lab, the local dashboard.")
+        epilog="ucl web [--port N] [--no-open] [--llm-model KEY] starts UCL Lab, the local dashboard. "
+               "ucl publish [--run STAGES] [--out DIR] writes it as a static website for Vercel.")
     parser.add_argument("command", choices=[*COMMANDS, "all"])
     parser.add_argument("--no-ai", action="store_true", help="skip the local-LLM analysis")
-    parser.add_argument("--llm-model", default=config.LLM_MODEL, help="LM Studio model key")
+    parser.add_argument("--llm-model", default=config.LLM_MODEL, help="model id: an LM Studio key or an OpenRouter slug")
     args = parser.parse_args(argv)
     names = list(COMMANDS) if args.command == "all" else [args.command]
     for name in names:

@@ -145,7 +145,7 @@ def _summary_block(narrative: Narrative | None) -> str:
 def _masthead(ai_ran: bool) -> str:
     first = config.season_label(config.SEASONS[0])
     last = config.season_label(config.SEASONS[-1])
-    ai = " A local AI model then writes up what it found." if ai_ran else ""
+    ai = " An AI model then writes up what it found." if ai_ran else ""
     return (
         '<header class="masthead">'
         f'<p class="eyebrow">UEFA Champions League · {first} to {last}</p>'
@@ -162,8 +162,9 @@ def _ai_notice(analysis: Analysis) -> str:
                 "and then <code>uv run ucl report</code> to add them.</p>")
     if analysis.status == "unavailable":
         why = f" ({escape(analysis.reason)})" if getattr(analysis, "reason", None) else ""
-        return (f'<p class="notice">LM Studio wasn’t reachable{why}, so the AI write-ups are missing. Open LM Studio, '
-                "then run <code>uv run ucl analyze</code> and <code>uv run ucl report</code>.</p>")
+        return (f'<p class="notice">The AI model wasn’t reachable{why}, so the AI write-ups are missing. Open LM '
+                "Studio or set <code>OPENROUTER_API_KEY</code>, then run <code>uv run ucl analyze</code> and "
+                "<code>uv run ucl report</code>.</p>")
     return ""
 
 
@@ -404,7 +405,7 @@ def _method(team_seasons: pd.DataFrame, finals: pd.DataFrame, results: ModelResu
     ]
     if analysis.status == "ok":
         method.append(
-            f"AI write-ups: {analysis.model} running locally in LM Studio, given only the numbers behind this "
+            f"AI write-ups: {analysis.model}, an open-weights model, given only the numbers behind this "
             "page. Every figure it writes is checked against those numbers. The check confirms that the figure "
             "appears in the data, not that it is attached to the right stat, and the wording itself is not checked."
         )

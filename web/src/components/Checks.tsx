@@ -2,10 +2,11 @@ import { Fragment, useState } from "react";
 import { api, ApiError } from "../api";
 import type { Loaded } from "../hooks/useApi";
 import { ago } from "../lib/format";
+import { STATIC_SITE } from "../site";
 import type { CheckItem, CheckReport, ModelTest } from "../types";
 import { AlertIcon, CheckIcon, CrossIcon } from "./Icons";
 
-const GROUP_ORDER = ["Local AI", "UEFA feeds", "Pipeline outputs", "Live season and players", "Dashboard"];
+const GROUP_ORDER = ["AI model", "UEFA feeds", "Pipeline outputs", "Live season and players", "Dashboard"];
 
 function StatusMark({ status }: { status: CheckItem["status"] }) {
   const Icon = status === "ok" ? CheckIcon : status === "fail" ? CrossIcon : status === "warn" ? AlertIcon : null;
@@ -26,7 +27,8 @@ export function summaryText(report: CheckReport): string {
   return parts.join(", ");
 }
 
-/** "Before you run": everything a run depends on, with what to do about anything that isn't ready. */
+/** "Before you run": everything a run depends on, with what to do about anything that isn't ready. On the website,
+ * the checks the nightly run made before publishing it. */
 export function Checks({ checks }: { checks: Loaded<CheckReport> }) {
   const report = checks.data;
   const trouble = !!report && (report.summary.warn > 0 || report.summary.fail > 0);
@@ -47,27 +49,31 @@ export function Checks({ checks }: { checks: Loaded<CheckReport> }) {
   const groups = GROUP_ORDER.map((group) => ({ group, items: (report?.checks ?? []).filter((c) => c.group === group) }))
     .filter((g) => g.items.length);
   return (
-    <section className="panel checks" aria-label="Before you run">
+    <section className="panel checks" aria-label={STATIC_SITE ? "Checks" : "Before you run"}>
       <div className="checks-head">
         <div>
-          <h3>Before you run</h3>
+          <h3>{STATIC_SITE ? "Checks from the nightly run" : "Before you run"}</h3>
           <p className="small muted" aria-live="polite">
-            {checks.loading && !report ? "Checking LM Studio, UEFA and the outputs…"
+            {checks.loading && !report ? "Checking the AI model, UEFA and the outputs…"
               : report ? <>{summaryText(report)}{checks.loading ? ", checking again…" : `, checked ${ago(report.checked_at)}`}</>
                 : checks.error ? checks.error.message : ""}
           </p>
         </div>
         <div className="checks-actions">
-          <button className="button small" type="button" onClick={checks.reload} disabled={checks.loading}>Check again</button>
-          <button className="button small" type="button" onClick={runTest} disabled={test.busy}>
-            {test.busy ? "Testing the model…" : "Test the local model"}</button>
+          {!STATIC_SITE && <>
+            <button className="button small" type="button" onClick={checks.reload} disabled={checks.loading}>Check again</button>
+            <button className="button small" type="button" onClick={runTest} disabled={test.busy}>
+              {test.busy ? "Testing the model…" : report?.provider === "openrouter" ? "Test the hosted model" : "Test the local model"}</button>
+          </>}
           {report && <button className="button small" type="button" aria-expanded={expanded} onClick={() => setOpen(!expanded)}>
             {expanded ? "Hide details" : `Show all ${report.checks.length} checks`}</button>}
         </div>
       </div>
       {(test.busy || test.result || test.error) && (
         <div className={`model-test ${test.result?.ok ? "ok" : test.busy ? "busy" : "fail"}`} role="status">
-          {test.busy && <>Loading {report?.model ?? "the model"} if needed and asking it one question. The first load can take a minute or two.</>}
+          {test.busy && (report?.provider === "openrouter"
+            ? <>Checking the OpenRouter key and asking {report.model} one question.</>
+            : <>Loading {report?.model ?? "the model"} if needed and asking it one question. The first load can take a minute or two.</>)}
           {test.result && (test.result.ok
             ? <>{test.result.detail}{test.result.reply ? <>, replying “{test.result.reply}”</> : null}
                 {test.result.load_seconds && test.result.load_seconds > 1 ? ` after ${test.result.load_seconds} s getting ready` : ""}.</>

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:site": "tsc --noEmit && vite build --mode site --outDir dist-site",
     "test": "vitest run"
   },
   "dependencies": {

@@ -16,7 +16,7 @@ function initials(name: string): string {
 /** One player: this season's numbers, then every cached season across clubs, with the chosen stat traced. */
 export function PlayerPanel({ player, stat, stats, onClose, onBuildIndex, running }: {
   player: SquadPlayer; stat: PlayerStatMeta; stats: PlayerStatMeta[]; onClose: () => void;
-  onBuildIndex: () => void; running: boolean;
+  onBuildIndex?: () => void; running: boolean;
 }) {
   const history = useApi(() => api.player(player.player_id), [player.player_id]);
   const meta = new Map(stats.map((s) => [s.key, s]));
@@ -86,7 +86,7 @@ export function PlayerPanel({ player, stat, stats, onClose, onBuildIndex, runnin
         <div className="warn-note small">
           {index.running ? `Building the player index: ${index.squads.done} of ${index.squads.of} squads.`
             : `History covers the ${index.squads.done} of ${index.squads.of} squads cached so far.`}
-          {!index.running && <> <button className="button small" type="button" onClick={onBuildIndex} disabled={running}>Build player index</button></>}
+          {!index.running && onBuildIndex && <> <button className="button small" type="button" onClick={onBuildIndex} disabled={running}>Build player index</button></>}
         </div>
       )}
       {history.data && history.data.unavailable_seasons.length > 0 && (

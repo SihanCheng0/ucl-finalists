@@ -145,8 +145,10 @@ class LiveService:
     waits for it. After a failure the next automatic attempt waits LIVE_RETRY_S."""
 
     def __init__(self, build: Callable[[bool], LiveSnapshot], clock: Callable[[], float] = time.time,
-                 max_age: float = config.LIVE_MAX_AGE_S, retry_after: float = config.LIVE_RETRY_S):
+                 max_age: float = config.LIVE_MAX_AGE_S, retry_after: float = config.LIVE_RETRY_S,
+                 background: bool = True):
         self._build, self._clock = build, clock
+        self._background = background  # False: requests never start a refresh (the website export)
         self._max_age, self._retry_after = max_age, retry_after
         self._lock = threading.Lock()  # guards the fields below
         self._flight = threading.Lock()  # one refresh at a time
@@ -194,8 +196,9 @@ class LiveService:
             return self.current()
 
     def refresh_in_background(self) -> bool:
-        """Start a refresh unless one is running, the snapshot is fresh, or the last failure was too recent."""
-        if self._flight.locked() or not self.due():
+        """Start a refresh unless one is running, the snapshot is fresh, the last failure was too recent, or this
+        service doesn't refresh in the background."""
+        if not self._background or self._flight.locked() or not self.due():
             return False
         with self._lock:
             if self._pending:
